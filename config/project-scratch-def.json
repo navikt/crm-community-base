@@ -1,0 +1,34 @@
+{
+	"orgName": "NAV COMMUNITIES",
+	"edition": "Enterprise",
+	"features": [
+		"Sites",
+		"ForceComPlatform",
+		"Communities",
+		"CustomerCommunity",
+		"CustomerCommunityPlus",
+		"PersonAccounts",
+		"ServiceCloud",
+		"LiveAgent",
+		"LightningServiceConsole"
+	],
+	"country": "NO",
+	"language": "en_US",
+	"settings": {
+		"communitiesSettings": {
+			"enableNetworksEnabled": true
+		},
+		"lightningExperienceSettings": {
+			"enableS1DesktopEnabled": true
+		},
+		"omniChannelSettings": {
+			"enableOmniChannel": true
+		},
+		"liveAgentSettings": {
+			"enableLiveAgent": true
+		},
+		"languageSettings": {
+			"enableTranslationWorkbench": true
+		}
+	}
+}
