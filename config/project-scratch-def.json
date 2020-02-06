@@ -1,6 +1,7 @@
 {
-	"orgName": "NAV COMMUNITIES",
+	"orgName": "NAV Salesforce",
 	"edition": "Enterprise",
+	"adminEmail": "fakeemail@nav.no.scratchorg",
 	"features": [
 		"Sites",
 		"ForceComPlatform",
@@ -8,9 +9,12 @@
 		"CustomerCommunity",
 		"CustomerCommunityPlus",
 		"PersonAccounts",
+		"ProcessBuilder",
+		"API",
 		"ServiceCloud",
 		"LiveAgent",
-		"LightningServiceConsole"
+		"LightningServiceConsole",
+		"ContactsToMultipleAccounts"
 	],
 	"country": "NO",
 	"language": "en_US",
