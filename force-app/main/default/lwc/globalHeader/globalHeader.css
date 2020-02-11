@@ -10,14 +10,90 @@
 .hodefot .dropdown-toggle:active,.hodefot .open .dropdown-toggle{outline:0}
 .hodefot .caret{display:inline-block;width:0;height:0;vertical-align:top;border-top:4px solid #fff;border-right:4px solid transparent;border-left:4px solid transparent;content:""}
 .hodefot .dropdown .caret{margin-top:0.375rem;margin-left:0.25rem}
-.hodefot .dropdown-menu{position:absolute;top:100%;left:0;z-index:1000;display:block;float:left;text-align:left;width:100%;padding:5px 0;margin:0;list-style:none;background-color:#7f756c;
--webkit-background-clip:padding-box;-moz-background-clip:padding;background-clip:padding-box}
+.hodefot .dropdown-menu{position:absolute;top:100%;left:0;z-index:1000;display:block;float:left;text-align:left;width:100%;padding:5px 0;margin:0;list-style:none;background-color:#7f756c;-webkit-background-clip:padding-box;-moz-background-clip:padding;background-clip:padding-box}
 .hodefot .dropdown-menu.pull-right{right:0;left:auto}.hodefot .dropdown-menu .divider{height:1px;margin:9px 1px;overflow:hidden;background-color:#7f756c;border-bottom:1px solid #000}
 .hodefot .dropdown-menu>li>a{display:block;padding:0.25em 0 0.25em 27px;clear:both;font-weight:normal;line-height:20px;color:#fff;white-space:nowrap}
 .hodefot .dropdown-menu>li>a:hover,.hodefot .dropdown-menu>li>a:focus,.hodefot .dropdown-submenu:hover>a,.hodefot .dropdown-submenu:focus>a{text-decoration:none;color:#0067c5}
 .hodefot .dropdown-menu>li.active>a{color:#0067c5}.hodefot .dropdown-menu>li.active>a:after{border:2px solid #0067c5;border-radius:50% 50% 50% 50%;content:" ";left:13%;top:40%;float:left;position:absolute;text-align:left;text-decoration:none;outline:0}
 .hodefot .dropdown-menu>.disabled>a,.hodefot .dropdown-menu>.disabled>a:hover,.hodefot .dropdown-menu>.disabled>a:focus{color:#7f756c}
 .hodefot .open>.dropdown-menu{display:block}.hodefot .dropdown-submenu{position:relative}@media (min-width:48.0625rem){.hodefot .login-container{width:40%}}@media (min-width:60em){.hodefot .login-container{width:30%}}
-.hodefot .site-coltrols-toolbar .login-container{position:absolute;top:0;right:0.9375em;height:100%}
 .hodefot .site-coltrols-toolbar .login-container p span,.hodefot .site-coltrols-toolbar .login-container p a{font-size:1em}
-.hodefot .nav-varsler .fiks-line-break{overflow-wrap:break-word;word-wrap:break-word;word-break:break-all;-ms-hyphens:auto;-moz-hyphens:auto;-webkit-hyphens:auto;hyphens:auto}*{-moz-box-sizing:border-box;box-sizing:border-box}.visuallyhidden{border:0;clip:rect(0 0 0 0);height:1px;margin:-1px;overflow:hidden;padding:0;position:absolute;width:1px}.visuallyhidden.focusable:focus,.visuallyhidden.focusable:active{clip:auto;height:auto;margin:0;overflow:visible;position:absolute;width:auto}.muted{color:#7f756c}.loud{color:#c30000}
+
+.btn-auth{min-height: 1.25rem!important;}
+.hodefot .login-container .knapp.btn-logout {background-color: #0CA9E0;border: none;}
+.hodefot .login-container .knapp {
+    font-family: Modus,Arial,sans-serif;
+    font-weight: bold;
+    padding: 4px 15px;
+    white-space: nowrap;
+    font-size: .75rem;
+    color: #333;
+    letter-spacing: normal;
+    line-height: 1.42857143;
+    background-color: #d1d1d1;
+    border: none;
+    border-radius: 0;
+}
+.hodefot .knapp+.knapp {
+    margin-left: .5rem;
+}
+
+.hodefot .site-coltrols-toolbar .login-container {
+    position: absolute;
+    top: 0;
+    right: 0.9375em;
+    height: 100%;
+}
+
+@media (min-width: 60em)
+.hodefot .login-container {
+    width: 30%;
+}
+@media (min-width: 48.0625rem)
+.hodefot .login-container {
+    width: 40%;
+}
+
+@media (min-width: 60em)
+.hodefot .site-coltrols-toolbar {
+    text-align: center;
+}
+.col-md-12 {
+    position: relative;
+    min-height: 1px;
+    padding-left: .46875rem;
+    padding-right: .46875rem;
+}
+@media (min-width: 48.0625rem)
+.col-md-12 {
+    width: 100%;
+    padding-left: .9375rem;
+    padding-right: .9375rem;
+}
+@media (min-width: 48.0625rem)
+.col-md-1, .col-md-2, .col-md-3, .col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8, .col-md-9, .col-md-10, .col-md-11, .col-md-12 {
+    padding-left: .9375rem;
+    padding-right: .9375rem;
+}
+@media (min-width: 48.0625rem)
+.col-md-12 {
+    width: 100%;
+}
+.hodefot .login-details {
+    width: 70%;
+    float: left;
+    padding-left: 25px;
+    cursor: pointer;
+    color: #fff;
+    font-style: italic;
+}
+.pagewrapper {
+    min-height: 100%;
+    height: auto;
+    display: block;
+    margin: 0;
+    padding: 0;
+    font-family: Arial,sans-serif;
+    line-height: 1.42857143;
+    color: #3e3832;
+}
