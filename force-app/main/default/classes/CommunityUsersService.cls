@@ -1,7 +1,7 @@
 public with sharing class CommunityUsersService {
 
     public static User getOrCreatePersonAccountUser(String nationalIdentityNumber) {
-        List<User> existingUsers = new UsersSelector().selectByAccountIdent(new Set<String>{
+        List<User> existingUsers = new UsersSelector_Community().selectByAccountIdent(new Set<String>{
                 nationalIdentityNumber
         });
         if (existingUsers.size() > 0) return existingUsers[0];
@@ -9,10 +9,10 @@ public with sharing class CommunityUsersService {
         DefaultCommunityProfile__c defaultCommunityProfiles=DefaultCommunityProfile__c.getOrgDefaults();
         String profileName = defaultCommunityProfiles.PersonAccountDefaultProfile__c;
         Profile profile = [SELECT Id FROM Profile WHERE Name = :profileName];
-        List<Account> personAccounts=new AccountsSelector().selectByIdent(new Set<String>{nationalIdentityNumber});
+        List<Account> personAccounts=new AccountsSelector_Community().selectByIdent(new Set<String>{nationalIdentityNumber});
 
         if (personAccounts.size()>0 && profile != null) {
-            SobjectWrapper contact=new SobjectWrapper(personAccounts[0]);
+            PersonAccountWrapper contact=new PersonAccountWrapper(personAccounts[0]);
             return createCommunityUser(contact, profile.Id);
         }
 
@@ -20,7 +20,7 @@ public with sharing class CommunityUsersService {
     }
 
     @TestVisible
-    private static User createCommunityUser(SobjectWrapper contact, Id profileId){
+    private static User createCommunityUser(PersonAccountWrapper contact, Id profileId){
         User user=new User();
         user.FirstName=contact.firstName;
         user.LastName=contact.lastName;

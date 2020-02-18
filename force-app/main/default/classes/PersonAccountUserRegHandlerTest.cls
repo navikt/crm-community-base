@@ -3,10 +3,10 @@ private class PersonAccountUserRegHandlerTest {
 
     @IsTest
     private static void createUser() {
-        User navEmployee=TestDataFactory.getUsers(1,'System Administrator',true,true)[0];
+        User navEmployee=TestDataFactory_Community.getUsers(1,'System Administrator',true,true)[0];
         System.runAs(navEmployee) {
-            Account personAccount = TestDataFactory.getPersonAccounts(1, true)[0];
-            TestDataFactory.getEmployerCommunityUser(new Set<Id>{
+            Account personAccount = TestDataFactory_Community.getPersonAccounts(1, true)[0];
+            TestDataFactory_Community.getEmployerCommunityUser(new Set<Id>{
                     personAccount.Id
             }, true);
 

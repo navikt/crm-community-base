@@ -10,11 +10,11 @@ private class CommunityUsersServiceTest {
 
     @IsTest
     private static void getOrCreatePersonAccountUser_whenUserExist() {
-        User navEmployee=TestDataFactory.getUsers(1,'System Administrator',true,true)[0];
+        User navEmployee=TestDataFactory_Community.getUsers(1,'System Administrator',true,true)[0];
         System.runAs(navEmployee) {
-            Account personAccount = TestDataFactory.getPersonAccounts(1, true)[0];
+            Account personAccount = TestDataFactory_Community.getPersonAccounts(1, true)[0];
 
-            TestDataFactory.getEmployerCommunityUser(new Set<Id>{
+            TestDataFactory_Community.getEmployerCommunityUser(new Set<Id>{
                     personAccount.Id
             }, true);
 
@@ -29,9 +29,9 @@ private class CommunityUsersServiceTest {
 
     @IsTest
     private static void getOrCreatePersonAccountUser_whenUserIsCreated() {
-        User navEmployee=TestDataFactory.getUsers(1,'System Administrator',true,true)[0];
+        User navEmployee=TestDataFactory_Community.getUsers(1,'System Administrator',true,true)[0];
         System.runAs(navEmployee) {
-            Account personAccount = TestDataFactory.getPersonAccounts(1, true)[0];
+            Account personAccount = TestDataFactory_Community.getPersonAccounts(1, true)[0];
 
             Test.startTest();
             User user = CommunityUsersService.getOrCreatePersonAccountUser('1');
@@ -53,13 +53,13 @@ private class CommunityUsersServiceTest {
 
     @IsTest
     private static void createCommunityUser() {
-        User officeUser = TestDataFactory.getUsers(1, 'System Administrator',true, true)[0];
+        User officeUser = TestDataFactory_Community.getUsers(1, 'System Administrator',true, true)[0];
         System.runAs(officeUser) {
-            TestDataFactory.getPersonAccounts(1, true);
+            TestDataFactory_Community.getPersonAccounts(1, true);
         }
 
         Id contactId = [SELECT PersonContactId FROM Account LIMIT 1].PersonContactId;
-        SobjectWrapper wrapper = new SobjectWrapper();
+        PersonAccountWrapper wrapper = new PersonAccountWrapper();
         wrapper.recordId = contactId;
         wrapper.firstName = 'Test';
         wrapper.lastName = 'User';
