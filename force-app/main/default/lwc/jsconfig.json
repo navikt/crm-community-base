@@ -5,6 +5,9 @@
         "paths": {
             "c/globalHeader": [
                 "globalHeader/globalHeader.js"
+            ],
+            "c/globalCommunityFooter": [
+                "globalCommunityFooter/globalCommunityFooter.js"
             ]
         }
     },
