@@ -6,14 +6,12 @@
                 <div class="container">
                     <div class="row navbar">
                         <div class="col-md-12">
-                            <div
-                                    class="settings">
-                                <ul
-                                        class="nav">
+                            <div class="settings">
+                                <ul class="nav">
                                     <li id="text-size-accessibility" tabindex="0">
                                         <span class="link-btn"
                                               aria-label="Hold Ctrl-tasten nede (Cmd-tasten på Mac). Trykk samtidig på + for å forstørre eller - for å forminske.">Skriftstørrelse</span>
-                                        <div class="text-size-tooltip">
+                                        <div class="text-size-tooltip tooltip-hidden">
                                             <p>Hold Ctrl-tasten nede (Cmd-tasten på Mac). Trykk samtidig på + for å
                                                 forstørre eller - for å
                                             </p>
@@ -23,14 +21,15 @@
                                 </ul>
                             </div>
                             <div class="login-container">
-                                <div id="login-details" class="login-details"><span id="name-container"><img
-                                        id="idporten-ikon-innlogging" alt="Innlogget via ID-porten" src={idportenIkon}>
+                                <div id="login-details" class="login-details">
+                                    <span class="name-container">
+                                        <img id="idporten-ikon-innlogging" alt="Innlogget via ID-porten" src={idportenIkon}>
                                     <span id="name">Frode Hoen</span>
+                                    </span>
+                                </div>
                                 <div id="auth-btns" class="idporten">
                                     <a id="logout" data-ga="Header" class="btn-auth knapp mini hoved btn-logout"
                                        href="https://loginservice.nav.no/slo">Logg ut</a>
-                                </div>
-                                </span>
                                 </div>
                             </div>
                         </div>
@@ -55,18 +54,33 @@
                                 class="link-btn mobile-toggler toggle-mainmenu">Meny
                         </button>
                         <ul class="accessible-megamenu" id="accessible-megamenu">
-                            <li class="topnavitem has-children">
+                            <li class="topnavitem">
                                 <a href="https://www.nav.no/no/Person" role="button" data-ga="Meny">Person</a>
                             </li>
-                            <li class="topnavitem has-children"><a href="https://www.nav.no/no/Bedrift" role="button"
+                            <li class="topnavitem"><a href="https://www.nav.no/no/Bedrift" role="button"
                                                                    data-ga="Meny">Bedrift</a>
                             </li>
-                            <li class="topnavitem has-children"><a href="https://www.nav.no/no/NAV+og+samfunn"
+                            <li class="topnavitem"><a href="https://www.nav.no/no/NAV+og+samfunn"
                                                                    role="button" data-ga="Meny">NAV og samfunn</a></li>
-                            <li class="topnavitem has-children"><a href="https://tjenester.nav.no/dittnav" role="button"
+                            <li class="topnavitem"><a href="https://tjenester.nav.no/dittnav" role="button"
                                                                    data-ga="Meny">Ditt NAV</a>
                             </li>
                         </ul>
+                        <input id="no-js-toggle-mobile-search" type="checkbox" class="visuallyhidden mobile-toggler" aria-hidden="true">
+                        <label for="no-js-toggle-mobile-search" class="mobile-toggler toggle-search" aria-hidden="true">
+                            Søk
+                        </label>
+                        <button type="button" id="toggle-mobile-search" class="link-btn mobile-toggler toggle-search" aria-hidden="true">
+                            <span>Søk</span>
+                        </button>
+                        <form action="https://www.naV.no/sok" method="get" class="sitesearch" id="sitesearch" role="search">
+
+                            <div class="inputwrapper">
+                                <input type="hidden" name="language" value="no">
+                                <input type="search" id="site-search-input" name="ord" maxlength="200" class="input-sitesearch" placeholder="Søk på nav.no" aria-label="Søk">
+                                <input type="image" src={searchButton} class="btn-sitesearch" value="Søk">
+                            </div>
+                        </form>
                     </nav>
                 </div>
             </div>
