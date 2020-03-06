@@ -37,7 +37,7 @@ a:active, a:hover {
     display: inline-block;
     margin-bottom: 16px;
     font-size: 1em;
-    Font-family: Modus,Arial,sans-serif;
+	font-family: "Source Sans Pro", Arial, sans-serif;
 }
 .hodefot .about-site .decorated:after {
     border-color: #857B71;
@@ -52,10 +52,9 @@ a:active, a:hover {
     width: 30px;
 }
 .hodefot .about-site ul li {
-     float: left;
-     display: inline-block;
-     position: relative;
-     padding-left: 30px;
+    display: inline-block;
+    position: relative;
+    padding-left: 30px;
 }
 .hodefot .about-site ul li:before {
     position: absolute;
@@ -66,6 +65,11 @@ a:active, a:hover {
     content: " ";
     display: inline-block;
 }
-*, :after, :before {
-    box-sizing: border-box;
+.hodefot .about-site ul li:first-child {
+    padding-left: 0;
+}
+@media (max-width: 47.99rem)
+.hodefot .about-site ul li>a {
+    padding: .5em 0;
+    font-size: 1em;
 }
