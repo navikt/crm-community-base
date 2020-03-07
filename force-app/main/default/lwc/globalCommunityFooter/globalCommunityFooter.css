@@ -68,7 +68,17 @@ a:active, a:hover {
 .hodefot .about-site ul li:first-child {
     padding-left: 0;
 }
-@media (max-width: 47.99rem)
+
+.hodefot .about-site ul li:before {
+    left: 50%;
+    top: -6px;
+}
+
+.hodefot .about-site ul li {
+    display: block;
+    padding: 0;
+    margin-bottom: 10px;
+}
 .hodefot .about-site ul li>a {
     padding: .5em 0;
     font-size: 1em;

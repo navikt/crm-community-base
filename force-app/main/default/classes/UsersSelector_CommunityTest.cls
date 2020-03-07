@@ -12,7 +12,7 @@ private class UsersSelector_CommunityTest {
 
             Test.startTest();
             List<User> users = new UsersSelector_Community().selectByAccountIdent(new Set<String>{
-                    personAccount.INT_Ident__c
+                    personAccount.INT_PersonIdent__c
             });
             Test.stopTest();
             System.assertEquals(1, users.size());

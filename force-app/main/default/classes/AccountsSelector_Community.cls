@@ -4,11 +4,7 @@ public inherited sharing class AccountsSelector_Community extends ApplicationSel
         return new List<Schema.SObjectField>{
                 Account.Id,
                 Account.Name,
-                Account.INT_Ident__c,
-                Account.INT_MunicipalityNumber__c,
-                Account.INT_RegionNumber__c,
-                Account.INT_DiscretionCode__c,
-                Account.INT_IsNavEmployee__c,
+                Account.INT_PersonIdent__c,
                 Account.PersonContactId,
                 Account.FirstName,
                 Account.LastName
@@ -23,7 +19,7 @@ public inherited sharing class AccountsSelector_Community extends ApplicationSel
         return (List<Account>)
                 Database.query(
                         newQueryFactory().
-                                setCondition('INT_Ident__c in :idents').
+                                setCondition('INT_PersonIdent__c in :idents').
                                 toSOQL());
     }
 }
