@@ -1,11 +1,24 @@
 {
-  "packageDirectories": [
-    {
-      "path": "force-app",
-      "default": true
+    "packageDirectories": [
+        {
+            "path": "force-app",
+            "default": true,
+            "package": "crm-community-base",
+            "versionName": "ver 0.1",
+            "versionNumber": "0.1.1.NEXT",
+            "dependencies": [
+                {
+                    "package": "crm-platform-base",
+                    "versionNumber": "0.6.0.2"
+                }
+            ]
+        }
+    ],
+    "namespace": "",
+    "sfdcLoginUrl": "https://login.salesforce.com",
+    "sourceApiVersion": "47.0",
+    "packageAliases": {
+        "crm-platform-base": "0Ho2o0000008ORmCAM",
+        "crm-community-base": "0Ho2o0000008OSzCAM"
     }
-  ],
-  "namespace": "",
-  "sfdcLoginUrl": "https://login.salesforce.com",
-  "sourceApiVersion": "47.0"
 }

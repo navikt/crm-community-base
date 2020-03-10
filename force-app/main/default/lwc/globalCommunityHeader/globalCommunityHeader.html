@@ -24,7 +24,7 @@
                                 <div id="login-details" class="login-details">
                                     <span class="name-container">
                                         <img id="idporten-ikon-innlogging" alt="Innlogget via ID-porten" src={idportenIkon}>
-                                    <span id="name">Frode Hoen</span>
+                                    <span id="name">{currentUser}</span>
                                     </span>
                                 </div>
                                 <div id="auth-btns" class="idporten">
@@ -66,21 +66,6 @@
                                                       data-ga="Meny">Ditt NAV</a>
                             </li>
                         </ul>
-                        <input id="no-js-toggle-mobile-search" type="checkbox" class="visuallyhidden mobile-toggler" aria-hidden="true">
-                        <label for="no-js-toggle-mobile-search" class="mobile-toggler toggle-search" aria-hidden="true">
-                            Søk
-                        </label>
-                        <button type="button" id="toggle-mobile-search" class="link-btn mobile-toggler toggle-search" aria-hidden="true">
-                            <span>Søk</span>
-                        </button>
-                        <form action="https://www.naV.no/sok" method="get" class="sitesearch" id="sitesearch" role="search">
-
-                            <div class="inputwrapper">
-                                <input type="hidden" name="language" value="no">
-                                <input type="search" id="site-search-input" name="ord" maxlength="200" class="input-sitesearch" placeholder="Søk på nav.no" aria-label="Søk">
-                                <input type="image" src={searchButton} class="btn-sitesearch" value="Søk">
-                            </div>
-                        </form>
                     </nav>
                 </div>
             </div>
