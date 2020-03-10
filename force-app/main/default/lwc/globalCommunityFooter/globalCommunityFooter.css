@@ -12,7 +12,7 @@
 }
 .hodefot .sitefooter a {
     color: #fff;
-    font-size: .875rem;
+    font-size: 15px;
     text-decoration: none;
 }
 .hodefot .nav a {
@@ -36,12 +36,12 @@ a:active, a:hover {
 .hodefot .about-site .decorated {
     display: inline-block;
     margin-bottom: 16px;
-    font-size: 1em;
+    font-size: 16x;
 	font-family: "Source Sans Pro", Arial, sans-serif;
 }
 .hodefot .about-site .decorated:after {
     border-color: #857B71;
-    margin-top: 15px;
+    margin-top: 16px;
 }
 .decorated:after {
     border-top: 1px solid #b7b1a9;
@@ -69,17 +69,4 @@ a:active, a:hover {
     padding-left: 0;
 }
 
-.hodefot .about-site ul li:before {
-    left: 50%;
-    top: -6px;
-}
 
-.hodefot .about-site ul li {
-    display: block;
-    padding: 0;
-    margin-bottom: 10px;
-}
-.hodefot .about-site ul li>a {
-    padding: .5em 0;
-    font-size: 1em;
-}

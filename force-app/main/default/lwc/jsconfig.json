@@ -3,11 +3,11 @@
         "experimentalDecorators": true,
         "baseUrl": ".",
         "paths": {
-            "c/globalHeader": [
-                "globalHeader/globalHeader.js"
-            ],
             "c/globalCommunityFooter": [
                 "globalCommunityFooter/globalCommunityFooter.js"
+            ],
+            "c/globalCommunityHeader": [
+                "globalCommunityHeader/globalCommunityHeader.js"
             ]
         }
     },
