@@ -16,7 +16,7 @@ public inherited sharing class UsersSelector_Community extends ApplicationSelect
         return (List<User>)
                 Database.query(
                         newQueryFactory()
-                                .setCondition('Account.INT_PersonIdent__c in: idents')
+                                .setCondition('Account.INT_Ident__c in: idents')
                                 .toSOQL());
     }
 }

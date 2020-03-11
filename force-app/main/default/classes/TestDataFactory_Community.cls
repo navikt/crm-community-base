@@ -38,7 +38,7 @@ public class TestDataFactory_Community {
             personAccounts.add(new Account(
                     FirstName = 'Person',
                     LastName = String.valueOf(i),
-                    INT_PersonIdent__c = String.valueOf(i),
+                    INT_Ident__c = String.valueOf(i),
                     RecordTypeId = PERSON_ACCOUNT_RECORDTYPEID
             ));
         }

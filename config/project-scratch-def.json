@@ -1,6 +1,7 @@
 {
-	"orgName": "NAV Salesforce",
+	"orgName": "NAV COMMUNITY",
 	"edition": "Enterprise",
+	"release": "Current",
 	"adminEmail": "fakeemail@nav.no.scratchorg",
 	"features": [
 		"Sites",
@@ -14,25 +15,35 @@
 		"ServiceCloud",
 		"LiveAgent",
 		"LightningServiceConsole",
-		"ContactsToMultipleAccounts"
+		"ContactsToMultipleAccounts",
+		"FieldService"
 	],
 	"country": "NO",
 	"language": "en_US",
 	"settings": {
+		"experienceBundleSettings": {
+			"enableExperienceBundleMetadata": true
+		},
 		"communitiesSettings": {
 			"enableNetworksEnabled": true
 		},
 		"lightningExperienceSettings": {
 			"enableS1DesktopEnabled": true
 		},
-		"omniChannelSettings": {
-			"enableOmniChannel": true
-		},
-		"liveAgentSettings": {
-			"enableLiveAgent": true
-		},
 		"languageSettings": {
 			"enableTranslationWorkbench": true
+		},
+		"fieldServiceSettings": {
+			"fieldServiceOrgPref": true,
+			"doesShareSaParentWoWithAr": false,
+			"doesShareSaWithAr": false,
+			"enableWorkOrders": true,
+			"isGeoCodeSyncEnabled": false,
+			"isLocationHistoryEnabled": false,
+			"fieldServiceNotificationsOrgPref": false,
+			"serviceAppointmentsDueDateOffsetOrgValue": 7,
+			"workOrderLineItemSearchFields": "Subject",
+			"workOrderSearchFields": "Subject"
 		}
 	}
 }
