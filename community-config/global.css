@@ -28,21 +28,11 @@
 }
 
 .main-content {
-  background-color: #fff !important;
   font-family: "Source Sans Pro", Arial, sans-serif;
-  margin: 1rem;
-  border-radius: 0.5rem;
   align-items: center;
   display: flex;
   justify-content: center;
   flex-direction: column;
-}
-
-@media (max-width: 600px) {
-  .main-content {
-    margin: 0;
-    margin-top: 2rem;
-  }
 }
 
 .slds-form-element__label {
@@ -124,7 +114,7 @@ lightning-datetimepicker > div > fieldset > legend.slds-form-element__legend {
   font-weight: normal;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 576px) {
   .postnummer label {
     left: -1000px;
     visibility: hidden;
@@ -173,6 +163,7 @@ lightning-radio-group {
   padding-left: 0;
   padding-right: 0;
 }
+
 .nav-radio-button-group .slds-form-element__control .slds-radio_faux {
   width: 1.5rem;
   height: 1.5rem;
@@ -250,6 +241,7 @@ span.slds-radio {
   text-decoration: underline;
   text-decoration-color: #0067c5;
 }
+
 .back-button:hover {
   color: #3385d1;
 }
@@ -309,7 +301,7 @@ lightning-input-field.ikke-sensitiv-fritekst
   align-items: center;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 576px) {
   .informasjonstavle__body {
     padding: 0;
     padding-top: 0.5rem;
@@ -350,6 +342,7 @@ lightning-input-field.ikke-sensitiv-fritekst
   min-width: 200px;
   flex: 1;
 }
+
 @media (max-width: 576px) {
   .panelMedBilde {
     margin: 20px;
@@ -450,6 +443,7 @@ lightning-input-field.ikke-sensitiv-fritekst
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
 .panelMedBilde:hover .panelMedBilde__panelOnPanel {
   color: #0067c5;
   cursor: pointer;
@@ -483,6 +477,7 @@ lightning-input-field.ikke-sensitiv-fritekst
   width: 100%;
   padding: 0 3.25rem;
 }
+
 .liste {
   padding: 3.25rem 3.25rem 3.25rem 3.25rem;
   background-color: #fff !important;
@@ -615,6 +610,8 @@ lightning-input-field.ikke-sensitiv-fritekst
   display: flex;
   justify-content: center;
   padding: 0;
+  z-index: 1;
+  position: relative;
 }
 
 .steg {
@@ -629,11 +626,12 @@ form {
 .skjema-max-width {
   width: 100%;
   max-width: 800px;
-  padding: 0 2rem;
 }
 
 div.skjema {
-  padding: 0;
+  margin-top: -2rem;
+  border-radius: 0.5rem;
+  padding: 0 2rem;
   background-color: #fff;
 }
 
@@ -642,6 +640,7 @@ lightning-breadcrumbs {
   display: flex;
   justify-content: left;
 }
+
 lightning-breadcrumb:last-child a {
   font-weight: bold;
   color: black;
@@ -656,6 +655,8 @@ lightning-breadcrumb:last-child a {
 @media (max-width: 576px) {
   div.skjema {
     padding: 1.25rem;
+    margin: 0;
+    margin-top: 2rem;
   }
   form {
     padding: 0;
@@ -663,7 +664,7 @@ lightning-breadcrumb:last-child a {
 }
 
 .tolk-skjema-input {
-  font-size: 1.33rem;
+  font-size: 1rem;
 }
 
 .nav-info-header {
@@ -682,4 +683,12 @@ html {
 .slds-notify_toast,
 .slds-notify--toast {
   min-width: 10rem;
+}
+
+@media (min-width: 576px) {
+  .mobile-toggler,
+  .mobile-only {
+    display: none !important;
+    visibility: hidden;
+  }
 }
