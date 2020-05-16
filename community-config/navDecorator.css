@@ -3783,6 +3783,7 @@ GRID
   margin: 0 0.25em;
 }
 
+
 .navno-dekorator .lenkeseksjon {
   margin-bottom: 2rem;
 }
@@ -4086,6 +4087,10 @@ GRID
 .navno-dekorator .desktop-sok-dropdown .ekspanderbar__innhold {
   left: 0;
   max-width: 700px;
+}
+
+.til-toppen{
+  width: 20px;
 }
 
 .navno-dekorator .hode-kropp-ikon__hode {
