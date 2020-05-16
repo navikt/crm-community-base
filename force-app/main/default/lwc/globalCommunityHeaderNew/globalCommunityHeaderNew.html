@@ -1,5 +1,4 @@
 <template>
-    <div onscroll={handleOnScroll}></div>
 <div id="header-withmenu">
 	<section id="decorator-header" class="navno-dekorator" role="main">
 		<div class="head-wrapper" style="min-height: 155px;">
@@ -28,9 +27,6 @@
 										</a>
 									</div>
 									<div class="mobilmeny__hoyre-kolonne">
-										<button class="knapp mobil-login-knapp login-knapp knapp--flat" type="submit">
-											<h2 class="typo-undertittel knappetekst">Logg inn</h2>
-										</button>
 										<button class="menylinje-knapp mobilmeny__knapp" id="mobilmeny-knapp-id" aria-label="Hovedmenyknapp" aria-pressed="false" aria-haspopup="true" aria-controls="mobilmeny" aria-expanded="false" onclick={handleOnClickMenu}>
 											<div class="menylinje-knapp-visning mobilmeny__knapp-visning">
 												<div class="hamburger-ikon">
@@ -46,7 +42,7 @@
 												<div class="ekspanderbar__innhold">
 													<div class="ekspanderbar__scroll-wrapper">
 														<section class="mobilmeny__startmeny mobilmeny__menuheight">
-															<form role="search" id="search-form" aria-expanded="false" aria-haspopup="listbox" aria-labelledby="downshift-1-label">
+															<form action="https://www.nav.no/sok" role="search" id="search-form" aria-expanded="false" aria-haspopup="listbox" aria-labelledby="downshift-1-label">
 																<div class="sok-container">
 																	<div class="sok-input-resultat">
 																		<div class="sok-input__tittel">
@@ -55,7 +51,7 @@
 																		<div class="sok-input-container">
 																			<div class="skjemaelement sok-input">
 																				<label class="skjemaelement__label" for="07322159-8025-14599-29492-6280366309300">Søk</label>
-																				<input type="text" class="skjemaelement__input input--fullbredde" id="07322159-8025-14599-29492-6280366309300" aria-autocomplete="list" aria-labelledby="downshift-1-label" autocomplete="off" placeholder="Søk på nav.no" aria-label="Søk" tabindex="-1" value="">
+																				<input name="ord" type="text" class="skjemaelement__input input--fullbredde" id="07322159-8025-14599-29492-6280366309300" aria-autocomplete="list" aria-labelledby="downshift-1-label" autocomplete="off" placeholder="Søk på nav.no" aria-label="Søk" tabindex="-1" value="">
 																					<div role="alert" aria-live="assertive"></div>
 																				</div>
 																				<div class="sok-knapper__container">
@@ -288,21 +284,30 @@
 									<ul class="arbeidsflate__topp-liste-rad" role="tablist">
 										<li role="tab" aria-selected="true" class="arbeidsflate__liste-element">
 											<a onclick={handleOnClickPrivatPerson} class="arbeidsflate__lenke" id="desktop-header-menylinje_0_0_0">
-												<div class="arbeidsflate__lenke-inner arbeidsflate__lenke-inner--active">
+												<div if:true={isPrivatPerson} class="arbeidsflate__lenke-inner arbeidsflate__lenke-inner--active">
+													<p class="typo-undertekst">Privatperson</p>
+												</div>
+												<div if:false={isPrivatPerson} class="arbeidsflate__lenke-inner">
 													<p class="typo-undertekst">Privatperson</p>
 												</div>
 											</a>
 										</li>
 										<li role="tab" aria-selected="false" class="arbeidsflate__liste-element">
 											<a  onclick={handleOnClickArbeidsgiver} class="arbeidsflate__lenke" id="desktop-header-menylinje_1_0_0">
-												<div class="arbeidsflate__lenke-inner">
+												<div if:true={isArbeidsgiver} class="arbeidsflate__lenke-inner arbeidsflate__lenke-inner--active">
+													<p class="typo-undertekst">Arbeidsgiver</p>
+												</div>
+												<div if:false={isArbeidsgiver} class="arbeidsflate__lenke-inner">
 													<p class="typo-undertekst">Arbeidsgiver</p>
 												</div>
 											</a>
 										</li>
 										<li role="tab" aria-selected="false" class="arbeidsflate__liste-element">
 											<a  onclick={handleOnClickSamarbeidspartner} class="arbeidsflate__lenke" id="desktop-header-menylinje_2_0_0">
-												<div class="arbeidsflate__lenke-inner">
+												<div if:true={isSamarbeidspartner} class="arbeidsflate__lenke-inner arbeidsflate__lenke-inner--active">
+													<p class="typo-undertekst">Samarbeidspartner</p>
+												</div>
+												<div if:false={isSamarbeidspartner} class="arbeidsflate__lenke-inner">
 													<p class="typo-undertekst">Samarbeidspartner</p>
 												</div>
 											</a>
@@ -317,10 +322,15 @@
 										<button class="menylinje-knapp desktop-hovedmeny__knapp" id="desktop-hovedmeny-knapp-id" aria-label="Hovedmenyknapp" 
 										aria-pressed="false" aria-haspopup="true" aria-controls="desktop-hovedmeny" aria-expanded="false" onclick={handleOnClickMenu}>
 											<div class="menylinje-knapp-visning desktop-hovedmeny__knapp-visning">
-												<div class="hamburger-ikon">
+												<div if:false={menuPressed}  class="hamburger-ikon">
 													<span class="hamburger-ikon__topp"></span>
 													<span class="hamburger-ikon__midt"></span>
 													<span class="hamburger-ikon__bunn"></span>
+												</div>
+												<div if:true={menuPressed} class="hamburger-ikon hamburger-ikon--open">
+													<span class="hamburger-ikon__topp hamburger-ikon__topp--open"></span>
+													<span class="hamburger-ikon__midt hamburger-ikon__midt--open"></span>
+													<span class="hamburger-ikon__bunn hamburger-ikon__bunn--open"></span>
 												</div>
 												<h2 class="typo-undertittel">Meny</h2>
 											</div>
@@ -1051,10 +1061,15 @@
 										aria-label="Søkeknapp" aria-pressed="false" aria-haspopup="true" aria-controls="desktop-sok-dropdown" 
 										aria-expanded="false" onclick={handleOnClickSearch}>
 											<div class="menylinje-knapp-visning desktop-sok-dropdown__knapp-visning">
-												<div class="sok-meny-ikon">
+												<div if:false={searchPressed} class="sok-meny-ikon">
 													<div class="sok-meny-ikon__circle"></div>
 													<div class="sok-meny-ikon__line"></div>
 													<div class="sok-meny-ikon__line-x"></div>
+												</div>
+												<div if:true={searchPressed} class="sok-meny-ikon sok-meny-ikon--open">
+													<div class="sok-meny-ikon__circle sok-meny-ikon__circle--open"></div>
+													<div class="sok-meny-ikon__line sok-meny-ikon__line--open"></div>
+													<div class="sok-meny-ikon__line-x sok-meny-ikon__line-x--open"></div>
 												</div>
 												<h2 class="typo-undertittel">Søk</h2>
 											</div>
@@ -1064,7 +1079,7 @@
 												<div class="ekspanderbar__innhold-wrapper ekspanderbar__innhold-wrapper--active ekspanderbar__menuheight" id="desktop-sok-dropdown" style="max-height: 100rem;">
 													<div class="ekspanderbar__innhold">
 														<div class="ekspanderbar__scroll-wrapper">
-															<form action={newPage} role="search" id="search-form-desktop-sok-input" aria-expanded="false" aria-haspopup="listbox" aria-labelledby="downshift-0-label">
+															<form action="https://www.nav.no/sok" role="search" id="search-form-desktop-sok-input" aria-expanded="false" aria-haspopup="listbox" aria-labelledby="downshift-0-label">
 																<div class="sok-container">
 																	<div class="sok-input-resultat">
 																		<div class="sok-input__tittel">
@@ -1073,7 +1088,7 @@
 																		<div class="sok-input-container">
 																			<div class="skjemaelement sok-input">
 																				<label class="skjemaelement__label" for="desktop-sok-input">Søk</label>
-																				<input type="text" class="skjemaelement__input input--fullbredde" onchange={handleSearching} id="desktop-sok-input" aria-autocomplete="list" aria-labelledby="downshift-0-label" autocomplete="off" placeholder="Søk på nav.no" aria-label="Søk" tabindex="0" value="">
+																				<input type="text" name="ord" class="skjemaelement__input input--fullbredde" id="desktop-sok-input" aria-autocomplete="list" aria-labelledby="downshift-0-label" autocomplete="off" placeholder="Søk på nav.no" aria-label="Søk" tabindex="0" value="">
 																					<div role="alert" aria-live="assertive"></div>
 																				</div>
 																				<div class="sok-knapper__container">
@@ -1098,9 +1113,255 @@
 												</div>
 											</div>
 											<span class="desktopmeny__spacer"></span>
-											<button class="knapp desktop-login-knapp login-knapp knapp--standard" type="submit" id="desktop-login-knapp">
-												<h2 class="typo-undertittel">Logg inn</h2>
+											<button onclick={onHandleClickVarsler} class="menylinje-knapp varselbjelle__knapp" id="desktop-varsler-dropdown-knapp-id" aria-label="Varsler. Du har ingen varsler." aria-pressed="false" aria-haspopup="true" aria-controls="varselbjelle" aria-expanded="false">
+												<div class="menylinje-knapp-visning varselbjelle__knapp-visning">
+													<div if:false={varslerPressed} class="varselbjelle-ikon">
+														<div class="varselbjelle-ikon__ring"></div>
+														<div class="varselbjelle-ikon__bell"></div>
+														<div class="varselbjelle-ikon__lip"></div>
+														<div class="varselbjelle-ikon__clapper"></div>
+														<div class="varselbjelle-ikon__ulest-sirkel varselbjelle-ikon__ulest-sirkel--hide">
+															<p class="typo-etikett-liten varselbjelle-ikon__ulest-antall">0</p>
+														</div>
+													</div>
+													<div if:true={varslerPressed} class="varselbjelle-ikon varselbjelle-ikon--open">
+														<div class="varselbjelle-ikon__ring"></div>
+														<div class="varselbjelle-ikon__bell"></div>
+														<div class="varselbjelle-ikon__lip"></div>
+														<div class="varselbjelle-ikon__clapper"></div>
+														<div class="varselbjelle-ikon__ulest-sirkel varselbjelle-ikon__ulest-sirkel--hide">
+															<p class="typo-etikett-liten varselbjelle-ikon__ulest-antall">0</p>
+														</div>
+													</div>
+													<h2 class="typo-undertittel varselbjelle__tekst">Varsler</h2>
+												</div>
 											</button>
+											<div class="ekspanderbar__container desktop-varsler-dropdown">
+												<div if:true={varslerPressed} class="ekspanderbar__innhold-wrapper ekspanderbar__innhold-wrapper--active ekspanderbar__menuheight" id="desktop-varsler-dropdown">
+													<div class="ekspanderbar__innhold">
+														<div class="ekspanderbar__scroll-wrapper">
+															<div class="varsler-display-desktop">
+																<h2 class="typo-systemtittel">Varsler</h2>
+																<div>
+																	<p class="text-center">Du har ingen varsler å vise.</p>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+											<button onclick={handleOnClickMinSide} class="menylinje-knapp desktop-minside-meny__knapp" id="desktop-minside-meny-knapp-id" aria-label="Min side menyknapp" aria-pressed="false" aria-haspopup="true" aria-controls="desktop-minside-meny" aria-expanded="false">
+												<div class="menylinje-knapp-visning desktop-minside-meny__knapp-visning">
+													<div class="minside-meny-ikon">
+														<div if:false={minSidePressed} class="hamburger-ikon">
+															<span class="hamburger-ikon__topp"></span>
+															<span class="hamburger-ikon__midt"></span>
+															<span class="hamburger-ikon__bunn"></span>
+														</div>
+														<div if:true={minSidePressed} class="hamburger-ikon hamburger-ikon--open">
+															<span class="hamburger-ikon__topp hamburger-ikon__topp--open"></span>
+															<span class="hamburger-ikon__midt hamburger-ikon__midt--open"></span>
+															<span class="hamburger-ikon__bunn hamburger-ikon__bunn--open"></span>
+														</div>
+														<div class="hode-kropp-ikon ">
+															<div class="hode-kropp-ikon__hode "></div>
+															<div class="hode-kropp-ikon__kropp "></div>
+														</div>
+													</div>
+													<div class="desktop-minside-meny__knapp-tekst">
+														<div class="desktop-minside-meny__knapp-tekst-topp ">Ditt NAV</div>
+														<div class="desktop-minside-meny__knapp-tekst-bunn ">{currentUser}</div>
+													</div>
+												</div>
+											</button>
+											<div if:true={minSidePressed} class="ekspanderbar__container desktop-minside-meny">
+												<div class="ekspanderbar__innhold-wrapper ekspanderbar__innhold-wrapper--active ekspanderbar__menuheight" id="desktop-minside-meny">
+													<div class="ekspanderbar__innhold">
+														<div class="ekspanderbar__scroll-wrapper">
+															<div class="desktop-minside-meny__topp-seksjon">
+																<div class="desktop-minside-meny__topp-seksjon-left">
+																	<h2 class="typo-systemtittel desktop-minside-meny__topp-seksjon-tittel">Ditt NAV</h2>
+																	<a href="https://www.nav.no/person/dittnav/" class="lenke" id="desktop-minside_0_0_0">Til forsiden</a>
+																</div>
+																<div class="desktop-minside-meny__topp-seksjon-right">
+																	<p class="typo-undertekst-bold">Logget inn:</p>
+																	<div class="desktop-minside-meny__brukernavn desktop-minside-meny__brukernavn desktop-minside-meny__brukernavn--open">
+																		<p class="typo-normal">{currentUser}</p>
+																	</div>
+																</div>
+															</div>
+															<div class="desktop-minside-meny__lenke-seksjoner">
+																<section class="lenkeseksjon">
+																	<div class="lenkeseksjon__tittel">
+																		<h2 class="typo-undertittel">Din oversikt</h2>
+																	</div>
+																	<ul class="lenkeseksjon__lenker">
+																		<li style="position: relative;">
+																			<a href="https://tjenester.nav.no/esso/saml2/jsp/spSSOInit.jsp?metaAlias=/sp&amp;idpEntityID=idporten.difi.no-v4&amp;NameIDFormat=transient&amp;goto=https://tjenester.nav.no/saksoversikt/&amp;AuthLevel=4" class="chevronlenke" id="desktop-minside_0_1_0" tabindex="0">
+																				<div>
+																					<i class="nav-frontend-chevron chevronboks chevronlenke__chevron chevron--hoyre"></i>
+																				</div>Dine saker
+																			</a>
+																		</li>
+																		<li style="position: relative;">
+																			<a href="https://tjenester.nav.no/esso/saml2/jsp/spSSOInit.jsp?metaAlias=/sp&amp;idpEntityID=idporten.difi.no-v4&amp;NameIDFormat=transient&amp;goto=https://tjenester.nav.no/mininnboks/&amp;AuthLevel=4" class="chevronlenke" id="desktop-minside_0_1_1" tabindex="0">
+																				<div>
+																					<i class="nav-frontend-chevron chevronboks chevronlenke__chevron chevron--hoyre"></i>
+																				</div>Din innboks
+																			</a>
+																		</li>
+																		<li style="position: relative;">
+																			<a href="https://tjenester.nav.no/utbetalingsoversikt/" class="chevronlenke" id="desktop-minside_0_1_2" tabindex="0">
+																				<div>
+																					<i class="nav-frontend-chevron chevronboks chevronlenke__chevron chevron--hoyre"></i>
+																				</div>Dine utbetalinger
+																			</a>
+																		</li>
+																		<li style="position: relative;">
+																			<a href="https://www.nav.no/person/personopplysninger/#adresser" class="chevronlenke" id="desktop-minside_0_1_3" tabindex="0">
+																				<div>
+																					<i class="nav-frontend-chevron chevronboks chevronlenke__chevron chevron--hoyre"></i>
+																				</div>Endre kontonummer/adresse
+																			</a>
+																		</li>
+																		<li style="position: relative;">
+																			<a href="https://www.nav.no/soknader" class="chevronlenke" id="desktop-minside_0_1_4" tabindex="0">
+																				<div>
+																					<i class="nav-frontend-chevron chevronboks chevronlenke__chevron chevron--hoyre"></i>
+																				</div>Send ny søknad
+																			</a>
+																		</li>
+																		<li style="position: relative;">
+																			<a href="https://www.nav.no/ettersendelse" class="chevronlenke" id="desktop-minside_0_1_5" tabindex="0">
+																				<div>
+																					<i class="nav-frontend-chevron chevronboks chevronlenke__chevron chevron--hoyre"></i>
+																				</div>Ettersend vedlegg
+																			</a>
+																		</li>
+																		<li style="position: relative;">
+																			<a href="https://www.nav.no/person/kontakt-oss/" class="chevronlenke" id="desktop-minside_0_1_6" tabindex="0">
+																				<div>
+																					<i class="nav-frontend-chevron chevronboks chevronlenke__chevron chevron--hoyre"></i>
+																				</div>Send beskjed til NAV
+																			</a>
+																		</li>
+																		<li style="position: relative;">
+																			<a href="https://www.nav.no/person/personopplysninger" class="chevronlenke" id="desktop-minside_0_1_7" tabindex="0">
+																				<div>
+																					<i class="nav-frontend-chevron chevronboks chevronlenke__chevron chevron--hoyre"></i>
+																				</div>Personopplysninger
+																			</a>
+																		</li>
+																	</ul>
+																</section>
+																<section class="lenkeseksjon">
+																	<div class="lenkeseksjon__tittel">
+																		<h2 class="typo-undertittel">Arbeid</h2>
+																	</div>
+																	<ul class="lenkeseksjon__lenker">
+																		<li style="position: relative;">
+																			<a href="https://arbeidssokerregistrering.nav.no/start" class="chevronlenke" id="desktop-minside_1_1_0" tabindex="0">
+																				<div>
+																					<i class="nav-frontend-chevron chevronboks chevronlenke__chevron chevron--hoyre"></i>
+																				</div>Registrer deg som arbeidssøker
+																			</a>
+																		</li>
+																		<li style="position: relative;">
+																			<a href="https://www.nav.no/meldekort/" class="chevronlenke" id="desktop-minside_1_1_1" tabindex="0">
+																				<div>
+																					<i class="nav-frontend-chevron chevronboks chevronlenke__chevron chevron--hoyre"></i>
+																				</div>Send meldekort
+																			</a>
+																		</li>
+																		<li style="position: relative;">
+																			<a href="https://arbeidsplassen.nav.no/stillinger" class="chevronlenke" id="desktop-minside_1_1_2" tabindex="0">
+																				<div>
+																					<i class="nav-frontend-chevron chevronboks chevronlenke__chevron chevron--hoyre"></i>
+																				</div>Finn ledige stillinger
+																			</a>
+																		</li>
+																		<li style="position: relative;">
+																			<a href="https://arbeidsplassen.nav.no/minside" class="chevronlenke" id="desktop-minside_1_1_3" tabindex="0">
+																				<div>
+																					<i class="nav-frontend-chevron chevronboks chevronlenke__chevron chevron--hoyre"></i>
+																				</div>Din CV
+																			</a>
+																		</li>
+																		<li style="position: relative;">
+																			<a href="https://arbeidsplassen.nav.no/stillinger/lagrede-sok" class="chevronlenke" id="desktop-minside_1_1_4" tabindex="0">
+																				<div>
+																					<i class="nav-frontend-chevron chevronboks chevronlenke__chevron chevron--hoyre"></i>
+																				</div>Dine lagrede søk
+																			</a>
+																		</li>
+																		<li style="position: relative;">
+																			<a href="https://aktivitetsplan.nav.no" class="chevronlenke" id="desktop-minside_1_1_5" tabindex="0">
+																				<div>
+																					<i class="nav-frontend-chevron chevronboks chevronlenke__chevron chevron--hoyre"></i>
+																				</div>Din aktivitetsplan
+																			</a>
+																		</li>
+																		<li style="position: relative;">
+																			<a href="http://nav.no/arbeid/dialog" class="chevronlenke" id="desktop-minside_1_1_6" tabindex="0">
+																				<div>
+																					<i class="nav-frontend-chevron chevronboks chevronlenke__chevron chevron--hoyre"></i>
+																				</div>Dialog med veilederen din
+																			</a>
+																		</li>
+																	</ul>
+																</section>
+																<section class="lenkeseksjon">
+																	<div class="lenkeseksjon__tittel">
+																		<h2 class="typo-undertittel">Flere tjenester</h2>
+																	</div>
+																	<ul class="lenkeseksjon__lenker">
+																		<li style="position: relative;">
+																			<a href="https://tjenester.nav.no/pselv/publisering/dinpensjon.jsf?context=pensjon" class="chevronlenke" id="desktop-minside_2_1_0" tabindex="0">
+																				<div>
+																					<i class="nav-frontend-chevron chevronboks chevronlenke__chevron chevron--hoyre"></i>
+																				</div>Din pensjon
+																			</a>
+																		</li>
+																		<li style="position: relative;">
+																			<a href="https://tjenester.nav.no/pselv/publisering/uforetrygd.jsf?context=ut" class="chevronlenke" id="desktop-minside_2_1_1" tabindex="0">
+																				<div>
+																					<i class="nav-frontend-chevron chevronboks chevronlenke__chevron chevron--hoyre"></i>
+																				</div>Din uføretrygd
+																			</a>
+																		</li>
+																		<li style="position: relative;">
+																			<a href="https://tjenester.nav.no/sykefravaer/" class="chevronlenke" id="desktop-minside_2_1_2" tabindex="0">
+																				<div>
+																					<i class="nav-frontend-chevron chevronboks chevronlenke__chevron chevron--hoyre"></i>
+																				</div>Ditt sykefravær
+																			</a>
+																		</li>
+																		<li style="position: relative;">
+																			<a href="https://foreldrepenger.nav.no" class="chevronlenke" id="desktop-minside_2_1_3" tabindex="0">
+																				<div>
+																					<i class="nav-frontend-chevron chevronboks chevronlenke__chevron chevron--hoyre"></i>
+																				</div>Dine foreldrepenger
+																			</a>
+																		</li>
+																		<li style="position: relative;">
+																			<a href="https://www.nav.no/person/pdl-fullmakt-ui" class="chevronlenke" id="desktop-minside_2_1_4" tabindex="0">
+																				<div>
+																					<i class="nav-frontend-chevron chevronboks chevronlenke__chevron chevron--hoyre"></i>
+																				</div>Dine fullmakter
+																			</a>
+																		</li>
+																	</ul>
+																</section>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+											<form class="login-knapp knapp--standard" action="https://loginservice.nav.no/slo">
+												<button class="knapp desktop-login-knapp login-knapp knapp--standard" type="submit" id="desktop-login-knapp">
+													<h2 class="typo-undertittel">Logg ut</h2>
+												</button>
+											</form>
 										</div>
 									</nav>
 								</div>

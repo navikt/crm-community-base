@@ -1,17 +1,17 @@
 <template>
-	<div id="footer-withmenu">
+	<div if:false={menuPressed} id="footer-withmenu">
 		<section id="decorator-footer" class="navno-dekorator" role="main">
 			<footer class="sitefooter" role="contentinfo">
 				<section class="menylinje-topp">
 					<div class="topp-kolonner">
 						<div class="menylenker-seksjon til-toppen">
 							<div class="til-toppen-innhold">
-								<a href="#scroll-til-toppen" class="lenke lenke-med-ikon lenke-med-ikon--venstrestiltIkon" role="button">
+								<button onclick={scrollToTop} style="border: 0; background-color: transparent; color: #FFFFFF;" class="lenke lenke-med-ikon lenke-med-ikon--venstrestiltIkon" role="button">
 									<span>Til toppen</span>
 									<div class="lenke-med-ikon__ikon">
-										
+										<img class="til-toppen" src="/sfsites/c/resource/1589541552000/til_toppen" alt="til toppen"></img>
 									</div>
-								</a>
+								</button>
 							</div>
 						</div>
 						<div class="menylenker-seksjon venstre">
@@ -87,7 +87,17 @@
 						<div class="menylenker-seksjon arbeidsflate">
 							<div class="arbeidsflatevalg-innhold">
 								<ul class="arbeidsflatevalg" aria-label="Gå til innhold for privatperson, arbeidsgiver eller samarbeidspartner">
-									<li>
+									<li if:false={isPrivatPerson}>
+										<a href="https://www.nav.no" class="lenkepanel lenkepanel--border">
+											<span class="typo-normal lenkepanel__heading">
+												<div class="arbeidsflatevalg-tekst">
+													<h2 class="typo-undertittel">Privatperson</h2>Dine saker, utbetalinger, meldinger, meldekort, aktivitetsplan, personopplysninger og flere tjenester
+												</div>
+											</span>
+											<span class="lenkepanel__indikator"></span>
+										</a>
+									</li>
+									<li if:false={isArbeidsgiver}>
 										<a href="https://www.nav.no/no/bedrift" class="lenkepanel lenkepanel--border">
 											<span class="typo-normal lenkepanel__heading">
 												<div class="arbeidsflatevalg-tekst">
@@ -97,7 +107,7 @@
 											<span class="lenkepanel__indikator"></span>
 										</a>
 									</li>
-									<li>
+									<li if:false={isSamarbeidspartner}>
 										<a href="https://www.nav.no/no/samarbeidspartner" class="lenkepanel lenkepanel--border">
 											<span class="typo-normal lenkepanel__heading">
 												<div class="arbeidsflatevalg-tekst">
@@ -130,7 +140,7 @@
 									</li>
 								</ul>
 							</div>
-							<a href="#" class="lenke footer-bottom-content__del-skjerm lenke-med-ikon" role="button">
+							<button style="border: 0;" onclick={onHandleClickDelSkjerm} class="lenke footer-bottom-content__del-skjerm lenke-med-ikon" role="button">
 								<span>Del skjerm med veileder</span>
 								<div class="lenke-med-ikon__ikon">
 									<svg viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"
@@ -142,7 +152,69 @@
 										</g>
 									</svg>
 								</div>
-							</a>
+							</button>
+							<div if:true={isDelSkjerm} class="ReactModal__Overlay ReactModal__Overlay--after-open modal__overlay" style="z-index: 9999;">
+								<div class="ReactModal__Content ReactModal__Content--after-open modal navno-dekorator delskjerm__modal" tabindex="-1" role="dialog" aria-label="Skjermdeling">
+									<section>
+										<div class="delskjerm__header">
+											<img class="delskjerm__veileder" src="/sfsites/c/resource/1589542877000/veileder" alt="Veileder">
+											</div>
+											<div class="delskjerm__content">
+												<h2 class="typo-undertittel">Del skjermen din med NAV</h2>
+												<div class="delskjerm__beskrivelse">
+													<p class="typo-normal">Gi veilederen du snakker med på telefon tilgang til å se det du ser på nav.no.</p>
+													<div id="413604204-16368-7061-4927-068612165717828" class="lesMerPanel">
+														<div if:true={isSkjermdelingLesMer} class="lesMerPanel__merContainer">
+															<div class="ReactCollapse--collapse" style="height: auto;">
+																<div class="ReactCollapse--content">
+																	<div class="lesMerPanel__mer">
+																		<ul>
+																			<li>
+																				<p class="typo-normal">Når du deler skjerm med NAV kontaktsenter kan veilederen hjelpe deg med å finne fram på nav.no.</p>
+																			</li>
+																			<li>
+																				<p class="typo-normal">Veilederen ser kun det du ser på nav.no og kan ikke fylle inn opplysninger eller sende inn noe på dine vegne. </p>
+																			</li>
+																			<li>
+																				<p class="typo-normal">Det er du som godkjenner skjermdeling. Ingenting blir lagret.</p>
+																			</li>
+																		</ul>
+																	</div>
+																</div>
+															</div>
+														</div>
+														<div class="lesMerPanel__toggle">
+															<button if:false={isSkjermDelingLesMer} onclick={onHandleClickSkjermdelingInfo} type="button" aria-expanded="false" class="lesMerPanel__togglelink" aria-controls="413604204-16368-7061-4927-068612165717828">
+																<i class="nav-frontend-chevron chevronboks lesMerPanel__toggleChevron chevron--ned"></i>
+																<div class="lesMerPanel__toggleTekst">
+																	<p class="typo-normal">Hva er skjermdeling?</p>
+																	</div>
+															</button>
+															<button if:true={isSkjermDelingLesMer} onclick={onHandleClickSkjermdelingInfo} type="button" aria-expanded="false" class="lesMerPanel__togglelink" aria-controls="413604204-16368-7061-4927-068612165717828">
+																<i class="nav-frontend-chevron chevronboks lesMerPanel__toggleChevron chevron--opp"></i>
+																<div class="lesMerPanel__toggleTekst">
+																	<p class="typo-normal">Lukk</p>
+																</div>
+															</button>
+														</div>
+													</div>
+												</div>
+												<div class="skjemaelement">
+													<label class="skjemaelement__label" for="code">Skriv inn koden du får fra veilederen</label>
+													<input type="text" class="skjemaelement__input input--m" id="code" name="code" maxlength="5" value="">
+														<div role="alert" aria-live="assertive"></div>
+													</div>
+													<div class="delskjerm__knapper">
+														<button onclick={functionalityNotSupported} class="knapp knapp--hoved" type="submit">Start skjermdeling</button>
+														<button onclick={onHandleClickDelSkjerm} class="knapp knapp--flat" type="submit">Avbryt</button>
+													</div>
+												</div>
+											</section>
+											<button onclick={onHandleClickDelSkjerm} class="lukknapp lukknapp--overstHjorne modal__lukkknapp--shake" aria-label="Lukk">
+												<span class="text-hide">Lukk</span>
+											</button>
+										</div>
+									</div>
 						</div>
 					</div>
 				</section>
