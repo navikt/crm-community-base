@@ -11,34 +11,41 @@ var prevScrolled = 0;
 const headerHeight = 91;
 const headerStartPosition = 44;
 var headerPosition = headerStartPosition;
+var hovedbannerposition = headerStartPosition + headerHeight;
+document.documentElement.style.setProperty('--hovedbannerposition', hovedbannerposition.toString() + "px");
+
 
 window.addEventListener('scroll', () => {
     var scrolled = window.scrollY;
     console.log(scrolled);
     const difference = scrolled - prevScrolled;
     if(difference >= 0){
-        if(headerPosition >= -headerHeight){ 
+        if(headerPosition > -headerHeight){ 
             headerPosition = headerPosition - difference;
+            hovedbannerposition = headerPosition + headerHeight;
         }
         else{
             headerPosition = -headerHeight
+            hovedbannerposition = 0;
         }
     }
     else{
         if(headerPosition < 0){
             headerPosition = headerPosition - difference;
+            hovedbannerposition = headerPosition + headerHeight;
         }
         else if(scrolled < headerStartPosition){
             headerPosition = headerStartPosition - scrolled;
+            hovedbannerposition = headerPosition + headerHeight;
         }
         else{
             headerPosition = 0;
+            hovedbannerposition = headerHeight;
         }
 
     }
-    
     document.documentElement.style.setProperty('--headerPosition', headerPosition.toString() + "px");
-    var myVar = getComputedStyle(document.documentElement).getPropertyValue('--headerPosition');
+    document.documentElement.style.setProperty('--hovedbannerposition', hovedbannerposition.toString() + "px");
     
     prevScrolled = scrolled;
 

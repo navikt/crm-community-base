@@ -249,6 +249,10 @@ lightning-input-field.ikke-sensitiv-fritekst>lightning-textarea>label:after {
 	border-bottom-width: 4px;
 	border-bottom-style: solid;
 	text-align: center;
+	width: 100%;
+	position: fixed;
+	top: var(--hovedbannerposition);
+	
 }
 
 .tolketjenesten {
@@ -431,7 +435,7 @@ lightning-input-field.ikke-sensitiv-fritekst>lightning-textarea>label:after {
 /*home vegard */
 
 .portal-hilsen {
-	margin-top: 2.5rem;
+	margin-top: 5rem;
 	font-size: 1.33rem;
 	font-weight: bold;
 	text-align: center;
