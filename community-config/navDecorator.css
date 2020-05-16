@@ -4689,6 +4689,7 @@ GRID
 }
 
 .navno-dekorator .desktopmeny {
+  position: fixed;
   width: 100%;
   padding: 0.5rem 0;
   border-bottom: 2px solid #C6C2BF;

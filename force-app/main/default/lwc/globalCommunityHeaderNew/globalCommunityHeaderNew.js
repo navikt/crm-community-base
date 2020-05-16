@@ -14,14 +14,32 @@ var headerPosition = headerStartPosition;
 
 window.addEventListener('scroll', () => {
     var scrolled = window.scrollY;
+    console.log(scrolled);
     const difference = scrolled - prevScrolled;
-    if(headerPosition > -headerHeight){
-        headerPosition = headerPosition - difference;
+    if(difference >= 0){
+        if(headerPosition >= -headerHeight){ 
+            headerPosition = headerPosition - difference;
+        }
+        else{
+            headerPosition = -headerHeight
+        }
     }
-    else if(difference < 0){
-        headerPosition = headerPosition - difference;
+    else{
+        if(headerPosition < 0){
+            headerPosition = headerPosition - difference;
+        }
+        else if(scrolled < headerStartPosition){
+            headerPosition = headerStartPosition - scrolled;
+        }
+        else{
+            headerPosition = 0;
+        }
+
     }
-    //console.log(headerPosition);
+    
+    document.documentElement.style.setProperty('--headerPosition', headerPosition.toString() + "px");
+    var myVar = getComputedStyle(document.documentElement).getPropertyValue('--headerPosition');
+    
     prevScrolled = scrolled;
 
 });
