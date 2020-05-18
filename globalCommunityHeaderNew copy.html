@@ -892,8 +892,465 @@
 																	</div>
 																</section>
 															</div>
+															<div if:true={isArbeidsgiver}>
+																<section if:true={onHandleUnderMeny1} class="mobilmeny__undermeny-innhold mobilmeny__undermeny-innhold--active mobilmeny__menuheight">
+																	<div class="mobilmeny__lukk-undermeny">
+																		<h2 class="typo-undertittel mobilmeny__meny mobilmeny__meny--tilbakelenke">
+																			<a onclick={onHandleBackToMenu} class="lenke" tabindex="-1">
+																				<i class="nav-frontend-chevron chevronboks chevron--venstre"></i>Tilbake til oversikt
+																			</a>
+																		</h2>
+																	</div>
+																	<h2 class="typo-systemtittel mobilmeny__undermeny-arbeidsflate">Tjenester og skjemaer</h2>
+																	<ul class="mobilmeny__meny mobilmeny__meny--list">
+																		<a href="https://www.nav.no/soknader/nb/bedrift" class="lenke" tabindex="-1">
+																			<li class="mobilmeny__meny mobilmeny__meny--listItem">
+																				<h2 class="typo-undertittel">
+																					<span class="mobilmeny__meny mobilmeny__meny--text-element-undermeny">
+																						<div class="mobilmeny__undermeny-chevron">
+																							<i class="nav-frontend-chevron chevronboks chevron--hoyre"></i>
+																						</div>Skjemaer for arbeidsgivere
+																					</span>
+																				</h2>
+																			</li>
+																		</a>
+																		<a href="https://www.nav.no/no/bedrift/tjenester-og-skjemaer/nav-og-altinn-tjenester" class="lenke" tabindex="-1">
+																			<li class="mobilmeny__meny mobilmeny__meny--listItem">
+																				<h2 class="typo-undertittel">
+																					<span class="mobilmeny__meny mobilmeny__meny--text-element-undermeny">
+																						<div class="mobilmeny__undermeny-chevron">
+																							<i class="nav-frontend-chevron chevronboks chevron--hoyre"></i>
+																						</div>Altinn - refusjoner, søknader, rapporter, foreldre-, omsorgs- og pleiepenger m.m.
+																					</span>
+																				</h2>
+																			</li>
+																		</a>
+																		<a href="https://www.nav.no/no/bedrift/tjenester-og-skjemaer/selvstendig-naringsdrivende-med-flere" class="lenke" tabindex="-1">
+																			<li class="mobilmeny__meny mobilmeny__meny--listItem">
+																				<h2 class="typo-undertittel">
+																					<span class="mobilmeny__meny mobilmeny__meny--text-element-undermeny">
+																						<div class="mobilmeny__undermeny-chevron">
+																							<i class="nav-frontend-chevron chevronboks chevron--hoyre"></i>
+																						</div>Selvstendig næringsdrivende og andre grupper
+																					</span>
+																				</h2>
+																			</li>
+																		</a>
+																		<a href="https://www.nav.no/no/bedrift/tjenester-og-skjemaer/innkreving-og-innbetaling" class="lenke" tabindex="-1">
+																			<li class="mobilmeny__meny mobilmeny__meny--listItem">
+																				<h2 class="typo-undertittel">
+																					<span class="mobilmeny__meny mobilmeny__meny--text-element-undermeny">
+																						<div class="mobilmeny__undermeny-chevron">
+																							<i class="nav-frontend-chevron chevronboks chevron--hoyre"></i>
+																						</div>Innkreving og innbetaling
+																					</span>
+																				</h2>
+																			</li>
+																		</a>
+																		<a href="https://www.nav.no/no/bedrift/tjenester-og-skjemaer/aa-registeret-og-a-meldingen" class="lenke" tabindex="-1">
+																			<li class="mobilmeny__meny mobilmeny__meny--listItem">
+																				<h2 class="typo-undertittel">
+																					<span class="mobilmeny__meny mobilmeny__meny--text-element-undermeny">
+																						<div class="mobilmeny__undermeny-chevron">
+																							<i class="nav-frontend-chevron chevronboks chevron--hoyre"></i>
+																						</div>Aa-registeret
+																					</span>
+																				</h2>
+																			</li>
+																		</a>
+																	</ul>
+																	<div class="mobilmeny__blokk-divider">
+																		<div class="mobilmeny__lukk-undermeny">
+																			<h2 class="typo-undertittel mobilmeny__meny mobilmeny__meny--tilbakelenke">
+																				<a onclick={onHandleBackToMenu} class="lenke" tabindex="-1">
+																					<i class="nav-frontend-chevron chevronboks chevron--venstre"></i>Tilbake til oversikt
+																				</a>
+																			</h2>
+																		</div>
+																	</div>
+																</section>
+																<section if:true={isUnderMeny2} class="mobilmeny__undermeny-innhold mobilmeny__undermeny-innhold--active mobilmeny__menuheight">
+																	<div class="mobilmeny__lukk-undermeny">
+																		<h2 class="typo-undertittel mobilmeny__meny mobilmeny__meny--tilbakelenke">
+																			<a onclick={onHandleBackToMenu} class="lenke" tabindex="-1">
+																				<i class="nav-frontend-chevron chevronboks chevron--venstre"></i>Tilbake til oversikt
+																			</a>
+																		</h2>
+																	</div>
+																	<h2 class="typo-systemtittel mobilmeny__undermeny-arbeidsflate">Sykdom og skade</h2>
+																	<ul class="mobilmeny__meny mobilmeny__meny--list">
+																		<a href="https://www.nav.no/no/bedrift/oppfolging/sykmeldt-arbeidstaker" class="lenke" tabindex="-1">
+																			<li class="mobilmeny__meny mobilmeny__meny--listItem">
+																				<h2 class="typo-undertittel">
+																					<span class="mobilmeny__meny mobilmeny__meny--text-element-undermeny">
+																						<div class="mobilmeny__undermeny-chevron">
+																							<i class="nav-frontend-chevron chevronboks chevron--hoyre"></i>
+																						</div>Sykmeldt arbeidstaker
+																					</span>
+																				</h2>
+																			</li>
+																		</a>
+																		<a href="https://www.nav.no/no/bedrift/tjenester-og-skjemaer/meld-yrkesskade-og-yrkessykdom" class="lenke" tabindex="-1">
+																			<li class="mobilmeny__meny mobilmeny__meny--listItem">
+																				<h2 class="typo-undertittel">
+																					<span class="mobilmeny__meny mobilmeny__meny--text-element-undermeny">
+																						<div class="mobilmeny__undermeny-chevron">
+																							<i class="nav-frontend-chevron chevronboks chevron--hoyre"></i>
+																						</div>Yrkesskade og yrkessykdom
+																					</span>
+																				</h2>
+																			</li>
+																		</a>
+																		<a href="https://www.nav.no/no/bedrift/inkluderende-arbeidsliv/kontakt-nav-arbeidslivssenter" class="lenke" tabindex="-1">
+																			<li class="mobilmeny__meny mobilmeny__meny--listItem">
+																				<h2 class="typo-undertittel">
+																					<span class="mobilmeny__meny mobilmeny__meny--text-element-undermeny">
+																						<div class="mobilmeny__undermeny-chevron">
+																							<i class="nav-frontend-chevron chevronboks chevron--hoyre"></i>
+																						</div>Inkluderende arbeidsliv
+																					</span>
+																				</h2>
+																			</li>
+																		</a>
+																		<a href="https://tjenester.nav.no/veiviserarbeidsgiver/tilrettelegge" class="lenke" tabindex="-1">
+																			<li class="mobilmeny__meny mobilmeny__meny--listItem">
+																				<h2 class="typo-undertittel">
+																					<span class="mobilmeny__meny mobilmeny__meny--text-element-undermeny">
+																						<div class="mobilmeny__undermeny-chevron">
+																							<i class="nav-frontend-chevron chevronboks chevron--hoyre"></i>
+																						</div>Støtte ved tilrettelegging på arbeidsplassen
+																					</span>
+																				</h2>
+																			</li>
+																		</a>
+																		<a href="https://arbeidsgiver.nav.no/sykefravarsstatistikk/" class="lenke" tabindex="-1">
+																			<li class="mobilmeny__meny mobilmeny__meny--listItem">
+																				<h2 class="typo-undertittel">
+																					<span class="mobilmeny__meny mobilmeny__meny--text-element-undermeny">
+																						<div class="mobilmeny__undermeny-chevron">
+																							<i class="nav-frontend-chevron chevronboks chevron--hoyre"></i>
+																						</div>Sykefraværsstatistikk
+																					</span>
+																				</h2>
+																			</li>
+																		</a>
+																		<a href="https://www.nav.no/no/bedrift/oppfolging/har-du-ansatte-som-sliter-psykisk" class="lenke" tabindex="-1">
+																			<li class="mobilmeny__meny mobilmeny__meny--listItem">
+																				<h2 class="typo-undertittel">
+																					<span class="mobilmeny__meny mobilmeny__meny--text-element-undermeny">
+																						<div class="mobilmeny__undermeny-chevron">
+																							<i class="nav-frontend-chevron chevronboks chevron--hoyre"></i>
+																						</div>Har du ansatte som sliter psykisk?
+																					</span>
+																				</h2>
+																			</li>
+																		</a>
+																	</ul>
+																	<div class="mobilmeny__blokk-divider">
+																		<div class="mobilmeny__lukk-undermeny">
+																			<h2 class="typo-undertittel mobilmeny__meny mobilmeny__meny--tilbakelenke">
+																				<a onclick={onHandleBackToMenu} class="lenke" tabindex="-1">
+																					<i class="nav-frontend-chevron chevronboks chevron--venstre"></i>Tilbake til oversikt
+																				</a>
+																			</h2>
+																		</div>
+																	</div>
+																</section>
+																<section if:true={isUnderMeny3} class="mobilmeny__undermeny-innhold mobilmeny__undermeny-innhold--active mobilmeny__menuheight">
+																	<div class="mobilmeny__lukk-undermeny">
+																		<h2 class="typo-undertittel mobilmeny__meny mobilmeny__meny--tilbakelenke">
+																			<a onclick={onHandleBackToMenu} class="lenke" tabindex="-1">
+																				<i class="nav-frontend-chevron chevronboks chevron--venstre"></i>Tilbake til oversikt
+																			</a>
+																		</h2>
+																	</div>
+																	<h2 class="typo-systemtittel mobilmeny__undermeny-arbeidsflate">Rekruttere og inkludere</h2>
+																	<ul class="mobilmeny__meny mobilmeny__meny--list">
+																		<a href="https://arbeidsplassen.nav.no/bedrift" class="lenke" tabindex="-1">
+																			<li class="mobilmeny__meny mobilmeny__meny--listItem">
+																				<h2 class="typo-undertittel">
+																					<span class="mobilmeny__meny mobilmeny__meny--text-element-undermeny">
+																						<div class="mobilmeny__undermeny-chevron">
+																							<i class="nav-frontend-chevron chevronboks chevron--hoyre"></i>
+																						</div>Annonser stilling eller finn kandidater i CV-basen
+																					</span>
+																				</h2>
+																			</li>
+																		</a>
+																		<a href="https://tjenester.nav.no/veiviserarbeidsgiver/rekruttere-og-inkludere/arbeidstrening" class="lenke" tabindex="-1">
+																			<li class="mobilmeny__meny mobilmeny__meny--listItem">
+																				<h2 class="typo-undertittel">
+																					<span class="mobilmeny__meny mobilmeny__meny--text-element-undermeny">
+																						<div class="mobilmeny__undermeny-chevron">
+																							<i class="nav-frontend-chevron chevronboks chevron--hoyre"></i>
+																						</div>Tilby arbeidstrening
+																					</span>
+																				</h2>
+																			</li>
+																		</a>
+																		<a href="https://tjenester.nav.no/veiviserarbeidsgiver/rekruttere-og-inkludere/ansette" class="lenke" tabindex="-1">
+																			<li class="mobilmeny__meny mobilmeny__meny--listItem">
+																				<h2 class="typo-undertittel">
+																					<span class="mobilmeny__meny mobilmeny__meny--text-element-undermeny">
+																						<div class="mobilmeny__undermeny-chevron">
+																							<i class="nav-frontend-chevron chevronboks chevron--hoyre"></i>
+																						</div>Støtte ved ansettelser
+																					</span>
+																				</h2>
+																			</li>
+																		</a>
+																		<a href="https://www.nav.no/no/bedrift/rekruttering/rekruttere-hjelp-og-selvhjelp" class="lenke" tabindex="-1">
+																			<li class="mobilmeny__meny mobilmeny__meny--listItem">
+																				<h2 class="typo-undertittel">
+																					<span class="mobilmeny__meny mobilmeny__meny--text-element-undermeny">
+																						<div class="mobilmeny__undermeny-chevron">
+																							<i class="nav-frontend-chevron chevronboks chevron--hoyre"></i>
+																						</div>Ønsker du hjelp fra NAV til å rekruttere?
+																					</span>
+																				</h2>
+																			</li>
+																		</a>
+																	</ul>
+																	<div class="mobilmeny__blokk-divider">
+																		<div class="mobilmeny__lukk-undermeny">
+																			<h2 class="typo-undertittel mobilmeny__meny mobilmeny__meny--tilbakelenke">
+																				<a onclick={onHandleBackToMenu} class="lenke" tabindex="-1">
+																					<i class="nav-frontend-chevron chevronboks chevron--venstre"></i>Tilbake til oversikt
+																				</a>
+																			</h2>
+																		</div>
+																	</div>
+																</section>
+																<section if:true={isUnderMeny4} class="mobilmeny__undermeny-innhold mobilmeny__undermeny-innhold--active mobilmeny__menuheight">
+																	<div class="mobilmeny__lukk-undermeny">
+																		<h2 class="typo-undertittel mobilmeny__meny mobilmeny__meny--tilbakelenke">
+																			<a onclick={onHandleBackToMenu} class="lenke" tabindex="-1">
+																				<i class="nav-frontend-chevron chevronboks chevron--venstre"></i>Tilbake til oversikt
+																			</a>
+																		</h2>
+																	</div>
+																	<h2 class="typo-systemtittel mobilmeny__undermeny-arbeidsflate">Permittere og omstille</h2>
+																	<ul class="mobilmeny__meny mobilmeny__meny--list">
+																		<a href="https://arbeidsgiver.nav.no/permittering/" class="lenke" tabindex="-1">
+																			<li class="mobilmeny__meny mobilmeny__meny--listItem">
+																				<h2 class="typo-undertittel">
+																					<span class="mobilmeny__meny mobilmeny__meny--text-element-undermeny">
+																						<div class="mobilmeny__undermeny-chevron">
+																							<i class="nav-frontend-chevron chevronboks chevron--hoyre"></i>
+																						</div>Meld fra til NAV
+																					</span>
+																				</h2>
+																			</li>
+																		</a>
+																		<a href="https://www.nav.no/no/bedrift/oppfolging/permittering-og-omstilling" class="lenke" tabindex="-1">
+																			<li class="mobilmeny__meny mobilmeny__meny--listItem">
+																				<h2 class="typo-undertittel">
+																					<span class="mobilmeny__meny mobilmeny__meny--text-element-undermeny">
+																						<div class="mobilmeny__undermeny-chevron">
+																							<i class="nav-frontend-chevron chevronboks chevron--hoyre"></i>
+																						</div>Permittering og omstilling
+																					</span>
+																				</h2>
+																			</li>
+																		</a>
+																	</ul>
+																	<div class="mobilmeny__blokk-divider">
+																		<div class="mobilmeny__lukk-undermeny">
+																			<h2 class="typo-undertittel mobilmeny__meny mobilmeny__meny--tilbakelenke">
+																				<a onclick={onHandleBackToMenu} class="lenke" tabindex="-1">
+																					<i class="nav-frontend-chevron chevronboks chevron--venstre"></i>Tilbake til oversikt
+																				</a>
+																			</h2>
+																		</div>
+																	</div>
+																</section>
+															</div>
 
-															
+															<div if:true={isSamarbeidspartner}>
+																<section if:true={isUnderMeny1} class="mobilmeny__undermeny-innhold mobilmeny__undermeny-innhold--active mobilmeny__menuheight">
+																	<div class="mobilmeny__lukk-undermeny">
+																		<h2 class="typo-undertittel mobilmeny__meny mobilmeny__meny--tilbakelenke">
+																			<a onclick={onHandleBackToMenu} class="lenke" tabindex="-1">
+																				<i class="nav-frontend-chevron chevronboks chevron--venstre"></i>Tilbake til oversikt
+																			</a>
+																		</h2>
+																	</div>
+																	<h2 class="typo-systemtittel mobilmeny__undermeny-arbeidsflate">Helsepersonell</h2>
+																	<ul class="mobilmeny__meny mobilmeny__meny--list">
+																		<a href="https://www.nav.no/no/nav-og-samfunn/samarbeid/leger-og-andre-behandlere" class="lenke" tabindex="-1">
+																			<li class="mobilmeny__meny mobilmeny__meny--listItem">
+																				<h2 class="typo-undertittel">
+																					<span class="mobilmeny__meny mobilmeny__meny--text-element-undermeny">
+																						<div class="mobilmeny__undermeny-chevron">
+																							<i class="nav-frontend-chevron chevronboks chevron--hoyre"></i>
+																						</div>Leger og andre behandlere
+																					</span>
+																				</h2>
+																			</li>
+																		</a>
+																		<a href="https://www.nav.no/no/nav-og-samfunn/samarbeid/hjelpemidler" class="lenke" tabindex="-1">
+																			<li class="mobilmeny__meny mobilmeny__meny--listItem">
+																				<h2 class="typo-undertittel">
+																					<span class="mobilmeny__meny mobilmeny__meny--text-element-undermeny">
+																						<div class="mobilmeny__undermeny-chevron">
+																							<i class="nav-frontend-chevron chevronboks chevron--hoyre"></i>
+																						</div>Hjelpemidler - for samarbeidspartnere
+																					</span>
+																				</h2>
+																			</li>
+																		</a>
+																	</ul>
+																	<div class="mobilmeny__blokk-divider">
+																		<div class="mobilmeny__lukk-undermeny">
+																			<h2 class="typo-undertittel mobilmeny__meny mobilmeny__meny--tilbakelenke">
+																				<a onclick={onHandleBackToMenu} class="lenke" tabindex="-1">
+																					<i class="nav-frontend-chevron chevronboks chevron--venstre"></i>Tilbake til oversikt
+																				</a>
+																			</h2>
+																		</div>
+																	</div>
+																</section>
+																<section if:true={isUnderMeny2} class="mobilmeny__undermeny-innhold mobilmeny__undermeny-innhold--active mobilmeny__menuheight">
+																	<div class="mobilmeny__lukk-undermeny">
+																		<h2 class="typo-undertittel mobilmeny__meny mobilmeny__meny--tilbakelenke">
+																			<a onclick={onHandleBackToMenu} class="lenke" tabindex="-1">
+																				<i class="nav-frontend-chevron chevronboks chevron--venstre"></i>Tilbake til oversikt
+																			</a>
+																		</h2>
+																	</div>
+																	<h2 class="typo-systemtittel mobilmeny__undermeny-arbeidsflate">Kommuner og fylker</h2>
+																	<ul class="mobilmeny__meny mobilmeny__meny--list">
+																		<a href="https://www.nav.no/no/nav-og-samfunn/samarbeid/for-kommunen" class="lenke" tabindex="-1">
+																			<li class="mobilmeny__meny mobilmeny__meny--listItem">
+																				<h2 class="typo-undertittel">
+																					<span class="mobilmeny__meny mobilmeny__meny--text-element-undermeny">
+																						<div class="mobilmeny__undermeny-chevron">
+																							<i class="nav-frontend-chevron chevronboks chevron--hoyre"></i>
+																						</div>For kommunen
+																					</span>
+																				</h2>
+																			</li>
+																		</a>
+																		<a href="https://www.nav.no/no/nav-og-samfunn/samarbeid/samarbeidsavtaler-pa%CC%8A-utdanningsomra%CC%8Adet" class="lenke" tabindex="-1">
+																			<li class="mobilmeny__meny mobilmeny__meny--listItem">
+																				<h2 class="typo-undertittel">
+																					<span class="mobilmeny__meny mobilmeny__meny--text-element-undermeny">
+																						<div class="mobilmeny__undermeny-chevron">
+																							<i class="nav-frontend-chevron chevronboks chevron--hoyre"></i>
+																						</div>Samarbeidsavtaler på utdanningsområdet
+																					</span>
+																				</h2>
+																			</li>
+																		</a>
+																	</ul>
+																	<div class="mobilmeny__blokk-divider">
+																		<div class="mobilmeny__lukk-undermeny">
+																			<h2 class="typo-undertittel mobilmeny__meny mobilmeny__meny--tilbakelenke">
+																				<a onclick={onHandleBackToMenu} class="lenke" tabindex="-1">
+																					<i class="nav-frontend-chevron chevronboks chevron--venstre"></i>Tilbake til oversikt
+																				</a>
+																			</h2>
+																		</div>
+																	</div>
+																</section>
+																<section if:true={isUnderMeny3} class="mobilmeny__undermeny-innhold mobilmeny__undermeny-innhold--active mobilmeny__menuheight">
+																	<div class="mobilmeny__lukk-undermeny">
+																		<h2 class="typo-undertittel mobilmeny__meny mobilmeny__meny--tilbakelenke">
+																			<a onclick={onHandleBackToMenu} class="lenke" tabindex="-1">
+																				<i class="nav-frontend-chevron chevronboks chevron--venstre"></i>Tilbake til oversikt
+																			</a>
+																		</h2>
+																	</div>
+																	<h2 class="typo-systemtittel mobilmeny__undermeny-arbeidsflate">Tiltaksarrangører </h2>
+																	<ul class="mobilmeny__meny mobilmeny__meny--list">
+																		<a href="https://www.nav.no/soknader/nb/bedrift" class="lenke" tabindex="-1">
+																			<li class="mobilmeny__meny mobilmeny__meny--listItem">
+																				<h2 class="typo-undertittel">
+																					<span class="mobilmeny__meny mobilmeny__meny--text-element-undermeny">
+																						<div class="mobilmeny__undermeny-chevron">
+																							<i class="nav-frontend-chevron chevronboks chevron--hoyre"></i>
+																						</div>Skjema for tiltaksarrangør/leverandør
+																					</span>
+																				</h2>
+																			</li>
+																		</a>
+																	</ul>
+																	<div class="mobilmeny__blokk-divider">
+																		<div class="mobilmeny__lukk-undermeny">
+																			<h2 class="typo-undertittel mobilmeny__meny mobilmeny__meny--tilbakelenke">
+																				<a onclick={onHandleBackToMenu} class="lenke" tabindex="-1">
+																					<i class="nav-frontend-chevron chevronboks chevron--venstre"></i>Tilbake til oversikt
+																				</a>
+																			</h2>
+																		</div>
+																	</div>
+																</section>
+																<section if:true={isUnderMeny4} class="mobilmeny__undermeny-innhold mobilmeny__undermeny-innhold--active mobilmeny__menuheight">
+																	<div class="mobilmeny__lukk-undermeny">
+																		<h2 class="typo-undertittel mobilmeny__meny mobilmeny__meny--tilbakelenke">
+																			<a onclick={onHandleBackToMenu} class="lenke" tabindex="-1">
+																				<i class="nav-frontend-chevron chevronboks chevron--venstre"></i>Tilbake til oversikt
+																			</a>
+																		</h2>
+																	</div>
+																	<h2 class="typo-systemtittel mobilmeny__undermeny-arbeidsflate">På tvers</h2>
+																	<ul class="mobilmeny__meny mobilmeny__meny--list">
+																		<a href="https://www.nav.no/no/nav-og-samfunn/samarbeid/tilskudd-gjennom-nav" class="lenke" tabindex="-1">
+																			<li class="mobilmeny__meny mobilmeny__meny--listItem">
+																				<h2 class="typo-undertittel">
+																					<span class="mobilmeny__meny mobilmeny__meny--text-element-undermeny">
+																						<div class="mobilmeny__undermeny-chevron">
+																							<i class="nav-frontend-chevron chevronboks chevron--hoyre"></i>
+																						</div>Tilskudd gjennom NAV
+																					</span>
+																				</h2>
+																			</li>
+																		</a>
+																		<a href="https://www.nav.no/no/nav-og-samfunn/samarbeid/arbeid-og-psykisk-helse" class="lenke" tabindex="-1">
+																			<li class="mobilmeny__meny mobilmeny__meny--listItem">
+																				<h2 class="typo-undertittel">
+																					<span class="mobilmeny__meny mobilmeny__meny--text-element-undermeny">
+																						<div class="mobilmeny__undermeny-chevron">
+																							<i class="nav-frontend-chevron chevronboks chevron--hoyre"></i>
+																						</div>Arbeid, psykisk helse og samarbeidspartnere
+																					</span>
+																				</h2>
+																			</li>
+																		</a>
+																		<a href="https://www.nav.no/no/nav-og-samfunn/samarbeid/arbeidslivskriminalitet-og-trygdesvindel" class="lenke" tabindex="-1">
+																			<li class="mobilmeny__meny mobilmeny__meny--listItem">
+																				<h2 class="typo-undertittel">
+																					<span class="mobilmeny__meny mobilmeny__meny--text-element-undermeny">
+																						<div class="mobilmeny__undermeny-chevron">
+																							<i class="nav-frontend-chevron chevronboks chevron--hoyre"></i>
+																						</div>Arbeidslivskriminalitet og trygdesvindel
+																					</span>
+																				</h2>
+																			</li>
+																		</a>
+																		<a href="https://www.nav.no/no/nav-og-samfunn/om-nav/brukermedvirkning" class="lenke" tabindex="-1">
+																			<li class="mobilmeny__meny mobilmeny__meny--listItem">
+																				<h2 class="typo-undertittel">
+																					<span class="mobilmeny__meny mobilmeny__meny--text-element-undermeny">
+																						<div class="mobilmeny__undermeny-chevron">
+																							<i class="nav-frontend-chevron chevronboks chevron--hoyre"></i>
+																						</div>Brukermedvirkning
+																					</span>
+																				</h2>
+																			</li>
+																		</a>
+																	</ul>
+																	<div class="mobilmeny__blokk-divider">
+																		<div class="mobilmeny__lukk-undermeny">
+																			<h2 class="typo-undertittel mobilmeny__meny mobilmeny__meny--tilbakelenke">
+																				<a onclick={onHandleBackToMenu} class="lenke" tabindex="-1">
+																					<i class="nav-frontend-chevron chevronboks chevron--venstre"></i>Tilbake til oversikt
+																				</a>
+																			</h2>
+																		</div>
+																	</div>
+																</section>
+															</div>
 															<section if:true={varslerPressed} class="mobilmeny__varsel-innhold mobilmeny__menuheight">
 																<h1 class="typo-innholdstittel mobilmeny__varseltittel">Varsler</h1>
 																<div class="varsler-display-mobil-tablet">

@@ -1,5 +1,13 @@
 <template>
 	<div if:false={menuPressed} id="footer-withmenu">
+		<div class="placeholder" style="height: 40px; margin-bottom: 1rem;">
+			<div class="top-link-wrapper">
+				<button class="btn-sf" onclick={scrollToTop} id="top-scroll-link">
+					Til toppen
+					<span class="top-link-indicator"></span>
+				</button>
+			</div>
+		</div>
 		<section id="decorator-footer" class="navno-dekorator" role="main">
 			<footer class="sitefooter" role="contentinfo">
 				<section class="menylinje-topp">
@@ -9,7 +17,7 @@
 								<button onclick={scrollToTop} style="border: 0; background-color: transparent; color: #FFFFFF;" class="lenke lenke-med-ikon lenke-med-ikon--venstrestiltIkon" role="button">
 									<span>Til toppen</span>
 									<div class="lenke-med-ikon__ikon">
-										<img class="til-toppen" src="/sfsites/c/resource/1589541552000/til_toppen" alt="til toppen"></img>
+										<img class="til-toppen-img" src="/sfsites/c/resource/1589541552000/til_toppen" alt="til toppen"></img>
 									</div>
 								</button>
 							</div>

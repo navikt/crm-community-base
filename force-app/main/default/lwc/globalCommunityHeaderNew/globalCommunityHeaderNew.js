@@ -17,7 +17,6 @@ document.documentElement.style.setProperty('--hovedbannerposition', hovedbannerp
 
 window.addEventListener('scroll', () => {
     var scrolled = window.scrollY;
-    console.log(scrolled);
     const difference = scrolled - prevScrolled;
     if(difference >= 0){
         if(headerPosition > -headerHeight){ 
@@ -82,9 +81,53 @@ export default class GlobalCommunityHeaderNew extends LightningElement {
 
     @track menuPressed=false;
     handleOnClickMenu(event){
+        console.log("meny");
         this.menuPressed=!this.menuPressed;
         this.sendMenuSelectedEvent();
     }
+    @track isUnderMeny1 = false;
+    @track isUnderMeny2 = false;
+    @track isUnderMeny3 = false;
+    @track isUnderMeny4 = false;
+    @track isUnderMeny5 = false;
+    @track isUnderMeny6 = false;
+    @track isUnderMeny7 = false;
+    @track isUnderMeny8 = false;
+    onHandleBackToMenu(){
+        this.isUnderMeny1 = false;
+        this.isUnderMeny2 = false;
+        this.isUnderMeny3 = false;
+        this.isUnderMeny4 = false;
+        this.isUnderMeny5 = false;
+        this.isUnderMeny6 = false;
+        this.isUnderMeny7 = false;
+        this.isUnderMeny8 = false;
+    }
+    onHandleUnderMeny1(){
+        this.isUnderMeny1=true;
+    }
+    onHandleUnderMeny2(){
+        this.isUnderMeny2=true;
+    }
+    onHandleUnderMeny3(){
+        this.isUnderMeny3=true;
+    }
+    onHandleUnderMeny4(){
+        this.isUnderMeny4=true;
+    }
+    onHandleUnderMeny5(){
+        this.isUnderMeny5=true;
+    }
+    onHandleUnderMeny6(){
+        this.isUnderMeny6=true;
+    }
+    onHandleUnderMeny7(){
+        this.isUnderMeny7=true;
+    }
+    onHandleUnderMeny8(){
+        this.isUnderMeny8=true;
+    }
+
 
     @track isPrivatPerson=true;
     @track isArbeidsgiver=false;
