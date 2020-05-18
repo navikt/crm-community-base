@@ -4,7 +4,7 @@ private class CommunityUsersServiceTest {
     @TestSetup
     private static void setupTestData(){
         Profile communityProfile = [SELECT Name FROM Profile WHERE Name='Personbruker Login' OR Name='Trial Customer Portal User' LIMIT 1];
-        DefaultCommunityProfile__c defaultCommunityProfile=new DefaultCommunityProfile__c(PersonAccountDefaultProfile__c=communityProfile.Name, ContactDefaultProfile__c=communityProfile.Name);
+        DefaultCommunityProfile__c defaultCommunityProfile=new DefaultCommunityProfile__c(DefaultProfile__c=communityProfile.Name, DefaultPermissionSet__c='CRM_ManageAsyncRequests');
         insert defaultCommunityProfile;
     }
 
@@ -39,6 +39,8 @@ private class CommunityUsersServiceTest {
             System.assert(user != null);
             System.assertEquals(personAccount.FirstName, user.FirstName);
             System.assertEquals(personAccount.LastName, user.LastName);
+            List<PermissionSet> permissionSets=[SELECT Id FROM permissionSet WHERE Name='CRM_ManageAsyncRequests'];
+            System.assertEquals(1, [SELECT COUNT() FROM PermissionSetAssignment WHERE AssigneeId=:user.Id and PermissionSetId=:permissionSets[0].Id]);
         }
     }
 

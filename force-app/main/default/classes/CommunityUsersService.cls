@@ -7,13 +7,19 @@ public with sharing class CommunityUsersService {
         if (existingUsers.size() > 0) return existingUsers[0];
 
         DefaultCommunityProfile__c defaultCommunityProfiles=DefaultCommunityProfile__c.getOrgDefaults();
-        String profileName = defaultCommunityProfiles.PersonAccountDefaultProfile__c;
+        String profileName = defaultCommunityProfiles.DefaultProfile__c;
         Profile profile = [SELECT Id FROM Profile WHERE Name = :profileName];
         List<Account> personAccounts=new AccountsSelector_Community().selectByIdent(new Set<String>{personIdent});
-
         if (personAccounts.size()>0 && profile != null) {
             PersonAccountWrapper contact=new PersonAccountWrapper(personAccounts[0]);
-            return createCommunityUser(contact, profile.Id);
+            User user= createCommunityUser(contact, profile.Id);
+            String permissionSetName = defaultCommunityProfiles.DefaultPermissionSet__c;
+            List<PermissionSet> permissionSets=[SELECT Id FROM permissionSet WHERE Name=:permissionSetName];
+           if(permissionSets.size()>0){
+                PermissionSetAssignment permSetAssignment=new PermissionSetAssignment(AssigneeId=user.Id, PermissionSetId=permissionSets[0].Id);
+                insert permSetAssignment;
+            }
+            return user;
         }
 
         return null;
