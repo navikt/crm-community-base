@@ -33,6 +33,9 @@
 		"languageSettings": {
 			"enableTranslationWorkbench": true
 		},
+		"nameSettings": {
+			"enableMiddleName": true
+		  },
 		"fieldServiceSettings": {
 			"fieldServiceOrgPref": true,
 			"doesShareSaParentWoWithAr": false,

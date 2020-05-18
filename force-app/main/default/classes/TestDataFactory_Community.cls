@@ -5,6 +5,7 @@ public class TestDataFactory_Community {
     private static List<User> users;
     private static List<Account> personAccounts;
 
+
     public static List<User> getEmployerCommunityUser(Set<Id> personAccountsIds, Boolean doInsert) {
         List<Account> personAccounts = [SELECT Id, FirstName, LastName, PersonContactId FROM Account WHERE Id IN :personAccountsIds];
         Profile communityProfile = [SELECT Name FROM Profile WHERE Name='Personbruker Login' OR Name='Trial Customer Portal User' LIMIT 1];
@@ -34,11 +35,13 @@ public class TestDataFactory_Community {
     public static List<Account> getPersonAccounts(Integer numberOfAccounts, Boolean doInsert) {
         if (personAccounts != null) return personAccounts;
         personAccounts = new List<Account>();
+        List<Person__c> persons=getPersons(numberOfAccounts);
         for (Integer i = 1; i <= numberOfAccounts; i++) {
             personAccounts.add(new Account(
                     FirstName = 'Person',
                     LastName = String.valueOf(i),
                     INT_PersonIdent__c = String.valueOf(i),
+                    CRM_Person__c=persons[i-1].Id,
                     RecordTypeId = PERSON_ACCOUNT_RECORDTYPEID
             ));
         }
@@ -46,6 +49,18 @@ public class TestDataFactory_Community {
             insert personAccounts;
         }
         return personAccounts;
+    }
+
+    private static List<Person__c> getPersons(Integer numberOfPersons){
+        List<Person__c> persons=new List<Person__c>();
+        for (Integer i = 1; i <= numberOfPersons; i++) {
+            persons.add(new Person__c(
+                Name=String.valueOf(i),
+                INT_MunicipalityNumber__c=String.valueOf(i)
+            ));
+        }
+        insert persons;
+        return persons;
     }
 
     public static List<User> getUsers(Integer numberOfUsers, String profileName, Boolean assignRole, Boolean doInsert) {
@@ -79,5 +94,4 @@ public class TestDataFactory_Community {
         if (doInsert) insert users;
         return users;
     }
-
 }

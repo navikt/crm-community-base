@@ -10,7 +10,7 @@ public with sharing class PersonAccountWrapper {
 
     public PersonAccountWrapper (Account account){
         this.recordId=account.PersonContactId;
-        this.municipality=account.INT_MunicipalityNumber__c;
+        this.municipality=account.CRM_Person__r.INT_MunicipalityNumber__c;
         this.firstName=account.FirstName;
         this.lastName=account.LastName;
     }

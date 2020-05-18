@@ -7,7 +7,9 @@ public inherited sharing class AccountsSelector_Community extends ApplicationSel
                 Account.INT_PersonIdent__c,
                 Account.PersonContactId,
                 Account.FirstName,
-                Account.LastName
+                Account.LastName,
+                Account.CRM_Person__c,
+                Account.CRM_Person__r.INT_MunicipalityNumber__c
         };
     }
 
