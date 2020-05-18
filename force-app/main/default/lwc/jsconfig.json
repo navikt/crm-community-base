@@ -8,6 +8,15 @@
             ],
             "c/globalCommunityHeader": [
                 "globalCommunityHeader/globalCommunityHeader.js"
+            ],
+            "c/globalCommunityHeaderNew": [
+                "globalCommunityHeaderNew/globalCommunityHeaderNew.js"
+            ],
+            "c/globalCommunityFooterNew": [
+                "globalCommunityFooterNew/globalCommunityFooterNew.js"
+            ],
+            "c/pubsub": [
+                "pubsub/pubsub.js"
             ]
         }
     },
