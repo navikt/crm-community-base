@@ -5,7 +5,7 @@ private class PersonAccountUserRegHandlerTest {
     private static void createUser() {
         User navEmployee=TestDataFactory_Community.getUsers(1,'System Administrator',true,true)[0];
         System.runAs(navEmployee) {
-            Account personAccount = TestDataFactory_Community.getPersonAccounts(1, true)[0];
+            Account personAccount = TestDataFactory_Community.getPersonAccounts(1)[0];
             TestDataFactory_Community.getEmployerCommunityUser(new Set<Id>{
                     personAccount.Id
             }, true);

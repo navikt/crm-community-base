@@ -12,12 +12,12 @@ public class TestDataFactory_Community {
 
         List<User> users = new List<User>();
         for (Account pa : personAccounts) {
-            String email = pa.FirstName + pa.LastName + '@nav.apextest';
+            String email = pa.PersonContactId + '@nav.apextest';
             User u = new User();
             u.FirstName = pa.FirstName;
             u.LastName = pa.LastName;
             u.ContactId = pa.PersonContactId;
-            u.Alias = pa.LastName;
+            u.Alias =  String.valueOf(pa.PersonContactId).substring(1,6);
             u.Username = email;
             u.Email = email;
             u.ProfileId = communityProfile.Id;
@@ -32,7 +32,7 @@ public class TestDataFactory_Community {
         return users;
     }
 
-    public static List<Account> getPersonAccounts(Integer numberOfAccounts, Boolean doInsert) {
+    public static List<Account> getPersonAccounts(Integer numberOfAccounts) {
         if (personAccounts != null) return personAccounts;
         personAccounts = new List<Account>();
         List<Person__c> persons=getPersons(numberOfAccounts);
@@ -45,9 +45,7 @@ public class TestDataFactory_Community {
                     RecordTypeId = PERSON_ACCOUNT_RECORDTYPEID
             ));
         }
-        if (doInsert) {
-            insert personAccounts;
-        }
+        personAccounts=[SELECT FirstName, LastName, INT_PersonIdent__c, CRM_Person__c FROM Account WHERE  RecordTypeId =: PERSON_ACCOUNT_RECORDTYPEID];
         return personAccounts;
     }
 
@@ -55,8 +53,7 @@ public class TestDataFactory_Community {
         List<Person__c> persons=new List<Person__c>();
         for (Integer i = 1; i <= numberOfPersons; i++) {
             persons.add(new Person__c(
-                Name=String.valueOf(i),
-                INT_MunicipalityNumber__c=String.valueOf(i)
+                Name=String.valueOf(i)
             ));
         }
         insert persons;

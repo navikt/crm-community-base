@@ -12,7 +12,7 @@ private class CommunityUsersServiceTest {
     private static void getOrCreatePersonAccountUser_whenUserExist() {
         User navEmployee=TestDataFactory_Community.getUsers(1,'System Administrator',true,true)[0];
         System.runAs(navEmployee) {
-            Account personAccount = TestDataFactory_Community.getPersonAccounts(1, true)[0];
+            Account personAccount = TestDataFactory_Community.getPersonAccounts(1)[0];
 
             TestDataFactory_Community.getEmployerCommunityUser(new Set<Id>{
                     personAccount.Id
@@ -31,7 +31,7 @@ private class CommunityUsersServiceTest {
     private static void getOrCreatePersonAccountUser_whenUserIsCreated() {
         User navEmployee=TestDataFactory_Community.getUsers(1,'System Administrator',true,true)[0];
         System.runAs(navEmployee) {
-            Account personAccount = TestDataFactory_Community.getPersonAccounts(1, true)[0];
+            Account personAccount = TestDataFactory_Community.getPersonAccounts(1)[0];
 
             Test.startTest();
             User user = CommunityUsersService.getOrCreatePersonAccountUser('1');
@@ -55,7 +55,7 @@ private class CommunityUsersServiceTest {
     private static void createCommunityUser() {
         User officeUser = TestDataFactory_Community.getUsers(1, 'System Administrator',true, true)[0];
         System.runAs(officeUser) {
-            TestDataFactory_Community.getPersonAccounts(1, true);
+            TestDataFactory_Community.getPersonAccounts(1);
         }
 
         Id contactId = [SELECT PersonContactId FROM Account LIMIT 1].PersonContactId;
