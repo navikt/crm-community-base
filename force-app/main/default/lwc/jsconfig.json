@@ -9,14 +9,14 @@
             "c/globalCommunityHeader": [
                 "globalCommunityHeader/globalCommunityHeader.js"
             ],
-            "c/globalCommunityHeaderNew": [
-                "globalCommunityHeaderNew/globalCommunityHeaderNew.js"
-            ],
-            "c/globalCommunityFooterNew": [
-                "globalCommunityFooterNew/globalCommunityFooterNew.js"
-            ],
             "c/pubsub": [
                 "pubsub/pubsub.js"
+            ],
+            "c/globalCommunityHeaderDesktopMenu": [
+                "globalCommunityHeaderDesktopMenu/globalCommunityHeaderDesktopMenu.js"
+            ],
+            "c/globalCommunityHeaderMobileMenu": [
+                "globalCommunityHeaderMobileMenu/globalCommunityHeaderMobileMenu.js"
             ]
         }
     },
