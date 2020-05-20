@@ -61,8 +61,15 @@ export default class GlobalCommunityHeaderDesktopMenu extends LightningElement {
 	@wire(getRecord, { recordId: '$userId', fields })
 	user;
 	get currentUser() {
-		var name="";
-		return name.concat(getFieldValue(this.user.data, FIRST_NAME), " " , getFieldValue(this.user.data, MIDDLE_NAME), " ", getFieldValue(this.user.data, LAST_NAME));
+		const firstName = getFieldValue(this.user.data, FIRST_NAME);
+		const middleName = getFieldValue(this.user.data, MIDDLE_NAME);
+		const lastName = getFieldValue(this.user.data, LAST_NAME);
+		if(middleName){
+			return firstName + " " + middleName + " " + lastName;
+		}
+		else{
+			return firstName + " " + lastName;
+		}
 	}
 
 
