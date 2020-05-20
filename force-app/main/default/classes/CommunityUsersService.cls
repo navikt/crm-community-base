@@ -29,6 +29,7 @@ public with sharing class CommunityUsersService {
     private static User createCommunityUser(PersonAccountWrapper contact, Id profileId){
         User user=new User();
         user.FirstName=contact.firstName;
+        user.MiddleName=contact.middleName;
         user.LastName=contact.lastName;
         user.Username=contact.recordId + '@nav.portal';
         user.Email=contact.recordId + '@nav.portal';

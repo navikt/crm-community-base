@@ -3,9 +3,10 @@ import { getRecord, getFieldValue } from 'lightning/uiRecordApi';
 import { NavigationMixin, CurrentPageReference } from 'lightning/navigation';
 import { fireEvent } from 'c/pubsub';
 import ID from '@salesforce/user/Id';
-import CURRENT_USER from '@salesforce/schema/User.Name';
+import FIRST_NAME from '@salesforce/schema/User.FirstName';
+import MIDDLE_NAME from '@salesforce/schema/User.MiddleName';
+import LAST_NAME from '@salesforce/schema/User.LastName';
 
-const fields = [CURRENT_USER];
 
 const screenWidth = screen.width;
 const headerHeight = screenWidth > 576 ? 91 : 88;
@@ -52,6 +53,7 @@ window.addEventListener('scroll', () => {
 
 });
 
+const fields = [FIRST_NAME, MIDDLE_NAME, LAST_NAME];
 export default class GlobalCommunityHeaderDesktopMenu extends LightningElement {
 	@track isProd = window.location.toString().includes("tolkebestilling.nav.no/");
 
@@ -59,7 +61,8 @@ export default class GlobalCommunityHeaderDesktopMenu extends LightningElement {
 	@wire(getRecord, { recordId: '$userId', fields })
 	user;
 	get currentUser() {
-		return getFieldValue(this.user.data, CURRENT_USER);
+		var name="";
+		return name.concat(getFieldValue(this.user.data, FIRST_NAME), " " , getFieldValue(this.user.data, MIDDLE_NAME), " ", getFieldValue(this.user.data, LAST_NAME));
 	}
 
 
