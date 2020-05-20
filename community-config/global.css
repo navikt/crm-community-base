@@ -6883,6 +6883,7 @@ lightning-input-field.ikke-sensitiv-fritekst>lightning-textarea>label:after {
 	border-bottom-style: solid;
 	text-align: center;
 	width: 100%;
+	z-index: 1004;
 	position: fixed;
 	top: var(--hovedbannerposition);
 }
@@ -6895,6 +6896,10 @@ lightning-input-field.ikke-sensitiv-fritekst>lightning-textarea>label:after {
 .frilanstolk {
 	background-color: rgb(181, 189, 51);
 	border-bottom: 4px solid #dade99;
+}
+
+.header-spacing{
+	margin-bottom: 11rem;
 }
 
 /* Home */
@@ -7067,7 +7072,6 @@ lightning-input-field.ikke-sensitiv-fritekst>lightning-textarea>label:after {
 /*home vegard */
 
 .portal-hilsen {
-	margin-top: 12rem;
 	font-size: 1.33rem;
 	font-weight: bold;
 	text-align: center;
@@ -7213,6 +7217,13 @@ lightning-input-field.ikke-sensitiv-fritekst>lightning-textarea>label:after {
 	z-index: 1;
 	position: relative;
 }
+@media(max-width: 576px){
+	.skjema-ikon {
+		margin-bottom: -2rem;
+		margin-top: 0;
+	}
+}
+
 
 .steg {
 	padding: 2rem 0 1rem;
@@ -7254,12 +7265,11 @@ lightning-breadcrumb:last-child a {
 
 @media (max-width: 576px) {
 	div.skjema {
-		padding: 1.25rem;
 		margin: 0;
-		margin-top: 2rem;
-	}
-	form {
 		padding: 0;
+	}
+	lightning-record-edit-form form {
+		padding: 4rem 2rem 1rem 2rem;
 	}
 }
 
