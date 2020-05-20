@@ -6883,7 +6883,7 @@ lightning-input-field.ikke-sensitiv-fritekst>lightning-textarea>label:after {
 	border-bottom-style: solid;
 	text-align: center;
 	width: 100%;
-	z-index: 1004;
+	z-index: 10;
 	position: fixed;
 	top: var(--hovedbannerposition);
 }
