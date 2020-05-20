@@ -54,9 +54,8 @@ window.addEventListener('scroll', () => {
 
 export default class GlobalCommunityHeaderMobileMenu extends LightningElement {
 
-
 	@track isProd = window.location.toString().includes("tolkebestilling.nav.no/");
-	
+
 	userId = ID;
 	@wire(getRecord, { recordId: '$userId', fields })
 	user;
@@ -65,27 +64,41 @@ export default class GlobalCommunityHeaderMobileMenu extends LightningElement {
 	}
 
 
-	handleOnScroll() {
-	}
-
-
 	@track searchPressed = false;
 	handleOnClickSearch(event) {
 		this.searchPressed = !this.searchPressed;
+		this.varslerPressed = false;
+		this.minSidePressed = false;
+		this.menuPressed = false;
+		this.isPrivatPerson = false;
+		this.sendMenuSelectedEvent();
 	}
 	@track varslerPressed = false;
 	onHandleClickVarsler() {
 		this.varslerPressed = !this.varslerPressed;
+		this.searchPressed = false;
+		this.minSidePressed = false;
+		this.menuPressed = false;
+		this.isPrivatPerson = false;
+		this.sendMenuSelectedEvent();
 	}
 	@track minSidePressed = false;
 	handleOnClickMinSide() {
+		this.varslerPressed = false;
+		this.searchPressed = false;
 		this.minSidePressed = !this.minSidePressed;
+		this.menuPressed = false;
+		this.isPrivatPerson = false;
+		this.sendMenuSelectedEvent();
 	}
 
 
 	@track menuPressed = false;
 	handleOnClickMenu(event) {
 		console.log("meny");
+		this.varslerPressed = false;
+		this.searchPressed = false;
+		this.minSidePressed = false;
 		this.menuPressed = !this.menuPressed;
 		this.isPrivatPerson = !this.isPrivatPerson;
 		this.sendMenuSelectedEvent();
