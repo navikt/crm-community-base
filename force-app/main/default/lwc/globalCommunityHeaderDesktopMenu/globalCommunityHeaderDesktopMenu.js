@@ -54,6 +54,7 @@ window.addEventListener('scroll', () => {
 
 export default class GlobalCommunityHeaderDesktopMenu extends LightningElement {
 
+	@track isProd = window.location.toString().includes("tolkebestilling.nav.no/");
 
 	userId = ID;
 	@wire(getRecord, { recordId: '$userId', fields })

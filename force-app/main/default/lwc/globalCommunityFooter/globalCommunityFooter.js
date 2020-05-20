@@ -5,6 +5,7 @@ import { registerListener, unregisterAllListeners } from 'c/pubsub';
 export default class GlobalCommunityFooterNew extends LightningElement {
 
 
+	@track isProd = window.location.toString().includes("tolkebestilling.nav.no/");
 
 	scrollToTop() {
 		window.scroll(0, 0, 'smooth');

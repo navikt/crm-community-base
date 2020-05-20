@@ -2,7 +2,8 @@
 	<nav class="desktopmeny dynamic-header" aria-label="Hovedmeny" id="hovedmeny">
 		<div class="desktopmeny__elementer">
 			<a href="https://www.nav.no" class="desktopmeny__nav-brand" id="desktop-header-logo-id">
-				<img src="/sfsites/c/resource/1589289905000/logo" alt="NAV-logo"></img>
+				<img if:false={isProd} src="/sfsites/c/resource/1589289905000/logo" alt="NAV-logo"></img>
+				<img if:true={isProd} src="/s/sfsites/c/resource/1589289905000/logo" alt="NAV-logo"></img>
 			</a>
 			<button class="menylinje-knapp desktop-hovedmeny__knapp" id="desktop-hovedmeny-knapp-id"
 				aria-label="Hovedmenyknapp" aria-pressed="false" aria-haspopup="true" aria-controls="desktop-hovedmeny"

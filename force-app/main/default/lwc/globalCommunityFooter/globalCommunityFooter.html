@@ -19,7 +19,9 @@
 									class="lenke lenke-med-ikon lenke-med-ikon--venstrestiltIkon" role="button">
 									<span>Til toppen</span>
 									<div class="lenke-med-ikon__ikon">
-										<img class="til-toppen-img" src="/sfsites/c/resource/1589541552000/til_toppen"
+										<img if:false={isProd} class="til-toppen-img" src="/sfsites/c/resource/1589541552000/til_toppen"
+											alt="til toppen"></img>
+										<img if:true={isProd} class="til-toppen-img" src="/s/sfsites/c/resource/1589541552000/til_toppen"
 											alt="til toppen"></img>
 									</div>
 								</button>
@@ -155,7 +157,8 @@
 					<div class="footer-bottom-content">
 						<div class="sitefooter__logo" style="width: 60px; height: 60px;">
 							<a href="https://www.nav.no" class="navbar-brand">
-								<img src="/sfsites/c/resource/1589463757000/logo_svart" alt="NAV-logo"></img>
+								<img if:false={isProd} src="/sfsites/c/resource/1589463757000/logo_svart" alt="NAV-logo"></img>
+								<img if:true={isProd} src="/s/sfsites/c/resource/1589463757000/logo_svart" alt="NAV-logo"></img>
 							</a>
 						</div>
 						<div class="footer-bottom-content__bottom-lenker">
@@ -194,8 +197,10 @@
 									tabindex="-1" role="dialog" aria-label="Skjermdeling">
 									<section>
 										<div class="delskjerm__header">
-											<img class="delskjerm__veileder"
+											<img if:false={isProd} class="delskjerm__veileder"
 												src="/sfsites/c/resource/1589542877000/veileder" alt="Veileder">
+											<img if:true={isProd} class="delskjerm__veileder"
+												src="/s/sfsites/c/resource/1589542877000/veileder" alt="Veileder">
 										</div>
 										<div class="delskjerm__content">
 											<h2 class="typo-undertittel">Del skjermen din med NAV</h2>
