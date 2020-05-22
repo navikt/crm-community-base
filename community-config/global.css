@@ -7240,10 +7240,18 @@ lightning-record-edit-form form {
 }
 
 div.skjema {
+	margin-bottom: 2rem;
 	margin-top: -2rem;
 	border-radius: 0.5rem;
 	padding: 0 2rem;
 	background-color: #fff;
+}
+
+.dialog-boks {
+	background-color: white;
+	padding: 2rem;
+	margin: 2rem 0;
+	border-radius: 0.5rem;
 }
 
 lightning-breadcrumbs {
