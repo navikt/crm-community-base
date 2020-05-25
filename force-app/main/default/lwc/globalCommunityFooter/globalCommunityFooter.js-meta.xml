@@ -2,9 +2,9 @@
 <LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>48.0</apiVersion>
     <isExposed>true</isExposed>
-	<description>Global Community Footer New</description>
+	<description>Global Community Footer</description>
 	<isExposed>true</isExposed>
-	<masterLabel>Global Community Footer New</masterLabel>
+	<masterLabel>Global Community Footer</masterLabel>
 	<targets>
 		<target>lightningCommunity__Page</target>
 	</targets>
