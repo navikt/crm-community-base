@@ -3,9 +3,11 @@ import { getRecord, getFieldValue } from 'lightning/uiRecordApi';
 import { NavigationMixin, CurrentPageReference } from 'lightning/navigation';
 import { fireEvent } from 'c/pubsub';
 import ID from '@salesforce/user/Id';
-import CURRENT_USER from '@salesforce/schema/User.Name';
+import FIRST_NAME from '@salesforce/schema/User.FirstName';
+import MIDDLE_NAME from '@salesforce/schema/User.MiddleName';
+import LAST_NAME from '@salesforce/schema/User.LastName';
 
-const fields = [CURRENT_USER];
+const fields = [FIRST_NAME, MIDDLE_NAME, LAST_NAME];
 
 const screenWidth = screen.width;
 const headerHeight = screenWidth > 576 ? 91 : 88;
@@ -60,7 +62,28 @@ export default class GlobalCommunityHeaderMobileMenu extends LightningElement {
 	@wire(getRecord, { recordId: '$userId', fields })
 	user;
 	get currentUser() {
-		return getFieldValue(this.user.data, CURRENT_USER);
+		const firstName = getFieldValue(this.user.data, FIRST_NAME);
+		const middleName = getFieldValue(this.user.data, MIDDLE_NAME);
+		const lastName = getFieldValue(this.user.data, LAST_NAME);
+		if(middleName){
+			return firstName + " " + middleName + " " + lastName;
+		}
+		else{
+			return firstName + " " + lastName;
+		}
+	}
+
+	@track isDinOversikt = false;
+	@track isArbeid = false;
+	@track isFlereTjenester = false;
+	onHandleDinOversikt(){
+		this.isDinOversikt = true;
+	}
+	onHandleArbeid(){
+		this.isArbeid = true;
+	}
+	onHandleFlereTjenester(){
+		this.isFlereTjenester = true;
 	}
 
 
@@ -101,6 +124,7 @@ export default class GlobalCommunityHeaderMobileMenu extends LightningElement {
 		this.minSidePressed = false;
 		this.menuPressed = !this.menuPressed;
 		this.isPrivatPerson = !this.isPrivatPerson;
+		this.onHandleBackToMenu();
 		this.sendMenuSelectedEvent();
 	}
 	@track isUnderMeny1 = false;
@@ -120,6 +144,9 @@ export default class GlobalCommunityHeaderMobileMenu extends LightningElement {
 		this.isUnderMeny6 = false;
 		this.isUnderMeny7 = false;
 		this.isUnderMeny8 = false;
+		this.isDinOversikt = false;
+		this.isArbeid = false;
+		this.isFlereTjenester = false;
 	}
 	onHandleUnderMeny1() {
 		this.isUnderMeny1 = true;
