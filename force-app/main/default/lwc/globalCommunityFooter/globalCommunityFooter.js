@@ -2,10 +2,11 @@ import { LightningElement, track, wire } from 'lwc';
 import { CurrentPageReference } from 'lightning/navigation';
 import { registerListener, unregisterAllListeners } from 'c/pubsub';
 
-export default class GlobalCommunityFooterNew extends LightningElement {
+export default class GlobalCommunityFooter extends LightningElement {
 
 
 	@track isProd = window.location.toString().includes("tolkebestilling.nav.no/");
+	@track isPrivatPerson = window.location.toString().includes("tolkebestilling");
 
 	scrollToTop() {
 		window.scroll(0, 0, 'smooth');
@@ -34,7 +35,7 @@ export default class GlobalCommunityFooterNew extends LightningElement {
 		unregisterAllListeners(this);
 	}
 
-	@track isPrivatPerson = true;
+	//@track isPrivatPerson = true;
 	@track isArbeidsgiver = false;
 	@track isSamarbeidspartner = false;
 	handleClientTypeSelected(data) {
