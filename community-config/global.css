@@ -6888,24 +6888,19 @@ lightning-input-field.ikke-sensitiv-fritekst>lightning-textarea>label:after {
 	top: var(--hovedbannerposition);
 }
 
-.tolketjenesten {
-	background-color: #dade99;
-	border-bottom: 4px solid rgb(181, 189, 51);
-}
-
 .frilanstolk {
 	background-color: rgb(181, 189, 51);
 	border-bottom: 4px solid #dade99;
 }
 
-.header-spacing{
+.header-spacing {
 	margin-bottom: 11rem;
 }
 
 /* Home */
 
 .informasjonstavle__body {
-	padding: 0.5rem 1rem;
+	padding: 0.25rem 1rem;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -6919,15 +6914,22 @@ lightning-input-field.ikke-sensitiv-fritekst>lightning-textarea>label:after {
 }
 
 .informasjonstavle__content {
-	max-width: 801px;
 	width: 100%;
-	margin-top: 1rem;
-	margin-bottom: 1rem;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
 }
 
 .informasjonstavle__bildepaneler {
 	display: grid;
 	grid-template-columns: repeat(3, 275px);
+}
+
+.informasjonstavle__bildepaneler-single {
+	min-height: 96px;
+	width: 825px;
+	display: flex;
+	flex-direction: row;
 }
 
 @media (max-width: 576px) {
@@ -6945,13 +6947,23 @@ lightning-input-field.ikke-sensitiv-fritekst>lightning-textarea>label:after {
 .panelMedBilde {
 	color: black;
 	text-decoration: none;
-	border-radius: 4px;
 	overflow: hidden;
 	text-overflow: ellipsis;
 	margin: 1rem;
 	min-width: 200px;
-	max-width: 235px;
+	max-width: 275px;
 	flex: 1;
+	border-radius: 4px;
+}
+
+.panelMedBilde-single {
+	max-width: 100%;
+	width: 100%;
+	display: flex;
+	flex-direction: row;
+	padding-top: 1rem;
+	padding-bottom: 1rem;
+	background-color: #FFFFFF;
 }
 
 @media (max-width: 576px) {
@@ -6971,7 +6983,7 @@ lightning-input-field.ikke-sensitiv-fritekst>lightning-textarea>label:after {
 }
 
 .panelMedBilde__imageOnPanel {
-	border-radius: 4px 4px 0 0;
+	border-radius: 4px 4px 0 0 !important;
 	height: 100px;
 	width: 100%;
 	display: flex;
@@ -6979,6 +6991,19 @@ lightning-input-field.ikke-sensitiv-fritekst>lightning-textarea>label:after {
 	flex-direction: column;
 	align-items: center;
 	justify-content: flex-end;
+}
+
+.panelMedBilde__imageOnPanel-single {
+	border-radius: 4px 0 0 4px !important;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 1rem;
+}
+
+.tolketjenesten {
+	background-color: #dade99;
+	border-bottom: 4px solid rgb(181, 189, 51);
 }
 
 .panelMedBilde__svgContainer {
@@ -6989,6 +7014,13 @@ lightning-input-field.ikke-sensitiv-fritekst>lightning-textarea>label:after {
 	justify-content: flex-end;
 	height: 100%;
 	float: left;
+}
+
+.panelMedBilde__svgContainer-single {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 100%;
 }
 
 @media (min-width: 576px) {
@@ -7003,11 +7035,16 @@ lightning-input-field.ikke-sensitiv-fritekst>lightning-textarea>label:after {
 	flex-direction: row;
 	justify-content: space-between;
 	align-items: flex-start;
-	border-radius: 0 0 4px 4px;
+	border-radius: 0 0 4px 4px !important;
 	padding: 1rem 1.66rem 1.25rem;
 	color: black;
 	overflow: hidden;
 	text-overflow: ellipsis;
+}
+
+.panelMedBilde__panelOnPanel-single {
+	border-radius: 0 4px 4px 0 !important;
+	width: 100%;
 }
 
 .panel {
@@ -7076,7 +7113,6 @@ lightning-input-field.ikke-sensitiv-fritekst>lightning-textarea>label:after {
 	font-weight: bold;
 	text-align: center;
 }
-
 
 .illustrasjon {
 	max-height: 90%;
@@ -7217,13 +7253,13 @@ lightning-input-field.ikke-sensitiv-fritekst>lightning-textarea>label:after {
 	z-index: 1;
 	position: relative;
 }
-@media(max-width: 576px){
+
+@media(max-width: 576px) {
 	.skjema-ikon {
 		margin-bottom: -2rem;
 		margin-top: 0;
 	}
 }
-
 
 .steg {
 	padding: 2rem 0 1rem;
