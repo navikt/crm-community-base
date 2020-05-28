@@ -1,57 +1,12 @@
 import { LightningElement, track, wire } from 'lwc';
 import { getRecord, getFieldValue } from 'lightning/uiRecordApi';
-import { NavigationMixin, CurrentPageReference } from 'lightning/navigation';
+import { CurrentPageReference } from 'lightning/navigation';
 import { fireEvent } from 'c/pubsub';
 import ID from '@salesforce/user/Id';
 import FIRST_NAME from '@salesforce/schema/User.FirstName';
 import MIDDLE_NAME from '@salesforce/schema/User.MiddleName';
 import LAST_NAME from '@salesforce/schema/User.LastName';
 
-
-const screenWidth = screen.width;
-const headerHeight = screenWidth > 576 ? 91 : 88;
-const headerStartPosition = screenWidth > 576 ? 44 : 0;
-var headerPosition = headerStartPosition;
-var hovedbannerposition = headerStartPosition + headerHeight;
-document.documentElement.style.setProperty('--hovedbannerposition', hovedbannerposition.toString() + "px");
-document.documentElement.style.setProperty('--headerPosition', headerPosition.toString() + "px");
-var prevScrolled = 0;
-
-
-window.addEventListener('scroll', () => {
-	var scrolled = window.scrollY;
-	const difference = scrolled - prevScrolled;
-	if (difference >= 0) {
-		if (headerPosition > -headerHeight) {
-			headerPosition = headerPosition - difference;
-			hovedbannerposition = headerPosition + headerHeight;
-		}
-		else {
-			headerPosition = -headerHeight
-			hovedbannerposition = 0;
-		}
-	}
-	else {
-		if (headerPosition < 0) {
-			headerPosition = headerPosition - difference;
-			hovedbannerposition = headerPosition + headerHeight;
-		}
-		else if (scrolled < headerStartPosition) {
-			headerPosition = headerStartPosition - scrolled;
-			hovedbannerposition = headerPosition + headerHeight;
-		}
-		else {
-			headerPosition = 0;
-			hovedbannerposition = headerHeight;
-		}
-
-	}
-	document.documentElement.style.setProperty('--headerPosition', headerPosition.toString() + "px");
-	document.documentElement.style.setProperty('--hovedbannerposition', hovedbannerposition.toString() + "px");
-
-	prevScrolled = scrolled;
-
-});
 
 const fields = [FIRST_NAME, MIDDLE_NAME, LAST_NAME];
 export default class GlobalCommunityHeaderDesktopMenu extends LightningElement {
