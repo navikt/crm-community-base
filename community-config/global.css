@@ -7354,11 +7354,12 @@ html {
 	border-radius: 4px;
 	position: relative;
 	flex-grow: 0;
-	overflow: auto;
+	overflow-x: auto;
 	max-height: 100%;
-	margin-bottom: 0;
+	margin-bottom: 1rem;
+	margin-top: 1rem;
 	z-index: 1010;
 	max-width: 800px;
+	max-height: 90%;
 	width: 100%;
-	overflow: visible;
 }
