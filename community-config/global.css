@@ -7345,3 +7345,20 @@ html {
 		visibility: hidden;
 	}
 }
+
+.comments-dialog-container {
+	all: unset;
+	background-color: #FFF;
+	display: block;
+	padding: 1rem 1rem 1rem 1rem;
+	border-radius: 4px;
+	position: relative;
+	flex-grow: 0;
+	overflow: auto;
+	max-height: 100%;
+	margin-bottom: 0;
+	z-index: 1010;
+	max-width: 800px;
+	width: 100%;
+	overflow: visible;
+}
