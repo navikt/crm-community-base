@@ -6949,7 +6949,7 @@ lightning-input-field.ikke-sensitiv-fritekst>lightning-textarea>label:after {
 	text-decoration: none;
 	overflow: hidden;
 	text-overflow: ellipsis;
-	margin: 1rem;
+	margin: 1rem 1.25rem;
 	min-width: 200px;
 	max-width: 275px;
 	flex: 1;
