@@ -35,6 +35,6 @@ ehthumbs.db
 [Dd]esktop.ini
 $RECYCLE.BIN/
 force-app/main/default/lwc/.eslintrc.json
-*.bat
 
 force-app/main/default/profiles/Trial Customer Portal User.profile-meta.xml
+force-app/main/default/lwc/jsconfig.json
