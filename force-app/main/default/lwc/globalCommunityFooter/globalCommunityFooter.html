@@ -1,5 +1,5 @@
 <template>
-	<div if:false={menuPressed} id="footer-withmenu">
+	<div if:false={menuPressed} id="footer-withmenu" style="margin-top: 2rem">
 		<div class="placeholder mobile-only" style="height: 40px; margin-bottom: 1rem;">
 			<div class="top-link-wrapper">
 				<button class="btn-sf" onclick={scrollToTop} id="top-scroll-link">
@@ -155,10 +155,10 @@
 				</section>
 				<section class="menylinje-bottom">
 					<div class="footer-bottom-content">
-						<div class="sitefooter__logo" style="width: 60px; height: 60px;">
+						<div class="sitefooter__logo" style="width: 100px; height: 60px;">
 							<a href="https://www.nav.no" class="navbar-brand">
-								<img if:false={isProd} src="/sfsites/c/resource/1589463757000/logo_svart" alt="NAV-logo"></img>
-								<img if:true={isProd} src="/s/sfsites/c/resource/1589463757000/logo_svart" alt="NAV-logo"></img>
+								<img if:false={isProd} src="/sfsites/c/resource/1591174839000/logo_svart" alt="NAV-logo"></img>
+								<img if:true={isProd} src="/s/sfsites/c/resource/1591174839000/logo_svart" alt="NAV-logo"></img>
 							</a>
 						</div>
 						<div class="footer-bottom-content__bottom-lenker">
