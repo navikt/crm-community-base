@@ -1,8 +1,10 @@
-# Profiles (some are needed for deploying the community to scratch orgs)
+# Profiles
 **/profiles/*
-!**/profiles/Customer Community User Custom.profile-meta.xml
+#!**/profiles/NAV Bruker.profile-meta.xml
+#!**/profiles/NAV Samhandler.profile-meta.xml
 **/profilePasswordPolicies/*
 **/profileSessionSettings/*
+
 # LWC configuration files
 **/jsconfig.json
 **/.eslintrc.json
