@@ -1,4 +1,4 @@
-.dynamic-header {
+﻿.dynamic-header {
 	position: fixed;
 	top: var(--headerPosition);
 }
@@ -7136,6 +7136,13 @@ lightning-input-field.ikke-sensitiv-fritekst>lightning-textarea>label:after {
 	display: flex;
 	justify-content: center;
 	flex-direction: column;
+}
+
+lightning-tabset{
+	width: 100%;
+}
+lightning-datatable{
+	width: 100%;
 }
 
 @media (min-width: 576px) {
