@@ -6,7 +6,7 @@ import ID from '@salesforce/user/Id';
 import FIRST_NAME from '@salesforce/schema/User.FirstName';
 import MIDDLE_NAME from '@salesforce/schema/User.MiddleName';
 import LAST_NAME from '@salesforce/schema/User.LastName';
-import isProd from '@salesforce/apex/globalCommunityHeaderFooterController.isProd';
+import isProd from '@salesforce/apex/GlobalCommunityHeaderFooterController.isProd';
 
 
 const fields = [FIRST_NAME, MIDDLE_NAME, LAST_NAME];
