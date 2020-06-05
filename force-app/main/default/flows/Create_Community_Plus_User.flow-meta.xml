@@ -3,8 +3,8 @@
     <actionCalls>
         <name>Create_Community_Plus_User</name>
         <label>Create Community Plus User</label>
-        <locationX>1021</locationX>
-        <locationY>72</locationY>
+        <locationX>1526</locationX>
+        <locationY>81</locationY>
         <actionName>CommunityUsersService</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -19,10 +19,35 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </actionCalls>
     <decisions>
+        <name>Access</name>
+        <label>Access?</label>
+        <locationX>790</locationX>
+        <locationY>309</locationY>
+        <defaultConnector>
+            <targetReference>No_Access_Screen</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>Yes</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Create_Community_Plus_User_Permission_Set_Assigment_Id</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Community_Plus_Profile</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Existing_User</name>
         <label>Existing User</label>
-        <locationX>587</locationX>
-        <locationY>424</locationY>
+        <locationX>1211</locationX>
+        <locationY>308</locationY>
         <defaultConnector>
             <targetReference>Already_added_as_user_screen</targetReference>
         </defaultConnector>
@@ -43,6 +68,11 @@
             <label>No</label>
         </rules>
     </decisions>
+    <formulas>
+        <name>curretUserId</name>
+        <dataType>String</dataType>
+        <expression>{!$User.Id}</expression>
+    </formulas>
     <interviewLabel>Create Community Plus User {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Create Community Plus User</label>
     <processMetadataValues>
@@ -61,8 +91,8 @@
     <recordLookups>
         <name>Community_Plus_Profile</name>
         <label>Community Plus Profile</label>
-        <locationX>165</locationX>
-        <locationY>298</locationY>
+        <locationX>962</locationX>
+        <locationY>307</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Get_User</targetReference>
@@ -79,10 +109,63 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
+        <name>Get_Current_User_Permission_Set_Assignment</name>
+        <label>Get Current User Permission Set Assignment</label>
+        <locationX>652</locationX>
+        <locationY>307</locationY>
+        <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Access</targetReference>
+        </connector>
+        <filters>
+            <field>AssigneeId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>curretUserId</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>PermissionSetId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_Permission_Set.Id</elementReference>
+            </value>
+        </filters>
+        <object>PermissionSetAssignment</object>
+        <outputAssignments>
+            <assignToReference>Create_Community_Plus_User_Permission_Set_Assigment_Id</assignToReference>
+            <field>Id</field>
+        </outputAssignments>
+        <sortField>Id</sortField>
+        <sortOrder>Asc</sortOrder>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_Permission_Set</name>
+        <label>Get Permission Set</label>
+        <locationX>458</locationX>
+        <locationY>307</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Get_Current_User_Permission_Set_Assignment</targetReference>
+        </connector>
+        <filters>
+            <field>Name</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Create_Community_Plus_User</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>PermissionSet</object>
+        <sortField>Id</sortField>
+        <sortOrder>Asc</sortOrder>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
         <name>Get_Person_Account</name>
         <label>Get Person Account</label>
-        <locationX>749</locationX>
-        <locationY>80</locationY>
+        <locationX>1314</locationX>
+        <locationY>81</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Create_Community_Plus_User</targetReference>
@@ -105,8 +188,8 @@
     <recordLookups>
         <name>Get_User</name>
         <label>Get User</label>
-        <locationX>425</locationX>
-        <locationY>422</locationY>
+        <locationX>1098</locationX>
+        <locationY>307</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Existing_User</targetReference>
@@ -136,14 +219,14 @@
     <screens>
         <name>Already_added_as_user_screen</name>
         <label>Already added as user</label>
-        <locationX>839</locationX>
-        <locationY>503</locationY>
+        <locationX>1378</locationX>
+        <locationY>306</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <fields>
             <name>Already_added_as_user_text</name>
-            <fieldText>&lt;p&gt;Er allerede registrert som frilanstolk&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Bruker er allerede registrert som frilanstolk.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <showFooter>true</showFooter>
@@ -152,14 +235,30 @@
     <screens>
         <name>End_Screen</name>
         <label>End Screen</label>
-        <locationX>1177</locationX>
-        <locationY>72</locationY>
+        <locationX>1725</locationX>
+        <locationY>81</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <fields>
             <name>Success_Message</name>
-            <fieldText>&lt;p&gt;Bruker ble opprettet. Neste steg er å opprette en tjenesteressurs.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Bruker opprettet!&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Link til tjenesteressursen: kommer&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(62, 62, 60);&quot;&gt;recordId: &lt;/span&gt;{!recordId}&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(62, 62, 60);&quot;&gt;PersonIdent: &lt;/span&gt;{!PersonIdent}&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(62, 62, 60);&quot;&gt;Create_Community_Plus_User: &lt;/span&gt;{!Create_Community_Plus_User}&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>No_Access_Screen</name>
+        <label>No Access</label>
+        <locationX>797</locationX>
+        <locationY>478</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>No_Access_Text</name>
+            <fieldText>&lt;p&gt;Du har ikke tilgang til denne funksjonen.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <showFooter>true</showFooter>
@@ -169,10 +268,17 @@
         <locationX>50</locationX>
         <locationY>50</locationY>
         <connector>
-            <targetReference>Community_Plus_Profile</targetReference>
+            <targetReference>Get_Permission_Set</targetReference>
         </connector>
     </start>
-    <status>Draft</status>
+    <status>Active</status>
+    <variables>
+        <name>Create_Community_Plus_User_Permission_Set_Assigment_Id</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
     <variables>
         <name>PersonIdent</name>
         <dataType>String</dataType>
