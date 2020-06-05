@@ -1,15 +1,19 @@
-import { LightningElement, track, wire } from 'lwc';
+import { LightningElement, track, wire, api } from 'lwc';
 import { CurrentPageReference } from 'lightning/navigation';
 import { registerListener, unregisterAllListeners } from 'c/pubsub';
+import isProd from '@salesforce/apex/globalCommunityHeaderFooterController.isProd';
 
 export default class GlobalCommunityFooter extends LightningElement {
 
+	@api NAVarea;
 
-	@track isProd = window.location.toString().includes("tolkebestilling.nav.no/");
-	@track isPrivatPerson = window.location.toString().includes("tolkebestilling");
+	//@track isProd = window.location.toString().includes("tolkebestilling.nav.no/");
+	@track isPrivatPerson = false;
+	@wire(isProd) isProd;
 
 	scrollToTop() {
 		window.scroll(0, 0, 'smooth');
+		
 	}
 
 	@track isDelSkjerm = false;
@@ -30,6 +34,7 @@ export default class GlobalCommunityFooter extends LightningElement {
 	connectedCallback() {
 		registerListener('clienttypeselected', this.handleClientTypeSelected, this);
 		registerListener('menuSelectedEvent', this.handleMenuSelected, this);
+		this.isPrivatPerson= this.NAVarea == 'Privatperson';
 	}
 	disconnectedCallback() {
 		unregisterAllListeners(this);

@@ -7352,12 +7352,15 @@ html {
 		visibility: hidden;
 	}
 }
+.slds-tabs_default__link{
+	font-size: 1rem;
+}
 
 .comments-dialog-container {
 	all: unset;
 	background-color: #FFF;
 	display: block;
-	padding: 1rem 1rem 1rem 1rem;
+	padding: 5rem;
 	border-radius: 4px;
 	position: relative;
 	flex-grow: 0;
@@ -7366,7 +7369,26 @@ html {
 	margin-bottom: 1rem;
 	margin-top: 1rem;
 	z-index: 1010;
-	max-width: 800px;
+	max-width: 432px;
 	max-height: 90%;
 	width: 100%;
+}
+
+.comment-form>form{
+	padding: 25px 0;
+}
+.sub-form>form{
+    padding: 0 1rem;
+}
+.sub-form>form>slot{
+    display: flex;
+    flex-direction: row;
+}
+.sub-form>form>slot>lightning-output-field>.slds-form-element__label{
+    background-color: red;
+    display: none !important;
+}
+.slds-form-element_stacked{
+	padding: 0!important;
+	margin: 0!important;
 }

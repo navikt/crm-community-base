@@ -1,4 +1,4 @@
-import { LightningElement, track, wire } from 'lwc';
+import { LightningElement, track, wire, api } from 'lwc';
 
 const screenWidth = screen.width;
 const headerHeight = screenWidth > 576 ? 91 : 88;
@@ -45,8 +45,15 @@ window.addEventListener('scroll', () => {
 
 });
 
+
 export default class GlobalCommunityHeader extends LightningElement {
 
-	@track isPrivatPerson = window.location.toString().includes("tolkebestilling") || window.location.toString().includes("tolketjenesten");
+	@api NAVarea;
+	@track isPrivatPerson = true;
+	connectedCallback(){
+		this.isPrivatPerson = this.NAVarea == 'Privatperson';
+		console.log(this.NAVarea);
+		console.log(this.isPrivatPerson);
+	}
 
 }
