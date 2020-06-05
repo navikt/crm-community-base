@@ -1,7 +1,7 @@
 import { LightningElement, track, wire, api } from 'lwc';
 import { CurrentPageReference } from 'lightning/navigation';
 import { registerListener, unregisterAllListeners } from 'c/pubsub';
-import isProd from '@salesforce/apex/globalCommunityHeaderFooterController.isProd';
+import isProd from '@salesforce/apex/GlobalCommunityHeaderFooterController.isProd';
 
 export default class GlobalCommunityFooter extends LightningElement {
 
