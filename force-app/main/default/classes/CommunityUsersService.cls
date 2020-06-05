@@ -6,7 +6,7 @@ public with sharing class CommunityUsersService {
         });
         if (existingUsers.size() > 0) return existingUsers[0];
 
-        DefaultCommunityProfile__c defaultCommunityProfiles=DefaultCommunityProfile__c.getOrgDefaults();
+        DefaultCommunityProfile__c defaultCommunityProfiles = DefaultCommunityProfile__c.getOrgDefaults();
         String profileName = defaultCommunityProfiles.DefaultProfile__c;
         Profile profile = [SELECT Id FROM Profile WHERE Name = :profileName];
         List<Account> personAccounts=new AccountsSelector_Community().selectByIdent(new Set<String>{personIdent});
@@ -43,5 +43,33 @@ public with sharing class CommunityUsersService {
         user.ContactId=contact.recordId;
         insert user;
         return user;
+    }
+
+    @InvocableMethod(label='Create Community Plus User')
+    public static List<User> createCommunityPlusUser(List<String> personIdents) {
+        
+        String personIdent = personIdents[0];
+        List<User> existingUsers = new UsersSelector_Community().selectByAccountIdent(new Set<String>{personIdent});
+        User user;
+        
+        if (existingUsers.isEmpty()) {
+            user = getOrCreatePersonAccountUser(personIdent);
+            existingUsers.add(user);
+        } else {
+            user = existingUsers[0];
+        }
+        
+        DefaultCommunityProfile__c defaultCommunityProfiles = DefaultCommunityProfile__c.getOrgDefaults();
+        String profileName = defaultCommunityProfiles.DefaultCommunityPlusProfile__c;
+        Id profileId = [SELECT Id FROM Profile WHERE Name = :profileName].Id;
+        user.ProfileId = profileId;
+        update user;
+
+        String permissionSetGroupName = defaultCommunityProfiles.DefaultCommunityPlusPermissionSetGroup__c;
+        Id permissionSetGroupId = [SELECT Id FROM PermissionSetGroup WHERE DeveloperName = :permissionSetGroupName].Id;
+        PermissionSetAssignment permSetAssignment = new PermissionSetAssignment(AssigneeId = user.Id, PermissionSetGroupId = permissionSetGroupId);
+        insert permSetAssignment;
+        
+        return existingUsers;
     }
 }

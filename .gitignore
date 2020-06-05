@@ -37,4 +37,4 @@ $RECYCLE.BIN/
 force-app/main/default/lwc/.eslintrc.json
 
 force-app/main/default/profiles/Trial Customer Portal User.profile-meta.xml
-force-app/main/default/lwc/jsconfig.json
+**/jsconfig.json
