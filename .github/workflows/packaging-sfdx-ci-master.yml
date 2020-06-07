@@ -34,9 +34,11 @@ jobs:
         run: "echo ${{ secrets.DEVHUB_SFDX_URL}} > ./DEVHUB_SFDX_URL.txt"
 
       # Store secret for package target org installation
-      - name: "Populate auth file with INTEGRATION_SANDBOX_SFDX_URL secret"
+      - name: "Populate auth files with secrets"
         shell: bash
-        run: "echo ${{ secrets.INTEGRATION_SANDBOX_SFDX_URL}} > ./INTEGRATION_SANDBOX_SFDX_URL.txt"
+        run: |
+          "echo ${{ secrets.INTEGRATION_SANDBOX_SFDX_URL}} > ./INTEGRATION_SANDBOX_SFDX_URL.txt"
+          "echo ${{ secrets.DEVHOT_SFDX_URL}} > ./DEVHOT_SFDX_URL.txt"
 
       # Authenticate dev hub
       - name: "Authenticate Dev Hub"
@@ -46,11 +48,16 @@ jobs:
       - name: "Authenticate package target org"
         run: "sfdx force:auth:sfdxurl:store -f ./INTEGRATION_SANDBOX_SFDX_URL.txt -a integration-sandbox -s"
 
+      # Authenticate devhot sandbox
+      - name: "Authenticate package target org"
+        run: "sfdx force:auth:sfdxurl:store -f ./DEVHOT_SFDX_URL.txt -a devhot-sandbox -s"
+
       # Remove auth files
       - name: "Remove auth files"
         run: |
           rm -f ./DEVHUB_SFDX_URL.txt
           rm -f ./INTEGRATION_SANDBOX_SFDX_URL.txt
+          rm -f ./DEVHOT_SFDX_URL.txt
 
       # Create package version
       - name: "Create package version"
@@ -67,9 +74,14 @@ jobs:
           json: ${{steps.package-version-create.outputs.result}}
 
       # Install package version into integration sandbox
-      - name: "Install new package version into test org"
+      - name: "Install new package version into integration sandbox"
         if: steps.extract-data-package-version-create.outputs.isSuccess
         run: "sfdx force:package:install --package ${{ steps.extract-data-package-version-create.outputs.packageVersionId }} -w 60 -b 60 -u integration-sandbox -r -k ${{ secrets.PACKAGE_KEY }}"
+      
+      # Install package version into DEVHOT sandbox
+      - name: "Install new package version into DEVHOT sandbox"
+        if: steps.extract-data-package-version-create.outputs.isSuccess
+        run: "sfdx force:package:install --package ${{ steps.extract-data-package-version-create.outputs.packageVersionId }} -w 60 -b 60 -u devhot-sandbox -r -k ${{ secrets.PACKAGE_KEY }}"
 
         # Fetch beta version number
       - name: "Fetch beta version number"
