@@ -37,8 +37,8 @@ jobs:
       - name: "Populate auth files with secrets"
         shell: bash
         run: |
-          "echo ${{ secrets.INTEGRATION_SANDBOX_SFDX_URL}} > ./INTEGRATION_SANDBOX_SFDX_URL.txt"
-          "echo ${{ secrets.DEVHOT_SFDX_URL}} > ./DEVHOT_SFDX_URL.txt"
+          echo ${{ secrets.INTEGRATION_SANDBOX_SFDX_URL}} > ./INTEGRATION_SANDBOX_SFDX_URL.txt
+          echo ${{ secrets.DEVHOT_SFDX_URL}} > ./DEVHOT_SFDX_URL.txt
 
       # Authenticate dev hub
       - name: "Authenticate Dev Hub"
