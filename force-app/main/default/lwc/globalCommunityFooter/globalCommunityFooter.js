@@ -8,7 +8,7 @@ export default class GlobalCommunityFooter extends LightningElement {
 	@api NAVarea;
 
 	//@track isProd = window.location.toString().includes("tolkebestilling.nav.no/");
-	@track isPrivatPerson = false;
+	@track isPrivatPerson = true;
 	@wire(isProd) isProd;
 
 	scrollToTop() {
@@ -34,7 +34,7 @@ export default class GlobalCommunityFooter extends LightningElement {
 	connectedCallback() {
 		registerListener('clienttypeselected', this.handleClientTypeSelected, this);
 		registerListener('menuSelectedEvent', this.handleMenuSelected, this);
-		this.isPrivatPerson= this.NAVarea == 'Privatperson';
+		//this.isPrivatPerson= this.NAVarea == 'Privatperson';
 	}
 	disconnectedCallback() {
 		unregisterAllListeners(this);

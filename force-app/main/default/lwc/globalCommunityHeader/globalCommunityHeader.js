@@ -51,7 +51,7 @@ export default class GlobalCommunityHeader extends LightningElement {
 	@api NAVarea;
 	@track isPrivatPerson = true;
 	connectedCallback(){
-		this.isPrivatPerson = this.NAVarea == 'Privatperson';
+		//this.isPrivatPerson = this.NAVarea == 'Privatperson';
 		console.log(this.NAVarea);
 		console.log(this.isPrivatPerson);
 	}
