@@ -121,7 +121,8 @@ jobs:
             **Author**: ${{ github.actor }}
 
             ✅ Package Creation
-            ✅ Package Installation
+            ✅ Package Installation: Integration
+            ✅ Package Installation: DEVHOT
 
             ## Changelog
 
