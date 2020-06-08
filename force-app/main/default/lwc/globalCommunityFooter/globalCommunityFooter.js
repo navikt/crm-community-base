@@ -1,7 +1,7 @@
 import { LightningElement, track, wire, api } from 'lwc';
 import { CurrentPageReference } from 'lightning/navigation';
 import { registerListener, unregisterAllListeners } from 'c/pubsub';
-import isProd from '@salesforce/apex/GlobalCommunityHeaderFooterController.isProd';
+import isProdFunction from '@salesforce/apex/GlobalCommunityHeaderFooterController.isProd';
 
 export default class GlobalCommunityFooter extends LightningElement {
 
@@ -9,7 +9,13 @@ export default class GlobalCommunityFooter extends LightningElement {
 
 	//@track isProd = window.location.toString().includes("tolkebestilling.nav.no/");
 	@track isPrivatPerson = true;
-	@wire(isProd) isProd;
+	@track isProd;
+	@track error;
+	@wire(isProdFunction)
+	wiredIsProd({ error, data }) {
+		this.isProd = data;
+		console.log("isProd: " + this.isProd);
+	}
 
 	scrollToTop() {
 		window.scroll(0, 0, 'smooth');

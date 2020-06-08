@@ -6,13 +6,19 @@ import ID from '@salesforce/user/Id';
 import FIRST_NAME from '@salesforce/schema/User.FirstName';
 import MIDDLE_NAME from '@salesforce/schema/User.MiddleName';
 import LAST_NAME from '@salesforce/schema/User.LastName';
-import isProd from '@salesforce/apex/GlobalCommunityHeaderFooterController.isProd';
+import isProdFunction from '@salesforce/apex/GlobalCommunityHeaderFooterController.isProd';
 
 
 const fields = [FIRST_NAME, MIDDLE_NAME, LAST_NAME];
 export default class GlobalCommunityHeaderDesktopMenu extends LightningElement {
 	//@track isProd = window.location.toString().includes("tolkebestilling.nav.no/");
-	@wire(isProd) isProd;
+	@track isProd;
+	@track error;
+	@wire(isProdFunction)
+	wiredIsProd({ error, data }) {
+		this.isProd = data;
+		console.log("isProd: " + this.isProd);
+	}
 
 	userId = ID;
 	@wire(getRecord, { recordId: '$userId', fields })

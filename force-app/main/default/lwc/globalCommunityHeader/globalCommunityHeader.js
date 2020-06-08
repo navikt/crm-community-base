@@ -40,7 +40,7 @@ window.addEventListener('scroll', () => {
 	}
 	document.documentElement.style.setProperty('--headerPosition', headerPosition.toString() + "px");
 	document.documentElement.style.setProperty('--hovedbannerposition', hovedbannerposition.toString() + "px");
-
+ 
 	prevScrolled = scrolled;
 
 });
@@ -52,8 +52,8 @@ export default class GlobalCommunityHeader extends LightningElement {
 	@track isPrivatPerson = true;
 	connectedCallback(){
 		//this.isPrivatPerson = this.NAVarea == 'Privatperson';
-		console.log(this.NAVarea);
-		console.log(this.isPrivatPerson);
+		//console.log(this.NAVarea);
+		//console.log(this.isPrivatPerson);
 	}
 
 }
