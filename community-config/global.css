@@ -1,5 +1,5 @@
 ﻿.dynamic-header {
-	position: fixed;
+	position: var(--fixed);
 	top: var(--headerPosition);
 }
 
@@ -5274,7 +5274,6 @@ GRID
 }
 
 .navno-dekorator .desktopmeny {
-	position: fixed;
 	width: 100%;
 	padding: 0.5rem 0;
 	border-bottom: 2px solid #C6C2BF;
@@ -6884,7 +6883,9 @@ lightning-input-field.ikke-sensitiv-fritekst>lightning-textarea>label:after {
 	text-align: center;
 	width: 100%;
 	z-index: 10;
-	position: fixed;
+	margin-top: -11rem;
+	margin-top: var(--margintop);
+	position: var(--fixed);
 	top: var(--hovedbannerposition);
 }
 
@@ -7137,10 +7138,11 @@ lightning-input-field.ikke-sensitiv-fritekst>lightning-textarea>label:after {
 	flex-direction: column;
 }
 
-lightning-tabset{
+lightning-tabset {
 	width: 100%;
 }
-lightning-datatable{
+
+lightning-datatable {
 	width: 100%;
 }
 
@@ -7351,7 +7353,8 @@ html {
 		visibility: hidden;
 	}
 }
-.slds-tabs_default__link{
+
+.slds-tabs_default__link {
 	font-size: 1rem;
 }
 
@@ -7373,21 +7376,25 @@ html {
 	width: 100%;
 }
 
-.comment-form>form{
+.comment-form>form {
 	padding: 25px 0;
 }
-.sub-form>form{
-    padding: 0 1rem;
+
+.sub-form>form {
+	padding: 0 1rem;
 }
-.sub-form>form>slot{
-    display: flex;
-    flex-direction: row;
+
+.sub-form>form>slot {
+	display: flex;
+	flex-direction: row;
 }
-.sub-form>form>slot>lightning-output-field>.slds-form-element__label{
-    background-color: red;
-    display: none !important;
+
+.sub-form>form>slot>lightning-output-field>.slds-form-element__label {
+	background-color: red;
+	display: none !important;
 }
-.slds-form-element_stacked{
+
+.slds-form-element_stacked {
 	padding: 0!important;
 	margin: 0!important;
 }

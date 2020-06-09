@@ -5,6 +5,8 @@ const headerHeight = screenWidth > 576 ? 91 : 88;
 const headerStartPosition = screenWidth > 576 ? 44 : 0;
 var headerPosition = headerStartPosition;
 var hovedbannerposition = headerStartPosition + headerHeight;
+document.documentElement.style.setProperty('--fixed', "fixed");
+document.documentElement.style.setProperty('--margintop', 0);
 document.documentElement.style.setProperty('--hovedbannerposition', hovedbannerposition.toString() + "px");
 document.documentElement.style.setProperty('--headerPosition', headerPosition.toString() + "px");
 var prevScrolled = 0;
