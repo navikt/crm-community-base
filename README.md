@@ -1,2 +1,2 @@
-# crm-communities-base
-Registration handlers and other base components for Salesforce Communities
+# crm-community-base
+Registration handlers, headers, footers and other base components for Salesforce Communities
