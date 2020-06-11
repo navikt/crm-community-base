@@ -6938,6 +6938,12 @@ lightning-input-field.ikke-sensitiv-fritekst>lightning-textarea>label:after {
 		display: flex;
 		flex-direction: column;
 	}
+	.informasjonstavle__bildepaneler-single {
+		width: 100%;
+		padding: 1rem;
+		display: flex;
+		flex-direction: column;
+	}
 }
 
 .informasjonstavle a:link {
@@ -7146,6 +7152,10 @@ lightning-datatable {
 	width: 100%;
 }
 
+.filter-list-checkbox {
+	width: 100%;
+}
+
 @media (min-width: 576px) {
 	.right-content {
 		margin-bottom: 1rem;
@@ -7153,6 +7163,9 @@ lightning-datatable {
 	}
 	.right-button>.slds-button_brand, .right-button>.slds-button--brand {
 		float: right;
+	}
+	.filter-list-checkbox {
+		width: 50%;
 	}
 }
 
@@ -7218,27 +7231,44 @@ lightning-datatable {
 
 @media (max-width: 576px) {
 	th:nth-of-type(1):before {
-		content: "Start tid";
+		content: var(--columnlabel_0);
 		font-weight: 600;
 	}
 	td:nth-of-type(1):before {
-		content: "Slutt tid";
+		content: var(--columnlabel_1);
 		font-weight: 600;
 	}
 	td:nth-of-type(2):before {
-		content: "Oppmøtested";
+		content: var(--columnlabel_2);
 		font-weight: 600;
 	}
 	td:nth-of-type(3):before {
-		content: "Tema";
+		content: var(--columnlabel_3);
 		font-weight: 600;
 	}
 	td:nth-of-type(4):before {
-		content: "Status";
+		content: var(--columnlabel_4);
 		font-weight: 600;
 	}
 	td:nth-of-type(5):before {
-		content: "";
+		content: var(--columnlabel_5);
+		font-weight: 600;
+	}
+	td:nth-of-type(6):before {
+		content: var(--columnlabel_6);
+		font-weight: 600;
+	}
+	td:nth-of-type(7):before {
+		content: var(--columnlabel_7);
+		font-weight: 600;
+	}
+	td:nth-of-type(8):before {
+		content: var(--columnlabel_8);
+		font-weight: 600;
+	}
+	td:nth-of-type(9):before {
+		content: var(--columnlabel_9);
+		font-weight: 600;
 	}
 }
 
