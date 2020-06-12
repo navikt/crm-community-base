@@ -3893,6 +3893,10 @@ div.placeholder .top-link-wrapper .top-link-indicator:after {
 	padding-bottom: 0.75rem;
 }
 
+.h2-successMessage {
+	outline: none;
+}
+
 .navno-dekorator .mobilmeny__meny--listItem {
 	position: relative;
 	margin-bottom: 2rem;
