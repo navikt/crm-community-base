@@ -17,6 +17,24 @@
             ],
             "c/globalCommunityHeaderMobileMenu": [
                 "globalCommunityHeaderMobileMenu/globalCommunityHeaderMobileMenu.js"
+            ],
+            "c/headerEnglish": [
+                "headerEnglish/headerEnglish.js"
+            ],
+            "c/footerEnglish": [
+                "footerEnglish/footerEnglish.js"
+            ],
+            "c/footerSami": [
+                "footerSami/footerSami.js"
+            ],
+            "c/headerSami": [
+                "headerSami/headerSami.js"
+            ],
+            "c/desktopMenuEng": [
+                "desktopMenuEng/desktopMenuEng.js"
+            ],
+            "c/desktopMenuSami": [
+                "desktopMenuSami/desktopMenuSami.js"
             ]
         }
     },

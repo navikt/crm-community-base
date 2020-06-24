@@ -3,7 +3,7 @@
 		<div class="placeholder mobile-only" style="height: 40px; margin-bottom: 1rem;">
 			<div class="top-link-wrapper">
 				<button class="btn-sf" onclick={scrollToTop} id="top-scroll-link">
-					Til toppen
+					To the top
 					<span class="top-link-indicator"></span>
 				</button>
 			</div>
@@ -17,7 +17,7 @@
 								<button onclick={scrollToTop}
 									style="border: 0; background-color: transparent; color: #FFFFFF;"
 									class="lenke lenke-med-ikon lenke-med-ikon--venstrestiltIkon" role="button">
-									<span>Til toppen</span>
+									<span>To the top</span>
 									<div class="lenke-med-ikon__ikon">
 										<img if:false={isProd} class="til-toppen-img" src="/sfsites/c/resource/1589541552000/til_toppen"
 											alt="til toppen"></img>
@@ -29,45 +29,34 @@
 						</div>
 						<div class="menylenker-seksjon venstre">
 							<h2 id="venstrelenker-overskrift-kontakt" class="typo-undertittel menylenker-overskrift">
-								Kontakt</h2>
+								Contact</h2>
 							<ul aria-labelledby="venstrelenker-overskrift">
 								<li>
 									<p class="typo-normal">
-										<a href="https://www.nav.no/person/kontakt-oss/" class="lenke">Kontakt oss</a>
+										<a href="https://www.nav.no/person/kontakt-oss/" class="lenke">Contact us</a>
 									</p>
 								</li>
 								<li>
 									<p class="typo-normal">
 										<a href="https://www.nav.no/no/nav-og-samfunn/kontakt-nav/nav-i-ditt-fylke"
-											class="lenke">NAV i ditt fylke</a>
-									</p>
-								</li>
-								<li>
-									<p class="typo-normal">
-										<a href="https://www.nav.no/no/nav-og-samfunn/kontakt-nav/kurs-fra-nav"
-											class="lenke">Kurs fra NAV</a>
+											class="lenke">Your local NAV office</a>
 									</p>
 								</li>
 								<li>
 									<p class="typo-normal">
 										<a href="https://www.nav.no/person/kontakt-oss/tilbakemeldinger"
-											class="lenke">Klage og tilbakemeldinger</a>
-									</p>
-								</li>
-								<li>
-									<p class="typo-normal">
-										<a href="https://lovdata.no/nav/" class="lenke">Lover og regler (lovdata.no)</a>
+											class="lenke">Complaints and feedback</a>
 									</p>
 								</li>
 							</ul>
 						</div>
 						<div class="menylenker-seksjon midt">
 							<h2 id="venstrelenker-overskrift-andresprak" class="typo-undertittel menylenker-overskrift">
-								Andre språk</h2>
+								Other languages</h2>
 							<ul aria-labelledby="venstrelenker-overskrift">
 								<li>
 									<p class="typo-normal">
-										<a href="https://sandbox-saas-force-4316-172e19c7a95.cs100.force.com/no/s/english" class="lenke">English pages</a>
+										<a href="https://sandbox-saas-force-4316-172e19c7a95.cs100.force.com/no/s/" class="lenke">Norwegian pages</a>
 									</p>
 								</li>
 								<li>
@@ -79,78 +68,41 @@
 						</div>
 						<div class="menylenker-seksjon hoyre">
 							<h2 id="venstrelenker-overskrift-navogsamfunn"
-								class="typo-undertittel menylenker-overskrift">NAV og samfunn</h2>
+								class="typo-undertittel menylenker-overskrift">NAV and society</h2>
 							<ul aria-labelledby="venstrelenker-overskrift">
 								<li>
 									<p class="typo-normal">
 										<a href="https://www.nav.no/no/nav-og-samfunn/statistikk-analyse-og-fou"
-											class="lenke">Statistikk, analyse og FoU</a>
+											class="lenke">Statistics, analysis and R&D</a>
 									</p>
 								</li>
 								<li>
 									<p class="typo-normal">
 										<a href="https://www.nav.no/no/nav-og-samfunn/kontakt-nav/presse"
-											class="lenke">Presse</a>
+											class="lenke">Public Relations</a>
 									</p>
 								</li>
 								<li>
 									<p class="typo-normal">
-										<a href="https://www.nav.no/no/nav-og-samfunn/om-nav/om-nav" class="lenke">Om
+										<a href="https://www.nav.no/no/nav-og-samfunn/om-nav/om-nav" class="lenke">Rules and regulations (lovdata.no)</a>
+									</p>
+                                </li>
+                                <li>
+									<p class="typo-normal">
+										<a href="https://www.nav.no/no/nav-og-samfunn/om-nav/om-nav" class="lenke">About
 											NAV</a>
 									</p>
-								</li>
+                                </li>
+                                
 								<li>
 									<p class="typo-normal">
 										<a href="https://www.nav.no/no/nav-og-samfunn/om-nav/sok-jobb-i-nav"
-											class="lenke">Jobb i NAV</a>
+											class="lenke">Work with us</a>
 									</p>
 								</li>
 							</ul>
 						</div>
-						<div class="menylenker-seksjon arbeidsflate">
-							<div class="arbeidsflatevalg-innhold">
-								<ul class="arbeidsflatevalg"
-									aria-label="Gå til innhold for privatperson, arbeidsgiver eller samarbeidspartner">
-									<li if:false={isPrivatPerson}>
-										<a href="https://www.nav.no" class="lenkepanel lenkepanel--border">
-											<span class="typo-normal lenkepanel__heading">
-												<div class="arbeidsflatevalg-tekst">
-													<h2 class="typo-undertittel">Privatperson</h2>Dine saker,
-													utbetalinger, meldinger, meldekort, aktivitetsplan,
-													personopplysninger og flere tjenester
-												</div>
-											</span>
-											<span class="lenkepanel__indikator"></span>
-										</a>
-									</li>
-									<li if:false={isArbeidsgiver}>
-										<a href="https://www.nav.no/no/bedrift" class="lenkepanel lenkepanel--border">
-											<span class="typo-normal lenkepanel__heading">
-												<div class="arbeidsflatevalg-tekst">
-													<h2 class="typo-undertittel">Arbeidsgiver</h2>Tjenester, skjemaer,
-													rekruttering, inkludering, oppfølging sykmeldte, hjelpemidler,
-													selvstendig næringsdrivende m.m.
-												</div>
-											</span>
-											<span class="lenkepanel__indikator"></span>
-										</a>
-									</li>
-									<li if:false={isSamarbeidspartner}>
-										<a href="https://www.nav.no/no/samarbeidspartner"
-											class="lenkepanel lenkepanel--border">
-											<span class="typo-normal lenkepanel__heading">
-												<div class="arbeidsflatevalg-tekst">
-													<h2 class="typo-undertittel">Samarbeidspartner</h2>Leger/behandlere,
-													hjelpemidler, tilskudd, skjema tiltaksarrangører,
-													arbeidslivskriminalitet, for kommunen m.m.
-												</div>
-											</span>
-											<span class="lenkepanel__indikator"></span>
-										</a>
-									</li>
-								</ul>
-							</div>
-						</div>
+						
 					</div>
 				</section>
 				<section class="menylinje-bottom">
