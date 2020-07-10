@@ -2,8 +2,18 @@
 	position: var(--fixed);
 	top: var(--headerPosition);
 }
+
 lightning-output-field.hidden-helptext>lightning-helptext {
 	display: none;
+}
+
+lightning-output-field>span, span.lightning-output-field__label {
+	font-weight: bold;
+}
+
+lightning-output-field>div>lightning-formatted-text, lightning-formatted-text.lightning-output-field {
+	font-size: 1rem !important;
+	font-weight: 300 !important;
 }
 
 .navno-dekorator .lukknapp {
