@@ -6893,6 +6893,18 @@ lightning-input-field.ikke-sensitiv-fritekst>lightning-textarea>label:after {
 	content: " (ikke sensitiv informasjon)";
 }
 
+lightning-input-field.ikke-sensitive-opplysninger>lightning-textarea>label:after {
+	content: " (ikke sensitive opplysninger)";
+}
+
+.ikke-sensitive-opplysninger__label:after {
+	content: " (ikke sensitive opplysninger)";
+}
+
+lightning-input-field.adressefelt-hjelp>lightning-input>label:after {
+	content: " (gatenavn, husnummer)";
+}
+
 .hovedbanner {
 	padding: 1rem 1.5rem 1rem 1.5rem;
 	border-bottom-width: 4px;
