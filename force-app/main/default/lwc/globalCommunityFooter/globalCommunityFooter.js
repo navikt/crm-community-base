@@ -14,7 +14,7 @@ export default class GlobalCommunityFooter extends LightningElement {
 	@wire(isProdFunction)
 	wiredIsProd({ error, data }) {
 		this.isProd = data;
-		console.log("isProd: " + this.isProd);
+		//console.log("isProd: " + this.isProd);
 	}
 
 	scrollToTop() {

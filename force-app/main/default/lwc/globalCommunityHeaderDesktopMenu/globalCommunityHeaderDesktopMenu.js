@@ -17,7 +17,7 @@ export default class GlobalCommunityHeaderDesktopMenu extends LightningElement {
 	@wire(isProdFunction)
 	wiredIsProd({ error, data }) {
 		this.isProd = data;
-		console.log("isProd: " + this.isProd);
+		//console.log("isProd: " + this.isProd);
 	}
 
 	userId = ID;
@@ -67,7 +67,7 @@ export default class GlobalCommunityHeaderDesktopMenu extends LightningElement {
 
 	@track menuPressed = false;
 	handleOnClickMenu(event) {
-		console.log("meny");
+		//console.log("meny");
 		this.varslerPressed = false;
 		this.searchPressed = false;
 		this.minSidePressed = false;
