@@ -6761,9 +6761,6 @@ lightning-datetimepicker>div>fieldset>legend.slds-form-element__legend {
 lightning-radio-group {
 	padding-left: 0.25rem;
 }
-lightning-radio-group.vertical {
-	margin-bottom: 1rem;
-}
 
 .slds-input {
 	border-color: #78706a;
