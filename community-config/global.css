@@ -7479,7 +7479,7 @@ html {
 	width: 100%;
 }
 
-lightning-radio-group.vertical > fieldset > div > span {
+lightning-radio-group > fieldset > div > span {
 	margin-bottom: 0.25rem;
 }
 
