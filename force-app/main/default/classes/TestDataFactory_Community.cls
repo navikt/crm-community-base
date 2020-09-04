@@ -36,16 +36,12 @@ public class TestDataFactory_Community {
         if (personAccounts != null) return personAccounts;
         personAccounts = new List<Account>();
         List<Person__c> persons=getPersons(numberOfAccounts);
-        for (Integer i = 1; i <= numberOfAccounts; i++) {
-            personAccounts.add(new Account(
-                    FirstName = 'Person',
-                    LastName = String.valueOf(i),
-                    INT_PersonIdent__c = String.valueOf(i),
-                    CRM_Person__c=persons[i-1].Id,
-                    RecordTypeId = PERSON_ACCOUNT_RECORDTYPEID
-            ));
+        
+        personAccounts=[SELECT FirstName, LastName, INT_PersonIdent__c, CRM_Person__c, CRM_IsPilot__c FROM Account WHERE  RecordTypeId =: PERSON_ACCOUNT_RECORDTYPEID];
+        for(Account acc:personAccounts){
+            acc.CRM_IsPilot__c=true;
         }
-        personAccounts=[SELECT FirstName, LastName, INT_PersonIdent__c, CRM_Person__c FROM Account WHERE  RecordTypeId =: PERSON_ACCOUNT_RECORDTYPEID];
+        update personAccounts;
         return personAccounts;
     }
 

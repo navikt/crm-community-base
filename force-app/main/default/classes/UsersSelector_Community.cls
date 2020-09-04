@@ -16,7 +16,7 @@ public inherited sharing class UsersSelector_Community extends ApplicationSelect
         return (List<User>)
                 Database.query(
                         newQueryFactory()
-                                .setCondition('Account.INT_PersonIdent__c in: idents')
+                                .setCondition('Account.INT_PersonIdent__c in: idents AND Account.CRM_IsPilot__c=true')
                                 .toSOQL());
     }
 }
