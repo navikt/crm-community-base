@@ -6758,7 +6758,7 @@ lightning-datetimepicker>div>fieldset>legend.slds-form-element__legend {
 	}
 }
 
-lightning-radio-group {
+lightning-radio-group.nav-radio-button-group {
 	padding-left: 0.25rem;
 }
 
@@ -6767,10 +6767,11 @@ lightning-radio-group {
 	box-shadow: none;
 }
 
-.nav-radio-button-group .slds-form-element__control {
+.horizontal .slds-form-element__control {
 	display: flex;
 	flex-direction: row;
-	justify-content: space-between;
+}
+.radio-button-group_yes-no .slds-form-element__control {
 	max-width: 200px;
 }
 
@@ -6814,6 +6815,7 @@ lightning-radio-group {
 span.slds-radio {
 	height: 1.16rem;
 	display: inline-block;
+	margin-right: 1rem;
 }
 
 .slds-button_brand, .slds-button--brand {
