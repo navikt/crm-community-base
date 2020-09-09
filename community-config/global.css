@@ -11,7 +11,7 @@ lightning-output-field>span, span.lightning-output-field__label {
 	font-weight: bold;
 }
 
-lightning-output-field>div>lightning-formatted-text, lightning-formatted-text.lightning-output-field {
+lightning-output-field>div>lightning-formatted-text, lightning-formatted-text.lightning-output-field, lightning-formatted-date-time.lightning-output-field {
 	font-size: 1rem !important;
 	font-weight: 300 !important;
 }
@@ -6771,6 +6771,7 @@ lightning-radio-group.nav-radio-button-group {
 	display: flex;
 	flex-direction: row;
 }
+
 .radio-button-group_yes-no .slds-form-element__control {
 	max-width: 200px;
 }
@@ -7481,7 +7482,6 @@ html {
 	width: 100%;
 }
 
-lightning-radio-group > fieldset > div > span {
+lightning-radio-group>fieldset>div>span {
 	margin-bottom: 0.25rem;
 }
-
