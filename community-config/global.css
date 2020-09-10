@@ -16,6 +16,10 @@ lightning-output-field>div>lightning-formatted-text, lightning-formatted-text.li
 	font-weight: 300 !important;
 }
 
+lightning-formatted-number.lightning-output-field {
+	font-size: 1rem !important;
+}
+
 .navno-dekorator .lukknapp {
 	font: 0/0 a;
 	color: transparent;
