@@ -9,7 +9,7 @@ private class UsersSelector_CommunityTest {
             TestDataFactory_Community.getEmployerCommunityUser(new Set<Id>{
                     personAccount.Id
             }, true);
-
+       
             Test.startTest();
             List<User> users = new UsersSelector_Community().selectByAccountIdent(new Set<String>{
                     personAccount.INT_PersonIdent__c
