@@ -1,15 +1,17 @@
 public with sharing class CommunityUsersService {
 
     public static User getOrCreatePersonAccountUser(String personIdent) {
-        List<User> existingUsers = new UsersSelector_Community().selectByAccountIdent(new Set<String>{
-                personIdent
-        });
+        //check if related Person__c is ugradert
+        List<Account> personAccounts=new AccountsSelector_Community().selectByIdent(personIdent);
+        if(personAccounts==null ||personAccounts.size()==0) return null;
+
+        List<User> existingUsers = new UsersSelector_Community().selectByAccountIdent(new set<String> {personIdent});
         if (existingUsers.size() > 0) return existingUsers[0];
 
         DefaultCommunityProfile__c defaultCommunityProfiles = DefaultCommunityProfile__c.getOrgDefaults();
         String profileName = defaultCommunityProfiles.DefaultProfile__c;
         Profile profile = [SELECT Id FROM Profile WHERE Name = :profileName];
-        List<Account> personAccounts=new AccountsSelector_Community().selectByIdent(new Set<String>{personIdent});
+        
         if (personAccounts.size()>0 && profile != null) {
             PersonAccountWrapper contact=new PersonAccountWrapper(personAccounts[0]);
             User user= createCommunityUser(contact, profile.Id);

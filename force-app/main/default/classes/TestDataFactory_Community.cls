@@ -53,7 +53,10 @@ public class TestDataFactory_Community {
         List<Person__c> persons=new List<Person__c>();
         for (Integer i = 1; i <= numberOfPersons; i++) {
             persons.add(new Person__c(
-                Name=String.valueOf(i)
+                Name=String.valueOf(i),
+                INT_LastName__c=String.valueOf(i),
+                INT_Confidential__c='UGRADERT'
+
             ));
         }
         insert persons;
