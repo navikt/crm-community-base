@@ -8224,5 +8224,6 @@
   lightning-output-field.checkbox-inline > div.slds-form-element__control {
 	width: unset;
 	flex-basis: unset;
+	top: 5px;
   }
   
