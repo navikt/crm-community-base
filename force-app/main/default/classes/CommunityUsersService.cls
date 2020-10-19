@@ -14,9 +14,10 @@ public with sharing class CommunityUsersService {
 
         DefaultCommunityProfile__c defaultCommunityProfiles = DefaultCommunityProfile__c.getOrgDefaults();
         String profileName = defaultCommunityProfiles.DefaultProfile__c;
+        System.debug(profileName);
         Profile profile = [SELECT Id FROM Profile WHERE Name = :profileName];
         String permissionSetName = defaultCommunityProfiles.DefaultPermissionSet__c;
-        List<PermissionSet> permissionSets=[SELECT Id FROM permissionSet WHERE Name=:permissionSetName];
+        PermissionSet permissionSet=[SELECT Id FROM permissionSet WHERE Name=:permissionSetName LIMIT 1];
 
         List<Account> personAccounts=new AccountsSelector_Community().selectByIdent(new Set<String>(newIdents));
         
@@ -32,8 +33,8 @@ public with sharing class CommunityUsersService {
             }
             insert newUsers;
             for(User user:newUsers){
-                if(permissionSets.size()>0){
-                    PermissionSetAssignment permSetAssignment=new PermissionSetAssignment(AssigneeId=user.Id, PermissionSetId=permissionSets[0].Id);
+                if(permissionSet != null){
+                    PermissionSetAssignment permSetAssignment=new PermissionSetAssignment(AssigneeId=user.Id, PermissionSetId=permissionSet.Id);
                     permsetAssignments.add(permSetAssignment);
                 }
             }
@@ -62,12 +63,16 @@ public with sharing class CommunityUsersService {
         return user;
     }
 
+
+    //Splitt opp i to metoder
     @InvocableMethod(label='Create Community Plus User')
-    public static List<ServiceResource> createCommunityPlusUser(List<String> personIdents_serviceTerritory) {
-        if(personIdents_serviceTerritory.size()>1){
-            String serviceTerritoryDeveloperName = personIdents_serviceTerritory[personIdents_serviceTerritory.size()-1];
-            personIdents_serviceTerritory.remove(personIdents_serviceTerritory.size()-1);
-            List<User> users = getOrCreatePersonAccountUser(personIdents_serviceTerritory);
+    public static List<ServiceResource> createCommunityPlusUserFlowAction(List<String> personIdents) {
+        return createCommunityPlusUser(personIdents, 'DummyServiceTerritory');
+    }
+
+    public static List<ServiceResource> createCommunityPlusUser(List<String> personIdents, String ServiceTerritoryDeveloperName){
+        if(personIdents.size()>0){
+            List<User> users = getOrCreatePersonAccountUser(personIdents);
             
             DefaultCommunityProfile__c defaultCommunityProfiles = DefaultCommunityProfile__c.getOrgDefaults();
             String profileName = defaultCommunityProfiles.DefaultCommunityPlusProfile__c;
@@ -89,21 +94,21 @@ public with sharing class CommunityUsersService {
             
             return serviceResources;
         }
+        
         return null;
     }
 
     public static List<ServiceResource> createServiceResource(List<User> users, Boolean isFreelance, String serviceTerritoryDeveloperName) {
-
+        System.debug('createServiceResource');
         List<ServiceResource> serviceResources = new List<ServiceResource>();
         for(User user:users){
-            ServiceResource serviceResource = new ServiceResource(
-                Name = user.Name,
-                //FSL__GanttLabel__c = isFreelance ? 'Frilanstolk' : 'Ansatt Tolk',
-                ResourceType = 'T',
-                IsActive = true,
-                HOT_IsEmployedInterpreter__c = !isFreelance,
-                HOT_IsFreelanceInterpreter__c = isFreelance
-            );
+            ServiceResource serviceResource = new ServiceResource();
+            serviceResource.Name = user.Name;
+            serviceResource.ResourceType = 'T';
+            serviceResource.IsActive = true;
+            serviceResource.put('FSL__GanttLabel__c', isFreelance ? 'Frilanstolk' : 'Ansatt Tolk');
+            serviceResource.put('HOT_IsEmployedInterpreter__c', !isFreelance);
+            serviceResource.put('HOT_IsFreelanceInterpreter__c', isFreelance);
         }
         insert serviceResources;
 
