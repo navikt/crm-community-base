@@ -3,7 +3,7 @@
     <actionCalls>
         <name>Create_Community_Plus_User</name>
         <label>Create Community Plus User</label>
-        <locationX>1526</locationX>
+        <locationX>1525</locationX>
         <locationY>81</locationY>
         <actionName>CommunityUsersService</actionName>
         <actionType>apex</actionType>
@@ -11,13 +11,32 @@
             <targetReference>End_Screen</targetReference>
         </connector>
         <inputParameters>
-            <name>personIdents</name>
+            <name>personIdents_serviceTerritory</name>
             <value>
                 <elementReference>PersonIdent</elementReference>
             </value>
         </inputParameters>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
+        <outputParameters>
+            <assignToReference>serviceResource</assignToReference>
+            <name>output</name>
+        </outputParameters>
     </actionCalls>
+    <assignments>
+        <name>AddDummyServiceTerritory</name>
+        <label>AddDummyServiceTerritory</label>
+        <locationX>1362</locationX>
+        <locationY>78</locationY>
+        <assignmentItems>
+            <assignToReference>PersonIdent</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <stringValue>DummyTerritory</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Create_Community_Plus_User</targetReference>
+        </connector>
+    </assignments>
     <decisions>
         <name>Access</name>
         <label>Access?</label>
@@ -79,6 +98,12 @@
         <name>BuilderType</name>
         <value>
             <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>FREE_FORM_CANVAS</stringValue>
         </value>
     </processMetadataValues>
     <processMetadataValues>
@@ -164,11 +189,11 @@
     <recordLookups>
         <name>Get_Person_Account</name>
         <label>Get Person Account</label>
-        <locationX>1314</locationX>
-        <locationY>81</locationY>
+        <locationX>1183</locationX>
+        <locationY>68</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Create_Community_Plus_User</targetReference>
+            <targetReference>AddDummyServiceTerritory</targetReference>
         </connector>
         <filters>
             <field>Id</field>
@@ -235,14 +260,14 @@
     <screens>
         <name>End_Screen</name>
         <label>End Screen</label>
-        <locationX>1725</locationX>
-        <locationY>81</locationY>
+        <locationX>1727</locationX>
+        <locationY>90</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <fields>
             <name>Success_Message</name>
-            <fieldText>&lt;p&gt;Bruker er nå lagt til som frilanstolk. Neste steg er å sette opp en tjenesteressurs for brukeren.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Bruker er nå lagt til som frilanstolk, og en tjenesteressurs er opprettet: {!serviceResource.Name}&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <showFooter>true</showFooter>
@@ -292,6 +317,14 @@
         <isCollection>false</isCollection>
         <isInput>true</isInput>
         <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>serviceResource</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+        <objectType>ServiceResource</objectType>
     </variables>
     <variables>
         <name>userId</name>
