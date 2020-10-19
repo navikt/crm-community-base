@@ -3,15 +3,15 @@
     <actionCalls>
         <name>Create_Community_Plus_User</name>
         <label>Create Community Plus User</label>
-        <locationX>1525</locationX>
-        <locationY>81</locationY>
+        <locationX>1428</locationX>
+        <locationY>78</locationY>
         <actionName>CommunityUsersService</actionName>
         <actionType>apex</actionType>
         <connector>
             <targetReference>End_Screen</targetReference>
         </connector>
         <inputParameters>
-            <name>personIdents_serviceTerritory</name>
+            <name>personIdents</name>
             <value>
                 <elementReference>PersonIdent</elementReference>
             </value>
@@ -21,22 +21,6 @@
             <name>output</name>
         </outputParameters>
     </actionCalls>
-    <assignments>
-        <name>AddDummyServiceTerritory</name>
-        <label>AddDummyServiceTerritory</label>
-        <locationX>1362</locationX>
-        <locationY>78</locationY>
-        <assignmentItems>
-            <assignToReference>PersonIdent</assignToReference>
-            <operator>Add</operator>
-            <value>
-                <stringValue>DummyTerritory</stringValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Create_Community_Plus_User</targetReference>
-        </connector>
-    </assignments>
     <decisions>
         <name>Access</name>
         <label>Access?</label>
@@ -193,7 +177,7 @@
         <locationY>68</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>AddDummyServiceTerritory</targetReference>
+            <targetReference>Create_Community_Plus_User</targetReference>
         </connector>
         <filters>
             <field>Id</field>
@@ -260,8 +244,8 @@
     <screens>
         <name>End_Screen</name>
         <label>End Screen</label>
-        <locationX>1727</locationX>
-        <locationY>90</locationY>
+        <locationX>1566</locationX>
+        <locationY>70</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
