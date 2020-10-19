@@ -1,29 +1,45 @@
 public with sharing class CommunityUsersService {
 
-    public static User getOrCreatePersonAccountUser(String personIdent) {
-        //check if related Person__c is ugradert
-        List<Account> personAccounts=new AccountsSelector_Community().selectByIdent(personIdent);
-        if(personAccounts==null ||personAccounts.size()==0) return null;
-
-        List<User> existingUsers = new UsersSelector_Community().selectByAccountIdent(new set<String> {personIdent});
-        if (existingUsers.size() > 0) return existingUsers[0];
+    public static List<User> getOrCreatePersonAccountUser(List<String> personIdents) {
+        List<User> existingUsers = new UsersSelector_Community().selectByAccountIdent(new Set<String>(
+                personIdents
+        ));
+        List<String> newIdents = new List<String>(personIdents);
+        if (existingUsers.size() == personIdents.size()) return existingUsers;
+        else{
+            for(User existingUser:existingUsers){
+                newIdents.remove(newIdents.indexOf(existingUser.Account.INT_PersonIdent__c));
+            }
+        }
 
         DefaultCommunityProfile__c defaultCommunityProfiles = DefaultCommunityProfile__c.getOrgDefaults();
         String profileName = defaultCommunityProfiles.DefaultProfile__c;
         Profile profile = [SELECT Id FROM Profile WHERE Name = :profileName];
-        
-        if (personAccounts.size()>0 && profile != null) {
-            PersonAccountWrapper contact=new PersonAccountWrapper(personAccounts[0]);
-            User user= createCommunityUser(contact, profile.Id);
-            String permissionSetName = defaultCommunityProfiles.DefaultPermissionSet__c;
-            List<PermissionSet> permissionSets=[SELECT Id FROM permissionSet WHERE Name=:permissionSetName];
-           if(permissionSets.size()>0){
-                PermissionSetAssignment permSetAssignment=new PermissionSetAssignment(AssigneeId=user.Id, PermissionSetId=permissionSets[0].Id);
-                insert permSetAssignment;
-            }
-            return user;
-        }
+        String permissionSetName = defaultCommunityProfiles.DefaultPermissionSet__c;
+        List<PermissionSet> permissionSets=[SELECT Id FROM permissionSet WHERE Name=:permissionSetName];
 
+        List<Account> personAccounts=new AccountsSelector_Community().selectByIdent(new Set<String>(newIdents));
+        
+        List<User> newUsers = new List<User>();
+        List<PermissionSetAssignment> permsetAssignments = new List<PermissionSetAssignment>();
+
+        if (personAccounts.size()>0 && profile != null) {   
+            for(Account personAccount:personAccounts){
+                PersonAccountWrapper contact=new PersonAccountWrapper(personAccount);
+                User user= createCommunityUser(contact, profile.Id);
+                newUsers.add(user);
+                existingUsers.add(user);
+            }
+            insert newUsers;
+            for(User user:newUsers){
+                if(permissionSets.size()>0){
+                    PermissionSetAssignment permSetAssignment=new PermissionSetAssignment(AssigneeId=user.Id, PermissionSetId=permissionSets[0].Id);
+                    permsetAssignments.add(permSetAssignment);
+                }
+            }
+            insert permsetAssignments;
+            return existingUsers;
+        }
         return null;
     }
 
@@ -43,35 +59,30 @@ public with sharing class CommunityUsersService {
         user.EmailEncodingKey = 'UTF-8';
         user.ProfileId=profileId;
         user.ContactId=contact.recordId;
-        insert user;
         return user;
     }
 
     @InvocableMethod(label='Create Community Plus User')
     public static List<User> createCommunityPlusUser(List<String> personIdents) {
         
-        String personIdent = personIdents[0];
-        List<User> existingUsers = new UsersSelector_Community().selectByAccountIdent(new Set<String>{personIdent});
-        User user;
-        
-        if (existingUsers.isEmpty()) {
-            user = getOrCreatePersonAccountUser(personIdent);
-            existingUsers.add(user);
-        } else {
-            user = existingUsers[0];
-        }
+        List<User> users = getOrCreatePersonAccountUser(personIdents);
         
         DefaultCommunityProfile__c defaultCommunityProfiles = DefaultCommunityProfile__c.getOrgDefaults();
         String profileName = defaultCommunityProfiles.DefaultCommunityPlusProfile__c;
         Id profileId = [SELECT Id FROM Profile WHERE Name = :profileName].Id;
-        user.ProfileId = profileId;
-        update user;
 
         String permissionSetGroupName = defaultCommunityProfiles.DefaultCommunityPlusPermissionSetGroup__c;
         Id permissionSetGroupId = [SELECT Id FROM PermissionSetGroup WHERE DeveloperName = :permissionSetGroupName].Id;
-        PermissionSetAssignment permSetAssignment = new PermissionSetAssignment(AssigneeId = user.Id, PermissionSetGroupId = permissionSetGroupId);
-        insert permSetAssignment;
+        List<PermissionSetAssignment> permSetAssignments = new List<PermissionSetAssignment>();
+
+        for(User user:users){
+            user.ProfileId = profileId;
+            PermissionSetAssignment permSetAssignment = new PermissionSetAssignment(AssigneeId = user.Id, PermissionSetGroupId = permissionSetGroupId);
+            permSetAssignments.add(permSetAssignment);
+        }
+        update users;
+        insert permSetAssignments;
         
-        return existingUsers;
+        return users;
     }
 }
