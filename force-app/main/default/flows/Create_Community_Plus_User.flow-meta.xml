@@ -16,10 +16,7 @@
                 <elementReference>PersonIdent</elementReference>
             </value>
         </inputParameters>
-        <outputParameters>
-            <assignToReference>serviceResource</assignToReference>
-            <name>output</name>
-        </outputParameters>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
     </actionCalls>
     <decisions>
         <name>Access</name>
@@ -251,7 +248,7 @@
         <allowPause>true</allowPause>
         <fields>
             <name>Success_Message</name>
-            <fieldText>&lt;p&gt;Bruker er nå lagt til som frilanstolk, og en tjenesteressurs er opprettet: {!serviceResource.Name}&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Bruker er nå lagt til som frilanstolk, og en tjenesteressurs er opprettet.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <showFooter>true</showFooter>
