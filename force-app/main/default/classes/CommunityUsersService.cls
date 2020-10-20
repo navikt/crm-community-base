@@ -82,7 +82,6 @@ public with sharing class CommunityUsersService {
     
             for(User user:users){
                 user.ProfileId = profileId;
-                user.put('HOT_CreateServiceResource__c', true);
                 PermissionSetAssignment permSetAssignment = new PermissionSetAssignment(AssigneeId = user.Id, PermissionSetGroupId = permissionSetGroupId);
                 permSetAssignments.add(permSetAssignment);
             }
