@@ -8,7 +8,7 @@ public with sharing class CommunityUsersService {
         }
         else{
             for(User existingUser:existingUsers){
-                newIdents.remove(newIdents.indexOf(existingUser.Account.CRM_Person__r.Name));
+                newIdents.remove(newIdents.indexOf(existingUser.Account.INT_PersonIdent__c));
             }
         }
 
