@@ -37,6 +37,10 @@ jobs:
       - name: "Lint Aura components"
         run: "sfdx force:lightning:lint force-app/main/default/aura --exit"
 
+      # Install sfpowerkit plugin used to install multiple packages only by version number
+      - name: "Install sfpowerkit plugin"
+        run: "echo y | sfdx plugins:install sfpowerkit"
+
       # Create scratch org
       - name: "Create scratch org"
         run: "sfdx force:org:create -f config/project-scratch-def.json -a scratch-org -s -d 1"
@@ -50,6 +54,7 @@ jobs:
               keys+=$p":${{ secrets.PACKAGE_KEY }} "
           done
           echo "::set-output name=keys::$(echo $keys)"
+
       # Install packages this repo is dependant on
       - name: "Install dependant packages"
         run: "sfdx sfpowerkit:package:dependencies:install -u scratch-org -r -a -w 60 -k '${{ steps.install-keys.outputs.keys }}'"
