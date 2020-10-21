@@ -12,9 +12,9 @@
                     "versionNumber": "0.36.0.LATEST"
                 },
                 {
-					"package": "crm-platform-access-control",
-					"versionNumber": "0.26.0.LATEST"
-				}
+                    "package": "crm-platform-access-control",
+                    "versionNumber": "0.26.0.LATEST"
+                }
             ]
         }
     ],
