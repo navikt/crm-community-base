@@ -1,7 +1,8 @@
 public with sharing class CommunityUsersService {
 
     public static List<User> getOrCreatePersonAccountUser(List<String> personIdents) {
-        List<User> existingUsers = new UsersSelector_Community().selectByAccountIdent(new Set<String>(personIdents));
+        List<User> existingUsers = [SELECT Id, Name, ProfileId, Account.INT_PersonIdent__c FROM User WHERE Account.INT_PersonIdent__c IN :personIdents];
+        //new UsersSelector_Community().selectByAccountIdent(new Set<String>(personIdents));
         List<String> newIdents = new List<String>(personIdents);
         if (existingUsers.size() == personIdents.size()){
             return existingUsers;
@@ -81,9 +82,11 @@ public with sharing class CommunityUsersService {
             List<PermissionSetAssignment> permSetAssignments = new List<PermissionSetAssignment>();
     
             for(User user:users){
-                user.ProfileId = profileId;
-                PermissionSetAssignment permSetAssignment = new PermissionSetAssignment(AssigneeId = user.Id, PermissionSetGroupId = permissionSetGroupId);
-                permSetAssignments.add(permSetAssignment);
+                if(user.ProfileId != profileId){
+                    user.ProfileId = profileId;
+                    PermissionSetAssignment permSetAssignment = new PermissionSetAssignment(AssigneeId = user.Id, PermissionSetGroupId = permissionSetGroupId);
+                    permSetAssignments.add(permSetAssignment);
+                }
             }
             update users;
             insert permSetAssignments;
