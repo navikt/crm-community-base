@@ -19,7 +19,7 @@ private class CommunityUsersServiceTest {
             }, true);
 
             Test.startTest();
-            User user = CommunityUsersService.getOrCreatePersonAccountUser(new List<String>{'1'})[0];
+            User user = CommunityUsersService.getOrCreatePersonAccountUser('1');
             Test.stopTest();
             System.assert(user != null);
             System.assertEquals(personAccount.FirstName, user.FirstName);
@@ -34,7 +34,7 @@ private class CommunityUsersServiceTest {
             Account personAccount = TestDataFactory_Community.getPersonAccounts(1)[0];
 
             Test.startTest();
-            User user = CommunityUsersService.getOrCreatePersonAccountUser(new List<String>{'1'})[0];
+            User user = CommunityUsersService.getOrCreatePersonAccountUser('1');
             Test.stopTest();
             System.assert(user != null);
             System.assertEquals(personAccount.FirstName, user.FirstName);
@@ -48,7 +48,7 @@ private class CommunityUsersServiceTest {
     @IsTest
     private static void getOrCreatePersonAccountUser_whenNoUserOrPersonAccountExist() {
         Test.startTest();
-        List<User> user = CommunityUsersService.getOrCreatePersonAccountUser(new List<String>{'1'});
+        User user = CommunityUsersService.getOrCreatePersonAccountUser('1');
         Test.stopTest();
         System.assert(user == null);
     }
@@ -69,7 +69,6 @@ private class CommunityUsersServiceTest {
 
         Test.startTest();
         User user=CommunityUsersService.createCommunityUser(wrapper, communityProfile.Id);
-        insert user;
         Test.stopTest();
 
         System.assertEquals(contactId + '@nav.portal', user.Username);
