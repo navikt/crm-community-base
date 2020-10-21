@@ -1,7 +1,7 @@
 public with sharing class CommunityUsersService {
 
     public static List<User> getOrCreatePersonAccountUser(List<String> personIdents) {
-        List<User> existingUsers = [SELECT Id, Name, ProfileId, Account.INT_PersonIdent__c FROM User WHERE Account.INT_PersonIdent__c IN :personIdents];
+        List<User> existingUsers = [SELECT Id, Name, FirstName, LastName, ProfileId, Account.INT_PersonIdent__c FROM User WHERE Account.INT_PersonIdent__c IN :personIdents];
         //new UsersSelector_Community().selectByAccountIdent(new Set<String>(personIdents));
         List<String> newIdents = new List<String>(personIdents);
         if (existingUsers.size() == personIdents.size()){
