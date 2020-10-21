@@ -1,4 +1,4 @@
-public with sharing class CommunityUsersService {
+public with sharing class CommunityUsersServiceBatch {
 
     public static List<User> getOrCreatePersonAccountUser(List<String> personIdents) {
         List<User> existingUsers = [SELECT Id, Name, FirstName, LastName, ProfileId, Account.INT_PersonIdent__c FROM User WHERE Account.INT_PersonIdent__c IN :personIdents];
