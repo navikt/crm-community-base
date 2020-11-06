@@ -8226,4 +8226,7 @@
 	flex-basis: unset;
 	top: 5px;
   }
+.no-padding form {
+	padding: 0;
+}
   
