@@ -7379,19 +7379,6 @@
 	box-shadow: none;
   }
   
-  lightning-timepicker > label.slds-form-element__label {
-	visibility: hidden;
-	position: relative;
-  }
-  
-  lightning-timepicker > label.slds-form-element__label:before {
-	visibility: visible;
-	position: absolute;
-	top: 0;
-	left: 0;
-	content: "Klokkeslett";
-  }
-  
   lightning-timepicker > label.slds-form-element__label:after {
 	visibility: visible;
 	position: relative;
@@ -8228,5 +8215,19 @@
   }
 .no-padding form {
 	padding: 0;
+}
+.dynamic-time-inputs-with-line_button {
+    display: grid;
+    grid-template-columns: 95% 5%;
+}
+.dynamic-time-inputs {
+    display: grid;
+    grid-template-columns: repeat(3, 33%);
+}
+.remove-time__button{
+    display: flex;
+    justify-content: center;
+    bottom: -20%;
+    position: relative;
 }
   
