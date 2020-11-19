@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="13px" height="7px" viewBox="0 0 13 7" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 61.2 (89653) - https://sketch.com -->
+    <title>Chevron/down</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Bestille-tolketjeneste" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Artboard" transform="translate(0.000000, -3.000000)" fill="#3E3832" fill-rule="nonzero">
+            <g id="Chevron/down">
+                <path d="M3.49291885,2.2325486 C3.16902705,1.90769284 3.16902705,1.38099758 3.49291885,1.05614182 C3.81681065,0.731286059 4.34194301,0.731286059 4.66583481,1.05614182 L9.50708115,5.91179661 C9.83097295,6.23665237 9.83097295,6.76334763 9.50708115,7.08820339 L4.66583481,11.9438582 C4.34194301,12.2687139 3.81681065,12.2687139 3.49291885,11.9438582 C3.16902705,11.6190024 3.16902705,11.0923072 3.49291885,10.7674514 L7.7477072,6.5 L3.49291885,2.2325486 Z" id="chevron" transform="translate(6.500000, 6.500000) rotate(-270.000000) translate(-6.500000, -6.500000) "></path>
+            </g>
+        </g>
+    </g>
+</svg>
