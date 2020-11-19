@@ -18,7 +18,4 @@ export default class GlobalCommunityHeader extends LightningElement {
         this.isArbeidsgiver = this.NAVarea == 'Arbeidsgiver';
         this.isSamarbeidspartner = this.NAVarea == 'Samarbeidspartner';
     }
-
-
-
 }

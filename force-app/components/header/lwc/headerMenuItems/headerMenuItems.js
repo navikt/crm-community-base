@@ -3,14 +3,16 @@ import logos from '@salesforce/resourceUrl/logos';
 
 export default class EmployerCommunityMenuItems extends LightningElement {
     navlogo = logos + '/navLogoRed.svg';
-    @api NAVarea;
+    @api area;
+
     @track isArbeidsgiver;
     @track isPrivatperson;
     @track isSamarbeidspartner;
 
+    
     connectedCallback() {
-        this.isPrivatperson = this.NAVarea == 'Privatperson';
-        this.isArbeidsgiver = this.NAVarea == 'Arbeidsgiver';
-        this.isSamarbeidspartner = this.NAVarea == 'Samarbeidspartner';
+        this.isPrivatperson = this.area == 'Privatperson';
+        this.isArbeidsgiver = this.area == 'Arbeidsgiver';
+        this.isSamarbeidspartner = this.area == 'Samarbeidspartner';
     }
 }
