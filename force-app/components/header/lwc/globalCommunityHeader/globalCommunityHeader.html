@@ -1,0 +1,100 @@
+<template>
+	<div id="header-withmenu" style="padding-top: 0.75rem">
+	  <section id="decorator-header" class="decorator-wrapper" role="main">
+		<div class="head-wrapper">
+		  <div class="head-container" id="stickyhead">
+			<header class="siteheader">
+			  <div class="decorator-wrapper">
+				<div class="header-z-wrapper">
+				  <nav
+					class="arbeidsflate"
+					id="arbeidsflate"
+					aria-label="Velg brukergruppe"
+				  >
+					<ul class="arbeidsflate__topp-liste-rad" role="tablist">
+					  <li
+						role="tab"
+						aria-selected="true"
+						class="arbeidsflate__liste-element"
+					  >
+						<a
+						  href="https://www.nav.no/no/person"
+						  class="arbeidsflate__lenke"
+						  id="desktop-header-menylinje_0_0_0"
+						>
+						  <div
+							if:true={isPrivatperson}
+							class="arbeidsflate__lenke-inner arbeidsflate__lenke-inner--active"
+						  >
+							<p class="typo-normal">Privatperson</p>
+						  </div>
+						  <div
+							if:false={isPrivatperson}
+							class="arbeidsflate__lenke-inner"
+						  >
+							<p class="typo-normal">Privatperson</p>
+						  </div>
+						</a>
+					  </li>
+					  <li
+						role="tab"
+						aria-selected="false"
+						class="arbeidsflate__liste-element"
+					  >
+						<a
+						  href="https://www.nav.no/no/bedrift"
+						  class="arbeidsflate__lenke"
+						  id="desktop-header-menylinje_1_0_0"
+						>
+						  <div
+							if:true={isArbeidsgiver}
+							class="arbeidsflate__lenke-inner arbeidsflate__lenke-inner--active"
+						  >
+							<p class="typo-normal">Arbeidsgiver</p>
+						  </div>
+						  <div
+							if:false={isArbeidsgiver}
+							class="arbeidsflate__lenke-inner"
+						  >
+							<p class="typo-normal">Arbeidsgiver</p>
+						  </div>
+						</a>
+					  </li>
+					  <li
+						role="tab"
+						aria-selected="false"
+						class="arbeidsflate__liste-element"
+					  >
+						<a
+						  href="https://www.nav.no/no/samarbeidspartner"
+						  class="arbeidsflate__lenke"
+						  id="desktop-header-menylinje_2_0_0"
+						>
+						  <div
+							if:true={isSamarbeidspartner}
+							class="arbeidsflate__lenke-inner arbeidsflate__lenke-inner--active"
+						  >
+							<p class="typo-normal">Samarbeidspartner</p>
+						  </div>
+						  <div
+							if:false={isSamarbeidspartner}
+							class="arbeidsflate__lenke-inner"
+						  >
+							<p class="typo-normal">Samarbeidspartner</p>
+						  </div>
+						</a>
+					  </li>
+					</ul>
+				  </nav>
+				  <!-- BUTTONS -->
+				  <c-header-menu-items></c-header-menu-items>
+				</div>
+			  </div>
+			</header>
+			<!--<div class="meny-bakgrunn meny-bakgrunn--active"></div>-->
+		  </div>
+		</div>
+	  </section>
+	</div>
+  </template>
+  
