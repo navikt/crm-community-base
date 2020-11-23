@@ -52,7 +52,6 @@ export default class HeaderLoggedInButtons extends LightningElement {
 		}
 	}
 
-/*
 	@track searchPressed = false;
 	handleOnClickSearch(event) {
 		this.searchPressed = !this.searchPressed;
