@@ -15,7 +15,6 @@ export default class HeaderDropdownMenu extends LightningElement {
     }
     
     connectedCallback() {
-        console.log('pressed', this.pressed);
         this.isPrivatperson = this.area == 'Privatperson';
         this.isArbeidsgiver = this.area == 'Arbeidsgiver';
         this.isSamarbeidspartner = this.area == 'Samarbeidspartner';
