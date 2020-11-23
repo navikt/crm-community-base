@@ -20,6 +20,10 @@
                             <c-header-search-button></c-header-search-button>
                         </div>
                         <span class="header-linje__spacer"></span>
+                        <div if:true={showLogin}>
+                        <c-header-logged-in-buttons></c-header-logged-in-buttons>
+                    </div>
+                  
                         <c-header-dropdown-menu-mobile class="media-sm-mobil"></c-header-dropdown-menu-mobile>
                     </div>
                 </nav>

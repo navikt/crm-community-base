@@ -9,10 +9,14 @@ export default class EmployerCommunityMenuItems extends LightningElement {
     @track isPrivatperson;
     @track isSamarbeidspartner;
 
+    @track showLogin;
+
     
     connectedCallback() {
         this.isPrivatperson = this.area == 'Privatperson';
         this.isArbeidsgiver = this.area == 'Arbeidsgiver';
         this.isSamarbeidspartner = this.area == 'Samarbeidspartner';
+
+        this.showLogin = this.area == 'Privatperson';
     }
 }
