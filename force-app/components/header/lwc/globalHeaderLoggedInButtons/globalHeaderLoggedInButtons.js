@@ -11,7 +11,7 @@ import dekoratoren from '@salesforce/resourceUrl/dekoratoren';
 
 const fields = [FIRST_NAME, MIDDLE_NAME, LAST_NAME];
 
-export default class HeaderLoggedInButtons extends LightningElement {
+export default class GlobalHeaderLoggedInButtons extends LightningElement {
     renderedCallback() {
         loadStyle(this, dekoratoren);
     }
