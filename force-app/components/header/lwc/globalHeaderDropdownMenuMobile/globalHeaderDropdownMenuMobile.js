@@ -2,7 +2,7 @@ import { LightningElement, track, api } from 'lwc';
 import dekoratoren from '@salesforce/resourceUrl/dekoratoren';
 import { loadStyle, loadScript } from 'lightning/platformResourceLoader';
 
-export default class HeaderDropdownMenuMobile extends LightningElement {
+export default class GlobalHeaderDropdownMenuMobile extends LightningElement {
     @api area;
 
     @track menuPressed = false;
