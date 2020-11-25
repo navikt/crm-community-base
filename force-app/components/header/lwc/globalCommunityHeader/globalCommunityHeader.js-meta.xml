@@ -3,7 +3,6 @@
     <apiVersion>48.0</apiVersion>
     <isExposed>true</isExposed>
 	<description>Global Community Header</description>
-	<isExposed>true</isExposed>
 	<masterLabel>Global Community Header</masterLabel>
 	<targets>
 		<target>lightningCommunity__Page</target>

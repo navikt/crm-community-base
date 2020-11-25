@@ -1,0 +1,24 @@
+.cCenterPanel {
+    margin-top: -1em;
+}
+
+.comm-content-header {
+    max-width: none;
+ 	padding-top: .75rem;
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.siteforceContentArea .comm-layout-column:not(:empty) {
+    padding-top: 0!important;
+    padding-left: 0;
+    padding-right: 0;
+    padding-bottom: 0!important;
+    background-color: #e9e7e7;
+}
+
+@media not all and (min-width: 768px) {
+    .siteforceContentArea .comm-layout-column:not(:empty) {
+         margin-top: -1.9rem;
+}
+}
