@@ -13,18 +13,18 @@
                         </a>
                         <!--HAMBURGERMENY-->
                         <div class="media-tablet-desktop">
-                            <c-header-dropdown-menu area={area}></c-header-dropdown-menu>
+                            <c-global-header-dropdown-menu area={area}></c-global-header-dropdown-menu>
                         </div>
                         <!-- SØKEKNAPP -->
                         <div class="media-tablet-desktop">
-                            <c-header-search-button></c-header-search-button>
+                            <c-global-header-search-button></c-global-header-search-button>
                         </div>
                         <span class="header-linje__spacer"></span>
                         <div if:true={showLogin}>
-                        <c-header-logged-in-buttons></c-header-logged-in-buttons>
+                        <c-global-header-logged-in-buttons></c-global-header-logged-in-buttons>
                     </div>
                   
-                        <c-header-dropdown-menu-mobile class="media-sm-mobil"></c-header-dropdown-menu-mobile>
+                        <c-global-header-dropdown-menu-mobile class="media-sm-mobil"></c-global-header-dropdown-menu-mobile>
                     </div>
                 </nav>
             </div>
