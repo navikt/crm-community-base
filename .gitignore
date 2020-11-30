@@ -38,3 +38,13 @@ force-app/main/default/lwc/.eslintrc.json
 
 force-app/main/default/profiles/Trial Customer Portal User.profile-meta.xml
 **/jsconfig.json
+
+# SSDX Helper
+# ----------------------------------------------------------------------------------------
+**/.ssdx/
+run.command
+run.cmd
+install.cmd
+.packageKey
+**/deployment_tmp*
+**/dummy-data/*.out/*
