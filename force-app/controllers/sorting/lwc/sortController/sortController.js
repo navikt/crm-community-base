@@ -18,7 +18,7 @@ export function sortList(listOfObjects, property, sortDirection) {
 	let cloneData = [...listOfObjects];
 	cloneData.sort(sortBy(property, sortDirection === 'asc' ? 1 : -1));
 	listOfObjects = cloneData;
-	return [listOfObjects, property, sortDirection];
+	return listOfObjects;
 }
 
 function sortBy(property, reverse) {
@@ -30,7 +30,7 @@ function sortBy(property, reverse) {
 }
 
 function getValue(object, property) {
-	return object[property] != null ? object[property] : "";
+	return object[property] ? object[property] : "";
 };
 
 
