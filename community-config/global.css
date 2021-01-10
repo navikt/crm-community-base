@@ -7520,7 +7520,7 @@ lightning-output-field.checkbox-inline>div.slds-form-element__control {
 	grid-column-gap: 6.25%;
 }
 
-@media (max-width: 1024px) {
+@media (max-width: 564px) {
 	.dynamic-time-inputs-with-line_button {
 		grid-template-columns: 85% 15%;
 	}
