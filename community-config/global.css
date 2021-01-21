@@ -7302,6 +7302,9 @@ lightning-datatable {
 		content: var(--columnlabel_9);
 		font-weight: 600;
 	}
+	table>tbody>tr>td>lightning-primitive-cell-factory>span {
+		place-content: flex-start !important;
+	}
 }
 
 /* Skjema */
