@@ -7244,6 +7244,12 @@ lightning-datatable {
 	td:last-child {
 		border-bottom: 0 transparent;
 	}
+	lightning-datatable>div>div>div {
+		width: 100% !important;
+	}
+	lightning-datatable>div>div>div>div>table {
+		width: 100% !important;
+	}
 	/*
 	.slds-table_bordered tbody td,
 	.slds-table_bordered tbody th,
@@ -7301,9 +7307,6 @@ lightning-datatable {
 	td:nth-of-type(9):before {
 		content: var(--columnlabel_9);
 		font-weight: 600;
-	}
-	table>tbody>tr>td>lightning-primitive-cell-factory>span {
-		place-content: flex-start !important;
 	}
 }
 
