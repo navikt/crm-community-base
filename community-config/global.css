@@ -7244,6 +7244,12 @@ lightning-datatable {
 	td:last-child {
 		border-bottom: 0 transparent;
 	}
+	lightning-datatable>div>div>div {
+		width: 100% !important;
+	}
+	lightning-datatable>div>div>div>div>table {
+		width: 100% !important;
+	}
 	/*
 	.slds-table_bordered tbody td,
 	.slds-table_bordered tbody th,
