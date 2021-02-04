@@ -6754,7 +6754,7 @@ lightning-radio-group.nav-radio-button-group {
 }
 
 .slds-input {
-	border-color: #78706a;
+	border-color: #78706a !important;
 	box-shadow: none;
 }
 
@@ -7536,5 +7536,15 @@ lightning-output-field.checkbox-inline>div.slds-form-element__control {
 	}
 	.remove-time__button {
 		bottom: 15%;
+	}
+}
+
+.third-width {
+	width: 30%;
+}
+
+@media (max-width: 564px) {
+	.third-width {
+		width: 100%;
 	}
 }
