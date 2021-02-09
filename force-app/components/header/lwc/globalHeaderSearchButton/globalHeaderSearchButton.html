@@ -1,83 +1,99 @@
 <template>
-  <div class="decorator-wrapper">
-    <div class="media-tablet-desktop">
-      <button
-        class="menylinje-knapp desktop-sok-dropdown__knapp"
-        id="desktop-sok-knapp"
-        aria-controls="desktop-sok-dropdown"
-        aria-expanded="false"
-        onclick={handleOnClickSearch}
-      >
-        <span if:false={searchPressed} class="sok-ikon">
-          <span class="sok-ikon__circle"></span>
-          <span class="sok-ikon__line"></span>
-          <span class="sok-ikon__line-x"></span>
-        </span>
-        <span if:true={searchPressed} class="sok-ikon sok-ikon--open">
-          <span class="sok-ikon__circle sok-ikon__circle--open"></span>
-          <span class="sok-ikon__line sok-ikon__line--open"></span>
-          <span class="sok-ikon__line-x sok-ikon__line-x--open"></span>
-        </span>
-        <span class="menylinje-knapp__tekst desktop-sok-dropdown__knapp-tekst"
-          >Søk</span
-        >
-      </button>
+    <div class="decorator-wrapper">
+        <div class="media-tablet-desktop">
+            <button
+                class="menylinje-knapp desktop-sok-dropdown__knapp"
+                id="desktop-sok-knapp"
+                aria-controls="desktop-sok-dropdown"
+                aria-expanded="false"
+                onclick={handleOnClickSearch}
+            >
+                <span if:false={searchPressed} class="sok-ikon">
+                    <span class="sok-ikon__circle"></span>
+                    <span class="sok-ikon__line"></span>
+                    <span class="sok-ikon__line-x"></span>
+                </span>
+                <span if:true={searchPressed} class="sok-ikon sok-ikon--open">
+                    <span
+                        class="sok-ikon__circle sok-ikon__circle--open"
+                    ></span>
+                    <span class="sok-ikon__line sok-ikon__line--open"></span>
+                    <span
+                        class="sok-ikon__line-x sok-ikon__line-x--open"
+                    ></span>
+                </span>
+                <span
+                    class="menylinje-knapp__tekst desktop-sok-dropdown__knapp-tekst"
+                    >Søk</span
+                >
+            </button>
 
-      <div class="ekspanderbar__container desktop-sok-dropdown">
-        <div
-          if:true={searchPressed}
-          class="ekspanderbar__innhold-wrapper ekspanderbar__innhold-wrapper--active"
-          id="desktop-sok-dropdown"
-          style="max-height: 100rem"
-        >
-          <div class="ekspanderbar__innhold">
-            <form role="search" id="search-form-desktop-sok-input">
-              <!--_lpchecked="1"-->
-              <div class="sok-container">
-                <div class="sok-input-resultat">
-                  <div class="sok-input__tittel">
-                    <h2 class="typo-systemtittel">Søk</h2>
-                  </div>
-                  <div class="sok-input-container">
-                    <div class="skjemaelement sok-input">
-                      <input
-                        type="text"
-                        class="skjemaelement__input input--fullbredde"
-                        id="desktop-sok-input"
-                        aria-invalid="false"
-                        placeholder="Søk på nav.no"
-                        aria-label="Søk på nav.no"
-                        value={searchWord}
-                        onchange={handleSearch}
-                      />
+            <div class="ekspanderbar__container desktop-sok-dropdown">
+                <div
+                    if:true={searchPressed}
+                    class="ekspanderbar__innhold-wrapper ekspanderbar__innhold-wrapper--active"
+                    id="desktop-sok-dropdown"
+                    style="max-height: 100rem"
+                >
+                    <div class="ekspanderbar__innhold">
+                        <form role="search" id="search-form-desktop-sok-input">
+                            <!--_lpchecked="1"-->
+                            <div class="sok-container">
+                                <div class="sok-input-resultat">
+                                    <div class="sok-input__tittel">
+                                        <h2 class="typo-systemtittel">Søk</h2>
+                                    </div>
+                                    <div class="sok-input-container">
+                                        <div class="skjemaelement sok-input">
+                                            <input
+                                                type="text"
+                                                class="skjemaelement__input input--fullbredde"
+                                                id="desktop-sok-input"
+                                                aria-invalid="false"
+                                                placeholder="Søk på nav.no"
+                                                aria-label="Søk på nav.no"
+                                                value={searchWord}
+                                                onchange={handleSearch}
+                                            />
+                                        </div>
+                                        <div class="sok-knapper__container">
+                                            <button
+                                                type="button"
+                                                id="desktop-sok-input-submit"
+                                                class="sok-knapper__knapp sok-knapper__knapp-submit"
+                                                onclick={searchNav}
+                                            >
+                                                <span
+                                                    class="sok-knapper__ikon-container"
+                                                >
+                                                    <span class="sok-ikon">
+                                                        <span
+                                                            class="sok-ikon__circle"
+                                                        ></span>
+                                                        <span
+                                                            class="sok-ikon__line"
+                                                        ></span>
+                                                        <span
+                                                            class="sok-ikon__line-x"
+                                                        ></span>
+                                                    </span>
+                                                </span>
+                                                <span
+                                                    class="sok-knapper__knapp-tekst"
+                                                    >Søk</span
+                                                >
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="media-sm-mobil mobil-meny">
+                                <div class="sok__bakgrunn"></div>
+                            </div>
+                        </form>
                     </div>
-                    <div class="sok-knapper__container">
-                      <button
-                        type="button"
-                        id="desktop-sok-input-submit"
-                        class="sok-knapper__knapp sok-knapper__knapp-submit"
-                        onclick={searchNav}
-                      >
-                        <span class="sok-knapper__ikon-container">
-                          <span class="sok-ikon">
-                            <span class="sok-ikon__circle"></span>
-                            <span class="sok-ikon__line"></span>
-                            <span class="sok-ikon__line-x"></span>
-                          </span>
-                        </span>
-                        <span class="sok-knapper__knapp-tekst">Søk</span>
-                      </button>
-                    </div>
-                  </div>
                 </div>
-              </div>
-              <div class="media-sm-mobil mobil-meny">
-                <div class="sok__bakgrunn"></div>
-              </div>
-            </form>
-          </div>
+            </div>
         </div>
-      </div>
     </div>
-  </div>
 </template>

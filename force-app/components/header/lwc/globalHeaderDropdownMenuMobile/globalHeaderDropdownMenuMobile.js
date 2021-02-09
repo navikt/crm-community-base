@@ -10,7 +10,6 @@ export default class GlobalHeaderDropdownMenuMobile extends LightningElement {
     @track isPrivatperson;
     @track isSamarbeidspartner;
 
-
     renderedCallback() {
         loadStyle(this, dekoratoren);
     }

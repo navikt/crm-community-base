@@ -6,9 +6,8 @@ import icons from '@salesforce/resourceUrl/icons';
 import logos from '@salesforce/resourceUrl/logos';
 
 export default class GlobalCommunityFooter extends LightningElement {
-
     arrowupicon = icons + '/arrowupicon.svg';
-	logosvart = logos + '/navLogoBlack.svg';
+    logosvart = logos + '/navLogoBlack.svg';
     @api NAVarea;
 
     @track isArbeidsgiver;
@@ -29,9 +28,8 @@ export default class GlobalCommunityFooter extends LightningElement {
         window.scroll(0, 0, 'smooth');
     }
 
-
     /* DEL SKJERM FUNKSJONER */
-   /* @track isDelSkjerm = false;
+    /* @track isDelSkjerm = false;
     onHandleClickDelSkjerm() {
         this.isDelSkjerm = !this.isDelSkjerm;
     }

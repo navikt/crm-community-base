@@ -11,7 +11,6 @@ export default class EmployerCommunityMenuItems extends LightningElement {
 
     @track showLogin;
 
-    
     connectedCallback() {
         this.isPrivatperson = this.area == 'Privatperson';
         this.isArbeidsgiver = this.area == 'Arbeidsgiver';

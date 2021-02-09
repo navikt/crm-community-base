@@ -1,235 +1,551 @@
 <template>
-<div style="display:flex">
-    <!--====================================VARSELKNAPP=====================================================-->
-    <button onclick={onHandleClickVarsler} class="menylinje-knapp varselbjelle__knapp" id="varsler-knapp-id" aria-label="Varsler. Du har ingen varsler." aria-controls="varsler-dropdown" aria-expanded="false">
-        <div if:false={varslerPressed} class="varselbjelle-ikon">
-        <div class="varselbjelle-ikon">
-        <div class="varselbjelle-ikon__ring"></div>
-        <div class="varselbjelle-ikon__bell"></div>
-        <div class="varselbjelle-ikon__lip"></div>
-        <div class="varselbjelle-ikon__clapper"></div>
-        <div class="varselbjelle-ikon__ulest-sirkel varselbjelle-ikon__ulest-sirkel--hide">
-            <p class="typo-etikett-liten varselbjelle-ikon__ulest-antall">0</p>
-        </div>
-    </div>
-</div>
-<div if:true={varslerPressed} class="varselbjelle-ikon varselbjelle-ikon--open">
-    <div class="varselbjelle-ikon__ring"></div>
-    <div class="varselbjelle-ikon__bell"></div>
-    <div class="varselbjelle-ikon__lip"></div>
-    <div class="varselbjelle-ikon__clapper"></div>
-    <div class="varselbjelle-ikon__ulest-sirkel varselbjelle-ikon__ulest-sirkel--hide">
-        <p class="typo-etikett-liten varselbjelle-ikon__ulest-antall">0
-        </p>
-    </div>
-</div>
-    <span class="menylinje-knapp__tekst varselbjelle__knapp-tekst">Varsler</span>
-</button>
-<!--===============EXPAND=======================-->
-<div class="ekspanderbar__container varsler-dropdown">
-    <div if:true={varslerPressed} class="ekspanderbar__innhold-wrapper ekspanderbar__innhold-wrapper--active ekspanderbar__menuheight" id="varsler-dropdown">
-        <div class="ekspanderbar__innhold">
-            <div class="slideToClose__content" style="left: 0px;">
-            <div class="varsler-visning">
-                <h2 class="typo-systemtittel varsler-visning__tittel">Varsler</h2>
-                <p class="text-center">Du har ingen varsler å vise.</p>
+    <div style="display: flex">
+        <!--====================================VARSELKNAPP=====================================================-->
+        <button
+            onclick={onHandleClickVarsler}
+            class="menylinje-knapp varselbjelle__knapp"
+            id="varsler-knapp-id"
+            aria-label="Varsler. Du har ingen varsler."
+            aria-controls="varsler-dropdown"
+            aria-expanded="false"
+        >
+            <div if:false={varslerPressed} class="varselbjelle-ikon">
+                <div class="varselbjelle-ikon">
+                    <div class="varselbjelle-ikon__ring"></div>
+                    <div class="varselbjelle-ikon__bell"></div>
+                    <div class="varselbjelle-ikon__lip"></div>
+                    <div class="varselbjelle-ikon__clapper"></div>
+                    <div
+                        class="varselbjelle-ikon__ulest-sirkel varselbjelle-ikon__ulest-sirkel--hide"
+                    >
+                        <p
+                            class="typo-etikett-liten varselbjelle-ikon__ulest-antall"
+                        >
+                            0
+                        </p>
                     </div>
                 </div>
-                <div class="slideToClose__message" style="left: 0px; display: none;">
-                    <p class="typo-element">Lukk</p>
+            </div>
+            <div
+                if:true={varslerPressed}
+                class="varselbjelle-ikon varselbjelle-ikon--open"
+            >
+                <div class="varselbjelle-ikon__ring"></div>
+                <div class="varselbjelle-ikon__bell"></div>
+                <div class="varselbjelle-ikon__lip"></div>
+                <div class="varselbjelle-ikon__clapper"></div>
+                <div
+                    class="varselbjelle-ikon__ulest-sirkel varselbjelle-ikon__ulest-sirkel--hide"
+                >
+                    <p
+                        class="typo-etikett-liten varselbjelle-ikon__ulest-antall"
+                    >
+                        0
+                    </p>
+                </div>
+            </div>
+            <span class="menylinje-knapp__tekst varselbjelle__knapp-tekst"
+                >Varsler</span
+            >
+        </button>
+        <!--===============EXPAND=======================-->
+        <div class="ekspanderbar__container varsler-dropdown">
+            <div
+                if:true={varslerPressed}
+                class="ekspanderbar__innhold-wrapper ekspanderbar__innhold-wrapper--active ekspanderbar__menuheight"
+                id="varsler-dropdown"
+            >
+                <div class="ekspanderbar__innhold">
+                    <div class="slideToClose__content" style="left: 0px">
+                        <div class="varsler-visning">
+                            <h2
+                                class="typo-systemtittel varsler-visning__tittel"
+                            >
+                                Varsler
+                            </h2>
+                            <p class="text-center">
+                                Du har ingen varsler å vise.
+                            </p>
+                        </div>
+                    </div>
+                    <div
+                        class="slideToClose__message"
+                        style="left: 0px; display: none"
+                    >
+                        <p class="typo-element">Lukk</p>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    <!--===========================================DITT NAV KNAPP====================================================-->
-   <div class="media-tablet-desktop">
-        <button onclick={handleOnClickMinSide} class="menylinje-knapp desktop-minside-meny__knapp" id="desktop-minside-knapp-id" aria-controls="desktop-minside-meny" aria-expanded="false">
-            <div class="minside-meny-ikon">
-                <span if:false={minSidePressed} class="hamburger-ikon">
-                    <span class="hamburger-ikon__topp"></span>
-                    <span class="hamburger-ikon__midt"></span>
-                    <span class="hamburger-ikon__bunn"></span>
-                </span>
-                <div if:true={minSidePressed} class="hamburger-ikon hamburger-ikon--open">
-                    <span class="hamburger-ikon__topp hamburger-ikon__topp--open"></span>
-                    <span class="hamburger-ikon__midt hamburger-ikon__midt--open"></span>
-                    <span class="hamburger-ikon__bunn hamburger-ikon__bunn--open"></span>
+        <!--===========================================DITT NAV KNAPP====================================================-->
+        <div class="media-tablet-desktop">
+            <button
+                onclick={handleOnClickMinSide}
+                class="menylinje-knapp desktop-minside-meny__knapp"
+                id="desktop-minside-knapp-id"
+                aria-controls="desktop-minside-meny"
+                aria-expanded="false"
+            >
+                <div class="minside-meny-ikon">
+                    <span if:false={minSidePressed} class="hamburger-ikon">
+                        <span class="hamburger-ikon__topp"></span>
+                        <span class="hamburger-ikon__midt"></span>
+                        <span class="hamburger-ikon__bunn"></span>
+                    </span>
+                    <div
+                        if:true={minSidePressed}
+                        class="hamburger-ikon hamburger-ikon--open"
+                    >
+                        <span
+                            class="hamburger-ikon__topp hamburger-ikon__topp--open"
+                        ></span>
+                        <span
+                            class="hamburger-ikon__midt hamburger-ikon__midt--open"
+                        ></span>
+                        <span
+                            class="hamburger-ikon__bunn hamburger-ikon__bunn--open"
+                        ></span>
+                    </div>
+                    <div class="minside-meny-ikon__hode"></div>
+                    <div class="minside-meny-ikon__kropp"></div>
                 </div>
-                <div class="minside-meny-ikon__hode"></div>
-                <div class="minside-meny-ikon__kropp"></div>
-            </div>
-            <span class="desktop-minside-meny__knapp-tekst">
-                <span class="desktop-minside-meny__knapp-tekst-topp ">Ditt NAV</span>
-                <span class="desktop-minside-meny__knapp-tekst-bunn ">{currentUser}</span>
-            </span>
-        </button>
+                <span class="desktop-minside-meny__knapp-tekst">
+                    <span class="desktop-minside-meny__knapp-tekst-topp"
+                        >Ditt NAV</span
+                    >
+                    <span class="desktop-minside-meny__knapp-tekst-bunn"
+                        >{currentUser}</span
+                    >
+                </span>
+            </button>
 
-        <!--==========================================MENY======================================================-->
-        <div if:true={minSidePressed} class="ekspanderbar__container desktop-minside-meny">
-                <div class="ekspanderbar__innhold-wrapper ekspanderbar__innhold-wrapper--active" id="desktop-minside-meny">
+            <!--==========================================MENY======================================================-->
+            <div
+                if:true={minSidePressed}
+                class="ekspanderbar__container desktop-minside-meny"
+            >
+                <div
+                    class="ekspanderbar__innhold-wrapper ekspanderbar__innhold-wrapper--active"
+                    id="desktop-minside-meny"
+                >
                     <div class="ekspanderbar__innhold">
                         <div class="desktop-minside-meny__topp-seksjon">
-                            <div class="desktop-minside-meny__topp-seksjon-left">
-                                <h2 class="typo-systemtittel desktop-minside-meny__topp-seksjon-tittel">Ditt NAV</h2>
-                                <a href="https://www.nav.no/person/dittnav/" class="lenke dekorator-lenke" id="desktop-minside_0_0_0">Til forsiden</a>
+                            <div
+                                class="desktop-minside-meny__topp-seksjon-left"
+                            >
+                                <h2
+                                    class="typo-systemtittel desktop-minside-meny__topp-seksjon-tittel"
+                                >
+                                    Ditt NAV
+                                </h2>
+                                <a
+                                    href="https://www.nav.no/person/dittnav/"
+                                    class="lenke dekorator-lenke"
+                                    id="desktop-minside_0_0_0"
+                                    >Til forsiden</a
+                                >
                             </div>
-                            <div class="desktop-minside-meny__topp-seksjon-right">
+                            <div
+                                class="desktop-minside-meny__topp-seksjon-right"
+                            >
                                 <p class="typo-undertekst-bold">Logget inn:</p>
-                                <p class="typo-normal desktop-minside-meny__brukernavn">{currentUser}</p>
+                                <p
+                                    class="typo-normal desktop-minside-meny__brukernavn"
+                                >
+                                    {currentUser}
+                                </p>
                             </div>
                         </div>
                         <div class="desktop-minside-meny__lenke-seksjoner">
-                            <section class="lenkeseksjon" aria-labelledby="headerId_87902576-3ce1-48bb-88bd-798d04352984">
-                                <h2 id="headerId_87902576-3ce1-48bb-88bd-798d04352984" class="typo-undertittel lenkeseksjon__tittel">Din oversikt</h2>
+                            <section
+                                class="lenkeseksjon"
+                                aria-labelledby="headerId_87902576-3ce1-48bb-88bd-798d04352984"
+                            >
+                                <h2
+                                    id="headerId_87902576-3ce1-48bb-88bd-798d04352984"
+                                    class="typo-undertittel lenkeseksjon__tittel"
+                                >
+                                    Din oversikt
+                                </h2>
                                 <ul class="lenkeseksjon__lenker">
                                     <li>
-                                        <a href="https://tjenester.nav.no/esso/saml2/jsp/spSSOInit.jsp?metaAlias=/sp&amp;idpEntityID=idporten.difi.no-v4&amp;NameIDFormat=transient&amp;goto=https://tjenester.nav.no/saksoversikt/&amp;AuthLevel=4" class="lenke dekorator-lenke chevronlenke" id="desktop-minside_0_1_0">
-                                            <div class="dekorator-lenke__ikon-container">
-                                                <i class="nav-frontend-chevron chevronboks chevronlenke__chevron chevron--hoyre"></i>
-                                            </div>Dine saker</a>
-                                        </li>
-                                        <li>
-                                            <a href="https://tjenester.nav.no/esso/saml2/jsp/spSSOInit.jsp?metaAlias=/sp&amp;idpEntityID=idporten.difi.no-v4&amp;NameIDFormat=transient&amp;goto=https://tjenester.nav.no/mininnboks/&amp;AuthLevel=4" class="lenke dekorator-lenke chevronlenke" id="desktop-minside_0_1_1">
-                                                <div class="dekorator-lenke__ikon-container">
-                                                    <i class="nav-frontend-chevron chevronboks chevronlenke__chevron chevron--hoyre"></i>
-                                                </div>Din innboks</a>
-                                            </li>
-                                            <li>
-                                                <a href="https://tjenester.nav.no/utbetalingsoversikt/" class="lenke dekorator-lenke chevronlenke" id="desktop-minside_0_1_2">
-                                                    <div class="dekorator-lenke__ikon-container">
-                                                        <i class="nav-frontend-chevron chevronboks chevronlenke__chevron chevron--hoyre"></i>
-                                                    </div>Dine utbetalinger</a>
-                                                </li>
-                                                <li>
-                                                    <a href="https://www.nav.no/person/personopplysninger/#adresser" class="lenke dekorator-lenke chevronlenke" id="desktop-minside_0_1_3">
-                                                        <div class="dekorator-lenke__ikon-container">
-                                                            <i class="nav-frontend-chevron chevronboks chevronlenke__chevron chevron--hoyre"></i>
-                                                        </div>Endre kontonummer/adresse</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="https://www.nav.no/soknader" class="lenke dekorator-lenke chevronlenke" id="desktop-minside_0_1_4">
-                                                            <div class="dekorator-lenke__ikon-container">
-                                                                <i class="nav-frontend-chevron chevronboks chevronlenke__chevron chevron--hoyre"></i>
-                                                            </div>Send ny søknad</a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="https://www.nav.no/ettersendelse" class="lenke dekorator-lenke chevronlenke" id="desktop-minside_0_1_5">
-                                                                <div class="dekorator-lenke__ikon-container">
-                                                                    <i class="nav-frontend-chevron chevronboks chevronlenke__chevron chevron--hoyre"></i>
-                                                                </div>Ettersend vedlegg</a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="https://www.nav.no/person/kontakt-oss/" class="lenke dekorator-lenke chevronlenke" id="desktop-minside_0_1_6">
-                                                                    <div class="dekorator-lenke__ikon-container">
-                                                                        <i class="nav-frontend-chevron chevronboks chevronlenke__chevron chevron--hoyre"></i>
-                                                                    </div>Send beskjed til NAV</a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="https://www.nav.no/person/personopplysninger" class="lenke dekorator-lenke chevronlenke" id="desktop-minside_0_1_7">
-                                                                        <div class="dekorator-lenke__ikon-container">
-                                                                            <i class="nav-frontend-chevron chevronboks chevronlenke__chevron chevron--hoyre"></i>
-                                                                        </div>Personopplysninger</a>
-                                                                    </li>
-                                                                </ul>
-                                                            </section>
-                                                            <section class="lenkeseksjon" aria-labelledby="headerId_a6d04c66-3f5b-431f-8db3-420b25aa3a75">
-                                                                <h2 id="headerId_a6d04c66-3f5b-431f-8db3-420b25aa3a75" class="typo-undertittel lenkeseksjon__tittel">Arbeid</h2>
-                                                                <ul class="lenkeseksjon__lenker">
-                                                                    <li>
-                                                                        <a href="https://arbeidssokerregistrering.nav.no/start" class="lenke dekorator-lenke chevronlenke" id="desktop-minside_1_1_0">
-                                                                            <div class="dekorator-lenke__ikon-container">
-                                                                                <i class="nav-frontend-chevron chevronboks chevronlenke__chevron chevron--hoyre"></i>
-                                                                            </div>Registrer deg som arbeidssøker</a>
-                                                                        </li>
-                                                                        <li>
-                                                                            <a href="https://www.nav.no/meldekort/" class="lenke dekorator-lenke chevronlenke" id="desktop-minside_1_1_1">
-                                                                                <div class="dekorator-lenke__ikon-container">
-                                                                                    <i class="nav-frontend-chevron chevronboks chevronlenke__chevron chevron--hoyre"></i>
-                                                                                </div>Send meldekort</a>
-                                                                            </li>
-                                                                            <li>
-                                                                                <a href="https://arbeidsplassen.nav.no/stillinger" class="lenke dekorator-lenke chevronlenke" id="desktop-minside_1_1_2">
-                                                                                    <div class="dekorator-lenke__ikon-container">
-                                                                                        <i class="nav-frontend-chevron chevronboks chevronlenke__chevron chevron--hoyre"></i>
-                                                                                    </div>Finn ledige stillinger</a>
-                                                                                </li>
-                                                                                <li>
-                                                                                    <a href="https://arbeidsplassen.nav.no/minside" class="lenke dekorator-lenke chevronlenke" id="desktop-minside_1_1_3">
-                                                                                        <div class="dekorator-lenke__ikon-container">
-                                                                                            <i class="nav-frontend-chevron chevronboks chevronlenke__chevron chevron--hoyre"></i>
-                                                                                        </div>Din CV</a>
-                                                                                    </li>
-                                                                                    <li>
-                                                                                        <a href="https://arbeidsplassen.nav.no/stillinger/lagrede-sok" class="lenke dekorator-lenke chevronlenke" id="desktop-minside_1_1_4">
-                                                                                            <div class="dekorator-lenke__ikon-container">
-                                                                                                <i class="nav-frontend-chevron chevronboks chevronlenke__chevron chevron--hoyre"></i>
-                                                                                            </div>Dine lagrede søk</a>
-                                                                                        </li>
-                                                                                        <li>
-                                                                                            <a href="https://aktivitetsplan.nav.no" class="lenke dekorator-lenke chevronlenke" id="desktop-minside_1_1_5">
-                                                                                                <div class="dekorator-lenke__ikon-container">
-                                                                                                    <i class="nav-frontend-chevron chevronboks chevronlenke__chevron chevron--hoyre"></i>
-                                                                                                </div>Din aktivitetsplan</a>
-                                                                                            </li>
-                                                                                            <li>
-                                                                                                <a href="http://nav.no/arbeid/dialog" class="lenke dekorator-lenke chevronlenke" id="desktop-minside_1_1_6">
-                                                                                                    <div class="dekorator-lenke__ikon-container">
-                                                                                                        <i class="nav-frontend-chevron chevronboks chevronlenke__chevron chevron--hoyre"></i>
-                                                                                                    </div>Dialog med veilederen din</a>
-                                                                                                </li>
-                                                                                            </ul>
-                                                                                        </section>
-                                                                                        <section class="lenkeseksjon" aria-labelledby="headerId_ecfbac87-4259-4402-8f64-6c65b2ed2dfd">
-                                                                                            <h2 id="headerId_ecfbac87-4259-4402-8f64-6c65b2ed2dfd" class="typo-undertittel lenkeseksjon__tittel">Flere tjenester</h2>
-                                                                                            <ul class="lenkeseksjon__lenker">
-                                                                                                <li>
-                                                                                                    <a href="https://tjenester.nav.no/pselv/publisering/dinpensjon.jsf?context=pensjon" class="lenke dekorator-lenke chevronlenke" id="desktop-minside_2_1_0">
-                                                                                                        <div class="dekorator-lenke__ikon-container">
-                                                                                                            <i class="nav-frontend-chevron chevronboks chevronlenke__chevron chevron--hoyre"></i>
-                                                                                                        </div>Din pensjon</a>
-                                                                                                    </li>
-                                                                                                    <li>
-                                                                                                        <a href="https://tjenester.nav.no/pselv/publisering/uforetrygd.jsf?context=ut" class="lenke dekorator-lenke chevronlenke" id="desktop-minside_2_1_1">
-                                                                                                            <div class="dekorator-lenke__ikon-container">
-                                                                                                                <i class="nav-frontend-chevron chevronboks chevronlenke__chevron chevron--hoyre"></i>
-                                                                                                            </div>Din uføretrygd</a>
-                                                                                                        </li>
-                                                                                                        <li>
-                                                                                                            <a href="https://tjenester.nav.no/sykefravaer/" class="lenke dekorator-lenke chevronlenke" id="desktop-minside_2_1_2">
-                                                                                                                <div class="dekorator-lenke__ikon-container">
-                                                                                                                    <i class="nav-frontend-chevron chevronboks chevronlenke__chevron chevron--hoyre"></i>
-                                                                                                                </div>Ditt sykefravær</a>
-                                                                                                            </li>
-                                                                                                            <li>
-                                                                                                                <a href="https://foreldrepenger.nav.no" class="lenke dekorator-lenke chevronlenke" id="desktop-minside_2_1_3">
-                                                                                                                    <div class="dekorator-lenke__ikon-container">
-                                                                                                                        <i class="nav-frontend-chevron chevronboks chevronlenke__chevron chevron--hoyre"></i>
-                                                                                                                    </div>Dine foreldrepenger</a>
-                                                                                                                </li>
-                                                                                                                <li>
-                                                                                                                    <a href="https://www.nav.no/person/pdl-fullmakt-ui" class="lenke dekorator-lenke chevronlenke" id="desktop-minside_2_1_4">
-                                                                                                                        <div class="dekorator-lenke__ikon-container">
-                                                                                                                            <i class="nav-frontend-chevron chevronboks chevronlenke__chevron chevron--hoyre"></i>
-                                                                                                                        </div>Dine fullmakter</a>
-                                                                                                                    </li>
-                                                                                                                    <li>
-                                                                                                                        <a href="https://www.nav.no/familie/sykdom-i-familien/soknad/innsyn" class="lenke dekorator-lenke chevronlenke" id="desktop-minside_2_1_5">
-                                                                                                                            <div class="dekorator-lenke__ikon-container">
-                                                                                                                                <i class="nav-frontend-chevron chevronboks chevronlenke__chevron chevron--hoyre"></i>
-                                                                                                                            </div>Sykdom i familien  </a>
-                                                                                                                        </li>
-                                                                                                                    </ul>
-                                                                                                                </section>
-                                                                                                            </div>
-                                                                                                        </div>
-                                                                                                    </div>
-                                                                                                </div>
-                                                                                            </div>
-     
-                                                                    
-    <form class="login-knapp-container" action="/secur/logout.jsp">
-        <button class="knapp login-knapp logout-knapp knapp--standard" type="submit"
-                id="desktop-login-knapp">Logg ut</button>
-    </form> 
-</div>
+                                        <a
+                                            href="https://tjenester.nav.no/esso/saml2/jsp/spSSOInit.jsp?metaAlias=/sp&amp;idpEntityID=idporten.difi.no-v4&amp;NameIDFormat=transient&amp;goto=https://tjenester.nav.no/saksoversikt/&amp;AuthLevel=4"
+                                            class="lenke dekorator-lenke chevronlenke"
+                                            id="desktop-minside_0_1_0"
+                                        >
+                                            <div
+                                                class="dekorator-lenke__ikon-container"
+                                            >
+                                                <i
+                                                    class="nav-frontend-chevron chevronboks chevronlenke__chevron chevron--hoyre"
+                                                ></i>
+                                            </div>
+                                            Dine saker</a
+                                        >
+                                    </li>
+                                    <li>
+                                        <a
+                                            href="https://tjenester.nav.no/esso/saml2/jsp/spSSOInit.jsp?metaAlias=/sp&amp;idpEntityID=idporten.difi.no-v4&amp;NameIDFormat=transient&amp;goto=https://tjenester.nav.no/mininnboks/&amp;AuthLevel=4"
+                                            class="lenke dekorator-lenke chevronlenke"
+                                            id="desktop-minside_0_1_1"
+                                        >
+                                            <div
+                                                class="dekorator-lenke__ikon-container"
+                                            >
+                                                <i
+                                                    class="nav-frontend-chevron chevronboks chevronlenke__chevron chevron--hoyre"
+                                                ></i>
+                                            </div>
+                                            Din innboks</a
+                                        >
+                                    </li>
+                                    <li>
+                                        <a
+                                            href="https://tjenester.nav.no/utbetalingsoversikt/"
+                                            class="lenke dekorator-lenke chevronlenke"
+                                            id="desktop-minside_0_1_2"
+                                        >
+                                            <div
+                                                class="dekorator-lenke__ikon-container"
+                                            >
+                                                <i
+                                                    class="nav-frontend-chevron chevronboks chevronlenke__chevron chevron--hoyre"
+                                                ></i>
+                                            </div>
+                                            Dine utbetalinger</a
+                                        >
+                                    </li>
+                                    <li>
+                                        <a
+                                            href="https://www.nav.no/person/personopplysninger/#adresser"
+                                            class="lenke dekorator-lenke chevronlenke"
+                                            id="desktop-minside_0_1_3"
+                                        >
+                                            <div
+                                                class="dekorator-lenke__ikon-container"
+                                            >
+                                                <i
+                                                    class="nav-frontend-chevron chevronboks chevronlenke__chevron chevron--hoyre"
+                                                ></i>
+                                            </div>
+                                            Endre kontonummer/adresse</a
+                                        >
+                                    </li>
+                                    <li>
+                                        <a
+                                            href="https://www.nav.no/soknader"
+                                            class="lenke dekorator-lenke chevronlenke"
+                                            id="desktop-minside_0_1_4"
+                                        >
+                                            <div
+                                                class="dekorator-lenke__ikon-container"
+                                            >
+                                                <i
+                                                    class="nav-frontend-chevron chevronboks chevronlenke__chevron chevron--hoyre"
+                                                ></i>
+                                            </div>
+                                            Send ny søknad</a
+                                        >
+                                    </li>
+                                    <li>
+                                        <a
+                                            href="https://www.nav.no/ettersendelse"
+                                            class="lenke dekorator-lenke chevronlenke"
+                                            id="desktop-minside_0_1_5"
+                                        >
+                                            <div
+                                                class="dekorator-lenke__ikon-container"
+                                            >
+                                                <i
+                                                    class="nav-frontend-chevron chevronboks chevronlenke__chevron chevron--hoyre"
+                                                ></i>
+                                            </div>
+                                            Ettersend vedlegg</a
+                                        >
+                                    </li>
+                                    <li>
+                                        <a
+                                            href="https://www.nav.no/person/kontakt-oss/"
+                                            class="lenke dekorator-lenke chevronlenke"
+                                            id="desktop-minside_0_1_6"
+                                        >
+                                            <div
+                                                class="dekorator-lenke__ikon-container"
+                                            >
+                                                <i
+                                                    class="nav-frontend-chevron chevronboks chevronlenke__chevron chevron--hoyre"
+                                                ></i>
+                                            </div>
+                                            Send beskjed til NAV</a
+                                        >
+                                    </li>
+                                    <li>
+                                        <a
+                                            href="https://www.nav.no/person/personopplysninger"
+                                            class="lenke dekorator-lenke chevronlenke"
+                                            id="desktop-minside_0_1_7"
+                                        >
+                                            <div
+                                                class="dekorator-lenke__ikon-container"
+                                            >
+                                                <i
+                                                    class="nav-frontend-chevron chevronboks chevronlenke__chevron chevron--hoyre"
+                                                ></i>
+                                            </div>
+                                            Personopplysninger</a
+                                        >
+                                    </li>
+                                </ul>
+                            </section>
+                            <section
+                                class="lenkeseksjon"
+                                aria-labelledby="headerId_a6d04c66-3f5b-431f-8db3-420b25aa3a75"
+                            >
+                                <h2
+                                    id="headerId_a6d04c66-3f5b-431f-8db3-420b25aa3a75"
+                                    class="typo-undertittel lenkeseksjon__tittel"
+                                >
+                                    Arbeid
+                                </h2>
+                                <ul class="lenkeseksjon__lenker">
+                                    <li>
+                                        <a
+                                            href="https://arbeidssokerregistrering.nav.no/start"
+                                            class="lenke dekorator-lenke chevronlenke"
+                                            id="desktop-minside_1_1_0"
+                                        >
+                                            <div
+                                                class="dekorator-lenke__ikon-container"
+                                            >
+                                                <i
+                                                    class="nav-frontend-chevron chevronboks chevronlenke__chevron chevron--hoyre"
+                                                ></i>
+                                            </div>
+                                            Registrer deg som arbeidssøker</a
+                                        >
+                                    </li>
+                                    <li>
+                                        <a
+                                            href="https://www.nav.no/meldekort/"
+                                            class="lenke dekorator-lenke chevronlenke"
+                                            id="desktop-minside_1_1_1"
+                                        >
+                                            <div
+                                                class="dekorator-lenke__ikon-container"
+                                            >
+                                                <i
+                                                    class="nav-frontend-chevron chevronboks chevronlenke__chevron chevron--hoyre"
+                                                ></i>
+                                            </div>
+                                            Send meldekort</a
+                                        >
+                                    </li>
+                                    <li>
+                                        <a
+                                            href="https://arbeidsplassen.nav.no/stillinger"
+                                            class="lenke dekorator-lenke chevronlenke"
+                                            id="desktop-minside_1_1_2"
+                                        >
+                                            <div
+                                                class="dekorator-lenke__ikon-container"
+                                            >
+                                                <i
+                                                    class="nav-frontend-chevron chevronboks chevronlenke__chevron chevron--hoyre"
+                                                ></i>
+                                            </div>
+                                            Finn ledige stillinger</a
+                                        >
+                                    </li>
+                                    <li>
+                                        <a
+                                            href="https://arbeidsplassen.nav.no/minside"
+                                            class="lenke dekorator-lenke chevronlenke"
+                                            id="desktop-minside_1_1_3"
+                                        >
+                                            <div
+                                                class="dekorator-lenke__ikon-container"
+                                            >
+                                                <i
+                                                    class="nav-frontend-chevron chevronboks chevronlenke__chevron chevron--hoyre"
+                                                ></i>
+                                            </div>
+                                            Din CV</a
+                                        >
+                                    </li>
+                                    <li>
+                                        <a
+                                            href="https://arbeidsplassen.nav.no/stillinger/lagrede-sok"
+                                            class="lenke dekorator-lenke chevronlenke"
+                                            id="desktop-minside_1_1_4"
+                                        >
+                                            <div
+                                                class="dekorator-lenke__ikon-container"
+                                            >
+                                                <i
+                                                    class="nav-frontend-chevron chevronboks chevronlenke__chevron chevron--hoyre"
+                                                ></i>
+                                            </div>
+                                            Dine lagrede søk</a
+                                        >
+                                    </li>
+                                    <li>
+                                        <a
+                                            href="https://aktivitetsplan.nav.no"
+                                            class="lenke dekorator-lenke chevronlenke"
+                                            id="desktop-minside_1_1_5"
+                                        >
+                                            <div
+                                                class="dekorator-lenke__ikon-container"
+                                            >
+                                                <i
+                                                    class="nav-frontend-chevron chevronboks chevronlenke__chevron chevron--hoyre"
+                                                ></i>
+                                            </div>
+                                            Din aktivitetsplan</a
+                                        >
+                                    </li>
+                                    <li>
+                                        <a
+                                            href="http://nav.no/arbeid/dialog"
+                                            class="lenke dekorator-lenke chevronlenke"
+                                            id="desktop-minside_1_1_6"
+                                        >
+                                            <div
+                                                class="dekorator-lenke__ikon-container"
+                                            >
+                                                <i
+                                                    class="nav-frontend-chevron chevronboks chevronlenke__chevron chevron--hoyre"
+                                                ></i>
+                                            </div>
+                                            Dialog med veilederen din</a
+                                        >
+                                    </li>
+                                </ul>
+                            </section>
+                            <section
+                                class="lenkeseksjon"
+                                aria-labelledby="headerId_ecfbac87-4259-4402-8f64-6c65b2ed2dfd"
+                            >
+                                <h2
+                                    id="headerId_ecfbac87-4259-4402-8f64-6c65b2ed2dfd"
+                                    class="typo-undertittel lenkeseksjon__tittel"
+                                >
+                                    Flere tjenester
+                                </h2>
+                                <ul class="lenkeseksjon__lenker">
+                                    <li>
+                                        <a
+                                            href="https://tjenester.nav.no/pselv/publisering/dinpensjon.jsf?context=pensjon"
+                                            class="lenke dekorator-lenke chevronlenke"
+                                            id="desktop-minside_2_1_0"
+                                        >
+                                            <div
+                                                class="dekorator-lenke__ikon-container"
+                                            >
+                                                <i
+                                                    class="nav-frontend-chevron chevronboks chevronlenke__chevron chevron--hoyre"
+                                                ></i>
+                                            </div>
+                                            Din pensjon</a
+                                        >
+                                    </li>
+                                    <li>
+                                        <a
+                                            href="https://tjenester.nav.no/pselv/publisering/uforetrygd.jsf?context=ut"
+                                            class="lenke dekorator-lenke chevronlenke"
+                                            id="desktop-minside_2_1_1"
+                                        >
+                                            <div
+                                                class="dekorator-lenke__ikon-container"
+                                            >
+                                                <i
+                                                    class="nav-frontend-chevron chevronboks chevronlenke__chevron chevron--hoyre"
+                                                ></i>
+                                            </div>
+                                            Din uføretrygd</a
+                                        >
+                                    </li>
+                                    <li>
+                                        <a
+                                            href="https://tjenester.nav.no/sykefravaer/"
+                                            class="lenke dekorator-lenke chevronlenke"
+                                            id="desktop-minside_2_1_2"
+                                        >
+                                            <div
+                                                class="dekorator-lenke__ikon-container"
+                                            >
+                                                <i
+                                                    class="nav-frontend-chevron chevronboks chevronlenke__chevron chevron--hoyre"
+                                                ></i>
+                                            </div>
+                                            Ditt sykefravær</a
+                                        >
+                                    </li>
+                                    <li>
+                                        <a
+                                            href="https://foreldrepenger.nav.no"
+                                            class="lenke dekorator-lenke chevronlenke"
+                                            id="desktop-minside_2_1_3"
+                                        >
+                                            <div
+                                                class="dekorator-lenke__ikon-container"
+                                            >
+                                                <i
+                                                    class="nav-frontend-chevron chevronboks chevronlenke__chevron chevron--hoyre"
+                                                ></i>
+                                            </div>
+                                            Dine foreldrepenger</a
+                                        >
+                                    </li>
+                                    <li>
+                                        <a
+                                            href="https://www.nav.no/person/pdl-fullmakt-ui"
+                                            class="lenke dekorator-lenke chevronlenke"
+                                            id="desktop-minside_2_1_4"
+                                        >
+                                            <div
+                                                class="dekorator-lenke__ikon-container"
+                                            >
+                                                <i
+                                                    class="nav-frontend-chevron chevronboks chevronlenke__chevron chevron--hoyre"
+                                                ></i>
+                                            </div>
+                                            Dine fullmakter</a
+                                        >
+                                    </li>
+                                    <li>
+                                        <a
+                                            href="https://www.nav.no/familie/sykdom-i-familien/soknad/innsyn"
+                                            class="lenke dekorator-lenke chevronlenke"
+                                            id="desktop-minside_2_1_5"
+                                        >
+                                            <div
+                                                class="dekorator-lenke__ikon-container"
+                                            >
+                                                <i
+                                                    class="nav-frontend-chevron chevronboks chevronlenke__chevron chevron--hoyre"
+                                                ></i>
+                                            </div>
+                                            Sykdom i familien
+                                        </a>
+                                    </li>
+                                </ul>
+                            </section>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <form class="login-knapp-container" action="/secur/logout.jsp">
+            <button
+                class="knapp login-knapp logout-knapp knapp--standard"
+                type="submit"
+                id="desktop-login-knapp"
+            >
+                Logg ut
+            </button>
+        </form>
+    </div>
 </template>
