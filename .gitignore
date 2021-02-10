@@ -14,7 +14,6 @@ yarn-error.log*
 
 # Project files
 .idea/
-.vscode/
 .IlluminatedCloud/
 *.zip
 *.iml
@@ -28,6 +27,10 @@ node_modules/
 
 # MacOS system files
 .DS_Store
+
+# LWC
+# ----------------------------------------------------------------------------------------
+**/jsconfig.json
 
 # Windows system files
 Thumbs.db

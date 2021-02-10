@@ -1,10 +1,10 @@
 public inherited sharing class UsersSelector_Community extends ApplicationSelector {
     public List<Schema.SObjectField> getSObjectFieldList() {
         return new List<Schema.SObjectField>{
-                User.Id,
-                User.FirstName,
-                User.LastName,
-                User.ProfileId
+            User.Id,
+            User.FirstName,
+            User.LastName,
+            User.ProfileId
         };
     }
 
@@ -12,11 +12,11 @@ public inherited sharing class UsersSelector_Community extends ApplicationSelect
         return User.sObjectType;
     }
 
-    public List<User> selectByAccountIdent(Set<String> idents){
-        return (List<User>)
-                Database.query(
-                        newQueryFactory()
-                                .setCondition('Account.INT_PersonIdent__c in: idents')
-                                .toSOQL());
+    public List<User> selectByAccountIdent(Set<String> idents) {
+        return (List<User>) Database.query(
+            newQueryFactory()
+                .setCondition('Account.INT_PersonIdent__c in: idents')
+                .toSOQL()
+        );
     }
 }

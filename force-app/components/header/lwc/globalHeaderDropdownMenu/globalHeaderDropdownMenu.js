@@ -13,7 +13,7 @@ export default class GlobalHeaderDropdownMenu extends LightningElement {
     renderedCallback() {
         loadStyle(this, dekoratoren);
     }
-    
+
     connectedCallback() {
         this.isPrivatperson = this.area == 'Privatperson';
         this.isArbeidsgiver = this.area == 'Arbeidsgiver';
