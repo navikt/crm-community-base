@@ -7464,8 +7464,8 @@ lightning-radio-group.nav-radio-button-group {
 }
 
 .slds-input {
-	border-color: #78706a !important;
-	box-shadow: none;
+    border-color: #78706a !important;
+    box-shadow: none;
 }
 
 .horizontal .slds-form-element__control {
@@ -8264,24 +8264,28 @@ lightning-output-field.checkbox-inline > div.slds-form-element__control {
 }
 
 @media (max-width: 564px) {
-	.dynamic-time-inputs-with-line_button {
-		grid-template-columns: 85% 15%;
-	}
-	.dynamic-time-inputs {
-		grid-template-columns: none;
-		grid-template-rows: 50% 50%;
-	}
-	.remove-time__button {
-		bottom: 15%;
-	}
+    .dynamic-time-inputs-with-line_button {
+        grid-template-columns: 85% 15%;
+    }
+    .dynamic-time-inputs {
+        grid-template-columns: none;
+        grid-template-rows: 50% 50%;
+    }
+    .remove-time__button {
+        bottom: 15%;
+    }
 }
 
 .third-width {
-	width: 30%;
+    width: 30%;
 }
 
 @media (max-width: 564px) {
-	.third-width {
-		width: 100%;
-	}
+    .third-width {
+        width: 100%;
+    }
+}
+
+lightning-datatable > div.dt-outer-container > div > div > table {
+    width: 100% !important;
 }
