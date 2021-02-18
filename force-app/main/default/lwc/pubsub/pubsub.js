@@ -30,9 +30,7 @@ const samePageRef = (pageRef1, pageRef2) => {
 const registerListener = (eventName, callback, thisArg) => {
     // Checking that the listener has a pageRef property. We rely on that property for filtering purpose in fireEvent()
     if (!thisArg.pageRef) {
-        throw new Error(
-            'pubsub listeners need a "@wire(CurrentPageReference) pageRef" property'
-        );
+        throw new Error('pubsub listeners need a "@wire(CurrentPageReference) pageRef" property');
     }
 
     if (!events[eventName]) {
@@ -55,8 +53,7 @@ const registerListener = (eventName, callback, thisArg) => {
 const unregisterListener = (eventName, callback, thisArg) => {
     if (events[eventName]) {
         events[eventName] = events[eventName].filter(
-            (listener) =>
-                listener.callback !== callback || listener.thisArg !== thisArg
+            (listener) => listener.callback !== callback || listener.thisArg !== thisArg
         );
     }
 };
@@ -67,9 +64,7 @@ const unregisterListener = (eventName, callback, thisArg) => {
  */
 const unregisterAllListeners = (thisArg) => {
     Object.keys(events).forEach((eventName) => {
-        events[eventName] = events[eventName].filter(
-            (listener) => listener.thisArg !== thisArg
-        );
+        events[eventName] = events[eventName].filter((listener) => listener.thisArg !== thisArg);
     });
 };
 
@@ -94,9 +89,4 @@ const fireEvent = (pageRef, eventName, payload) => {
     }
 };
 
-export {
-    registerListener,
-    unregisterListener,
-    unregisterAllListeners,
-    fireEvent
-};
+export { registerListener, unregisterListener, unregisterAllListeners, fireEvent };

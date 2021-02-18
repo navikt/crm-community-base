@@ -5,9 +5,7 @@ private class CommunityUsersServiceTest {
         Profile communityProfile = [
             SELECT Name
             FROM Profile
-            WHERE
-                Name = 'Personbruker Login'
-                OR Name = 'Trial Customer Portal User'
+            WHERE Name = 'Personbruker Login' OR Name = 'Trial Customer Portal User'
             LIMIT 1
         ];
         DefaultCommunityProfile__c defaultCommunityProfile = new DefaultCommunityProfile__c(
@@ -21,21 +19,11 @@ private class CommunityUsersServiceTest {
 
     @IsTest
     private static void getOrCreatePersonAccountUser_whenUserExist() {
-        User navEmployee = TestDataFactory_Community.getUsers(
-            1,
-            'System Administrator',
-            true,
-            true
-        )[0];
+        User navEmployee = TestDataFactory_Community.getUsers(1, 'System Administrator', true, true)[0];
         System.runAs(navEmployee) {
-            Account personAccount = TestDataFactory_Community.getPersonAccounts(
-                1
-            )[0];
+            Account personAccount = TestDataFactory_Community.getPersonAccounts(1)[0];
 
-            TestDataFactory_Community.getEmployerCommunityUser(
-                new Set<Id>{ personAccount.Id },
-                true
-            );
+            TestDataFactory_Community.getEmployerCommunityUser(new Set<Id>{ personAccount.Id }, true);
 
             Test.startTest();
             User user = CommunityUsersService.getOrCreatePersonAccountUser('1');
@@ -48,16 +36,9 @@ private class CommunityUsersServiceTest {
 
     @IsTest
     private static void getOrCreatePersonAccountUser_whenUserIsCreated() {
-        User navEmployee = TestDataFactory_Community.getUsers(
-            1,
-            'System Administrator',
-            true,
-            true
-        )[0];
+        User navEmployee = TestDataFactory_Community.getUsers(1, 'System Administrator', true, true)[0];
         System.runAs(navEmployee) {
-            Account personAccount = TestDataFactory_Community.getPersonAccounts(
-                1
-            )[0];
+            Account personAccount = TestDataFactory_Community.getPersonAccounts(1)[0];
 
             Test.startTest();
             User user = CommunityUsersService.getOrCreatePersonAccountUser('1');
@@ -65,19 +46,13 @@ private class CommunityUsersServiceTest {
             System.assert(user != null);
             System.assertEquals(personAccount.FirstName, user.FirstName);
             System.assertEquals(personAccount.LastName, user.LastName);
-            List<PermissionSet> permissionSets = [
-                SELECT Id
-                FROM permissionSet
-                WHERE Name = 'CRM_ManageAsyncRequests'
-            ];
+            List<PermissionSet> permissionSets = [SELECT Id FROM permissionSet WHERE Name = 'CRM_ManageAsyncRequests'];
             System.assertEquals(
                 1,
                 [
                     SELECT COUNT()
                     FROM PermissionSetAssignment
-                    WHERE
-                        AssigneeId = :user.Id
-                        AND PermissionSetId = :permissionSets[0].Id
+                    WHERE AssigneeId = :user.Id AND PermissionSetId = :permissionSets[0].Id
                 ]
             );
         }
@@ -93,18 +68,12 @@ private class CommunityUsersServiceTest {
 
     @IsTest
     private static void createCommunityUser() {
-        User officeUser = TestDataFactory_Community.getUsers(
-            1,
-            'System Administrator',
-            true,
-            true
-        )[0];
+        User officeUser = TestDataFactory_Community.getUsers(1, 'System Administrator', true, true)[0];
         System.runAs(officeUser) {
             TestDataFactory_Community.getPersonAccounts(1);
         }
 
-        Id contactId = [SELECT PersonContactId FROM Account LIMIT 1]
-        .PersonContactId;
+        Id contactId = [SELECT PersonContactId FROM Account LIMIT 1].PersonContactId;
         PersonAccountWrapper wrapper = new PersonAccountWrapper();
         wrapper.recordId = contactId;
         wrapper.firstName = 'Test';
@@ -112,17 +81,12 @@ private class CommunityUsersServiceTest {
         Profile communityProfile = [
             SELECT Name
             FROM Profile
-            WHERE
-                Name = 'Personbruker Login'
-                OR Name = 'Trial Customer Portal User'
+            WHERE Name = 'Personbruker Login' OR Name = 'Trial Customer Portal User'
             LIMIT 1
         ];
 
         Test.startTest();
-        User user = CommunityUsersService.createCommunityUser(
-            wrapper,
-            communityProfile.Id
-        );
+        User user = CommunityUsersService.createCommunityUser(wrapper, communityProfile.Id);
         Test.stopTest();
 
         System.assertEquals(contactId + '@nav.portal', user.Username);
@@ -133,12 +97,7 @@ private class CommunityUsersServiceTest {
 
     @IsTest
     private static void createCommunityPlusUser() {
-        User officeUser = TestDataFactory_Community.getUsers(
-            1,
-            'System Administrator',
-            true,
-            true
-        )[0];
+        User officeUser = TestDataFactory_Community.getUsers(1, 'System Administrator', true, true)[0];
         System.runAs(officeUser) {
             Person__c person = new Person__c();
             person.INT_Confidential__c = 'Ugradert';
@@ -149,16 +108,10 @@ private class CommunityUsersServiceTest {
         }
 
         Test.startTest();
-        CommunityUsersService.createCommunityPlusUser(
-            new List<String>{ '01011800001' }
-        );
+        CommunityUsersService.createCommunityPlusUser(new List<String>{ '01011800001' });
         Test.stopTest();
 
-        User user = [
-            SELECT Id, Name, FirstName, LastName, ProfileId
-            FROM User
-            WHERE Name = 'Freelance Tolk'
-        ];
+        User user = [SELECT Id, Name, FirstName, LastName, ProfileId FROM User WHERE Name = 'Freelance Tolk'];
         System.assertEquals('Freelance', user.FirstName);
         System.assertEquals('Tolk', user.LastName);
     }

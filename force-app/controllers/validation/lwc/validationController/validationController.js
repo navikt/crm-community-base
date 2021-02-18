@@ -1,15 +1,15 @@
 export function validate(element, validationRules, ...args) {
     let errors = [];
-    if(element != null && element != {}){
-        element.setCustomValidity("");
+    if (element != null && element != {}) {
+        element.setCustomValidity('');
         element.reportValidity();
         for (let validationRule of validationRules) {
             let errorMessage = validationRule(element.value, args);
-            if (errorMessage != "") {
+            if (errorMessage != '') {
                 element.setCustomValidity(errorMessage);
                 element.reportValidity();
                 element.focus();
-                errors.push({element: errorMessage});
+                errors.push({ element: errorMessage });
             }
         }
     }
@@ -17,5 +17,5 @@ export function validate(element, validationRules, ...args) {
 }
 
 export function require(value) {
-	return value == null || value == "" ? "Fyll ut dette feltet." : "";
+    return value == null || value == '' ? 'Fyll ut dette feltet.' : '';
 }

@@ -27,9 +27,7 @@
                                     role="button"
                                     onclick={scrollToTop}
                                 >
-                                    <span style="font-size: 1rem"
-                                        >Til toppen</span
-                                    >
+                                    <span style="font-size: 1rem">Til toppen</span>
                                     <div class="lenke-med-ikon__ikon">
                                         <img src={arrowupicon} alt="Pil" />
                                     </div>
@@ -38,16 +36,12 @@
                         </div>
 
                         <div class="menylenker-seksjon venstre">
-                            <h2 class="typo-undertittel menylenker-overskrift">
-                                Kontakt
-                            </h2>
+                            <h2 class="typo-undertittel menylenker-overskrift">Kontakt</h2>
                             <!--===================== PRIVATPERSON ================================-->
                             <ul if:true={isPrivatperson}>
                                 <li>
                                     <p class="typo-normal">
-                                        <a
-                                            href="https://www.nav.no/person/kontakt-oss/"
-                                            class="lenke dekorator-lenke"
+                                        <a href="https://www.nav.no/person/kontakt-oss/" class="lenke dekorator-lenke"
                                             >Kontakt oss</a
                                         >
                                     </p>
@@ -85,9 +79,7 @@
                             <ul if:true={isArbeidsgiver}>
                                 <li>
                                     <p class="typo-normal">
-                                        <a
-                                            href="https://arbeidsgiver.nav.no/kontakt-oss/"
-                                            class="lenke dekorator-lenke"
+                                        <a href="https://arbeidsgiver.nav.no/kontakt-oss/" class="lenke dekorator-lenke"
                                             >Kontakt NAV - arbeidsgiver</a
                                         >
                                     </p>
@@ -134,9 +126,7 @@
                             <ul if:true={isSamarbeidspartner}>
                                 <li>
                                     <p class="typo-normal">
-                                        <a
-                                            href="https://www.nav.no/person/kontakt-oss/"
-                                            class="lenke dekorator-lenke"
+                                        <a href="https://www.nav.no/person/kontakt-oss/" class="lenke dekorator-lenke"
                                             >Kontakt oss</a
                                         >
                                     </p>
@@ -182,24 +172,16 @@
                         </div>
 
                         <div class="menylenker-seksjon midt">
-                            <h2 class="typo-undertittel menylenker-overskrift">
-                                Andre språk
-                            </h2>
+                            <h2 class="typo-undertittel menylenker-overskrift">Andre språk</h2>
                             <ul>
                                 <li>
                                     <p class="typo-normal">
-                                        <a
-                                            href="https://www.nav.no/en"
-                                            class="lenke dekorator-lenke"
-                                            >English pages</a
-                                        >
+                                        <a href="https://www.nav.no/en" class="lenke dekorator-lenke">English pages</a>
                                     </p>
                                 </li>
                                 <li>
                                     <p class="typo-normal">
-                                        <a
-                                            href="https://www.nav.no/se"
-                                            class="lenke dekorator-lenke"
+                                        <a href="https://www.nav.no/se" class="lenke dekorator-lenke"
                                             >Sámegiel skovit</a
                                         >
                                     </p>
@@ -207,9 +189,7 @@
                             </ul>
                         </div>
                         <div class="menylenker-seksjon hoyre">
-                            <h2 class="typo-undertittel menylenker-overskrift">
-                                NAV og samfunn
-                            </h2>
+                            <h2 class="typo-undertittel menylenker-overskrift">NAV og samfunn</h2>
                             <ul>
                                 <li>
                                     <p class="typo-normal">
@@ -231,9 +211,7 @@
                                 </li>
                                 <li>
                                     <p class="typo-normal">
-                                        <a
-                                            href="https://lovdata.no/nav/"
-                                            class="lenke dekorator-lenke"
+                                        <a href="https://lovdata.no/nav/" class="lenke dekorator-lenke"
                                             >Lover og regler (lovdata.no)</a
                                         >
                                     </p>
@@ -260,33 +238,19 @@
                         </div>
                         <div class="menylenker-seksjon arbeidsflate">
                             <!-- =============== IF PRIVATPERSON ============================================ -->
-                            <ul
-                                if:true={isPrivatperson}
-                                class="arbeidsflatevalg"
-                            >
+                            <ul if:true={isPrivatperson} class="arbeidsflatevalg">
                                 <li>
                                     <a
                                         href="https://www.nav.no/no/bedrift"
                                         class="lenkepanel arbeidsflate-lenkepanel lenkepanel--border"
                                     >
-                                        <div
-                                            class="arbeidsflate-lenkepanel__innhold"
-                                        >
-                                            <h2
-                                                class="typo-undertittel lenkepanel__heading"
-                                            >
-                                                Arbeidsgiver
-                                            </h2>
-                                            <p
-                                                class="typo-undertekst arbeidsflate-lenkepanel__stikkord"
-                                            >
-                                                Dine sykmeldte, rekruttering,
-                                                digitale skjemaer
+                                        <div class="arbeidsflate-lenkepanel__innhold">
+                                            <h2 class="typo-undertittel lenkepanel__heading">Arbeidsgiver</h2>
+                                            <p class="typo-undertekst arbeidsflate-lenkepanel__stikkord">
+                                                Dine sykmeldte, rekruttering, digitale skjemaer
                                             </p>
                                         </div>
-                                        <span
-                                            class="lenkepanel__indikator"
-                                        ></span>
+                                        <span class="lenkepanel__indikator"></span>
                                     </a>
                                 </li>
                                 <li>
@@ -294,60 +258,32 @@
                                         href="https://www.nav.no/no/samarbeidspartner"
                                         class="lenkepanel arbeidsflate-lenkepanel lenkepanel--border"
                                     >
-                                        <div
-                                            class="arbeidsflate-lenkepanel__innhold"
-                                        >
-                                            <h2
-                                                class="typo-undertittel lenkepanel__heading"
-                                            >
-                                                Samarbeidspartner
-                                            </h2>
-                                            <p
-                                                class="typo-undertekst arbeidsflate-lenkepanel__stikkord"
-                                            >
-                                                Helsepersonell,
-                                                tiltaksarrangører, fylker og
-                                                kommuner
+                                        <div class="arbeidsflate-lenkepanel__innhold">
+                                            <h2 class="typo-undertittel lenkepanel__heading">Samarbeidspartner</h2>
+                                            <p class="typo-undertekst arbeidsflate-lenkepanel__stikkord">
+                                                Helsepersonell, tiltaksarrangører, fylker og kommuner
                                             </p>
                                         </div>
-                                        <span
-                                            class="lenkepanel__indikator"
-                                        ></span>
+                                        <span class="lenkepanel__indikator"></span>
                                     </a>
                                 </li>
                             </ul>
                             <!-- =================================================== -->
                             <!-- =================== IF ARBEIDSGIVER ==================== -->
-                            <ul
-                                if:true={isArbeidsgiver}
-                                class="arbeidsflatevalg"
-                            >
+                            <ul if:true={isArbeidsgiver} class="arbeidsflatevalg">
                                 <li>
                                     <a
                                         href="https://www.nav.no"
                                         class="lenkepanel arbeidsflate-lenkepanel lenkepanel--border"
                                     >
-                                        <div
-                                            class="arbeidsflate-lenkepanel__innhold"
-                                        >
-                                            <h2
-                                                class="typo-undertittel lenkepanel__heading"
-                                            >
-                                                Privatperson
-                                            </h2>
-                                            <p
-                                                class="typo-undertekst arbeidsflate-lenkepanel__stikkord"
-                                            >
-                                                Dine saker, utbetalinger,
-                                                meldinger, meldekort,
-                                                aktivitetsplan,
-                                                personopplysninger og flere
-                                                tjenester
+                                        <div class="arbeidsflate-lenkepanel__innhold">
+                                            <h2 class="typo-undertittel lenkepanel__heading">Privatperson</h2>
+                                            <p class="typo-undertekst arbeidsflate-lenkepanel__stikkord">
+                                                Dine saker, utbetalinger, meldinger, meldekort, aktivitetsplan,
+                                                personopplysninger og flere tjenester
                                             </p>
                                         </div>
-                                        <span
-                                            class="lenkepanel__indikator"
-                                        ></span>
+                                        <span class="lenkepanel__indikator"></span>
                                     </a>
                                 </li>
                                 <li>
@@ -355,60 +291,32 @@
                                         href="https://www.nav.no/no/samarbeidspartner"
                                         class="lenkepanel arbeidsflate-lenkepanel lenkepanel--border"
                                     >
-                                        <div
-                                            class="arbeidsflate-lenkepanel__innhold"
-                                        >
-                                            <h2
-                                                class="typo-undertittel lenkepanel__heading"
-                                            >
-                                                Samarbeidspartner
-                                            </h2>
-                                            <p
-                                                class="typo-undertekst arbeidsflate-lenkepanel__stikkord"
-                                            >
-                                                Helsepersonell,
-                                                tiltaksarrangører, fylker og
-                                                kommuner
+                                        <div class="arbeidsflate-lenkepanel__innhold">
+                                            <h2 class="typo-undertittel lenkepanel__heading">Samarbeidspartner</h2>
+                                            <p class="typo-undertekst arbeidsflate-lenkepanel__stikkord">
+                                                Helsepersonell, tiltaksarrangører, fylker og kommuner
                                             </p>
                                         </div>
-                                        <span
-                                            class="lenkepanel__indikator"
-                                        ></span>
+                                        <span class="lenkepanel__indikator"></span>
                                     </a>
                                 </li>
                             </ul>
                             <!-- =================================================== -->
                             <!-- ============== IF SAMARBEIDSPARTNER =================== -->
-                            <ul
-                                if:true={isSamarbeidspartner}
-                                class="arbeidsflatevalg"
-                            >
+                            <ul if:true={isSamarbeidspartner} class="arbeidsflatevalg">
                                 <li>
                                     <a
                                         href="https://www.nav.no"
                                         class="lenkepanel arbeidsflate-lenkepanel lenkepanel--border"
                                     >
-                                        <div
-                                            class="arbeidsflate-lenkepanel__innhold"
-                                        >
-                                            <h2
-                                                class="typo-undertittel lenkepanel__heading"
-                                            >
-                                                Privatperson
-                                            </h2>
-                                            <p
-                                                class="typo-undertekst arbeidsflate-lenkepanel__stikkord"
-                                            >
-                                                Dine saker, utbetalinger,
-                                                meldinger, meldekort,
-                                                aktivitetsplan,
-                                                personopplysninger og flere
-                                                tjenester
+                                        <div class="arbeidsflate-lenkepanel__innhold">
+                                            <h2 class="typo-undertittel lenkepanel__heading">Privatperson</h2>
+                                            <p class="typo-undertekst arbeidsflate-lenkepanel__stikkord">
+                                                Dine saker, utbetalinger, meldinger, meldekort, aktivitetsplan,
+                                                personopplysninger og flere tjenester
                                             </p>
                                         </div>
-                                        <span
-                                            class="lenkepanel__indikator"
-                                        ></span>
+                                        <span class="lenkepanel__indikator"></span>
                                     </a>
                                 </li>
                                 <li>
@@ -416,24 +324,13 @@
                                         href="https://www.nav.no/no/bedrift"
                                         class="lenkepanel arbeidsflate-lenkepanel lenkepanel--border"
                                     >
-                                        <div
-                                            class="arbeidsflate-lenkepanel__innhold"
-                                        >
-                                            <h2
-                                                class="typo-undertittel lenkepanel__heading"
-                                            >
-                                                Arbeidsgiver
-                                            </h2>
-                                            <p
-                                                class="typo-undertekst arbeidsflate-lenkepanel__stikkord"
-                                            >
-                                                Dine sykmeldte, rekruttering,
-                                                digitale skjemaer
+                                        <div class="arbeidsflate-lenkepanel__innhold">
+                                            <h2 class="typo-undertittel lenkepanel__heading">Arbeidsgiver</h2>
+                                            <p class="typo-undertekst arbeidsflate-lenkepanel__stikkord">
+                                                Dine sykmeldte, rekruttering, digitale skjemaer
                                             </p>
                                         </div>
-                                        <span
-                                            class="lenkepanel__indikator"
-                                        ></span>
+                                        <span class="lenkepanel__indikator"></span>
                                     </a>
                                 </li>
                             </ul>
@@ -450,19 +347,14 @@
                         </div>
                         <div class="footer-bottom-content__bottom-lenker">
                             <div>
-                                <p class="typo-normal bottom-tekst">
-                                    Arbeids- og velferdsetaten
-                                </p>
-                                <ul
-                                    class="footer-bottom-content__personvern-lenker"
-                                >
+                                <p class="typo-normal bottom-tekst">Arbeids- og velferdsetaten</p>
+                                <ul class="footer-bottom-content__personvern-lenker">
                                     <li>
                                         <p class="typo-normal">
                                             <a
                                                 href="https://www.nav.no/no/nav-og-samfunn/om-nav/personvern-i-arbeids-og-velferdsetaten"
                                                 class="lenke dekorator-lenke"
-                                                >Personvern og
-                                                informasjonskapsler</a
+                                                >Personvern og informasjonskapsler</a
                                             >
                                         </p>
                                     </li>

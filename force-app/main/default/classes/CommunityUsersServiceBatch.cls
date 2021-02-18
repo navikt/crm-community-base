@@ -1,15 +1,7 @@
 public with sharing class CommunityUsersServiceBatch {
-    public static List<User> getOrCreatePersonAccountUser(
-        List<String> personIdents
-    ) {
+    public static List<User> getOrCreatePersonAccountUser(List<String> personIdents) {
         List<User> existingUsers = [
-            SELECT
-                Id,
-                Name,
-                FirstName,
-                LastName,
-                ProfileId,
-                Account.INT_PersonIdent__c
+            SELECT Id, Name, FirstName, LastName, ProfileId, Account.INT_PersonIdent__c
             FROM User
             WHERE Account.INT_PersonIdent__c IN :personIdents
         ];
@@ -18,9 +10,7 @@ public with sharing class CommunityUsersServiceBatch {
             return existingUsers;
         } else {
             for (User existingUser : existingUsers) {
-                newIdents.remove(
-                    newIdents.indexOf(existingUser.Account.INT_PersonIdent__c)
-                );
+                newIdents.remove(newIdents.indexOf(existingUser.Account.INT_PersonIdent__c));
             }
         }
 
@@ -28,27 +18,12 @@ public with sharing class CommunityUsersServiceBatch {
         String profileName = defaultCommunityProfiles.DefaultProfile__c;
         Profile profile = [SELECT Id FROM Profile WHERE Name = :profileName];
         String permissionSetName = defaultCommunityProfiles.DefaultPermissionSet__c;
-        PermissionSet permissionSet = [
-            SELECT Id
-            FROM permissionSet
-            WHERE Name = :permissionSetName
-            LIMIT 1
-        ];
+        PermissionSet permissionSet = [SELECT Id FROM permissionSet WHERE Name = :permissionSetName LIMIT 1];
 
         List<Account> personAccounts = [
-            SELECT
-                Id,
-                PersonContactId,
-                Name,
-                FirstName,
-                MiddleName,
-                LastName,
-                INT_PersonIdent__c,
-                CRM_Person__c
+            SELECT Id, PersonContactId, Name, FirstName, MiddleName, LastName, INT_PersonIdent__c, CRM_Person__c
             FROM Account
-            WHERE
-                INT_PersonIdent__c IN :newIdents
-                AND CRM_Person__r.INT_Confidential__c = 'UGRADERT'
+            WHERE INT_PersonIdent__c IN :newIdents AND CRM_Person__r.INT_Confidential__c = 'UGRADERT'
         ];
 
         List<User> newUsers = new List<User>();
@@ -56,9 +31,7 @@ public with sharing class CommunityUsersServiceBatch {
 
         if (personAccounts.size() > 0 && profile != null) {
             for (Account personAccount : personAccounts) {
-                PersonAccountWrapper contact = new PersonAccountWrapper(
-                    personAccount
-                );
+                PersonAccountWrapper contact = new PersonAccountWrapper(personAccount);
                 User user = createCommunityUser(contact, profile.Id);
                 newUsers.add(user);
                 existingUsers.add(user);
@@ -80,10 +53,7 @@ public with sharing class CommunityUsersServiceBatch {
     }
 
     @TestVisible
-    private static User createCommunityUser(
-        PersonAccountWrapper contact,
-        Id profileId
-    ) {
+    private static User createCommunityUser(PersonAccountWrapper contact, Id profileId) {
         User user = new User();
         user.FirstName = contact.firstName;
         user.MiddleName = contact.middleName;
@@ -102,9 +72,7 @@ public with sharing class CommunityUsersServiceBatch {
     }
 
     @InvocableMethod(label='Create Community Plus User')
-    public static void createCommunityPlusUserFlowAction(
-        List<String> personIdents
-    ) {
+    public static void createCommunityPlusUserFlowAction(List<String> personIdents) {
         createCommunityPlusUser(personIdents);
     }
 
@@ -114,15 +82,10 @@ public with sharing class CommunityUsersServiceBatch {
 
             DefaultCommunityProfile__c defaultCommunityProfiles = DefaultCommunityProfile__c.getOrgDefaults();
             String profileName = defaultCommunityProfiles.DefaultCommunityPlusProfile__c;
-            Id profileId = [SELECT Id FROM Profile WHERE Name = :profileName]
-            .Id;
+            Id profileId = [SELECT Id FROM Profile WHERE Name = :profileName].Id;
 
             String permissionSetGroupName = defaultCommunityProfiles.DefaultCommunityPlusPermissionSetGroup__c;
-            Id permissionSetGroupId = [
-                SELECT Id
-                FROM PermissionSetGroup
-                WHERE DeveloperName = :permissionSetGroupName
-            ]
+            Id permissionSetGroupId = [SELECT Id FROM PermissionSetGroup WHERE DeveloperName = :permissionSetGroupName]
             .Id;
             List<PermissionSetAssignment> permSetAssignments = new List<PermissionSetAssignment>();
 

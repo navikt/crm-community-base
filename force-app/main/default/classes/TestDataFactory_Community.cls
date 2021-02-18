@@ -6,10 +6,7 @@ public class TestDataFactory_Community {
     private static List<User> users;
     private static List<Account> personAccounts;
 
-    public static List<User> getEmployerCommunityUser(
-        Set<Id> personAccountsIds,
-        Boolean doInsert
-    ) {
+    public static List<User> getEmployerCommunityUser(Set<Id> personAccountsIds, Boolean doInsert) {
         List<Account> personAccounts = [
             SELECT Id, FirstName, LastName, PersonContactId
             FROM Account
@@ -18,9 +15,7 @@ public class TestDataFactory_Community {
         Profile communityProfile = [
             SELECT Name
             FROM Profile
-            WHERE
-                Name = 'Personbruker Login'
-                OR Name = 'Trial Customer Portal User'
+            WHERE Name = 'Personbruker Login' OR Name = 'Trial Customer Portal User'
             LIMIT 1
         ];
 
@@ -86,21 +81,11 @@ public class TestDataFactory_Community {
         return persons;
     }
 
-    public static List<User> getUsers(
-        Integer numberOfUsers,
-        String profileName,
-        Boolean assignRole,
-        Boolean doInsert
-    ) {
+    public static List<User> getUsers(Integer numberOfUsers, String profileName, Boolean assignRole, Boolean doInsert) {
         if (users != null)
             return users;
         users = new List<User>();
-        Profile profile = [
-            SELECT Id, UserLicense.Name
-            FROM Profile
-            WHERE Name = :profileName
-            LIMIT 1
-        ];
+        Profile profile = [SELECT Id, UserLicense.Name FROM Profile WHERE Name = :profileName LIMIT 1];
 
         for (Integer i = 1; i <= numberOfUsers; i++) {
             String firstName = 'User';
@@ -119,11 +104,7 @@ public class TestDataFactory_Community {
                 ProfileId = profile.Id
             );
             if (assignRole) {
-                UserRole role = [
-                    SELECT Id
-                    FROM UserRole
-                    WHERE Name = 'Default'
-                ];
+                UserRole role = [SELECT Id FROM UserRole WHERE Name = 'Default'];
                 user.UserRoleId = role.Id;
             }
             users.add(user);

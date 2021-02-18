@@ -6,20 +6,9 @@
                     <header class="siteheader">
                         <div class="decorator-wrapper">
                             <div class="header-z-wrapper">
-                                <nav
-                                    class="arbeidsflate"
-                                    id="arbeidsflate"
-                                    aria-label="Velg brukergruppe"
-                                >
-                                    <ul
-                                        class="arbeidsflate__topp-liste-rad"
-                                        role="tablist"
-                                    >
-                                        <li
-                                            role="tab"
-                                            aria-selected="true"
-                                            class="arbeidsflate__liste-element"
-                                        >
+                                <nav class="arbeidsflate" id="arbeidsflate" aria-label="Velg brukergruppe">
+                                    <ul class="arbeidsflate__topp-liste-rad" role="tablist">
+                                        <li role="tab" aria-selected="true" class="arbeidsflate__liste-element">
                                             <a
                                                 href="https://www.nav.no/no/person"
                                                 class="arbeidsflate__lenke"
@@ -29,25 +18,14 @@
                                                     if:true={isPrivatperson}
                                                     class="arbeidsflate__lenke-inner arbeidsflate__lenke-inner--active"
                                                 >
-                                                    <p class="typo-normal">
-                                                        Privatperson
-                                                    </p>
+                                                    <p class="typo-normal">Privatperson</p>
                                                 </div>
-                                                <div
-                                                    if:false={isPrivatperson}
-                                                    class="arbeidsflate__lenke-inner"
-                                                >
-                                                    <p class="typo-normal">
-                                                        Privatperson
-                                                    </p>
+                                                <div if:false={isPrivatperson} class="arbeidsflate__lenke-inner">
+                                                    <p class="typo-normal">Privatperson</p>
                                                 </div>
                                             </a>
                                         </li>
-                                        <li
-                                            role="tab"
-                                            aria-selected="false"
-                                            class="arbeidsflate__liste-element"
-                                        >
+                                        <li role="tab" aria-selected="false" class="arbeidsflate__liste-element">
                                             <a
                                                 href="https://www.nav.no/no/bedrift"
                                                 class="arbeidsflate__lenke"
@@ -57,25 +35,14 @@
                                                     if:true={isArbeidsgiver}
                                                     class="arbeidsflate__lenke-inner arbeidsflate__lenke-inner--active"
                                                 >
-                                                    <p class="typo-normal">
-                                                        Arbeidsgiver
-                                                    </p>
+                                                    <p class="typo-normal">Arbeidsgiver</p>
                                                 </div>
-                                                <div
-                                                    if:false={isArbeidsgiver}
-                                                    class="arbeidsflate__lenke-inner"
-                                                >
-                                                    <p class="typo-normal">
-                                                        Arbeidsgiver
-                                                    </p>
+                                                <div if:false={isArbeidsgiver} class="arbeidsflate__lenke-inner">
+                                                    <p class="typo-normal">Arbeidsgiver</p>
                                                 </div>
                                             </a>
                                         </li>
-                                        <li
-                                            role="tab"
-                                            aria-selected="false"
-                                            class="arbeidsflate__liste-element"
-                                        >
+                                        <li role="tab" aria-selected="false" class="arbeidsflate__liste-element">
                                             <a
                                                 href="https://www.nav.no/no/samarbeidspartner"
                                                 class="arbeidsflate__lenke"
@@ -85,26 +52,17 @@
                                                     if:true={isSamarbeidspartner}
                                                     class="arbeidsflate__lenke-inner arbeidsflate__lenke-inner--active"
                                                 >
-                                                    <p class="typo-normal">
-                                                        Samarbeidspartner
-                                                    </p>
+                                                    <p class="typo-normal">Samarbeidspartner</p>
                                                 </div>
-                                                <div
-                                                    if:false={isSamarbeidspartner}
-                                                    class="arbeidsflate__lenke-inner"
-                                                >
-                                                    <p class="typo-normal">
-                                                        Samarbeidspartner
-                                                    </p>
+                                                <div if:false={isSamarbeidspartner} class="arbeidsflate__lenke-inner">
+                                                    <p class="typo-normal">Samarbeidspartner</p>
                                                 </div>
                                             </a>
                                         </li>
                                     </ul>
                                 </nav>
                                 <!-- BUTTONS -->
-                                <c-global-header-menu-items
-                                    area={NAVarea}
-                                ></c-global-header-menu-items>
+                                <c-global-header-menu-items area={NAVarea}></c-global-header-menu-items>
                             </div>
                         </div>
                     </header>
