@@ -19,9 +19,7 @@ public inherited sharing class AccountsSelector_Community extends ApplicationSel
     public List<Account> selectByIdent(String ident) {
         return (List<Account>) Database.query(
             newQueryFactory()
-                .setCondition(
-                    'INT_PersonIdent__c=:ident AND CRM_Person__r.INT_Confidential__c=\'UGRADERT\''
-                )
+                .setCondition('INT_PersonIdent__c=:ident AND CRM_Person__r.INT_Confidential__c=\'UGRADERT\'')
                 .toSOQL()
         );
     }

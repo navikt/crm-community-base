@@ -2,9 +2,7 @@
 private class AccountsSelector_CommunityTest {
     @IsTest
     private static void selectByIdent() {
-        List<Account> personAccountsTestData = TestDataFactory_Community.getPersonAccounts(
-            2
-        );
+        List<Account> personAccountsTestData = TestDataFactory_Community.getPersonAccounts(2);
 
         Test.startTest();
         List<Account> personAccounts = new AccountsSelector_Community()

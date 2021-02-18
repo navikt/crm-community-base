@@ -15,38 +15,21 @@
                     <div class="varselbjelle-ikon__bell"></div>
                     <div class="varselbjelle-ikon__lip"></div>
                     <div class="varselbjelle-ikon__clapper"></div>
-                    <div
-                        class="varselbjelle-ikon__ulest-sirkel varselbjelle-ikon__ulest-sirkel--hide"
-                    >
-                        <p
-                            class="typo-etikett-liten varselbjelle-ikon__ulest-antall"
-                        >
-                            0
-                        </p>
+                    <div class="varselbjelle-ikon__ulest-sirkel varselbjelle-ikon__ulest-sirkel--hide">
+                        <p class="typo-etikett-liten varselbjelle-ikon__ulest-antall">0</p>
                     </div>
                 </div>
             </div>
-            <div
-                if:true={varslerPressed}
-                class="varselbjelle-ikon varselbjelle-ikon--open"
-            >
+            <div if:true={varslerPressed} class="varselbjelle-ikon varselbjelle-ikon--open">
                 <div class="varselbjelle-ikon__ring"></div>
                 <div class="varselbjelle-ikon__bell"></div>
                 <div class="varselbjelle-ikon__lip"></div>
                 <div class="varselbjelle-ikon__clapper"></div>
-                <div
-                    class="varselbjelle-ikon__ulest-sirkel varselbjelle-ikon__ulest-sirkel--hide"
-                >
-                    <p
-                        class="typo-etikett-liten varselbjelle-ikon__ulest-antall"
-                    >
-                        0
-                    </p>
+                <div class="varselbjelle-ikon__ulest-sirkel varselbjelle-ikon__ulest-sirkel--hide">
+                    <p class="typo-etikett-liten varselbjelle-ikon__ulest-antall">0</p>
                 </div>
             </div>
-            <span class="menylinje-knapp__tekst varselbjelle__knapp-tekst"
-                >Varsler</span
-            >
+            <span class="menylinje-knapp__tekst varselbjelle__knapp-tekst">Varsler</span>
         </button>
         <!--===============EXPAND=======================-->
         <div class="ekspanderbar__container varsler-dropdown">
@@ -58,20 +41,11 @@
                 <div class="ekspanderbar__innhold">
                     <div class="slideToClose__content" style="left: 0px">
                         <div class="varsler-visning">
-                            <h2
-                                class="typo-systemtittel varsler-visning__tittel"
-                            >
-                                Varsler
-                            </h2>
-                            <p class="text-center">
-                                Du har ingen varsler å vise.
-                            </p>
+                            <h2 class="typo-systemtittel varsler-visning__tittel">Varsler</h2>
+                            <p class="text-center">Du har ingen varsler å vise.</p>
                         </div>
                     </div>
-                    <div
-                        class="slideToClose__message"
-                        style="left: 0px; display: none"
-                    >
+                    <div class="slideToClose__message" style="left: 0px; display: none">
                         <p class="typo-element">Lukk</p>
                     </div>
                 </div>
@@ -92,52 +66,30 @@
                         <span class="hamburger-ikon__midt"></span>
                         <span class="hamburger-ikon__bunn"></span>
                     </span>
-                    <div
-                        if:true={minSidePressed}
-                        class="hamburger-ikon hamburger-ikon--open"
-                    >
-                        <span
-                            class="hamburger-ikon__topp hamburger-ikon__topp--open"
-                        ></span>
-                        <span
-                            class="hamburger-ikon__midt hamburger-ikon__midt--open"
-                        ></span>
-                        <span
-                            class="hamburger-ikon__bunn hamburger-ikon__bunn--open"
-                        ></span>
+                    <div if:true={minSidePressed} class="hamburger-ikon hamburger-ikon--open">
+                        <span class="hamburger-ikon__topp hamburger-ikon__topp--open"></span>
+                        <span class="hamburger-ikon__midt hamburger-ikon__midt--open"></span>
+                        <span class="hamburger-ikon__bunn hamburger-ikon__bunn--open"></span>
                     </div>
                     <div class="minside-meny-ikon__hode"></div>
                     <div class="minside-meny-ikon__kropp"></div>
                 </div>
                 <span class="desktop-minside-meny__knapp-tekst">
-                    <span class="desktop-minside-meny__knapp-tekst-topp"
-                        >Ditt NAV</span
-                    >
-                    <span class="desktop-minside-meny__knapp-tekst-bunn"
-                        >{currentUser}</span
-                    >
+                    <span class="desktop-minside-meny__knapp-tekst-topp">Ditt NAV</span>
+                    <span class="desktop-minside-meny__knapp-tekst-bunn">{currentUser}</span>
                 </span>
             </button>
 
             <!--==========================================MENY======================================================-->
-            <div
-                if:true={minSidePressed}
-                class="ekspanderbar__container desktop-minside-meny"
-            >
+            <div if:true={minSidePressed} class="ekspanderbar__container desktop-minside-meny">
                 <div
                     class="ekspanderbar__innhold-wrapper ekspanderbar__innhold-wrapper--active"
                     id="desktop-minside-meny"
                 >
                     <div class="ekspanderbar__innhold">
                         <div class="desktop-minside-meny__topp-seksjon">
-                            <div
-                                class="desktop-minside-meny__topp-seksjon-left"
-                            >
-                                <h2
-                                    class="typo-systemtittel desktop-minside-meny__topp-seksjon-tittel"
-                                >
-                                    Ditt NAV
-                                </h2>
+                            <div class="desktop-minside-meny__topp-seksjon-left">
+                                <h2 class="typo-systemtittel desktop-minside-meny__topp-seksjon-tittel">Ditt NAV</h2>
                                 <a
                                     href="https://www.nav.no/person/dittnav/"
                                     class="lenke dekorator-lenke"
@@ -145,15 +97,9 @@
                                     >Til forsiden</a
                                 >
                             </div>
-                            <div
-                                class="desktop-minside-meny__topp-seksjon-right"
-                            >
+                            <div class="desktop-minside-meny__topp-seksjon-right">
                                 <p class="typo-undertekst-bold">Logget inn:</p>
-                                <p
-                                    class="typo-normal desktop-minside-meny__brukernavn"
-                                >
-                                    {currentUser}
-                                </p>
+                                <p class="typo-normal desktop-minside-meny__brukernavn">{currentUser}</p>
                             </div>
                         </div>
                         <div class="desktop-minside-meny__lenke-seksjoner">
@@ -174,9 +120,7 @@
                                             class="lenke dekorator-lenke chevronlenke"
                                             id="desktop-minside_0_1_0"
                                         >
-                                            <div
-                                                class="dekorator-lenke__ikon-container"
-                                            >
+                                            <div class="dekorator-lenke__ikon-container">
                                                 <i
                                                     class="nav-frontend-chevron chevronboks chevronlenke__chevron chevron--hoyre"
                                                 ></i>
@@ -190,9 +134,7 @@
                                             class="lenke dekorator-lenke chevronlenke"
                                             id="desktop-minside_0_1_1"
                                         >
-                                            <div
-                                                class="dekorator-lenke__ikon-container"
-                                            >
+                                            <div class="dekorator-lenke__ikon-container">
                                                 <i
                                                     class="nav-frontend-chevron chevronboks chevronlenke__chevron chevron--hoyre"
                                                 ></i>
@@ -206,9 +148,7 @@
                                             class="lenke dekorator-lenke chevronlenke"
                                             id="desktop-minside_0_1_2"
                                         >
-                                            <div
-                                                class="dekorator-lenke__ikon-container"
-                                            >
+                                            <div class="dekorator-lenke__ikon-container">
                                                 <i
                                                     class="nav-frontend-chevron chevronboks chevronlenke__chevron chevron--hoyre"
                                                 ></i>
@@ -222,9 +162,7 @@
                                             class="lenke dekorator-lenke chevronlenke"
                                             id="desktop-minside_0_1_3"
                                         >
-                                            <div
-                                                class="dekorator-lenke__ikon-container"
-                                            >
+                                            <div class="dekorator-lenke__ikon-container">
                                                 <i
                                                     class="nav-frontend-chevron chevronboks chevronlenke__chevron chevron--hoyre"
                                                 ></i>
@@ -238,9 +176,7 @@
                                             class="lenke dekorator-lenke chevronlenke"
                                             id="desktop-minside_0_1_4"
                                         >
-                                            <div
-                                                class="dekorator-lenke__ikon-container"
-                                            >
+                                            <div class="dekorator-lenke__ikon-container">
                                                 <i
                                                     class="nav-frontend-chevron chevronboks chevronlenke__chevron chevron--hoyre"
                                                 ></i>
@@ -254,9 +190,7 @@
                                             class="lenke dekorator-lenke chevronlenke"
                                             id="desktop-minside_0_1_5"
                                         >
-                                            <div
-                                                class="dekorator-lenke__ikon-container"
-                                            >
+                                            <div class="dekorator-lenke__ikon-container">
                                                 <i
                                                     class="nav-frontend-chevron chevronboks chevronlenke__chevron chevron--hoyre"
                                                 ></i>
@@ -270,9 +204,7 @@
                                             class="lenke dekorator-lenke chevronlenke"
                                             id="desktop-minside_0_1_6"
                                         >
-                                            <div
-                                                class="dekorator-lenke__ikon-container"
-                                            >
+                                            <div class="dekorator-lenke__ikon-container">
                                                 <i
                                                     class="nav-frontend-chevron chevronboks chevronlenke__chevron chevron--hoyre"
                                                 ></i>
@@ -286,9 +218,7 @@
                                             class="lenke dekorator-lenke chevronlenke"
                                             id="desktop-minside_0_1_7"
                                         >
-                                            <div
-                                                class="dekorator-lenke__ikon-container"
-                                            >
+                                            <div class="dekorator-lenke__ikon-container">
                                                 <i
                                                     class="nav-frontend-chevron chevronboks chevronlenke__chevron chevron--hoyre"
                                                 ></i>
@@ -315,9 +245,7 @@
                                             class="lenke dekorator-lenke chevronlenke"
                                             id="desktop-minside_1_1_0"
                                         >
-                                            <div
-                                                class="dekorator-lenke__ikon-container"
-                                            >
+                                            <div class="dekorator-lenke__ikon-container">
                                                 <i
                                                     class="nav-frontend-chevron chevronboks chevronlenke__chevron chevron--hoyre"
                                                 ></i>
@@ -331,9 +259,7 @@
                                             class="lenke dekorator-lenke chevronlenke"
                                             id="desktop-minside_1_1_1"
                                         >
-                                            <div
-                                                class="dekorator-lenke__ikon-container"
-                                            >
+                                            <div class="dekorator-lenke__ikon-container">
                                                 <i
                                                     class="nav-frontend-chevron chevronboks chevronlenke__chevron chevron--hoyre"
                                                 ></i>
@@ -347,9 +273,7 @@
                                             class="lenke dekorator-lenke chevronlenke"
                                             id="desktop-minside_1_1_2"
                                         >
-                                            <div
-                                                class="dekorator-lenke__ikon-container"
-                                            >
+                                            <div class="dekorator-lenke__ikon-container">
                                                 <i
                                                     class="nav-frontend-chevron chevronboks chevronlenke__chevron chevron--hoyre"
                                                 ></i>
@@ -363,9 +287,7 @@
                                             class="lenke dekorator-lenke chevronlenke"
                                             id="desktop-minside_1_1_3"
                                         >
-                                            <div
-                                                class="dekorator-lenke__ikon-container"
-                                            >
+                                            <div class="dekorator-lenke__ikon-container">
                                                 <i
                                                     class="nav-frontend-chevron chevronboks chevronlenke__chevron chevron--hoyre"
                                                 ></i>
@@ -379,9 +301,7 @@
                                             class="lenke dekorator-lenke chevronlenke"
                                             id="desktop-minside_1_1_4"
                                         >
-                                            <div
-                                                class="dekorator-lenke__ikon-container"
-                                            >
+                                            <div class="dekorator-lenke__ikon-container">
                                                 <i
                                                     class="nav-frontend-chevron chevronboks chevronlenke__chevron chevron--hoyre"
                                                 ></i>
@@ -395,9 +315,7 @@
                                             class="lenke dekorator-lenke chevronlenke"
                                             id="desktop-minside_1_1_5"
                                         >
-                                            <div
-                                                class="dekorator-lenke__ikon-container"
-                                            >
+                                            <div class="dekorator-lenke__ikon-container">
                                                 <i
                                                     class="nav-frontend-chevron chevronboks chevronlenke__chevron chevron--hoyre"
                                                 ></i>
@@ -411,9 +329,7 @@
                                             class="lenke dekorator-lenke chevronlenke"
                                             id="desktop-minside_1_1_6"
                                         >
-                                            <div
-                                                class="dekorator-lenke__ikon-container"
-                                            >
+                                            <div class="dekorator-lenke__ikon-container">
                                                 <i
                                                     class="nav-frontend-chevron chevronboks chevronlenke__chevron chevron--hoyre"
                                                 ></i>
@@ -440,9 +356,7 @@
                                             class="lenke dekorator-lenke chevronlenke"
                                             id="desktop-minside_2_1_0"
                                         >
-                                            <div
-                                                class="dekorator-lenke__ikon-container"
-                                            >
+                                            <div class="dekorator-lenke__ikon-container">
                                                 <i
                                                     class="nav-frontend-chevron chevronboks chevronlenke__chevron chevron--hoyre"
                                                 ></i>
@@ -456,9 +370,7 @@
                                             class="lenke dekorator-lenke chevronlenke"
                                             id="desktop-minside_2_1_1"
                                         >
-                                            <div
-                                                class="dekorator-lenke__ikon-container"
-                                            >
+                                            <div class="dekorator-lenke__ikon-container">
                                                 <i
                                                     class="nav-frontend-chevron chevronboks chevronlenke__chevron chevron--hoyre"
                                                 ></i>
@@ -472,9 +384,7 @@
                                             class="lenke dekorator-lenke chevronlenke"
                                             id="desktop-minside_2_1_2"
                                         >
-                                            <div
-                                                class="dekorator-lenke__ikon-container"
-                                            >
+                                            <div class="dekorator-lenke__ikon-container">
                                                 <i
                                                     class="nav-frontend-chevron chevronboks chevronlenke__chevron chevron--hoyre"
                                                 ></i>
@@ -488,9 +398,7 @@
                                             class="lenke dekorator-lenke chevronlenke"
                                             id="desktop-minside_2_1_3"
                                         >
-                                            <div
-                                                class="dekorator-lenke__ikon-container"
-                                            >
+                                            <div class="dekorator-lenke__ikon-container">
                                                 <i
                                                     class="nav-frontend-chevron chevronboks chevronlenke__chevron chevron--hoyre"
                                                 ></i>
@@ -504,9 +412,7 @@
                                             class="lenke dekorator-lenke chevronlenke"
                                             id="desktop-minside_2_1_4"
                                         >
-                                            <div
-                                                class="dekorator-lenke__ikon-container"
-                                            >
+                                            <div class="dekorator-lenke__ikon-container">
                                                 <i
                                                     class="nav-frontend-chevron chevronboks chevronlenke__chevron chevron--hoyre"
                                                 ></i>
@@ -520,9 +426,7 @@
                                             class="lenke dekorator-lenke chevronlenke"
                                             id="desktop-minside_2_1_5"
                                         >
-                                            <div
-                                                class="dekorator-lenke__ikon-container"
-                                            >
+                                            <div class="dekorator-lenke__ikon-container">
                                                 <i
                                                     class="nav-frontend-chevron chevronboks chevronlenke__chevron chevron--hoyre"
                                                 ></i>
@@ -539,11 +443,7 @@
         </div>
 
         <form class="login-knapp-container" action="/secur/logout.jsp">
-            <button
-                class="knapp login-knapp logout-knapp knapp--standard"
-                type="submit"
-                id="desktop-login-knapp"
-            >
+            <button class="knapp login-knapp logout-knapp knapp--standard" type="submit" id="desktop-login-knapp">
                 Logg ut
             </button>
         </form>

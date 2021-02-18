@@ -31,8 +31,7 @@
             <name>Yes</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference
-                >Create_Community_Plus_User_Permission_Set_Assigment_Id</leftValueReference>
+                <leftValueReference>Create_Community_Plus_User_Permission_Set_Assigment_Id</leftValueReference>
                 <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
@@ -74,8 +73,7 @@
         <dataType>String</dataType>
         <expression>{!$User.Id}</expression>
     </formulas>
-    <interviewLabel
-    >Create Community Plus User {!$Flow.CurrentDateTime}</interviewLabel>
+    <interviewLabel>Create Community Plus User {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Create Community Plus User</label>
     <processMetadataValues>
         <name>BuilderType</name>
@@ -95,8 +93,7 @@
         <label>Community Plus Profile</label>
         <locationX>962</locationX>
         <locationY>307</locationY>
-        <assignNullValuesIfNoRecordsFound
-        >false</assignNullValuesIfNoRecordsFound>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Get_User</targetReference>
         </connector>
@@ -116,8 +113,7 @@
         <label>Get Current User Permission Set Assignment</label>
         <locationX>652</locationX>
         <locationY>307</locationY>
-        <assignNullValuesIfNoRecordsFound
-        >true</assignNullValuesIfNoRecordsFound>
+        <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Access</targetReference>
         </connector>
@@ -137,8 +133,7 @@
         </filters>
         <object>PermissionSetAssignment</object>
         <outputAssignments>
-            <assignToReference
-            >Create_Community_Plus_User_Permission_Set_Assigment_Id</assignToReference>
+            <assignToReference>Create_Community_Plus_User_Permission_Set_Assigment_Id</assignToReference>
             <field>Id</field>
         </outputAssignments>
         <sortField>Id</sortField>
@@ -149,11 +144,9 @@
         <label>Get Permission Set</label>
         <locationX>458</locationX>
         <locationY>307</locationY>
-        <assignNullValuesIfNoRecordsFound
-        >false</assignNullValuesIfNoRecordsFound>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference
-            >Get_Current_User_Permission_Set_Assignment</targetReference>
+            <targetReference>Get_Current_User_Permission_Set_Assignment</targetReference>
         </connector>
         <filters>
             <field>Name</field>
@@ -173,8 +166,7 @@
         <label>Get Person Account</label>
         <locationX>1314</locationX>
         <locationY>81</locationY>
-        <assignNullValuesIfNoRecordsFound
-        >true</assignNullValuesIfNoRecordsFound>
+        <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Create_Community_Plus_User</targetReference>
         </connector>
@@ -198,8 +190,7 @@
         <label>Get User</label>
         <locationX>1098</locationX>
         <locationY>307</locationY>
-        <assignNullValuesIfNoRecordsFound
-        >true</assignNullValuesIfNoRecordsFound>
+        <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Existing_User</targetReference>
         </connector>
@@ -235,8 +226,7 @@
         <allowPause>true</allowPause>
         <fields>
             <name>Already_added_as_user_text</name>
-            <fieldText
-            >&lt;p&gt;Bruker er allerede registrert som frilanstolk.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Bruker er allerede registrert som frilanstolk.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <showFooter>true</showFooter>
@@ -269,8 +259,7 @@
         <allowPause>true</allowPause>
         <fields>
             <name>No_Access_Text</name>
-            <fieldText
-            >&lt;p&gt;Du har ikke tilgang til denne funksjonen.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Du har ikke tilgang til denne funksjonen.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <showFooter>true</showFooter>

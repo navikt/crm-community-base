@@ -179,10 +179,7 @@ lightning-radio-group {
 .slds-radio [type='radio']:checked ~ .slds-radio_faux:after,
 .slds-radio [type='radio']:checked ~ .slds-radio--faux:after,
 .slds-radio [type='radio']:checked + .slds-radio__label .slds-radio_faux:after,
-.slds-radio
-    [type='radio']:checked
-    + .slds-radio__label
-    .slds-radio--faux:after {
+.slds-radio [type='radio']:checked + .slds-radio__label .slds-radio--faux:after {
     width: 65%;
     height: 65%;
     content: '';
@@ -274,9 +271,7 @@ span.slds-radio {
     font-weight: bold;
 }
 
-lightning-input-field.ikke-sensitiv-fritekst
-    > lightning-textarea
-    > label:after {
+lightning-input-field.ikke-sensitiv-fritekst > lightning-textarea > label:after {
     content: ' (ikke sensitiv informasjon)';
 }
 

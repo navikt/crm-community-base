@@ -144,8 +144,7 @@ lightning-formatted-number.lightning-output-field {
     transform: rotate(10deg);
     transition: -webkit-transform 100ms cubic-bezier(0.82, -2, 1, 0.3);
     transition: transform 100ms cubic-bezier(0.82, -2, 1, 0.3);
-    transition: transform 100ms cubic-bezier(0.82, -2, 1, 0.3),
-        -webkit-transform 100ms cubic-bezier(0.82, -2, 1, 0.3);
+    transition: transform 100ms cubic-bezier(0.82, -2, 1, 0.3), -webkit-transform 100ms cubic-bezier(0.82, -2, 1, 0.3);
 }
 
 .modal__lukkknapp--shake {
@@ -153,8 +152,7 @@ lightning-formatted-number.lightning-output-field {
     transform: rotate(0deg);
     transition: -webkit-transform 100ms cubic-bezier(0.82, 2, 1, 0.3);
     transition: transform 100ms cubic-bezier(0.82, 2, 1, 0.3);
-    transition: transform 100ms cubic-bezier(0.82, 2, 1, 0.3),
-        -webkit-transform 100ms cubic-bezier(0.82, 2, 1, 0.3);
+    transition: transform 100ms cubic-bezier(0.82, 2, 1, 0.3), -webkit-transform 100ms cubic-bezier(0.82, 2, 1, 0.3);
 }
 
 .navno-dekorator [autocomplete='off']::-webkit-contacts-auto-fill-button {
@@ -326,8 +324,7 @@ lightning-formatted-number.lightning-output-field {
 
 .navno-dekorator .radioknapp:checked:focus + .skjemaelement__label:before {
     transition: box-shadow 200ms cubic-bezier(0.465, 0.183, 0.153, 0.946);
-    box-shadow: 0 0 0 3px #254b6d, 0 0 0 3px #fff inset,
-        0 0 0 12px #0067c5 inset;
+    box-shadow: 0 0 0 3px #254b6d, 0 0 0 3px #fff inset, 0 0 0 12px #0067c5 inset;
 }
 
 .navno-dekorator .textarea--medMeta {
@@ -576,12 +573,8 @@ lightning-formatted-number.lightning-output-field {
     background-color: #f3e3e3;
 }
 
-.navno-dekorator
-    .skjemaelement__input--harFeil.checkboks:not(:checked)
-    + .skjemaelement__label:before,
-.navno-dekorator
-    .skjemaelement__input--harFeil.radio:not(:checked)
-    + .skjemaelement__label:before {
+.navno-dekorator .skjemaelement__input--harFeil.checkboks:not(:checked) + .skjemaelement__label:before,
+.navno-dekorator .skjemaelement__input--harFeil.radio:not(:checked) + .skjemaelement__label:before {
     border-color: #ba3a26;
     background-color: #f3e3e3;
 }
@@ -720,13 +713,11 @@ lightning-formatted-number.lightning-output-field {
     border: 1px solid transparent;
 }
 
-.navno-dekorator
-    .inputPanel:active:not(.inputPanel--disabled):not(.bekreftCheckboksPanel) {
+.navno-dekorator .inputPanel:active:not(.inputPanel--disabled):not(.bekreftCheckboksPanel) {
     background-color: #cce1f3;
 }
 
-.navno-dekorator
-    .inputPanel:hover:not(.inputPanel--disabled):not(.bekreftCheckboksPanel) {
+.navno-dekorator .inputPanel:hover:not(.inputPanel--disabled):not(.bekreftCheckboksPanel) {
     border: 1px solid #0067c5;
     box-shadow: #b7b1a9 0 2px 1px 0;
     cursor: pointer;
@@ -748,14 +739,11 @@ lightning-formatted-number.lightning-output-field {
     background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMyAxMCI+ICAgIDxnPiAgICA8cGF0aCBmaWxsPSIjRkZGRkZGIiBkPSJNNCwxMGMtMC40LDAtMC44LTAuMS0xLjEtMC40TDAuNCw3LjFDMC4xLDYuOCwwLDYuNCwwLDZzMC4yLTAuOCwwLjUtMS4xQzEsNC40LDIsNC40LDIuNSw0LjlMNCw2LjRsNi40LTYgICAgQzEwLjgsMC4xLDExLjEsMCwxMS41LDBjMC40LDAsMC44LDAuMiwxLDAuNWMwLjYsMC42LDAuNSwxLjYtMC4xLDIuMXYwTDUsOS42QzQuNyw5LjksNC40LDEwLDQsMTB6IE0xMS44LDEuOUwxMS44LDEuOSAgICBDMTEuOCwxLjksMTEuOCwxLjksMTEuOCwxLjl6IE0xMS4yLDEuMUMxMS4yLDEuMSwxMS4yLDEuMSwxMS4yLDEuMUwxMS4yLDEuMXoiLz4gICAgPC9nPjwvc3ZnPg==);
 }
 
-.navno-dekorator
-    .inputPanel:hover:not(.inputPanel--disabled):not(.bekreftCheckboksPanel)
-    .inputPanel__label {
+.navno-dekorator .inputPanel:hover:not(.inputPanel--disabled):not(.bekreftCheckboksPanel) .inputPanel__label {
     color: #0067c5;
 }
 
-.navno-dekorator
-    .radioPanel.inputPanel--checked:hover:not(.inputPanel--disabled) {
+.navno-dekorator .radioPanel.inputPanel--checked:hover:not(.inputPanel--disabled) {
     background-color: rgba(0, 103, 197, 0.2);
     border: 1px solid transparent;
     box-shadow: none;
@@ -807,35 +795,23 @@ lightning-formatted-number.lightning-output-field {
     border-color: #cde7d8;
 }
 
-.navno-dekorator
-    .bekreftCheckboksPanel--checked
-    .checkboks
-    + .skjemaelement__label:before {
+.navno-dekorator .bekreftCheckboksPanel--checked .checkboks + .skjemaelement__label:before {
     transition: none;
     background-color: #06893a;
     border-color: #06893a;
     background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMyAxMCI+ICAgIDxnPiAgICA8cGF0aCBmaWxsPSIjRkZGRkZGIiBkPSJNNCwxMGMtMC40LDAtMC44LTAuMS0xLjEtMC40TDAuNCw3LjFDMC4xLDYuOCwwLDYuNCwwLDZzMC4yLTAuOCwwLjUtMS4xQzEsNC40LDIsNC40LDIuNSw0LjlMNCw2LjRsNi40LTYgICAgQzEwLjgsMC4xLDExLjEsMCwxMS41LDBjMC40LDAsMC44LDAuMiwxLDAuNWMwLjYsMC42LDAuNSwxLjYtMC4xLDIuMXYwTDUsOS42QzQuNyw5LjksNC40LDEwLDQsMTB6IE0xMS44LDEuOUwxMS44LDEuOSAgICBDMTEuOCwxLjksMTEuOCwxLjksMTEuOCwxLjl6IE0xMS4yLDEuMUMxMS4yLDEuMSwxMS4yLDEuMSwxMS4yLDEuMUwxMS4yLDEuMXoiLz4gICAgPC9nPjwvc3ZnPg==);
 }
 
-.navno-dekorator
-    .bekreftCheckboksPanel--checked
-    .checkboks
-    + .skjemaelement__label:hover:before {
+.navno-dekorator .bekreftCheckboksPanel--checked .checkboks + .skjemaelement__label:hover:before {
     background-color: #6ab889;
     border-color: #6ab889;
 }
 
-.navno-dekorator
-    .bekreftCheckboksPanel--checked
-    .checkboks:focus
-    + .skjemaelement__label:before {
+.navno-dekorator .bekreftCheckboksPanel--checked .checkboks:focus + .skjemaelement__label:before {
     border-color: #254b6d;
 }
 
-.navno-dekorator
-    .bekreftCheckboksPanel--checked
-    .checkboks:focus
-    + .skjemaelement__label:hover:before {
+.navno-dekorator .bekreftCheckboksPanel--checked .checkboks:focus + .skjemaelement__label:hover:before {
     background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMyAxMCI+ICAgIDxnPiAgICA8cGF0aCBmaWxsPSIjRkZGRkZGIiBkPSJNNCwxMGMtMC40LDAtMC44LTAuMS0xLjEtMC40TDAuNCw3LjFDMC4xLDYuOCwwLDYuNCwwLDZzMC4yLTAuOCwwLjUtMS4xQzEsNC40LDIsNC40LDIuNSw0LjlMNCw2LjRsNi40LTYgICAgQzEwLjgsMC4xLDExLjEsMCwxMS41LDBjMC40LDAsMC44LDAuMiwxLDAuNWMwLjYsMC42LDAuNSwxLjYtMC4xLDIuMXYwTDUsOS42QzQuNyw5LjksNC40LDEwLDQsMTB6IE0xMS44LDEuOUwxMS44LDEuOSAgICBDMTEuOCwxLjksMTEuOCwxLjksMTEuOCwxLjl6IE0xMS4yLDEuMUMxMS4yLDEuMSwxMS4yLDEuMSwxMS4yLDEuMUwxMS4yLDEuMXoiLz4gICAgPC9nPjwvc3ZnPg==);
 }
 
@@ -1504,9 +1480,7 @@ lightning-formatted-number.lightning-output-field {
     margin-bottom: 1rem;
 }
 
-.navno-dekorator
-    .lesMerPanel__togglelink--erApen:hover
-    .lesMerPanel__toggleChevron {
+.navno-dekorator .lesMerPanel__togglelink--erApen:hover .lesMerPanel__toggleChevron {
     -webkit-transform: translateY(-0.25rem);
     transform: translateY(-0.25rem);
 }
@@ -2000,8 +1974,7 @@ lightning-formatted-number.lightning-output-field {
     transform: rotate(10deg);
     transition: -webkit-transform 100ms cubic-bezier(0.82, -2, 1, 0.3);
     transition: transform 100ms cubic-bezier(0.82, -2, 1, 0.3);
-    transition: transform 100ms cubic-bezier(0.82, -2, 1, 0.3),
-        -webkit-transform 100ms cubic-bezier(0.82, -2, 1, 0.3);
+    transition: transform 100ms cubic-bezier(0.82, -2, 1, 0.3), -webkit-transform 100ms cubic-bezier(0.82, -2, 1, 0.3);
 }
 
 .modal__lukkknapp--shake {
@@ -2009,8 +1982,7 @@ lightning-formatted-number.lightning-output-field {
     transform: rotate(0deg);
     transition: -webkit-transform 100ms cubic-bezier(0.82, 2, 1, 0.3);
     transition: transform 100ms cubic-bezier(0.82, 2, 1, 0.3);
-    transition: transform 100ms cubic-bezier(0.82, 2, 1, 0.3),
-        -webkit-transform 100ms cubic-bezier(0.82, 2, 1, 0.3);
+    transition: transform 100ms cubic-bezier(0.82, 2, 1, 0.3), -webkit-transform 100ms cubic-bezier(0.82, 2, 1, 0.3);
 }
 
 .navno-dekorator .hjelpetekst {
@@ -2520,14 +2492,8 @@ lightning-formatted-number.lightning-output-field {
     text-decoration: none;
 }
 
-.navno-dekorator
-    .arbeidsflatevalg-innhold
-    .lenkepanel:hover
-    .lenkepanel__heading,
-.navno-dekorator
-    .arbeidsflatevalg-innhold
-    .lenkepanel--hover
-    .lenkepanel__heading {
+.navno-dekorator .arbeidsflatevalg-innhold .lenkepanel:hover .lenkepanel__heading,
+.navno-dekorator .arbeidsflatevalg-innhold .lenkepanel--hover .lenkepanel__heading {
     color: white;
 }
 
@@ -2617,11 +2583,7 @@ lightning-formatted-number.lightning-output-field {
     background-color: white;
 }
 
-.navno-dekorator
-    .menylinje-topp
-    .topp-kolonner
-    .menylenker-seksjon
-    .menylenker-overskrift {
+.navno-dekorator .menylinje-topp .topp-kolonner .menylenker-seksjon .menylenker-overskrift {
     font-weight: bolder;
     margin-bottom: 1.2rem;
 }
@@ -2631,31 +2593,16 @@ lightning-formatted-number.lightning-output-field {
     padding-left: 1.2rem;
 }
 
-.navno-dekorator
-    .menylinje-topp
-    .topp-kolonner
-    .menylenker-seksjon.til-toppen
-    .til-toppen-innhold {
+.navno-dekorator .menylinje-topp .topp-kolonner .menylenker-seksjon.til-toppen .til-toppen-innhold {
     display: flex;
     justify-content: start;
 }
 
-.navno-dekorator
-    .menylinje-topp
-    .topp-kolonner
-    .menylenker-seksjon.til-toppen
-    .til-toppen-innhold
-    .lenke-med-ikon {
+.navno-dekorator .menylinje-topp .topp-kolonner .menylenker-seksjon.til-toppen .til-toppen-innhold .lenke-med-ikon {
     text-decoration: none;
 }
 
-.navno-dekorator
-    .menylinje-topp
-    .topp-kolonner
-    .menylenker-seksjon.til-toppen
-    .til-toppen-innhold
-    .lenke-med-ikon
-    svg {
+.navno-dekorator .menylinje-topp .topp-kolonner .menylenker-seksjon.til-toppen .til-toppen-innhold .lenke-med-ikon svg {
     fill: white;
     stroke: white;
 }
@@ -2708,18 +2655,12 @@ lightning-formatted-number.lightning-output-field {
         flex-wrap: wrap;
         justify-content: space-between;
     }
-    .navno-dekorator
-        .menylinje-topp
-        .topp-kolonner
-        .menylenker-seksjon.til-toppen {
+    .navno-dekorator .menylinje-topp .topp-kolonner .menylenker-seksjon.til-toppen {
         width: 100%;
         margin-bottom: 2rem;
         padding-left: 0;
     }
-    .navno-dekorator
-        .menylinje-topp
-        .topp-kolonner
-        .menylenker-seksjon.venstre {
+    .navno-dekorator .menylinje-topp .topp-kolonner .menylenker-seksjon.venstre {
         width: 31%;
         padding-left: 0;
     }
@@ -2728,10 +2669,7 @@ lightning-formatted-number.lightning-output-field {
         width: 31%;
         padding-left: 2rem;
     }
-    .navno-dekorator
-        .menylinje-topp
-        .topp-kolonner
-        .menylenker-seksjon.arbeidsflate {
+    .navno-dekorator .menylinje-topp .topp-kolonner .menylenker-seksjon.arbeidsflate {
         margin-top: 3rem;
     }
 }
@@ -2740,17 +2678,11 @@ lightning-formatted-number.lightning-output-field {
     .navno-dekorator .menylinje-topp {
         padding: 1.5rem 2rem;
     }
-    .navno-dekorator
-        .menylinje-topp
-        .topp-kolonner
-        .menylenker-seksjon.til-toppen {
+    .navno-dekorator .menylinje-topp .topp-kolonner .menylenker-seksjon.til-toppen {
         padding-left: 0;
         width: 100%;
     }
-    .navno-dekorator
-        .menylinje-topp
-        .topp-kolonner
-        .menylenker-seksjon.venstre {
+    .navno-dekorator .menylinje-topp .topp-kolonner .menylenker-seksjon.venstre {
         width: 24%;
     }
     .navno-dekorator .menylinje-topp .topp-kolonner .menylenker-seksjon.midt,
@@ -2758,26 +2690,14 @@ lightning-formatted-number.lightning-output-field {
         width: 23%;
         padding-left: 0;
     }
-    .navno-dekorator
-        .menylinje-topp
-        .topp-kolonner
-        .menylenker-seksjon.arbeidsflate {
+    .navno-dekorator .menylinje-topp .topp-kolonner .menylenker-seksjon.arbeidsflate {
         width: 29%;
         margin-top: 0;
     }
-    .navno-dekorator
-        .menylinje-topp
-        .topp-kolonner
-        .arbeidsflatevalg-innhold
-        .arbeidsflatevalg {
+    .navno-dekorator .menylinje-topp .topp-kolonner .arbeidsflatevalg-innhold .arbeidsflatevalg {
         flex-direction: column;
     }
-    .navno-dekorator
-        .menylinje-topp
-        .topp-kolonner
-        .arbeidsflatevalg-innhold
-        .arbeidsflatevalg
-        li {
+    .navno-dekorator .menylinje-topp .topp-kolonner .arbeidsflatevalg-innhold .arbeidsflatevalg li {
         width: auto;
     }
 }
@@ -2786,10 +2706,7 @@ lightning-formatted-number.lightning-output-field {
     .navno-dekorator .menylinje-topp {
         padding: 1.5rem 2rem;
     }
-    .navno-dekorator
-        .menylinje-topp
-        .topp-kolonner
-        .menylenker-seksjon.til-toppen {
+    .navno-dekorator .menylinje-topp .topp-kolonner .menylenker-seksjon.til-toppen {
         width: 15%;
         margin-bottom: 0;
     }
@@ -2798,31 +2715,19 @@ lightning-formatted-number.lightning-output-field {
     .navno-dekorator .menylinje-topp .topp-kolonner .menylenker-seksjon.hoyre {
         width: 20%;
     }
-    .navno-dekorator
-        .menylinje-topp
-        .topp-kolonner
-        .menylenker-seksjon.arbeidsflate {
+    .navno-dekorator .menylinje-topp .topp-kolonner .menylenker-seksjon.arbeidsflate {
         width: 24%;
         margin-top: 0;
     }
     .navno-dekorator .menylinje-topp .topp-kolonner .arbeidsflatevalg-innhold {
         margin-bottom: 0;
     }
-    .navno-dekorator
-        .menylinje-topp
-        .topp-kolonner
-        .arbeidsflatevalg-innhold
-        .arbeidsflatevalg {
+    .navno-dekorator .menylinje-topp .topp-kolonner .arbeidsflatevalg-innhold .arbeidsflatevalg {
         margin: 0;
         flex-direction: column;
         justify-content: left;
     }
-    .navno-dekorator
-        .menylinje-topp
-        .topp-kolonner
-        .arbeidsflatevalg-innhold
-        .arbeidsflatevalg
-        li {
+    .navno-dekorator .menylinje-topp .topp-kolonner .arbeidsflatevalg-innhold .arbeidsflatevalg li {
         width: auto;
     }
 }
@@ -3141,11 +3046,7 @@ lightning-formatted-number.lightning-output-field {
     padding: 0;
 }
 
-.navno-dekorator
-    .mobilmeny
-    .varsler-display-mobil-tablet
-    .nav-varsler
-    .varsel-liste {
+.navno-dekorator .mobilmeny .varsler-display-mobil-tablet .nav-varsler .varsel-liste {
     padding-left: 0.5rem;
 }
 
@@ -3160,24 +3061,13 @@ lightning-formatted-number.lightning-output-field {
     margin-bottom: 0.75rem;
 }
 
-.navno-dekorator
-    .mobilmeny
-    .varsler-display-mobil-tablet
-    .nav-varsler
-    .varsel-liste
-    .varsel-container:last-child {
+.navno-dekorator .mobilmeny .varsler-display-mobil-tablet .nav-varsler .varsel-liste .varsel-container:last-child {
     margin-bottom: 0;
     padding-bottom: 0;
     border-bottom: none;
 }
 
-.navno-dekorator
-    .mobilmeny
-    .varsler-display-mobil-tablet
-    .nav-varsler
-    .varsel-liste
-    .varsel-container
-    .varsel {
+.navno-dekorator .mobilmeny .varsler-display-mobil-tablet .nav-varsler .varsel-liste .varsel-container .varsel {
     display: flex;
     padding: 0.25rem;
 }
@@ -3217,8 +3107,7 @@ lightning-formatted-number.lightning-output-field {
     .varsel-container
     .varsel
     .varsel-ikon.boble {
-    background: #f1d8d4 url(/dekoratoren/media/bubble-chat-2.svg) no-repeat
-        center;
+    background: #f1d8d4 url(/dekoratoren/media/bubble-chat-2.svg) no-repeat center;
 }
 
 .navno-dekorator
@@ -3240,8 +3129,7 @@ lightning-formatted-number.lightning-output-field {
     .varsel-container
     .varsel
     .varsel-ikon.digisyfo {
-    background: #e0f5fb url(/dekoratoren/media/first-aid-plaster.svg) no-repeat
-        center;
+    background: #e0f5fb url(/dekoratoren/media/first-aid-plaster.svg) no-repeat center;
 }
 
 .navno-dekorator
@@ -3391,18 +3279,11 @@ lightning-formatted-number.lightning-output-field {
     overflow: hidden;
 }
 
-.navno-dekorator
-    .mobilmeny
-    .varsler-display-mobil-tablet
-    .nye-varsler-mobil-wrapper {
+.navno-dekorator .mobilmeny .varsler-display-mobil-tablet .nye-varsler-mobil-wrapper {
     padding-left: 0.5rem;
 }
 
-.navno-dekorator
-    .mobilmeny
-    .varsler-display-mobil-tablet
-    .nye-varsler-mobil-wrapper
-    .vis-alle-lenke {
+.navno-dekorator .mobilmeny .varsler-display-mobil-tablet .nye-varsler-mobil-wrapper .vis-alle-lenke {
     border-top: none;
     border-bottom: 1px solid #78706a;
     padding: 0 1rem 1rem 0;
@@ -3415,11 +3296,7 @@ lightning-formatted-number.lightning-output-field {
     margin-top: 0.75rem;
 }
 
-.navno-dekorator
-    .mobilmeny
-    .varsler-display-mobil-tablet
-    .varsler-display-mobil-tablet
-    .vis-alle-lenke {
+.navno-dekorator .mobilmeny .varsler-display-mobil-tablet .varsler-display-mobil-tablet .vis-alle-lenke {
     padding: 1.5rem 0.75rem 0 3.125rem;
 }
 
@@ -3510,18 +3387,12 @@ lightning-formatted-number.lightning-output-field {
     border-bottom: none;
 }
 
-.navno-dekorator
-    .sok-input-resultat
-    .sokeresultat-liste
-    li[aria-selected='true'] {
+.navno-dekorator .sok-input-resultat .sokeresultat-liste li[aria-selected='true'] {
     background-color: lightgray;
     font-weight: bold;
 }
 
-.navno-dekorator
-    .sok-input-resultat
-    .sokeresultat-liste
-    .sok-resultat-listItem-text {
+.navno-dekorator .sok-input-resultat .sokeresultat-liste .sok-resultat-listItem-text {
     padding-left: 0;
 }
 
@@ -3559,38 +3430,22 @@ lightning-formatted-number.lightning-output-field {
         animation-timing-function: ease-in-out;
         border: none;
     }
-    .navno-dekorator
-        .sok-input-resultat
-        .sokeresultat-liste
-        li[aria-selected='true'] {
+    .navno-dekorator .sok-input-resultat .sokeresultat-liste li[aria-selected='true'] {
         background-color: lightgray;
         font-weight: bold;
     }
-    .navno-dekorator
-        .sok-input-resultat
-        .sokeresultat-liste
-        .sokeresultat-liste
-        ul {
+    .navno-dekorator .sok-input-resultat .sokeresultat-liste .sokeresultat-liste ul {
         padding: 0;
     }
-    .navno-dekorator
-        .sok-input-resultat
-        .sokeresultat-liste
-        .sok-resultat-listItem {
+    .navno-dekorator .sok-input-resultat .sokeresultat-liste .sok-resultat-listItem {
         display: flex;
         flex-direction: row;
         align-items: center;
     }
-    .navno-dekorator
-        .sok-input-resultat
-        .sokeresultat-liste
-        .sok-resultat-chevron {
+    .navno-dekorator .sok-input-resultat .sokeresultat-liste .sok-resultat-chevron {
         padding: 0 1rem 0 0;
     }
-    .navno-dekorator
-        .sok-input-resultat
-        .sokeresultat-liste
-        .sok-resultat-listItem-text {
+    .navno-dekorator .sok-input-resultat .sokeresultat-liste .sok-resultat-listItem-text {
         padding-left: 2.25rem;
     }
     .navno-dekorator .sok-input-resultat .sok-resultat-listItem {
@@ -3796,10 +3651,7 @@ lightning-formatted-number.lightning-output-field {
     .navno-dekorator .sok-input-resultat .sok-input input:active {
         border: 2px solid #0067c5;
     }
-    .navno-dekorator
-        .sok-input-resultat
-        .sok-input
-        input::-webkit-input-placeholder,
+    .navno-dekorator .sok-input-resultat .sok-input input::-webkit-input-placeholder,
     .navno-dekorator .sok-input-resultat .sok-input input::-moz-placeholder,
     .navno-dekorator .sok-input-resultat .sok-input input:-ms-input-placeholder,
     .navno-dekorator .sok-input-resultat .sok-input input:-moz-placeholder {
@@ -3815,22 +3667,13 @@ lightning-formatted-number.lightning-output-field {
         line-height: 1.625rem;
         font-weight: 300;
     }
-    .navno-dekorator
-        .sok-input-resultat
-        .sok-input
-        input::-webkit-input-placeholder {
+    .navno-dekorator .sok-input-resultat .sok-input input::-webkit-input-placeholder {
         color: #0067c5;
     }
-    .navno-dekorator
-        .sok-input-resultat
-        .sok-input
-        input:-ms-input-placeholder {
+    .navno-dekorator .sok-input-resultat .sok-input input:-ms-input-placeholder {
         color: #0067c5;
     }
-    .navno-dekorator
-        .sok-input-resultat
-        .sok-input
-        input::-ms-input-placeholder {
+    .navno-dekorator .sok-input-resultat .sok-input input::-ms-input-placeholder {
         color: #0067c5;
     }
     .navno-dekorator .sok-input-resultat .sok-input input::placeholder {
@@ -4440,11 +4283,7 @@ div.placeholder .top-link-wrapper .top-link-indicator:after {
     color: #005b82;
 }
 
-.navno-dekorator
-    .mobilmeny
-    .min-varsel-wrapper
-    .mobilmeny__lukk-undermeny
-    .lenke {
+.navno-dekorator .mobilmeny .min-varsel-wrapper .mobilmeny__lukk-undermeny .lenke {
     padding-top: 0;
     padding-bottom: 2rem;
 }
@@ -4688,14 +4527,8 @@ div.placeholder .top-link-wrapper .top-link-indicator:after {
     top: -0.125em;
 }
 
-.navno-dekorator
-    .desktop-hovedmeny__topp-seksjon-lenke
-    svg
-    + span:not(.sr-only),
-.navno-dekorator
-    .desktop-hovedmeny__topp-seksjon-lenke
-    span:not(.sr-only)
-    + svg {
+.navno-dekorator .desktop-hovedmeny__topp-seksjon-lenke svg + span:not(.sr-only),
+.navno-dekorator .desktop-hovedmeny__topp-seksjon-lenke span:not(.sr-only) + svg {
     margin-left: 0.25em;
 }
 
@@ -4746,9 +4579,7 @@ div.placeholder .top-link-wrapper .top-link-indicator:after {
 
 .navno-dekorator .desktop-hovedmeny__bunn-lenke:hover .lenkepanel__indikator,
 .navno-dekorator .desktop-hovedmeny__bunn-lenke:hover .lenkepanel__heading,
-.navno-dekorator
-    .desktop-hovedmeny__bunn-lenke:hover
-    .desktop-hovedmeny__bunn-lenke-stikkord {
+.navno-dekorator .desktop-hovedmeny__bunn-lenke:hover .desktop-hovedmeny__bunn-lenke-stikkord {
     color: white;
 }
 
@@ -4780,10 +4611,7 @@ div.placeholder .top-link-wrapper .top-link-indicator:after {
     display: inline-block;
 }
 
-.navno-dekorator
-    .desktop-hovedmeny__bunn-lenke-stikkord
-    li:not(:first-of-type)
-    .bullet::before {
+.navno-dekorator .desktop-hovedmeny__bunn-lenke-stikkord li:not(:first-of-type) .bullet::before {
     content: '•';
     margin: 0 0.25em;
 }
@@ -4896,18 +4724,8 @@ div.placeholder .top-link-wrapper .top-link-indicator:after {
     top: -0.125em;
 }
 
-.navno-dekorator
-    .lenkeseksjon__lenker
-    li
-    .chevronlenke
-    svg
-    + span:not(.sr-only),
-.navno-dekorator
-    .lenkeseksjon__lenker
-    li
-    .chevronlenke
-    span:not(.sr-only)
-    + svg {
+.navno-dekorator .lenkeseksjon__lenker li .chevronlenke svg + span:not(.sr-only),
+.navno-dekorator .lenkeseksjon__lenker li .chevronlenke span:not(.sr-only) + svg {
     margin-left: 0.25em;
 }
 
@@ -4924,11 +4742,7 @@ div.placeholder .top-link-wrapper .top-link-indicator:after {
     text-decoration: underline;
 }
 
-.navno-dekorator
-    .lenkeseksjon__lenker
-    li
-    .chevronlenke:hover
-    .chevronlenke__chevron {
+.navno-dekorator .lenkeseksjon__lenker li .chevronlenke:hover .chevronlenke__chevron {
     left: 0.33em;
 }
 
@@ -5276,9 +5090,7 @@ div.placeholder .top-link-wrapper .top-link-indicator:after {
     max-width: calc(33.33333333% - (1.5em - 1.5em / 3));
 }
 
-.navno-dekorator
-    .desktop-minside-meny__lenke-seksjoner
-    > *:not(:nth-child(3n)) {
+.navno-dekorator .desktop-minside-meny__lenke-seksjoner > *:not(:nth-child(3n)) {
     margin-right: 1.5em;
 }
 
@@ -5367,14 +5179,8 @@ div.placeholder .top-link-wrapper .top-link-indicator:after {
     top: -0.125em;
 }
 
-.navno-dekorator
-    .desktop-minside-meny__topp-seksjon-lenke
-    svg
-    + span:not(.sr-only),
-.navno-dekorator
-    .desktop-minside-meny__topp-seksjon-lenke
-    span:not(.sr-only)
-    + svg {
+.navno-dekorator .desktop-minside-meny__topp-seksjon-lenke svg + span:not(.sr-only),
+.navno-dekorator .desktop-minside-meny__topp-seksjon-lenke span:not(.sr-only) + svg {
     margin-left: 0.25em;
 }
 
@@ -5412,9 +5218,7 @@ div.placeholder .top-link-wrapper .top-link-indicator:after {
     border-bottom: #3e3832 solid 1px;
 }
 
-.navno-dekorator
-    .varsler-display-desktop
-    .dekorator-varsel-container:first-of-type {
+.navno-dekorator .varsler-display-desktop .dekorator-varsel-container:first-of-type {
     border-top: #3e3832 solid 1px;
 }
 
@@ -5433,63 +5237,37 @@ div.placeholder .top-link-wrapper .top-link-indicator:after {
     padding-right: 1rem;
 }
 
-.navno-dekorator
-    .varsler-display-desktop
-    .dekorator-varsel
-    .varsel-ikon-container {
+.navno-dekorator .varsler-display-desktop .dekorator-varsel .varsel-ikon-container {
     padding: 0.75rem;
     border-radius: 50%;
 }
 
-.navno-dekorator
-    .varsler-display-desktop
-    .dekorator-varsel
-    .varsel-ikon-container
-    .varsel-ikon {
+.navno-dekorator .varsler-display-desktop .dekorator-varsel .varsel-ikon-container .varsel-ikon {
     width: 28px;
     height: 28px;
 }
 
-.navno-dekorator
-    .varsler-display-desktop
-    .dekorator-varsel
-    .varsel-ikon-container.alarm-ikon {
+.navno-dekorator .varsler-display-desktop .dekorator-varsel .varsel-ikon-container.alarm-ikon {
     background-color: #ffe4c2;
 }
 
-.navno-dekorator
-    .varsler-display-desktop
-    .dekorator-varsel
-    .varsel-ikon-container.kalender-ikon {
+.navno-dekorator .varsler-display-desktop .dekorator-varsel .varsel-ikon-container.kalender-ikon {
     background-color: #ecefcc;
 }
 
-.navno-dekorator
-    .varsler-display-desktop
-    .dekorator-varsel
-    .varsel-ikon-container.snakkeboble-ikon {
+.navno-dekorator .varsler-display-desktop .dekorator-varsel .varsel-ikon-container.snakkeboble-ikon {
     background-color: #f1d8d4;
 }
 
-.navno-dekorator
-    .varsler-display-desktop
-    .dekorator-varsel
-    .varsel-ikon-container.dokument-ikon {
+.navno-dekorator .varsler-display-desktop .dekorator-varsel .varsel-ikon-container.dokument-ikon {
     background-color: #e0dae7;
 }
 
-.navno-dekorator
-    .varsler-display-desktop
-    .dekorator-varsel
-    .varsel-ikon-container.plaster-ikon {
+.navno-dekorator .varsler-display-desktop .dekorator-varsel .varsel-ikon-container.plaster-ikon {
     background-color: #e0f5fb;
 }
 
-.navno-dekorator
-    .varsler-display-desktop
-    .dekorator-varsel
-    .varsel-innhold
-    .varsel-dato {
+.navno-dekorator .varsler-display-desktop .dekorator-varsel .varsel-innhold .varsel-dato {
     margin: 0;
     font-family: 'Source Sans Pro', Arial, sans-serif;
     font-size: 0.875rem;
@@ -5499,11 +5277,7 @@ div.placeholder .top-link-wrapper .top-link-indicator:after {
     margin-bottom: 0.25rem;
 }
 
-.navno-dekorator
-    .varsler-display-desktop
-    .dekorator-varsel
-    .varsel-innhold
-    .typo-infotekst {
+.navno-dekorator .varsler-display-desktop .dekorator-varsel .varsel-innhold .typo-infotekst {
     margin: 0;
     font-family: 'Source Sans Pro', Arial, sans-serif;
     font-size: 1rem;
@@ -5512,40 +5286,20 @@ div.placeholder .top-link-wrapper .top-link-indicator:after {
     margin-bottom: 0.5rem;
 }
 
-.navno-dekorator
-    .varsler-display-desktop
-    .dekorator-varsel
-    .varsel-innhold
-    .varsel-lenke {
+.navno-dekorator .varsler-display-desktop .dekorator-varsel .varsel-innhold .varsel-lenke {
     color: #0067c5;
     background: none;
     cursor: pointer;
     text-decoration: underline;
 }
 
-.navno-dekorator
-    .varsler-display-desktop
-    .dekorator-varsel
-    .varsel-innhold
-    .varsel-lenke:hover,
-.navno-dekorator
-    .varsler-display-desktop
-    .dekorator-varsel
-    .varsel-innhold
-    .varsel-lenke--hover {
+.navno-dekorator .varsler-display-desktop .dekorator-varsel .varsel-innhold .varsel-lenke:hover,
+.navno-dekorator .varsler-display-desktop .dekorator-varsel .varsel-innhold .varsel-lenke--hover {
     text-decoration: none;
 }
 
-.navno-dekorator
-    .varsler-display-desktop
-    .dekorator-varsel
-    .varsel-innhold
-    .varsel-lenke:focus,
-.navno-dekorator
-    .varsler-display-desktop
-    .dekorator-varsel
-    .varsel-innhold
-    .varsel-lenke--focus {
+.navno-dekorator .varsler-display-desktop .dekorator-varsel .varsel-innhold .varsel-lenke:focus,
+.navno-dekorator .varsler-display-desktop .dekorator-varsel .varsel-innhold .varsel-lenke--focus {
     outline: none;
     color: white;
     text-decoration: none;
@@ -5553,25 +5307,12 @@ div.placeholder .top-link-wrapper .top-link-indicator:after {
     box-shadow: 0 0 0 2px #254b6d;
 }
 
-.navno-dekorator
-    .varsler-display-desktop
-    .dekorator-varsel
-    .varsel-innhold
-    .varsel-lenke:active,
-.navno-dekorator
-    .varsler-display-desktop
-    .dekorator-varsel
-    .varsel-innhold
-    .varsel-lenke--active {
+.navno-dekorator .varsler-display-desktop .dekorator-varsel .varsel-innhold .varsel-lenke:active,
+.navno-dekorator .varsler-display-desktop .dekorator-varsel .varsel-innhold .varsel-lenke--active {
     color: white;
 }
 
-.navno-dekorator
-    .varsler-display-desktop
-    .dekorator-varsel
-    .varsel-innhold
-    .varsel-lenke
-    svg {
+.navno-dekorator .varsler-display-desktop .dekorator-varsel .varsel-innhold .varsel-lenke svg {
     width: 1em;
     height: 1em;
     fill: #0067c5;
@@ -5581,38 +5322,17 @@ div.placeholder .top-link-wrapper .top-link-indicator:after {
     top: -0.125em;
 }
 
-.navno-dekorator
-    .varsler-display-desktop
-    .dekorator-varsel
-    .varsel-innhold
-    .varsel-lenke
-    svg
-    + span:not(.sr-only),
-.navno-dekorator
-    .varsler-display-desktop
-    .dekorator-varsel
-    .varsel-innhold
-    .varsel-lenke
-    span:not(.sr-only)
-    + svg {
+.navno-dekorator .varsler-display-desktop .dekorator-varsel .varsel-innhold .varsel-lenke svg + span:not(.sr-only),
+.navno-dekorator .varsler-display-desktop .dekorator-varsel .varsel-innhold .varsel-lenke span:not(.sr-only) + svg {
     margin-left: 0.25em;
 }
 
-.navno-dekorator
-    .varsler-display-desktop
-    .dekorator-varsel
-    .varsel-innhold
-    .varsel-lenke:focus
-    svg {
+.navno-dekorator .varsler-display-desktop .dekorator-varsel .varsel-innhold .varsel-lenke:focus svg {
     fill: white;
     stroke: white;
 }
 
-.navno-dekorator
-    .varsler-display-desktop
-    .dekorator-varsel
-    .varsel-innhold
-    .varsel-lenke:hover {
+.navno-dekorator .varsler-display-desktop .dekorator-varsel .varsel-innhold .varsel-lenke:hover {
     text-decoration: none;
 }
 
@@ -5816,9 +5536,7 @@ div.placeholder .top-link-wrapper .top-link-indicator:after {
     max-width: 525px;
 }
 
-.navno-dekorator
-    .varselbjelle__knapp:hover:not(:focus)
-    .varselbjelle-ikon:not(.varselbjelle-ikon--open) {
+.navno-dekorator .varselbjelle__knapp:hover:not(:focus) .varselbjelle-ikon:not(.varselbjelle-ikon--open) {
     -webkit-transform-origin: top center;
     transform-origin: top center;
     -webkit-animation-duration: 1s;
@@ -7297,8 +7015,7 @@ body {
     }
 }
 
-@media (min-width: 768px) and (-ms-high-contrast: active),
-    (min-width: 768px) and (-ms-high-contrast: none) {
+@media (min-width: 768px) and (-ms-high-contrast: active), (min-width: 768px) and (-ms-high-contrast: none) {
     .navno-dekorator .media-md-tablet,
     .navno-dekorator .media-tablet-desktop {
         display: inline !important;
@@ -7311,8 +7028,7 @@ body {
     }
 }
 
-@media (max-width: 1023px) and (-ms-high-contrast: active),
-    (max-width: 1023px) and (-ms-high-contrast: none) {
+@media (max-width: 1023px) and (-ms-high-contrast: active), (max-width: 1023px) and (-ms-high-contrast: none) {
     .navno-dekorator .media-mobil-tablet {
         display: inline !important;
     }
@@ -7327,8 +7043,7 @@ body {
     }
 }
 
-@media (min-width: 1440px) and (-ms-high-contrast: active),
-    (min-width: 1440px) and (-ms-high-contrast: none) {
+@media (min-width: 1440px) and (-ms-high-contrast: active), (min-width: 1440px) and (-ms-high-contrast: none) {
     .navno-dekorator .media-lg-desktop {
         display: inline !important;
     }
@@ -7516,10 +7231,7 @@ lightning-radio-group.nav-radio-button-group {
 .slds-radio [type='radio']:checked ~ .slds-radio_faux:after,
 .slds-radio [type='radio']:checked ~ .slds-radio--faux:after,
 .slds-radio [type='radio']:checked + .slds-radio__label .slds-radio_faux:after,
-.slds-radio
-    [type='radio']:checked
-    + .slds-radio__label
-    .slds-radio--faux:after {
+.slds-radio [type='radio']:checked + .slds-radio__label .slds-radio--faux:after {
     width: 65%;
     height: 65%;
     content: '';
@@ -7612,15 +7324,11 @@ span.slds-radio {
     font-weight: bold;
 }
 
-lightning-input-field.ikke-sensitiv-fritekst
-    > lightning-textarea
-    > label:after {
+lightning-input-field.ikke-sensitiv-fritekst > lightning-textarea > label:after {
     content: ' (ingen sensitiv informasjon)';
 }
 
-lightning-input-field.ikke-sensitive-opplysninger
-    > lightning-textarea
-    > label:after {
+lightning-input-field.ikke-sensitive-opplysninger > lightning-textarea > label:after {
     content: ' (ingen sensitive opplysninger)';
 }
 

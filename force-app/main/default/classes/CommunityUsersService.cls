@@ -1,13 +1,11 @@
 public with sharing class CommunityUsersService {
     public static User getOrCreatePersonAccountUser(String personIdent) {
         //check if related Person__c is ugradert
-        List<Account> personAccounts = new AccountsSelector_Community()
-            .selectByIdent(personIdent);
+        List<Account> personAccounts = new AccountsSelector_Community().selectByIdent(personIdent);
         if (personAccounts == null || personAccounts.size() == 0)
             return null;
 
-        List<User> existingUsers = new UsersSelector_Community()
-            .selectByAccountIdent(new Set<String>{ personIdent });
+        List<User> existingUsers = new UsersSelector_Community().selectByAccountIdent(new Set<String>{ personIdent });
         if (existingUsers.size() > 0)
             return existingUsers[0];
 
@@ -16,16 +14,10 @@ public with sharing class CommunityUsersService {
         Profile profile = [SELECT Id FROM Profile WHERE Name = :profileName];
 
         if (personAccounts.size() > 0 && profile != null) {
-            PersonAccountWrapper contact = new PersonAccountWrapper(
-                personAccounts[0]
-            );
+            PersonAccountWrapper contact = new PersonAccountWrapper(personAccounts[0]);
             User user = createCommunityUser(contact, profile.Id);
             String permissionSetName = defaultCommunityProfiles.DefaultPermissionSet__c;
-            List<PermissionSet> permissionSets = [
-                SELECT Id
-                FROM permissionSet
-                WHERE Name = :permissionSetName
-            ];
+            List<PermissionSet> permissionSets = [SELECT Id FROM permissionSet WHERE Name = :permissionSetName];
             if (permissionSets.size() > 0) {
                 PermissionSetAssignment permSetAssignment = new PermissionSetAssignment(
                     AssigneeId = user.Id,
@@ -40,10 +32,7 @@ public with sharing class CommunityUsersService {
     }
 
     @TestVisible
-    private static User createCommunityUser(
-        PersonAccountWrapper contact,
-        Id profileId
-    ) {
+    private static User createCommunityUser(PersonAccountWrapper contact, Id profileId) {
         User user = new User();
         user.FirstName = contact.firstName;
         user.MiddleName = contact.middleName;
@@ -63,12 +52,9 @@ public with sharing class CommunityUsersService {
     }
 
     @InvocableMethod(label='Create Community Plus User')
-    public static List<User> createCommunityPlusUser(
-        List<String> personIdents
-    ) {
+    public static List<User> createCommunityPlusUser(List<String> personIdents) {
         String personIdent = personIdents[0];
-        List<User> existingUsers = new UsersSelector_Community()
-            .selectByAccountIdent(new Set<String>{ personIdent });
+        List<User> existingUsers = new UsersSelector_Community().selectByAccountIdent(new Set<String>{ personIdent });
         User user;
 
         if (existingUsers.isEmpty()) {
@@ -85,12 +71,7 @@ public with sharing class CommunityUsersService {
         update user;
 
         String permissionSetGroupName = defaultCommunityProfiles.DefaultCommunityPlusPermissionSetGroup__c;
-        Id permissionSetGroupId = [
-            SELECT Id
-            FROM PermissionSetGroup
-            WHERE DeveloperName = :permissionSetGroupName
-        ]
-        .Id;
+        Id permissionSetGroupId = [SELECT Id FROM PermissionSetGroup WHERE DeveloperName = :permissionSetGroupName].Id;
         PermissionSetAssignment permSetAssignment = new PermissionSetAssignment(
             AssigneeId = user.Id,
             PermissionSetGroupId = permissionSetGroupId

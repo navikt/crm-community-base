@@ -2,25 +2,16 @@
     <div class="decorator-wrapper">
         <div class="sticky-placeholder" style="height: 106px">
             <!--når mobilen meny er åpen: sticky-container--mobil-fixed-->
-            <div
-                class="sticky-container sticky-container--mobil-fixed"
-                style="position: absolute; top: 0px"
-            >
+            <div class="sticky-container sticky-container--mobil-fixed" style="position: absolute; top: 0px">
                 <nav class="header-linje" id="hovedmeny" aria-label="Hovedmeny">
                     <div class="header-linje__elementer">
                         <!--NAV LOGO-->
-                        <a
-                            href="https://www.nav.no"
-                            class="nav-logo-lenke"
-                            id="header-logo-id"
-                        >
+                        <a href="https://www.nav.no" class="nav-logo-lenke" id="header-logo-id">
                             <img src={navlogo} alt="NAV-logo" />
                         </a>
                         <!--HAMBURGERMENY-->
                         <div class="media-tablet-desktop">
-                            <c-global-header-dropdown-menu
-                                area={area}
-                            ></c-global-header-dropdown-menu>
+                            <c-global-header-dropdown-menu area={area}></c-global-header-dropdown-menu>
                         </div>
                         <!-- SØKEKNAPP -->
                         <div class="media-tablet-desktop">
