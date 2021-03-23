@@ -23,6 +23,16 @@ lightning-formatted-number.lightning-output-field {
     font-size: 1rem !important;
 }
 
+a {
+    color: #0067c5;
+    background: none;
+    text-decoration: underline;
+    cursor: pointer;
+}
+a:hover{
+    text-decoration: none;
+}
+
 .navno-dekorator .lukknapp {
     font: 0/0 a;
     color: transparent;
