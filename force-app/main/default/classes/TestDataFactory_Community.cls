@@ -47,6 +47,17 @@ public class TestDataFactory_Community {
             return personAccounts;
         personAccounts = new List<Account>();
         List<Person__c> persons = getPersons(numberOfAccounts);
+        
+        //return person accounts if created by trigger
+        personAccounts = [
+            SELECT FirstName, LastName, INT_PersonIdent__c, CRM_Person__c
+            FROM Account
+            WHERE RecordTypeId = :PERSON_ACCOUNT_RECORDTYPEID
+        ];
+        if(personAccounts.size()>0){
+            return personAccounts;
+        }
+
         for (Integer i = 1; i <= numberOfAccounts; i++) {
             personAccounts.add(
                 new Account(
@@ -57,6 +68,7 @@ public class TestDataFactory_Community {
                     RecordTypeId = PERSON_ACCOUNT_RECORDTYPEID
                 )
             );
+            insert personAccounts;
         }
         personAccounts = [
             SELECT FirstName, LastName, INT_PersonIdent__c, CRM_Person__c
