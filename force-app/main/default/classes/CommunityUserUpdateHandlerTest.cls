@@ -32,6 +32,34 @@ private class CommunityUserUpdateHandlerTest {
     }
 
     @IsTest
+    private static void updateFirstName(){ 
+        Test.startTest();
+        Person__c person=[SELECT INT_FirstName__c, CRM_Account__c FROM Person__c LIMIT 1]; 
+        User communityUser=[SELECT FirstName FROM User WHERE AccountId =:person.CRM_Account__c LIMIT 1];
+        System.assertEquals('Person', communityUser.FirstName, 'First name before update');
+        person.INT_FirstName__c='New first name';
+        update person;
+        Test.stopTest();
+
+        User updatedUser=[SELECT FirstName FROM User WHERE Id=:communityUser.Id LIMIT 1];
+        System.assertEquals('New first name', updatedUser.FirstName, 'Expect users first name to be same as person');
+    }
+
+    @IsTest
+    private static void updateMiddleName(){ 
+        Test.startTest();
+        Person__c person=[SELECT INT_MiddleName__c, CRM_Account__c FROM Person__c LIMIT 1]; 
+        User communityUser=[SELECT MiddleName FROM User WHERE AccountId =:person.CRM_Account__c LIMIT 1];
+        System.assertEquals(null, communityUser.MiddleName, 'Middle name before update');
+        person.INT_MiddleName__c='New middle name';
+        update person;
+        Test.stopTest();
+
+        User updatedUser=[SELECT MiddleName FROM User WHERE Id=:communityUser.Id LIMIT 1];
+        System.assertEquals('New middle name', updatedUser.MiddleName, 'Expect users middle name to be same as person');
+    }
+
+    @IsTest
     private static void updatePersonWithoutChangingName(){
         Person__c person=[SELECT INT_LastName__c, CRM_Account__c FROM Person__c LIMIT 1]; 
         User communityUser=[SELECT LastName FROM User WHERE AccountId =:person.CRM_Account__c LIMIT 1];
