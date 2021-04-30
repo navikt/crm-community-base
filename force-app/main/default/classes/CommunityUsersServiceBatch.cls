@@ -21,7 +21,7 @@ public with sharing class CommunityUsersServiceBatch {
         PermissionSet permissionSet = [SELECT Id FROM permissionSet WHERE Name = :permissionSetName LIMIT 1];
 
         List<Account> personAccounts = [
-            SELECT Id, PersonContactId, Name, FirstName, MiddleName, LastName, INT_PersonIdent__c, CRM_Person__c
+            SELECT Id, PersonContactId, Name, FirstName, MiddleName, LastName, INT_PersonIdent__c, CRM_Person__c, CRM_Person__r.INT_FirstName__c, CRM_Person__r.INT_MiddleName__c, CRM_Person__r.INT_LastName__c
             FROM Account
             WHERE INT_PersonIdent__c IN :newIdents AND CRM_Person__r.INT_Confidential__c = 'UGRADERT'
         ];
