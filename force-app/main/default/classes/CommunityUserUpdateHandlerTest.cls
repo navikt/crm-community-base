@@ -85,4 +85,22 @@ private class CommunityUserUpdateHandlerTest {
         User updatedUser=[SELECT LastName FROM User WHERE Id=:communityUser.Id LIMIT 1];
         System.assertEquals(0,[SELECT COUNT() FROM AsyncRequest__c WHERE CRM_AsyncType__c='Community User Update'], 'Expect no async request');
     }
+
+    @IsTest
+    private static void updateTwoPersonAccounts(){ 
+        Test.startTest();
+        List<Person__c> persons=[SELECT INT_LastName__c, CRM_Account__c FROM Person__c LIMIT 2]; 
+        for(Person__c person:persons){
+            person.INT_LastName__c='New last name';
+        }
+        update persons;
+        Test.stopTest();
+
+        List<AsyncRequest__c> asyncRequests=[SELECT CRM_Params__c FROM AsyncRequest__c WHERE CRM_AsyncType__c='Community User Update'];
+        System.assertEquals(1,asyncRequests.size(), 'Expect 1 async request for updating community user');
+        
+        System.assert(asyncRequests[0].CRM_Params__c.contains(persons[0].CRM_Account__c), 'Expect first account id to be included in params');
+        System.assert(asyncRequests[0].CRM_Params__c.contains(persons[1].CRM_Account__c), 'Expect second account id to be included in params');
+        System.assert(asyncRequests[0].CRM_Params__c.contains(', '), 'Expect comma to be included in params');
+    }
 }

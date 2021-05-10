@@ -25,11 +25,10 @@ public without sharing class CommunityUserUpdateHandler extends MyTriggers {
         for(User user:usersToUpdate){
             params+=user.AccountId;
             i++;
-            //if(i<usersToUpdate.size()){
-            //    params+=', ';
-            //}
+            if(i<usersToUpdate.size()){
+                params+=', ';
+            }
         }
-
         if(usersToUpdate.size()>0){
             AsyncRequest__c req=new AsyncRequest__c();
         	req.CRM_ApexJobType__c='Queueable';
