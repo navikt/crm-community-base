@@ -9,25 +9,34 @@ public without sharing class CommunityUserUpdateHandler extends MyTriggers {
             }
         }
         if(personIdsWithChangedName.size()>0){
-            updateCommunityUser(personIdsWithChangedName);
+            createAsyncRequestJob(personIdsWithChangedName);
         }    
     }
 
-    @future
-    private static void updateCommunityUser(Set<Id> personIds){
+    private void createAsyncRequestJob(Set<Id> personIds){
         Map<Id,Person__c> personsWithChangedName=new Map<Id,Person__c>();
         for(Person__c person:[SELECT CRM_Account__c, INT_LastName__c, INT_FirstName__c,	INT_MiddleName__c FROM Person__c WHERE Id in:personIds]){
             personsWithChangedName.put(person.CRM_Account__c, person);
         }
 
         List<User> usersToUpdate=new UsersSelector_Community().selectByAccountId(personsWithChangedName.keyset());
+        String params='';
+        Integer i=0;
         for(User user:usersToUpdate){
-            Person__c person=personsWithChangedName.get(user.AccountId);
-            user.FirstName=person.INT_FirstName__c;
-            user.LastName=person.INT_LastName__c;
-            user.MiddleName=person.INT_MiddleName__c;       
+            params+=user.AccountId;
+            i++;
+            //if(i<usersToUpdate.size()){
+            //    params+=', ';
+            //}
         }
-        update usersToUpdate;
+
+        if(usersToUpdate.size()>0){
+            AsyncRequest__c req=new AsyncRequest__c();
+        	req.CRM_ApexJobType__c='Queueable';
+        	req.CRM_AsyncType__c='Community User Update';
+        	req.CRM_Params__c=params;
+        	insert req;
+        }
     }
 }
 
