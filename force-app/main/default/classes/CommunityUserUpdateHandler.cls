@@ -26,7 +26,7 @@ public without sharing class CommunityUserUpdateHandler extends MyTriggers {
             params+=user.AccountId;
             i++;
             if(i<usersToUpdate.size()){
-                params+=', ';
+                params+=',';
             }
         }
         if(usersToUpdate.size()>0){

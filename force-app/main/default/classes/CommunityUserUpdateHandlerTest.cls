@@ -101,6 +101,6 @@ private class CommunityUserUpdateHandlerTest {
         
         System.assert(asyncRequests[0].CRM_Params__c.contains(persons[0].CRM_Account__c), 'Expect first account id to be included in params');
         System.assert(asyncRequests[0].CRM_Params__c.contains(persons[1].CRM_Account__c), 'Expect second account id to be included in params');
-        System.assert(asyncRequests[0].CRM_Params__c.contains(', '), 'Expect comma to be included in params');
+        System.assert(asyncRequests[0].CRM_Params__c.contains(','), 'Expect comma to be included in params');
     }
 }
