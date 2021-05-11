@@ -9,7 +9,7 @@ public without sharing class CommunityUserAsyncRequestHandler extends AsyncJob {
     for(Person__c person:[SELECT CRM_Account__c, INT_LastName__c, INT_FirstName__c,	INT_MiddleName__c FROM Person__c WHERE CRM_Account__c in:accountIds]){
         personsWithChangedName.put(person.CRM_Account__c, person);
     }
-    system.debug(personsWithChangedName);
+
     //convert account ids to set to be able to user Users Selector class
     Set<Id> accountIdSet=new Set<Id>();
     for(Id accountId:accountIds){
@@ -18,7 +18,6 @@ public without sharing class CommunityUserAsyncRequestHandler extends AsyncJob {
 
     //update community users with name from Person__c
     List<User> usersToUpdate=new UsersSelector_Community().selectByAccountId(accountIdSet);
-    System.debug(usersToUpdate);
         for(User user:usersToUpdate){
             Person__c person=personsWithChangedName.get(user.AccountId);
             user.FirstName=person.INT_FirstName__c;

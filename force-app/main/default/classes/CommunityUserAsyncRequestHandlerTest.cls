@@ -41,8 +41,8 @@ private class CommunityUserAsyncRequestHandlerTest {
     @IsTest
     private static void updateTwoLastNames(){ 
         Set<Id> personAccountIds=new Set<Id>();
-        for(Person__c person:[SELECT Id FROM Person__c]){
-            personAccountIds.add(person.Id);
+        for(Person__c person:[SELECT CRM_Account__c FROM Person__c]){
+            personAccountIds.add(person.CRM_Account__c);
         }
 
         Test.startTest();
