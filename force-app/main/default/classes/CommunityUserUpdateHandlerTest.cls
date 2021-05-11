@@ -9,11 +9,20 @@ private class CommunityUserUpdateHandlerTest {
         myTriggers.disable(CommunityUserUpdateHandler.class);
         User navEmployee = TestDataFactory_Community.getUsers(1, 'System Administrator', true, true)[0];
         System.runAs(navEmployee) {
-            Account personAccount = TestDataFactory_Community.getPersonAccounts(1)[0];
-            Person__c person=[SELECT CRM_Account__c FROM Person__c LIMIT 1]; 
-            person.CRM_Account__c=personAccount.Id;
-            update person;
-            User communityUser = TestDataFactory_Community.getEmployerCommunityUser(new Set<Id>{ personAccount.Id }, true)[0];
+            List<Account> personAccounts = TestDataFactory_Community.getPersonAccounts(2);
+            Map<String,Account> accountByLastName=new Map<String,Account>();
+            for(Account acc:personAccounts){
+                accountByLastName.put(acc.LastName,acc);
+            }
+
+            Set<Id> personAccountIds=new Set<Id>();
+            List<Person__c> persons=[SELECT INT_LastName__c, CRM_Account__c FROM Person__c]; 
+            for(Person__c person:persons){
+                person.CRM_Account__c=accountByLastName.get(person.INT_LastName__c).Id;
+                personAccountIds.add(person.CRM_Account__c);
+            }
+            update persons;
+            List<User> users=TestDataFactory_Community.getEmployerCommunityUser(personAccountIds, true);
         }
     }
     
@@ -27,8 +36,9 @@ private class CommunityUserUpdateHandlerTest {
         update person;
         Test.stopTest();
 
-        User updatedUser=[SELECT LastName FROM User WHERE Id=:communityUser.Id LIMIT 1];
-        System.assertEquals('New last name', updatedUser.LastName, 'Expect users last name to be same as person');
+        List<AsyncRequest__c> asyncRequests=[SELECT CRM_Params__c FROM AsyncRequest__c WHERE CRM_AsyncType__c='Community User Update'];
+        System.assertEquals(1,asyncRequests.size(), 'Expect 1 async request for updating community user');
+        System.assertEquals(person.CRM_Account__c, asyncRequests[0].CRM_Params__c, 'Expect parram to be users account id');
     }
 
     @IsTest
@@ -41,8 +51,9 @@ private class CommunityUserUpdateHandlerTest {
         update person;
         Test.stopTest();
 
-        User updatedUser=[SELECT FirstName FROM User WHERE Id=:communityUser.Id LIMIT 1];
-        System.assertEquals('New first name', updatedUser.FirstName, 'Expect users first name to be same as person');
+        List<AsyncRequest__c> asyncRequests=[SELECT CRM_Params__c FROM AsyncRequest__c WHERE CRM_AsyncType__c='Community User Update'];
+        System.assertEquals(1,asyncRequests.size(), 'Expect 1 async request for updating community user');
+        System.assertEquals(person.CRM_Account__c, asyncRequests[0].CRM_Params__c, 'Expect parram to be users account id');
     }
 
     @IsTest
@@ -55,8 +66,9 @@ private class CommunityUserUpdateHandlerTest {
         update person;
         Test.stopTest();
 
-        User updatedUser=[SELECT MiddleName FROM User WHERE Id=:communityUser.Id LIMIT 1];
-        System.assertEquals('New middle name', updatedUser.MiddleName, 'Expect users middle name to be same as person');
+        List<AsyncRequest__c> asyncRequests=[SELECT CRM_Params__c FROM AsyncRequest__c WHERE CRM_AsyncType__c='Community User Update'];
+        System.assertEquals(1,asyncRequests.size(), 'Expect 1 async request for updating community user');
+        System.assertEquals(person.CRM_Account__c, asyncRequests[0].CRM_Params__c, 'Expect parram to be users account id');
     }
 
     @IsTest
@@ -71,6 +83,24 @@ private class CommunityUserUpdateHandlerTest {
         Test.stopTest();
 
         User updatedUser=[SELECT LastName FROM User WHERE Id=:communityUser.Id LIMIT 1];
-        System.assertEquals('1', updatedUser.LastName, 'Expect last name to be unchanged');
+        System.assertEquals(0,[SELECT COUNT() FROM AsyncRequest__c WHERE CRM_AsyncType__c='Community User Update'], 'Expect no async request');
+    }
+
+    @IsTest
+    private static void updateTwoPersonAccounts(){ 
+        Test.startTest();
+        List<Person__c> persons=[SELECT INT_LastName__c, CRM_Account__c FROM Person__c LIMIT 2]; 
+        for(Person__c person:persons){
+            person.INT_LastName__c='New last name';
+        }
+        update persons;
+        Test.stopTest();
+
+        List<AsyncRequest__c> asyncRequests=[SELECT CRM_Params__c FROM AsyncRequest__c WHERE CRM_AsyncType__c='Community User Update'];
+        System.assertEquals(1,asyncRequests.size(), 'Expect 1 async request for updating community user');
+        
+        System.assert(asyncRequests[0].CRM_Params__c.contains(persons[0].CRM_Account__c), 'Expect first account id to be included in params');
+        System.assert(asyncRequests[0].CRM_Params__c.contains(persons[1].CRM_Account__c), 'Expect second account id to be included in params');
+        System.assert(asyncRequests[0].CRM_Params__c.contains(','), 'Expect comma to be included in params');
     }
 }

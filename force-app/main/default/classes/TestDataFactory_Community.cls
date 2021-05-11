@@ -57,7 +57,6 @@ public class TestDataFactory_Community {
         if(personAccounts.size()>0){
             return personAccounts;
         }
-
         for (Integer i = 1; i <= numberOfAccounts; i++) {
             personAccounts.add(
                 new Account(
@@ -68,8 +67,8 @@ public class TestDataFactory_Community {
                     RecordTypeId = PERSON_ACCOUNT_RECORDTYPEID
                 )
             );
-            insert personAccounts;
         }
+        insert personAccounts;
         personAccounts = [
             SELECT FirstName, LastName, INT_PersonIdent__c, CRM_Person__c
             FROM Account
