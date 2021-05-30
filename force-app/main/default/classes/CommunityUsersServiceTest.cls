@@ -8,6 +8,15 @@ private class CommunityUsersServiceTest {
             WHERE Name = 'Personbruker Login' OR Name = 'Trial Customer Portal User'
             LIMIT 1
         ];
+
+        Profile communityPlusLoginProfile = [
+            SELECT Name
+            FROM Profile
+            WHERE Name = 'Samhandler Login' OR Name = 'Customer Community Plus Login User'
+            LIMIT 1
+        ];
+
+        
         DefaultCommunityProfile__c defaultCommunityProfile = new DefaultCommunityProfile__c(
             DefaultProfile__c = communityProfile.Name,
             DefaultPermissionSet__c = 'CRM_ManageAsyncRequests',
@@ -115,4 +124,10 @@ private class CommunityUsersServiceTest {
         System.assertEquals('Freelance', user.FirstName);
         System.assertEquals('Tolk', user.LastName);
     }
+
+    @IsTest
+    private static void createCommunityPlusLoginUser_whenUserDoesNotExisit(){
+
+    }
+
 }

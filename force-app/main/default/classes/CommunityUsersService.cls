@@ -80,4 +80,8 @@ public with sharing class CommunityUsersService {
 
         return existingUsers;
     }
+
+    public static User createCommunityPlusLoginUser(String personIdent) {
+        return null;
+    }
 }
