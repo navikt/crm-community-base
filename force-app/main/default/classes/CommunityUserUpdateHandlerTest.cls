@@ -22,7 +22,7 @@ private class CommunityUserUpdateHandlerTest {
                 personAccountIds.add(person.CRM_Account__c);
             }
             update persons;
-            List<User> users=TestDataFactory_Community.getEmployerCommunityUser(personAccountIds, true);
+            List<User> users=TestDataFactory_Community.getEmployerCommunityUser(personAccountIds, 'Personbruker Login', true);
         }
     }
     
