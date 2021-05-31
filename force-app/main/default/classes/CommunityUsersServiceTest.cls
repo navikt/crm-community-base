@@ -12,7 +12,7 @@ private class CommunityUsersServiceTest {
         Profile communityPlusLoginProfile = [
             SELECT Name
             FROM Profile
-            WHERE Name = 'Samhandler Login' OR Name = 'Customer Community Plus Login User'
+            WHERE Name = 'Samhandler Login' OR Name = 'Trial Customer Portal User'
             LIMIT 1
         ];
 
@@ -21,7 +21,9 @@ private class CommunityUsersServiceTest {
             DefaultProfile__c = communityProfile.Name,
             DefaultPermissionSet__c = 'CRM_ManageAsyncRequests',
             DefaultCommunityPlusProfile__c = 'Trial Customer Portal User',
-            DefaultCommunityPlusPermissionSetGroup__c = 'Test'
+            DefaultCommunityPlusPermissionSetGroup__c = 'Test',
+            DefaultCommunityPlusLoginPermSet__c='TestCommunity',
+            DefaultCommunityPlusLoginProfile__c=communityPlusLoginProfile.Name
         );
         insert defaultCommunityProfile;
     }
@@ -32,7 +34,7 @@ private class CommunityUsersServiceTest {
         System.runAs(navEmployee) {
             Account personAccount = TestDataFactory_Community.getPersonAccounts(1)[0];
 
-            TestDataFactory_Community.getEmployerCommunityUser(new Set<Id>{ personAccount.Id }, true);
+            TestDataFactory_Community.getEmployerCommunityUser(new Set<Id>{ personAccount.Id }, 'Personbruker Login', true);
 
             Test.startTest();
             User user = CommunityUsersService.getOrCreatePersonAccountUser('1');
@@ -126,8 +128,63 @@ private class CommunityUsersServiceTest {
     }
 
     @IsTest
-    private static void createCommunityPlusLoginUser_whenUserDoesNotExisit(){
+    private static void getOrcreateCommunityPlusLoginUser_whenUserDoesNotExisit(){
+        User navEmployee = TestDataFactory_Community.getUsers(1, 'System Administrator', true, true)[0];
+        System.runAs(navEmployee) {
+            Account personAccount = TestDataFactory_Community.getPersonAccounts(1)[0];
+            Test.startTest();
+            User user = CommunityUsersService.getOrcreateCommunityPlusLoginUser('1');
+            Test.stopTest();
+            System.assert(user != null);
+            System.assertEquals(personAccount.FirstName, user.FirstName);
+            System.assertEquals(personAccount.LastName, user.LastName);
 
+            PermissionSet permSet=[SELECT Id FROM PermissionSet WHERE Name='TestCommunity' LIMIT 1];
+            System.assertEquals(1, [SELECT COUNT() FROM PermissionSetAssignment WHERE PermissionSetId=:permSet.Id AND AssigneeId=:user.Id], 'Expect perm set to be assigned to new user');
+        }
     }
 
+    @IsTest
+    private static void getOrcreateCommunityPlusLoginUser_whenCommunityPlusLoginUserExisit(){
+        User navEmployee = TestDataFactory_Community.getUsers(1, 'System Administrator', true, true)[0];
+        System.runAs(navEmployee) {
+            Account personAccount = TestDataFactory_Community.getPersonAccounts(1)[0];
+            User existingCommunityUser=TestDataFactory_Community.getEmployerCommunityUser(new Set<Id>{ personAccount.Id }, 'Samhandler Login', true)[0];
+            PermissionSet permSet=[SELECT Id FROM PermissionSet WHERE Name='TestCommunity' LIMIT 1];
+            PermissionSetAssignment permSetAssignment = new PermissionSetAssignment(
+                      AssigneeId = existingCommunityUser.Id,
+                      PermissionSetId = permSet.Id
+                  );
+                  insert permSetAssignment;
+
+            Test.startTest();
+            User user = CommunityUsersService.getOrcreateCommunityPlusLoginUser('1');
+            Test.stopTest();
+            System.assert(user != null);
+            System.assertEquals(personAccount.FirstName, user.FirstName);
+            System.assertEquals(personAccount.LastName, user.LastName);
+
+            
+            System.assertEquals(1, [SELECT COUNT() FROM PermissionSetAssignment WHERE PermissionSetId=:permSet.Id AND AssigneeId=:user.Id], 'Expect perm set to be assigned to new user');
+        }
+    }
+
+    @IsTest
+    private static void getOrcreateCommunityPlusLoginUser_whenCommunityUserWithoutPermSetExisit(){
+        User navEmployee = TestDataFactory_Community.getUsers(1, 'System Administrator', true, true)[0];
+        System.runAs(navEmployee) {
+            Account personAccount = TestDataFactory_Community.getPersonAccounts(1)[0];
+            User existingCommunityUser=TestDataFactory_Community.getEmployerCommunityUser(new Set<Id>{ personAccount.Id }, 'Personbruker Login', true)[0];
+            
+            Test.startTest();
+            User user = CommunityUsersService.getOrcreateCommunityPlusLoginUser('1');
+            Test.stopTest();
+            System.assert(user != null);
+            System.assertEquals(personAccount.FirstName, user.FirstName);
+            System.assertEquals(personAccount.LastName, user.LastName);
+
+            PermissionSet permSet=[SELECT Id FROM PermissionSet WHERE Name='TestCommunity' LIMIT 1];            
+            System.assertEquals(1, [SELECT COUNT() FROM PermissionSetAssignment WHERE PermissionSetId=:permSet.Id AND AssigneeId=:user.Id], 'Expect perm set to be assigned to new user');
+        }
+    }
 }

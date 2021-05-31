@@ -6,7 +6,7 @@ public class TestDataFactory_Community {
     private static List<User> users;
     private static List<Account> personAccounts;
 
-    public static List<User> getEmployerCommunityUser(Set<Id> personAccountsIds, Boolean doInsert) {
+    public static List<User> getEmployerCommunityUser(Set<Id> personAccountsIds, String profileName, Boolean doInsert) {
         List<Account> personAccounts = [
             SELECT Id, FirstName, LastName, PersonContactId
             FROM Account
@@ -15,7 +15,7 @@ public class TestDataFactory_Community {
         Profile communityProfile = [
             SELECT Name
             FROM Profile
-            WHERE Name = 'Personbruker Login' OR Name = 'Trial Customer Portal User'
+            WHERE Name =: profileName OR Name = 'Trial Customer Portal User'
             LIMIT 1
         ];
 

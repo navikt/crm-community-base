@@ -34,7 +34,7 @@ private class CommunityUserAsyncRequestHandlerTest {
             req.CRM_Params__c=accountIds[0] + ',' + accountIds[1];
             insert req;
 
-            List<User> users=TestDataFactory_Community.getEmployerCommunityUser(personAccountIds, true);
+            List<User> users=TestDataFactory_Community.getEmployerCommunityUser(personAccountIds, 'Personbruker Login', true);
         }
     }
 
