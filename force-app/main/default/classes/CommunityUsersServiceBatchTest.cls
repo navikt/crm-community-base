@@ -23,7 +23,7 @@ private class CommunityUsersServiceBatchTest {
         System.runAs(navEmployee) {
             Account personAccount = TestDataFactory_Community.getPersonAccounts(1)[0];
 
-            TestDataFactory_Community.getEmployerCommunityUser(new Set<Id>{ personAccount.Id }, true);
+            TestDataFactory_Community.getEmployerCommunityUser(new Set<Id>{ personAccount.Id }, 'Personbruker Login', true);
 
             Test.startTest();
             User user = CommunityUsersServiceBatch.getOrCreatePersonAccountUser(new List<String>{ '1' })[0];

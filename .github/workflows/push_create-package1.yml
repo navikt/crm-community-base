@@ -42,6 +42,7 @@ jobs:
         run: |
           sfdx force:package:version:create -f config/project-scratch-def.json -p $(cat sfdx-project.json | jq '.packageDirectories | map(select(.package != null))[0].package' -r) -k ${{ secrets.PACKAGE_KEY }} -w 90 -c --json | tee output
 
+          # ! manually cancel the process if the package failed to be created
           if [ $(cat output |jq '.status') == "1" ]; then
             exit 125
           fi
@@ -257,7 +258,7 @@ jobs:
       - name: Set release fields
         id: release-fields
         run: |
-          versionNumber=$(cat sfdx-project.json | jq '.packageDirectories[0].versionNumber' -r | sed 's/.\{5\}$//')
+          versionNumber=$(cat sfdx-project.json | jq '.packageDirectories | map(select(.package != null))[0].versionNumber' -r | sed 's/.\{5\}$//')
           betaVersionNumber=${{ needs.create-package.outputs.betaVersionNumber }}
 
           echo "::set-output name=tagName::v$(echo $versionNumber)-beta$(echo $betaVersionNumber)"

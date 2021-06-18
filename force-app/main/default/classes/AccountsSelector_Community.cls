@@ -19,6 +19,9 @@ public inherited sharing class AccountsSelector_Community extends ApplicationSel
     public List<Account> selectByIdent(String ident) {
         return (List<Account>) Database.query(
             newQueryFactory()
+                .selectField('CRM_Person__r.INT_FirstName__c')
+                .selectField('CRM_Person__r.INT_MiddleName__c')
+                .selectField('CRM_Person__r.INT_LastName__c')
                 .setCondition('INT_PersonIdent__c=:ident AND CRM_Person__r.INT_Confidential__c=\'UGRADERT\'')
                 .toSOQL()
         );

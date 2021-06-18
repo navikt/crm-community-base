@@ -9,8 +9,8 @@ public with sharing class PersonAccountWrapper {
 
     public PersonAccountWrapper(Account account) {
         this.recordId = account.PersonContactId;
-        this.firstName = account.FirstName;
-        this.middleName = account.MiddleName;
-        this.lastName = account.LastName;
+        this.firstName = account.CRM_Person__r.INT_FirstName__c;
+        this.middleName = account.CRM_Person__r.INT_MiddleName__c;
+        this.lastName = account.CRM_Person__r.INT_LastName__c;
     }
 }

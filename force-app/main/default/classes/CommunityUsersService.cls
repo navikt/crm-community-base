@@ -80,4 +80,61 @@ public with sharing class CommunityUsersService {
 
         return existingUsers;
     }
+
+    public static User getOrcreateCommunityPlusLoginUser(String personIdent) {
+          //check if related Person__c is ugradert
+          List<Account> personAccounts = new AccountsSelector_Community().selectByIdent(personIdent);
+          if (personAccounts == null || personAccounts.size() == 0)
+              return null;
+  
+              DefaultCommunityProfile__c defaultCommunityProfiles = DefaultCommunityProfile__c.getOrgDefaults();
+              String profileName = defaultCommunityProfiles.DefaultCommunityPlusLoginProfile__c;
+              Profile profile = [SELECT Id FROM Profile WHERE Name = :profileName];
+
+              String permissionSetName = defaultCommunityProfiles.DefaultCommunityPlusLoginPermSet__c;
+              List<PermissionSet> permissionSets = [SELECT Id FROM permissionSet WHERE Name = :permissionSetName];
+
+          List<User> existingUsers = new UsersSelector_Community().selectByAccountIdent(new Set<String>{ personIdent });
+            if(existingUsers.size()>0)
+                return assignCommunityPlusLoginProfileAndPermSetToExistingUser(existingUsers[0], profile.Id, permissionSets[0].Id);
+
+
+          if (personAccounts.size() > 0 && profile != null) {
+              PersonAccountWrapper contact = new PersonAccountWrapper(personAccounts[0]);
+              User user = createCommunityUser(contact, profile.Id);
+            
+
+              if (permissionSets.size() > 0) {
+                  PermissionSetAssignment permSetAssignment = new PermissionSetAssignment(
+                      AssigneeId = user.Id,
+                      PermissionSetId = permissionSets[0].Id
+                  );
+                  insert permSetAssignment;
+              }
+              return user;
+          }
+  
+          return null;
+    }
+
+    private static User assignCommunityPlusLoginProfileAndPermSetToExistingUser(User user, Id plusLoginProfileId, Id permissionSetId){
+        DefaultCommunityProfile__c defaultCommunityProfiles = DefaultCommunityProfile__c.getOrgDefaults();
+        String communityProfileName = defaultCommunityProfiles.DefaultProfile__c;
+        Profile communityProfile = [SELECT Id FROM Profile WHERE Name = :communityProfileName];
+        //check if user don't have community plus
+        if(user.ProfileId==communityProfile.Id){
+            user.ProfileId=plusLoginProfileId;
+        }
+
+        //check if user has community plus login perm set
+        List<PermissionSetAssignment> assignments=[SELECT Id FROM PermissionSetAssignment WHERE PermissionSetId=:permissionSetId AND AssigneeId=:user.Id];
+        if(assignments.size()==0){
+            PermissionSetAssignment newAssignment=new PermissionSetAssignment(PermissionSetId=permissionSetId, AssigneeId=user.Id);
+            insert newAssignment;
+        }
+
+        return user;
+    }
 }
+        
+        

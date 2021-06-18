@@ -52,6 +52,9 @@
             "serviceAppointmentsDueDateOffsetOrgValue": 7,
             "workOrderLineItemSearchFields": "Subject",
             "workOrderSearchFields": "Subject"
+        },
+        "liveAgentSettings": {
+            "enableLiveAgent": true
         }
     }
 }
