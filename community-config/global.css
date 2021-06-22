@@ -7637,6 +7637,9 @@ lightning-datatable {
     .right-content {
         margin-bottom: 1rem;
         width: 100%;
+    } 
+    div.liste.liste-max-width > div > lightning-radio-group{
+        width: 50%;
     }
     .right-button > .slds-button_brand,
     .right-button > .slds-button--brand {
