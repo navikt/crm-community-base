@@ -357,17 +357,8 @@ lightning-input-field.adressefelt-hjelp > lightning-input > label:after {
     border-bottom: 4px solid #dade99;
 }
 
-.header-spacing {
-    margin-bottom: 11rem;
-}
 
 /* Home */
-
-
-.tolketjenesten {
-    background-color: #dade99;
-    border-bottom: 4px solid rgb(181, 189, 51);
-}
 
 .typo-undertittel {
     margin: 0;
