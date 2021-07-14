@@ -407,10 +407,6 @@ lightning-input-field.adressefelt-hjelp > lightning-input > label:after {
     flex-direction: column;
 }
 
-lightning-tabset {
-    width: 100%;
-}
-
 lightning-datatable {
     width: 100%;
 }
