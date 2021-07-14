@@ -339,23 +339,6 @@ lightning-input-field.adressefelt-hjelp > lightning-input > label:after {
     content: ' (gatenavn, husnummer)';
 }
 
-.hovedbanner {
-    padding: 1rem 1.5rem 1rem 1.5rem;
-    border-bottom-width: 4px;
-    border-bottom-style: solid;
-    text-align: center;
-    width: 100%;
-    z-index: 10;
-    margin-top: -11rem;
-    margin-top: var(--margintop);
-    position: var(--fixed);
-    top: var(--hovedbannerposition);
-}
-
-.frilanstolk {
-    background-color: rgb(181, 189, 51);
-    border-bottom: 4px solid #dade99;
-}
 
 
 /* Home */
