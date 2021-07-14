@@ -577,18 +577,6 @@ lightning-input-field.adressefelt-hjelp > lightning-input > label:after {
     font-weight: 400;
 }
 
-/*home vegard */
-
-.portal-hilsen {
-    font-size: 1.33rem;
-    font-weight: bold;
-    text-align: center;
-    margin-top: 1rem;
-}
-
-.illustrasjon {
-    max-height: 90%;
-}
 
 /* Liste */
 
