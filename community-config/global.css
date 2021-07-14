@@ -1,7 +1,4 @@
-﻿.dynamic-header {
-    position: var(--fixed);
-    top: var(--headerPosition);
-}
+﻿/* Override slds styles */
 
 lightning-output-field.hidden-helptext > lightning-helptext {
     display: none;
@@ -24,6 +21,7 @@ lightning-formatted-number.lightning-output-field {
 }
 
 a {
+    all: unset;
     color: #0067c5;
     background: none;
     text-decoration: underline;
@@ -32,9 +30,6 @@ a {
 a:hover{
     text-decoration: none;
 }
-
-/* Sections
-	 ========================================================================== */
 
 /**
    * Remove the margin in all browsers (opinionated).
