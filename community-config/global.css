@@ -31,19 +31,6 @@ a:hover{
     text-decoration: none;
 }
 
-/**
-   * Remove the margin in all browsers (opinionated).
-   */
-
-body {
-    margin: 0;
-}
-
-/**
-   * Add the correct display in IE 9-.
-   */
-
-
 
 /* GLOBAL */
 
@@ -74,14 +61,6 @@ body {
     padding-left: 0 !important;
     padding-right: 0 !important;
     padding-bottom: 0 !important;
-}
-
-.main-content {
-    font-family: 'Source Sans Pro', Arial, sans-serif;
-    align-items: center;
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
 }
 
 .slds-form-element__label {
