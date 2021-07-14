@@ -1,4 +1,28 @@
-﻿/* Override slds styles */
+﻿/* Override slds styles on standard html*/
+
+
+a {
+    all: unset;
+    color: #0067c5;
+    background: none;
+    text-decoration: underline;
+    cursor: pointer;
+}
+a:hover{
+    text-decoration: none;
+}
+
+
+div {
+    display: block;
+}
+
+html {
+    background-color: #efefef;
+    justify-content: center;
+    scroll-behavior: smooth;
+}
+/* Override slds tags */
 
 lightning-output-field.hidden-helptext > lightning-helptext {
     display: none;
@@ -20,40 +44,16 @@ lightning-formatted-number.lightning-output-field {
     font-size: 1rem !important;
 }
 
-a {
-    all: unset;
-    color: #0067c5;
-    background: none;
-    text-decoration: underline;
-    cursor: pointer;
-}
-a:hover{
-    text-decoration: none;
-}
-
-
-/* GLOBAL */
-
-/* PREPROD */
-
 .slds-p-horizontal_medium,
 .slds-p-horizontal--medium {
     padding-left: 0 !important;
     padding-right: 0 !important;
 }
 
-.forceCommunitySection .cb-section_column:only-child {
-    padding: 0 !important;
-}
 
 .slds-m-top_x-large,
 .slds-m-top--x-large {
     margin-top: 0 !important;
-}
-
-.siteforceContentArea .comm-layout-column .ui-widget:not(:last-child),
-.siteforceContentArea .cb-section_column .ui-widget:not(:last-child) {
-    margin-bottom: 0 !important;
 }
 
 .slds-col--padded {
@@ -81,74 +81,8 @@ a:hover{
     box-shadow: none;
 }
 
-lightning-timepicker > label.slds-form-element__label:after {
-    visibility: visible;
-    position: relative;
-    top: 0;
-    left: 0;
-    content: ' (tt:mm)';
-}
-
-lightning-input-field.start-tid
-    > lightning-input
-    > lightning-datetimepicker
-    > div
-    > fieldset
-    > div
-    > div
-    > div
-    > lightning-datepicker
-    > div
-    > label:before {
-    content: 'Start ';
-}
-
-lightning-input-field.slutt-tid
-    > lightning-input
-    > lightning-datetimepicker
-    > div
-    > fieldset
-    > div
-    > div
-    > div
-    > lightning-datepicker
-    > div
-    > label:before {
-    content: 'Slutt ';
-}
-
-lightning-datepicker > div > label.slds-form-element__label:after {
-    content: ' (dd.mm.åååå)';
-}
-
-lightning-datetimepicker > div > fieldset > legend.slds-form-element__legend {
-    display: none;
-}
-
 .slds-form-element__legend {
     font-weight: normal;
-}
-
-@media (max-width: 576px) {
-    .postnummer label {
-        left: -1000px;
-        visibility: hidden;
-        position: absolute;
-    }
-    .postnummer label:after {
-        visibility: visible;
-        position: absolute;
-        top: -23px;
-        left: 1000px;
-        content: 'Postnr';
-    }
-    .postnummer {
-        top: 29px;
-    }
-}
-
-lightning-radio-group.nav-radio-button-group {
-    padding-left: 0.25rem;
 }
 
 .slds-input {
@@ -156,48 +90,6 @@ lightning-radio-group.nav-radio-button-group {
     box-shadow: none;
 }
 
-.horizontal .slds-form-element__control {
-    display: flex;
-    flex-direction: row;
-}
-
-@media (max-width: 576px) {
-    .horizontal .slds-form-element__control {
-        display: flex;
-        flex-direction: row;
-        margin-bottom: 2rem;
-    }
-}
-
-.radio-button-group_yes-no .slds-form-element__control {
-    max-width: 200px;
-}
-
-.nav-radio-button-group .slds-form-element__control .slds-radio {
-    margin-top: 0.25rem;
-    font-size: 1rem;
-    width: 100%;
-    border: 0 transparent;
-    border-radius: 8px;
-    display: flex;
-    align-content: flex-start;
-    justify-content: left;
-    height: 2.33rem;
-    margin-left: 1rem;
-    margin-right: 0;
-    padding-left: 0;
-    padding-right: 0;
-}
-
-.nav-radio-button-group .slds-form-element__control .slds-radio_faux {
-    width: 1.5rem;
-    height: 1.5rem;
-    margin-right: 0.75rem !important;
-}
-
-.nav-radio-button-group .slds-form-element__control .slds-radio:first-child {
-    margin-left: 0;
-}
 
 .slds-radio [type='radio']:checked + .slds-radio_faux:after,
 .slds-radio [type='radio']:checked + .slds-radio--faux:after,
@@ -243,12 +135,6 @@ span.slds-radio {
     background-color: #3385d1;
 }
 
-.button-container {
-    text-align: center;
-    max-width: 792px;
-    padding: 1rem 2rem 1rem 2rem;
-}
-
 @media (max-width: 576px) {
     lightning-button {
         width: 100%;
@@ -257,16 +143,6 @@ span.slds-radio {
 
 .slds-button {
     font-size: 1rem;
-}
-
-.back-button {
-    color: #0067c5;
-    text-decoration: underline;
-    text-decoration-color: #0067c5;
-}
-
-.back-button:hover {
-    color: #3385d1;
 }
 
 .slds-th__action-button {
@@ -289,110 +165,18 @@ span.slds-radio {
     top: 25%;
 }
 
-.typo-systemtittel {
-    margin: 0;
-    font-family: 'Source Sans Pro', Arial, sans-serif;
-    font-size: 1.25rem;
-    line-height: 1.625rem;
-    font-weight: bold;
-}
-
-lightning-input-field.ikke-sensitiv-fritekst > lightning-textarea > label:after {
-    content: ' (ingen sensitiv informasjon)';
-}
-
-lightning-input-field.ikke-sensitive-opplysninger > lightning-textarea > label:after {
-    content: ' (ingen sensitive opplysninger)';
-}
-
-.ikke-sensitive-opplysninger__label:after {
-    content: ' (ingen sensitive opplysninger)';
-}
-
-lightning-input-field.adressefelt-hjelp > lightning-input > label:after {
-    content: ' (gatenavn, husnummer)';
+.slds-form-element_stacked {
+    padding: 0 !important;
+    margin: 0 !important;
 }
 
 
 
-/* Home */
-
-.typo-undertittel {
-    margin: 0;
-    font-family: 'Source Sans Pro', Arial, sans-serif;
-    font-size: 1rem;
-    line-height: 1.5625rem;
-    font-weight: bold;
-}
-
-
-.typo-normal {
-    margin: 0;
-    font-family: 'Source Sans Pro', Arial, sans-serif;
-    font-size: 1rem;
-    line-height: 1.375rem;
-    font-weight: 400;
-}
-
-
-/* Liste */
-
-.liste-max-width {
-    max-width: 1480px;
-    width: 100%;
-    padding: 0 3.25rem;
-}
-
-.liste {
-    padding: 3.25rem 3.25rem 3.25rem 3.25rem;
-    background-color: #fff !important;
-    font-family: 'Source Sans Pro', Arial, sans-serif;
-    margin: 1rem auto 1rem auto;
-    border-radius: 0.5rem;
-    align-items: center;
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-}
+/* Override datatable */
 
 lightning-datatable {
     width: 100%;
 }
-
-
-@media (min-width: 576px) {
-    .right-content {
-        margin-bottom: 1rem;
-        width: 100%;
-    } 
-    div.liste.liste-max-width > div > lightning-radio-group{
-        width: 50%;
-    }
-    .right-button > .slds-button_brand,
-    .right-button > .slds-button--brand {
-        float: right;
-    }
-    .filter-list-checkbox {
-        width: 50%;
-    }
-}
-
-@media (max-width: 576px) {
-    .right-content {
-        margin-bottom: 0;
-        width: 100%;
-    }
-    .slds-button_brand,
-    .slds-button--brand {
-        width: 100%;
-    }
-    .liste {
-        padding: 1rem 1rem 1rem 1rem;
-        margin: 1rem auto 1rem auto;
-    }
-}
-
-
 lightning-datatable > div.dt-outer-container > div > div > table {
     width: 100% !important;
 }
@@ -498,16 +282,240 @@ lightning-datatable > div.dt-outer-container > div > div > table {
     }
 }
 
+/*Override community styling */
+
+.forceCommunitySection .cb-section_column:only-child {
+    padding: 0 !important;
+}
+
+.siteforceContentArea .comm-layout-column .ui-widget:not(:last-child),
+.siteforceContentArea .cb-section_column .ui-widget:not(:last-child) {
+    margin-bottom: 0 !important;
+}
+
+/* HOT Spesific */
+
+lightning-timepicker > label.slds-form-element__label:after {
+    visibility: visible;
+    position: relative;
+    top: 0;
+    left: 0;
+    content: ' (tt:mm)';
+}
+
+lightning-input-field.start-tid
+    > lightning-input
+    > lightning-datetimepicker
+    > div
+    > fieldset
+    > div
+    > div
+    > div
+    > lightning-datepicker
+    > div
+    > label:before {
+    content: 'Start ';
+}
+
+lightning-input-field.slutt-tid
+    > lightning-input
+    > lightning-datetimepicker
+    > div
+    > fieldset
+    > div
+    > div
+    > div
+    > lightning-datepicker
+    > div
+    > label:before {
+    content: 'Slutt ';
+}
+
+lightning-datepicker > div > label.slds-form-element__label:after {
+    content: ' (dd.mm.åååå)';
+}
+
+lightning-datetimepicker > div > fieldset > legend.slds-form-element__legend {
+    display: none;
+}
+
+
+@media (max-width: 576px) {
+    .postnummer label {
+        left: -1000px;
+        visibility: hidden;
+        position: absolute;
+    }
+    .postnummer label:after {
+        visibility: visible;
+        position: absolute;
+        top: -23px;
+        left: 1000px;
+        content: 'Postnr';
+    }
+    .postnummer {
+        top: 29px;
+    }
+}
+
+lightning-radio-group.nav-radio-button-group {
+    padding-left: 0.25rem;
+}
+
+.horizontal .slds-form-element__control {
+    display: flex;
+    flex-direction: row;
+}
+
+@media (max-width: 576px) {
+    .horizontal .slds-form-element__control {
+        display: flex;
+        flex-direction: row;
+        margin-bottom: 2rem;
+    }
+}
+
+.radio-button-group_yes-no .slds-form-element__control {
+    max-width: 200px;
+}
+
+.nav-radio-button-group .slds-form-element__control .slds-radio {
+    margin-top: 0.25rem;
+    font-size: 1rem;
+    width: 100%;
+    border: 0 transparent;
+    border-radius: 8px;
+    display: flex;
+    align-content: flex-start;
+    justify-content: left;
+    height: 2.33rem;
+    margin-left: 1rem;
+    margin-right: 0;
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.nav-radio-button-group .slds-form-element__control .slds-radio_faux {
+    width: 1.5rem;
+    height: 1.5rem;
+    margin-right: 0.75rem !important;
+}
+
+.nav-radio-button-group .slds-form-element__control .slds-radio:first-child {
+    margin-left: 0;
+}
+
+
+
+
+lightning-input-field.ikke-sensitiv-fritekst > lightning-textarea > label:after {
+    content: ' (ingen sensitiv informasjon)';
+}
+
+lightning-input-field.ikke-sensitive-opplysninger > lightning-textarea > label:after {
+    content: ' (ingen sensitive opplysninger)';
+}
+
+.ikke-sensitive-opplysninger__label:after {
+    content: ' (ingen sensitive opplysninger)';
+}
+
+lightning-input-field.adressefelt-hjelp > lightning-input > label:after {
+    content: ' (gatenavn, husnummer)';
+}
+
+
+
+
+
+/* NAV Styling */
+
+
+.typo-systemtittel {
+    margin: 0;
+    font-family: 'Source Sans Pro', Arial, sans-serif;
+    font-size: 1.25rem;
+    line-height: 1.625rem;
+    font-weight: bold;
+}
+
+.typo-undertittel {
+    margin: 0;
+    font-family: 'Source Sans Pro', Arial, sans-serif;
+    font-size: 1rem;
+    line-height: 1.5625rem;
+    font-weight: bold;
+}
+
+
+.typo-normal {
+    margin: 0;
+    font-family: 'Source Sans Pro', Arial, sans-serif;
+    font-size: 1rem;
+    line-height: 1.375rem;
+    font-weight: 400;
+}
+
+
+/* Liste */
+
+.liste-max-width {
+    max-width: 1480px;
+    width: 100%;
+    padding: 0 3.25rem;
+}
+
+.liste {
+    padding: 3.25rem 3.25rem 3.25rem 3.25rem;
+    background-color: #fff !important;
+    font-family: 'Source Sans Pro', Arial, sans-serif;
+    margin: 1rem auto 1rem auto;
+    border-radius: 0.5rem;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+
+
+@media (min-width: 576px) {
+    .right-content {
+        margin-bottom: 1rem;
+        width: 100%;
+    } 
+    div.liste.liste-max-width > div > lightning-radio-group{
+        width: 50%;
+    }
+    .right-button > .slds-button_brand,
+    .right-button > .slds-button--brand {
+        float: right;
+    }
+    .filter-list-checkbox {
+        width: 50%;
+    }
+}
+
+@media (max-width: 576px) {
+    .right-content {
+        margin-bottom: 0;
+        width: 100%;
+    }
+    .slds-button_brand,
+    .slds-button--brand {
+        width: 100%;
+    }
+    .liste {
+        padding: 1rem 1rem 1rem 1rem;
+        margin: 1rem auto 1rem auto;
+    }
+}
+
+
+
 /* Skjema */
 
 
-
-.dialog-boks {
-    background-color: white;
-    padding: 2rem;
-    margin: 2rem 0;
-    border-radius: 0.5rem;
-}
 
 lightning-breadcrumbs {
     padding-left: 2.25rem !important;
@@ -527,23 +535,7 @@ lightning-breadcrumb:last-child a {
 }
 
 
-.tolk-skjema-input {
-    font-size: 1rem;
-}
 
-.nav-info-header {
-    font-size: 1.75rem;
-}
-
-div {
-    display: block;
-}
-
-html {
-    background-color: #efefef;
-    justify-content: center;
-    scroll-behavior: smooth;
-}
 
 .slds-notify_toast,
 .slds-notify--toast {
@@ -598,31 +590,6 @@ html {
     display: none !important;
 }
 
-.slds-form-element_stacked {
-    padding: 0 !important;
-    margin: 0 !important;
-}
-
-.center-content {
-    align-items: center;
-    display: flex !important;
-    flex-direction: column !important;
-    justify-content: center !important;
-}
-
-.user-info-tile {
-    background-color: #fff;
-    display: block;
-    padding: 4rem 2rem;
-    border-radius: 4px;
-    position: relative;
-    flex-grow: 0;
-    overflow-x: auto;
-    margin-bottom: 1rem;
-    margin-top: 1rem;
-    max-width: 800px;
-    width: 100%;
-}
 
 lightning-radio-group > fieldset > div > span {
     margin-bottom: 0.25rem;
