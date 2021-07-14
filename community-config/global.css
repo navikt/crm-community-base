@@ -415,9 +415,6 @@ lightning-datatable {
     width: 100%;
 }
 
-.filter-list-checkbox {
-    width: 100%;
-}
 
 @media (min-width: 576px) {
     .right-content {
@@ -449,6 +446,11 @@ lightning-datatable {
         padding: 1rem 1rem 1rem 1rem;
         margin: 1rem auto 1rem auto;
     }
+}
+
+
+lightning-datatable > div.dt-outer-container > div > div > table {
+    width: 100% !important;
 }
 
 @media (max-width: 576px) {
@@ -737,8 +739,4 @@ lightning-output-field.checkbox-inline > div.slds-form-element__control {
     .third-width {
         width: 100%;
     }
-}
-
-lightning-datatable > div.dt-outer-container > div > div > table {
-    width: 100% !important;
 }
