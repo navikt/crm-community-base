@@ -171,6 +171,14 @@ span.slds-radio {
 }
 
 
+.slds-notify_toast,
+.slds-notify--toast {
+    min-width: 10rem;
+}
+.slds-tabs_default__link {
+    font-size: 1rem;
+}
+
 
 /* Override datatable */
 
@@ -456,60 +464,20 @@ lightning-input-field.adressefelt-hjelp > lightning-input > label:after {
     font-weight: 400;
 }
 
+/* nav-crm styling */
+
+.third-width {
+    width: 30%;
+}
+
+@media (max-width: 564px) {
+    .third-width {
+        width: 100%;
+    }
+}
+
 
 /* Liste */
-
-.liste-max-width {
-    max-width: 1480px;
-    width: 100%;
-    padding: 0 3.25rem;
-}
-
-.liste {
-    padding: 3.25rem 3.25rem 3.25rem 3.25rem;
-    background-color: #fff !important;
-    font-family: 'Source Sans Pro', Arial, sans-serif;
-    margin: 1rem auto 1rem auto;
-    border-radius: 0.5rem;
-    align-items: center;
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-}
-
-
-
-@media (min-width: 576px) {
-    .right-content {
-        margin-bottom: 1rem;
-        width: 100%;
-    } 
-    div.liste.liste-max-width > div > lightning-radio-group{
-        width: 50%;
-    }
-    .right-button > .slds-button_brand,
-    .right-button > .slds-button--brand {
-        float: right;
-    }
-    .filter-list-checkbox {
-        width: 50%;
-    }
-}
-
-@media (max-width: 576px) {
-    .right-content {
-        margin-bottom: 0;
-        width: 100%;
-    }
-    .slds-button_brand,
-    .slds-button--brand {
-        width: 100%;
-    }
-    .liste {
-        padding: 1rem 1rem 1rem 1rem;
-        margin: 1rem auto 1rem auto;
-    }
-}
 
 
 
@@ -537,11 +505,6 @@ lightning-breadcrumb:last-child a {
 
 
 
-.slds-notify_toast,
-.slds-notify--toast {
-    min-width: 10rem;
-}
-
 @media (min-width: 576px) {
     .mobile-toggler,
     .mobile-only {
@@ -550,9 +513,6 @@ lightning-breadcrumb:last-child a {
     }
 }
 
-.slds-tabs_default__link {
-    font-size: 1rem;
-}
 
 .comments-dialog-container {
     all: unset;
@@ -642,12 +602,3 @@ lightning-output-field.checkbox-inline > div.slds-form-element__control {
     }
 }
 
-.third-width {
-    width: 30%;
-}
-
-@media (max-width: 564px) {
-    .third-width {
-        width: 100%;
-    }
-}
