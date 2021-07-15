@@ -194,6 +194,9 @@ lightning-datatable {
 lightning-datatable > div.dt-outer-container > div > div > table {
     width: 100% !important;
 }
+.slds-th__action{
+    height: 1rem;
+}
 
 @media (max-width: 576px) {
     /* Force table to not be like tables anymore */
