@@ -23,6 +23,7 @@ html {
     justify-content: center;
     scroll-behavior: smooth;
 }
+
 /* Override slds tags */
 
 lightning-output-field.hidden-helptext > lightning-helptext {
@@ -356,9 +357,9 @@ lightning-datatable > div.dt-outer-container > div > div > table {
 }
 
 
-/* TEMP (Breadcrumbs)*/
+/* TEMP*/
 
-
+/* Breadcrumbs*/
 
 lightning-breadcrumbs {
     padding-left: 2.25rem !important;
@@ -377,5 +378,18 @@ lightning-breadcrumb:last-child a {
     justify-content: center;
 }
 
+/* output checkbox*/
 
+lightning-output-field.checkbox-inline {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+}
 
+lightning-output-field.checkbox-inline > div.slds-form-element__control {
+    all: unset;
+    width: unset;
+    flex-basis: unset;
+    position: relative;
+    top: 5px;
+}
