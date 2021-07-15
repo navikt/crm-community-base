@@ -406,46 +406,7 @@ lightning-radio-group.nav-radio-button-group {
 }
 
 
-
-.comments-dialog-container {
-    all: unset;
-    background-color: #fff;
-    display: block;
-    padding: 5rem;
-    border-radius: 4px;
-    position: relative;
-    flex-grow: 0;
-    overflow-x: auto;
-    max-height: 100%;
-    margin-bottom: 1rem;
-    margin-top: 1rem;
-    z-index: 1010;
-    max-width: 432px;
-    max-height: 75%;
-    width: 100%;
-}
-
-.comment-form > form {
-    padding: 25px 0;
-}
-
-.sub-form > form {
-    padding: 0 1rem;
-}
-
-.sub-form > form > slot {
-    display: flex;
-    flex-direction: row;
-}
-
-.sub-form > form > slot > lightning-output-field > .slds-form-element__label {
-    background-color: red;
-    display: none !important;
-}
-
-
-
-/* TEMP */
+/* TEMP (Breadcrumbs)*/
 
 
 
@@ -467,12 +428,4 @@ lightning-breadcrumb:last-child a {
 }
 
 
-lightning-output-field.checkbox-inline > div.slds-form-element__control {
-    width: unset;
-    flex-basis: unset;
-    top: 5px;
-}
 
-.no-padding form {
-    padding: 0;
-}
