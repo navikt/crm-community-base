@@ -498,6 +498,16 @@ lightning-datatable > div.dt-outer-container > div > div > table {
 
 /* TEMP*/
 
+/* HOT */
+
+lightning-input-field.ikke-sensitiv-fritekst > lightning-textarea > label:after {
+    content: ' (ingen sensitiv informasjon)';
+}
+
+lightning-input-field.adressefelt-hjelp > lightning-input > label:after {
+    content: ' (gatenavn, husnummer)';
+}
+
 /* Breadcrumbs*/
 
 lightning-breadcrumbs {
