@@ -1,4 +1,5 @@
-﻿/* Override slds styles on standard html*/
+﻿
+/* Override slds styles on standard html*/
 
 
 a {
@@ -179,6 +180,10 @@ span.slds-radio {
     font-size: 1rem;
 }
 
+lightning-radio-group > fieldset > div > span {
+    margin-bottom: 0.25rem;
+}
+
 
 /* Override datatable */
 
@@ -301,70 +306,9 @@ lightning-datatable > div.dt-outer-container > div > div > table {
     margin-bottom: 0 !important;
 }
 
+
+
 /* HOT Spesific */
-
-lightning-timepicker > label.slds-form-element__label:after {
-    visibility: visible;
-    position: relative;
-    top: 0;
-    left: 0;
-    content: ' (tt:mm)';
-}
-
-lightning-input-field.start-tid
-    > lightning-input
-    > lightning-datetimepicker
-    > div
-    > fieldset
-    > div
-    > div
-    > div
-    > lightning-datepicker
-    > div
-    > label:before {
-    content: 'Start ';
-}
-
-lightning-input-field.slutt-tid
-    > lightning-input
-    > lightning-datetimepicker
-    > div
-    > fieldset
-    > div
-    > div
-    > div
-    > lightning-datepicker
-    > div
-    > label:before {
-    content: 'Slutt ';
-}
-
-lightning-datepicker > div > label.slds-form-element__label:after {
-    content: ' (dd.mm.åååå)';
-}
-
-lightning-datetimepicker > div > fieldset > legend.slds-form-element__legend {
-    display: none;
-}
-
-
-@media (max-width: 576px) {
-    .postnummer label {
-        left: -1000px;
-        visibility: hidden;
-        position: absolute;
-    }
-    .postnummer label:after {
-        visibility: visible;
-        position: absolute;
-        top: -23px;
-        left: 1000px;
-        content: 'Postnr';
-    }
-    .postnummer {
-        top: 29px;
-    }
-}
 
 lightning-radio-group.nav-radio-button-group {
     padding-left: 0.25rem;
@@ -414,30 +358,7 @@ lightning-radio-group.nav-radio-button-group {
 }
 
 
-
-
-lightning-input-field.ikke-sensitiv-fritekst > lightning-textarea > label:after {
-    content: ' (ingen sensitiv informasjon)';
-}
-
-lightning-input-field.ikke-sensitive-opplysninger > lightning-textarea > label:after {
-    content: ' (ingen sensitive opplysninger)';
-}
-
-.ikke-sensitive-opplysninger__label:after {
-    content: ' (ingen sensitive opplysninger)';
-}
-
-lightning-input-field.adressefelt-hjelp > lightning-input > label:after {
-    content: ' (gatenavn, husnummer)';
-}
-
-
-
-
-
 /* NAV Styling */
-
 
 .typo-systemtittel {
     margin: 0;
@@ -454,7 +375,6 @@ lightning-input-field.adressefelt-hjelp > lightning-input > label:after {
     line-height: 1.5625rem;
     font-weight: bold;
 }
-
 
 .typo-normal {
     margin: 0;
@@ -477,34 +397,6 @@ lightning-input-field.adressefelt-hjelp > lightning-input > label:after {
 }
 
 
-/* Liste */
-
-
-
-/* Skjema */
-
-
-
-lightning-breadcrumbs {
-    padding-left: 2.25rem !important;
-    display: flex;
-    justify-content: left;
-}
-
-lightning-breadcrumb:last-child a {
-    font-weight: bold;
-    color: black;
-}
-
-.brodsmulesti {
-    margin: 1rem;
-    display: flex;
-    justify-content: center;
-}
-
-
-
-
 @media (min-width: 576px) {
     .mobile-toggler,
     .mobile-only {
@@ -512,6 +404,7 @@ lightning-breadcrumb:last-child a {
         visibility: hidden;
     }
 }
+
 
 
 .comments-dialog-container {
@@ -551,9 +444,28 @@ lightning-breadcrumb:last-child a {
 }
 
 
-lightning-radio-group > fieldset > div > span {
-    margin-bottom: 0.25rem;
+
+/* TEMP */
+
+
+
+lightning-breadcrumbs {
+    padding-left: 2.25rem !important;
+    display: flex;
+    justify-content: left;
 }
+
+lightning-breadcrumb:last-child a {
+    font-weight: bold;
+    color: black;
+}
+
+.brodsmulesti {
+    margin: 1rem;
+    display: flex;
+    justify-content: center;
+}
+
 
 lightning-output-field.checkbox-inline > div.slds-form-element__control {
     width: unset;
@@ -564,6 +476,8 @@ lightning-output-field.checkbox-inline > div.slds-form-element__control {
 .no-padding form {
     padding: 0;
 }
+
+/* Dynamic time inputs */
 
 .dynamic-time-inputs-with-line_button {
     display: grid;
