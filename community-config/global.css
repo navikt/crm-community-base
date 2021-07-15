@@ -141,6 +141,9 @@ span.slds-radio {
     lightning-button {
         width: 100%;
     }
+    .slds-button {
+        width: 100%;
+    }
 }
 
 .slds-button {
