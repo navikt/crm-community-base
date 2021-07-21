@@ -2,18 +2,23 @@ import { LightningElement, api } from 'lwc';
 
 // https://navikt.github.io/Designsystemet/?path=/story/ds-react-button--all
 export default class Button extends LightningElement {
+    @api id;
+    @api name;
     @api autofocus;
     @api disabled;
     @api type; // Button, Submit, Reset
     @api value;
     @api buttonStyling; // Primary, Secondary, Action, Danger
     @api buttonLabel;
-    @api overrideStyle;
+    @api desktopStyle;
     @api mobileStyle;
 
     get buttonClass() {
         let buttonStyle;
 
+        if (this.buttonStyling !== undefined) {
+            buttonStyle = this.buttonStyling.toLowerCase();
+        }
         if (
             this.buttonStyling !== 'primary' &&
             this.buttonStyling !== 'secondary' &&
@@ -21,8 +26,6 @@ export default class Button extends LightningElement {
             this.buttonStyling !== 'danger'
         ) {
             buttonStyle = 'primary'; // Set primary as default if invalid argument
-        } else {
-            buttonStyle = this.buttonStyling.toLowerCase();
         }
         return 'navds-button navds-button--' + buttonStyle + ' navds-body-short';
     }
@@ -37,6 +40,14 @@ export default class Button extends LightningElement {
             value = valueToSet;
         }
         return value;
+    }
+
+    get setDefaultId() {
+        return this.setDefault(this.id, 'button');
+    }
+
+    get setDefaultName() {
+        return this.setDefault(this.name, 'button');
     }
 
     get setDefaultAutofocus() {
@@ -54,9 +65,10 @@ export default class Button extends LightningElement {
     get setDefaultType() {
         return this.setDefault(this.type, 'button');
     }
+
     get setDefaultStyle() {
-        let style = this.overrideStyle;
-        if(window.screen.width < 576){
+        let style = this.desktopStyle;
+        if (window.screen.width < 576) {
             style = this.mobileStyle;
         }
         return this.setDefault(style, '');

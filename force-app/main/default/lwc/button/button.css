@@ -15,15 +15,14 @@
     padding: calc(0.75rem - 2px) 0.75rem;
 }
 
-.navds-button--primary:active {
-    background-color: #005b82;
-}
-
 .navds-button--primary:hover,
 .navds-button--primary:active {
     color: #ffffff;
     background-color: #0056b4;
     border-color: transparent;
+}
+.navds-button--primary:active {
+    background-color: #005b82;
 }
 
 .navds-body-short {
@@ -76,53 +75,43 @@ button,
     -webkit-appearance: button;
 }
 
-button,
-select {
+button {
     text-transform: none;
 }
 
-button,
-input {
+button {
     overflow: visible;
 }
 
-button,
-input,
-optgroup,
-select,
-textarea {
+button {
     font-family: inherit;
     font-size: 100%;
     line-height: 1.15;
     margin: 0;
 }
-input,
-button,
-select,
-textarea {
+
+button {
     font-family: inherit;
     font-size: inherit;
     line-height: inherit;
 }
+
 button,
 [type='button'],
 [type='reset'],
 [type='submit'] {
     -webkit-appearance: button;
 }
-button,
-select {
+
+button {
     text-transform: none;
 }
-button,
-input {
+
+button {
     overflow: visible;
 }
-button,
-input,
-optgroup,
-select,
-textarea {
+
+button {
     font-family: inherit;
     font-size: 100%;
     line-height: 1.15;
@@ -155,11 +144,20 @@ button {
     background-color: -internal-light-dark(rgb(239, 239, 239), rgb(59, 59, 59));
     box-sizing: border-box;
     margin: 0em;
-    font: 400 13.3333px;
+    font: 400 13.3333px Arial;
     font-family: 'Source Sans Pro', Arial, sans-serif;
     padding: 1px 6px;
     border-width: 2px;
     border-style: outset;
     border-color: -internal-light-dark(rgb(118, 118, 118), rgb(133, 133, 133));
     border-image: initial;
+}
+
+.navds-button:disabled:disabled {
+    background-color: #a0a0a0;
+    color: #ffffff;
+    cursor: not-allowed;
+    border-width: 0;
+    box-shadow: none;
+    transform: none;
 }
