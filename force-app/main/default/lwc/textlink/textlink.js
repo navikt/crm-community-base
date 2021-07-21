@@ -17,6 +17,8 @@ export default class Textlink extends LightningElement {
     @api pathFillRule;
     @api pathClipRule;
     @api pathFill;
+    @api desktopStyle;
+    @api mobileStyle;
 
     setDefaultValue(value, valueToSet) {
         if (value === undefined) {
@@ -56,6 +58,14 @@ export default class Textlink extends LightningElement {
     }
     get pFill() {
         return this.setDefaultValue(this.pathFill, 'currentColor');
+    }
+
+    get setDefaultStyle() {
+        let style = this.desktopStyle;
+        if(window.screen.width < 576){
+            style = this.mobileStyle;
+        }
+        return this.setDefault(style, '');
     }
 
     renderedCallback() {
