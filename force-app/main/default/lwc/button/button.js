@@ -8,6 +8,8 @@ export default class Button extends LightningElement {
     @api value;
     @api buttonStyling; // Primary, Secondary, Action, Danger
     @api buttonLabel;
+    @api overrideStyle;
+    @api mobileStyle;
 
     get buttonClass() {
         let buttonStyle;
@@ -51,5 +53,12 @@ export default class Button extends LightningElement {
 
     get setDefaultType() {
         return this.setDefault(this.type, 'button');
+    }
+    get setDefaultStyle() {
+        let style = this.overrideStyle;
+        if(window.screen.width < 576){
+            style = this.mobileStyle;
+        }
+        return this.setDefault(style, '');
     }
 }
