@@ -87,7 +87,6 @@ export default class Linktile extends LightningElement {
         return this.setDefaultValue(style, '');
     }
 
-    // If flex-direction === row -> no image
     // if flex-direction === column -> hide chevron
     image = false;
     chevron = true;
