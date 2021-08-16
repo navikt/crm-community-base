@@ -65,7 +65,7 @@ export default class Textlink extends LightningElement {
         if(window.screen.width < 576){
             style = this.mobileStyle;
         }
-        return this.setDefault(style, '');
+        return this.setDefaultValue(style, '');
     }
 
     renderedCallback() {
