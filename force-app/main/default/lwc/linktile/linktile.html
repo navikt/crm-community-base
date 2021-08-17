@@ -1,7 +1,9 @@
 <template>
     <a class="navds-panel navds-link-panel navds-panel--border" href={linkAddress}>
         <div style={setDefaultStyle}>
-            <img if:true={image} src={imageUrl} alt={altImgText} width={imgWidth} height={imgHeight} />
+            <div if:true={image} class="imageClass" style={defaultImageStyle}>
+                <img src={imageUrl} alt={altImgText} width={imgWidth} height={imgHeight} />
+            </div>
             <div>
                 <span class="navds-link-panel-title navds-title navds-title--m"> {linkHeader} </span>
                 <p class={linkLabelClass}>{linkLabel}</p>

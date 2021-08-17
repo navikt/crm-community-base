@@ -15,6 +15,7 @@ export default class Linktile extends LightningElement {
     @api imageWidth;
     @api imageHeight;
     @api altImageText;
+    @api imageStyle;
 
     setDefaultValue(value, valueToSet) {
         if (value === undefined) {
@@ -54,11 +55,11 @@ export default class Linktile extends LightningElement {
     }
 
     get imgWidth() {
-        return this.setDefaultValue(this.imageWidth, '30');
+        return this.setDefaultValue(this.imageWidth, '50');
     }
 
     get imgHeight() {
-        return this.setDefaultValue(this.imageHeight, '30');
+        return this.setDefaultValue(this.imageHeight, '50');
     }
 
     get altImgText() {
@@ -78,13 +79,20 @@ export default class Linktile extends LightningElement {
         if (window.screen.width < 576) {
             style = this.mobileStyle;
         }
-        if (this.image) {
+        if (this.image && this.setFlex() === 'column') {
+            return this.setDefaultValue(style, 'padding: 1rem; gap: 2rem; align-items: center; text-align: center;');
+        }
+        if (this.image && this.setFlex() === 'row') {
             return this.setDefaultValue(
                 style,
                 'padding: 1rem; display: grid; grid-auto-flow: column; gap: 2rem; align-items: center;'
             );
         }
         return this.setDefaultValue(style, '');
+    }
+
+    get defaultImageStyle() {
+        return this.setDefaultValue(this.imageStyle, 'text-align: center;');
     }
 
     // if flex-direction === column -> hide chevron
@@ -98,5 +106,9 @@ export default class Linktile extends LightningElement {
         document.documentElement.style.setProperty('--justifyContent', this.jContent());
         this.image = this.imageUrl !== undefined;
         this.chevron = this.setFlex() === 'row';
+        if (this.chevron && this.image) {
+            document.documentElement.style.setProperty('--marginBlockStart', '1em');
+            document.documentElement.style.setProperty('--marginBlockEnd', '1em');
+        }
     }
 }

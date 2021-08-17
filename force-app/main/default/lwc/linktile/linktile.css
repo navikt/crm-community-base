@@ -52,7 +52,6 @@
 }
 
 .navds-label {
-    margin: 18px 0px;
     font-family: 'Source Sans Pro', Arial, sans-serif;
     line-height: 1.375;
     color: #262626;
@@ -66,8 +65,12 @@
 
 p {
     display: block;
-    margin-block-start: 1em;
-    margin-block-end: 1em;
+    margin-block-start: var(--marginBlockStart);
+    margin-block-end: var(--marginBlockEnd);
     margin-inline-start: 0px;
     margin-inline-end: 0px;
+}
+
+.imageClass {
+    margin-bottom: 18px;
 }
