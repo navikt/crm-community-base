@@ -13,7 +13,7 @@
                         <template for:each={contents} for:item="content">
                             <h2 key={content.subheader}>{content.subheader}</h2>
                             <p key={content.content} if:false={setContentAsPrimitive}>
-                                <c-hot_record-details record={content.content}></c-hot_record-details>
+                                <c-record-details record={content.content}></c-record-details>
                             </p>
                             <p key={content.content} if:true={setContentAsPrimitive}>{content.content}</p>
                         </template>
