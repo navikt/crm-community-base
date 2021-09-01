@@ -55,6 +55,10 @@ export default class Linktile extends LightningElement {
         return this.setDefaultValue(this.justifyContent, 'space-between');
     }
 
+    get linkId() {
+        return this.setDefaultValue(this.id, 'link');
+    }
+
     get imgWidth() {
         return this.setDefaultValue(this.imageWidth, '50');
     }
