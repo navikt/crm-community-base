@@ -1,6 +1,7 @@
 import { LightningElement, api } from 'lwc';
 
 export default class Linktile extends LightningElement {
+    @api id;
     @api linkLabel;
     @api linkHeader;
     @api linkAddress;
