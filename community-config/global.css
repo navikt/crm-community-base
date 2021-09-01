@@ -1,5 +1,4 @@
-﻿
-/* Override slds styles on standard html*/
+﻿/* Override slds styles on standard html*/
 
 
 a {
@@ -141,7 +140,7 @@ span.slds-radio {
     lightning-button {
         width: 100%;
     }
-    .slds-button {
+    .slds-button_brand {
         width: 100%;
     }
 }
@@ -609,4 +608,21 @@ lightning-radio-group.nav-radio-button-group {
 
 .nav-radio-button-group .slds-form-element__control .slds-radio:first-child {
     margin-left: 0;
+}
+@media (max-width: 576px) {
+    .postnummer label {
+        left: -1000px;
+        visibility: hidden;
+        position: absolute;
+    }
+    .postnummer label:after {
+        visibility: visible;
+        position: absolute;
+        top: -23px;
+        left: 1000px;
+        content: 'Postnr';
+    }
+    .postnummer {
+        top: 29px;
+    }
 }
