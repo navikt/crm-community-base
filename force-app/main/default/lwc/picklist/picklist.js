@@ -2,6 +2,7 @@ import { LightningElement, api } from 'lwc';
 
 export default class Picklist extends LightningElement {
     @api masterLabel;
+    @api id;
     @api choices = [];
     @api disabled;
     @api multiple;
@@ -22,6 +23,10 @@ export default class Picklist extends LightningElement {
             return valueToSet;
         }
         return value;
+    }
+
+    get setDefaultId() {
+        return this.setDefaultValue(this.id, 'picklist');
     }
 
     get setDefaultStyle() {
