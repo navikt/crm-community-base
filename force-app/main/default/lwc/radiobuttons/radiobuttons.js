@@ -1,6 +1,7 @@
 import { api, LightningElement } from 'lwc';
 
 export default class Radiobuttons extends LightningElement {
+    // TODO: Show error on bottom when flexDirection === 'row'
     @api radiobuttons = [];
     @api header;
     @api groupName;
@@ -23,9 +24,11 @@ export default class Radiobuttons extends LightningElement {
     }
 
     bottomErrorText = false;
+    bottomErrorTextWhenRow = false;
     error = false;
     updateShowErrorTextValue() {
         this.bottomErrorText = false;
+        this.bottomErrorTextWhenRow = false;
         let checked = false;
         // Check for checked values and error
         for (let i = 0; i < this.radiobuttons.length; i++) {
@@ -49,7 +52,12 @@ export default class Radiobuttons extends LightningElement {
         let inputComponent = this.template.querySelectorAll('input')[i];
         //inputComponent.setCustomValidity(this.errorText);
         inputComponent.focus();
-        this.bottomErrorText = true;
+        if (this.setFlex() !== 'row') {
+            this.bottomErrorText = true;
+        }
+        if (this.setFlex() === 'row') {
+            this.bottomErrorTextWhenRow = true;
+        }
     }
 
     // True if err
@@ -62,6 +70,10 @@ export default class Radiobuttons extends LightningElement {
         document.documentElement.style.setProperty('--error-size', this.defaultErrorSize());
         document.documentElement.style.setProperty('--flex', this.setFlex());
         document.documentElement.style.setProperty('--gap', this.setFlex() === 'column' ? '' : '24px');
+        document.documentElement.style.setProperty(
+            '--alignItems',
+            this.setFlex() === 'column' ? 'flex-start' : 'center'
+        );
     }
 
     defaultLabelSize() {
@@ -73,7 +85,7 @@ export default class Radiobuttons extends LightningElement {
     }
 
     setFlex() {
-        let flex = this.setDefaultValue(this.flexDirection, 'row').toLowerCase();
+        let flex = this.setDefaultValue(this.flexDirection, 'column').toLowerCase();
         if (flex !== 'row' && flex !== 'column') {
             return 'column';
         }
