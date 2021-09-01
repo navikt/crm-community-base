@@ -1,13 +1,11 @@
 import { api, LightningElement } from 'lwc';
 
 export default class Radiobuttons extends LightningElement {
-    // TODO: Show error on bottom when flexDirection === 'row'
     @api radiobuttons = [];
     @api header;
     @api groupName;
     @api flexDirection;
     @api errorText;
-    @api disabled;
     @api labelSize;
     @api errorSize;
     @api desktopStyle;
