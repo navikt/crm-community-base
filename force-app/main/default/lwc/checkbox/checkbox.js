@@ -2,6 +2,7 @@ import { api, LightningElement } from 'lwc';
 
 export default class Checkbox extends LightningElement {
     @api label;
+    @api id;
     @api errorText;
     @api defaultValue;
     @api disabled;
@@ -54,6 +55,10 @@ export default class Checkbox extends LightningElement {
             document.documentElement.style.setProperty('--box-shadow', '0 0 0 0');
             document.documentElement.style.setProperty('--border-color', '#a0a0a0');
         }
+    }
+
+    get setId() {
+        return this.setDefaultValue(this.id, 'checkbox1');
     }
 
     setDefaultValue(value, valueToSet) {
