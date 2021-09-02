@@ -1,7 +1,6 @@
 import { LightningElement, api } from 'lwc';
 
 export default class Linktile extends LightningElement {
-    @api id;
     @api linkLabel;
     @api linkHeader;
     @api linkAddress;
@@ -9,12 +8,13 @@ export default class Linktile extends LightningElement {
     @api maximumHeight;
     @api borderOpacity; //"solid" or no argument for normal bordered tile and "solid transparent" for no border tile
     @api flexDirection;
+    @api backgroundColor;
     @api justifyContent;
     @api desktopStyle;
     @api mobileStyle;
     @api imageUrl;
-    @api imageWidth;
-    @api imageHeight;
+    @api imageMaxWidth;
+    @api imageMaxHeight;
     @api altImageText;
     @api imageStyle;
 
@@ -55,16 +55,16 @@ export default class Linktile extends LightningElement {
         return this.setDefaultValue(this.justifyContent, 'space-between');
     }
 
-    get linkId() {
-        return this.setDefaultValue(this.id, 'link');
+    setBackgroundColor() {
+        return this.setDefaultValue(this.backgroundColor, '');
     }
 
-    get imgWidth() {
-        return this.setDefaultValue(this.imageWidth, '50');
+    imgMaxWidth() {
+        return this.setDefaultValue(this.imageMaxWidth, '50%');
     }
 
-    get imgHeight() {
-        return this.setDefaultValue(this.imageHeight, '50');
+    imgMaxHeight() {
+        return this.setDefaultValue(this.imageMaxHeight, '100%');
     }
 
     get altImgText() {
@@ -85,7 +85,7 @@ export default class Linktile extends LightningElement {
             style = this.mobileStyle;
         }
         if (this.image && this.setFlex() === 'column') {
-            return this.setDefaultValue(style, 'padding: 1rem; gap: 2rem; align-items: center; text-align: center;');
+            return this.setDefaultValue(style, 'text-align: center;');
         }
         if (this.image && this.setFlex() === 'row') {
             return this.setDefaultValue(
@@ -97,10 +97,9 @@ export default class Linktile extends LightningElement {
     }
 
     get defaultImageStyle() {
-        return this.setDefaultValue(this.imageStyle, 'text-align: center;');
+        return this.setDefaultValue(this.imageStyle, 'text-align: center');
     }
 
-    // if flex-direction === column -> hide chevron
     image = false;
     chevron = true;
     renderedCallback() {
@@ -110,10 +109,24 @@ export default class Linktile extends LightningElement {
         document.documentElement.style.setProperty('--flex', this.setFlex());
         document.documentElement.style.setProperty('--justifyContent', this.jContent());
         this.image = this.imageUrl !== undefined;
-        this.chevron = this.setFlex() === 'row';
+        this.chevron = this.setFlex() === 'row'; // if flex-direction === column -> hide chevron
+
+        // Row
         if (this.chevron && this.image) {
-            document.documentElement.style.setProperty('--marginBlockStart', '1em');
-            document.documentElement.style.setProperty('--marginBlockEnd', '1em');
+            document.documentElement.style.setProperty('--marginBlockStart', '1rem');
+            document.documentElement.style.setProperty('--marginBlockEnd', '1rem');
+            document.documentElement.style.setProperty('--navdsPanelPadding', '1rem');
+            document.documentElement.style.setProperty('--backgroundColor', this.setBackgroundColor());
+            document.documentElement.style.setProperty('--imgHeight', this.imgMaxHeight());
+            document.documentElement.style.setProperty('--imgWidth', this.imgMaxWidth());
+        }
+        // Column
+        if (!this.chevron && this.image) {
+            document.documentElement.style.setProperty('--textMargin', '1rem');
+            document.documentElement.style.setProperty('--backgroundColor', this.setBackgroundColor());
+            document.documentElement.style.setProperty('--imgHeight', this.imgMaxHeight());
+            document.documentElement.style.setProperty('--imgWidth', this.imgMaxWidth());
+            document.documentElement.style.setProperty('--imgMargin', '1em 0 0 0');
         }
     }
 }
