@@ -4,6 +4,7 @@ export default class Linktile extends LightningElement {
     @api linkLabel;
     @api linkHeader;
     @api linkAddress;
+    @api id;
     @api maximumWidth;
     @api maximumHeight;
     @api borderOpacity; //"solid" or no argument for normal bordered tile and "solid transparent" for no border tile
@@ -65,6 +66,10 @@ export default class Linktile extends LightningElement {
 
     imgMaxHeight() {
         return this.setDefaultValue(this.imageMaxHeight, '100%');
+    }
+
+    get linkId() {
+        return this.setDefaultValue(this.id, 'link');
     }
 
     get altImgText() {
