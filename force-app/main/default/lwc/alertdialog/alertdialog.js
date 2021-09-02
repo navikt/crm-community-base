@@ -1,5 +1,5 @@
 import { LightningElement, api } from 'lwc';
-export default class Confirmdialog extends LightningElement {
+export default class Alertdialog extends LightningElement {
     @api header;
     @api content;
     @api maxWidth;
@@ -52,7 +52,7 @@ export default class Confirmdialog extends LightningElement {
     }
 
     setCenterButtons() {
-        if (this.centerButtons) {
+        if (this.centerButtons === 'true') {
             return 'auto';
         }
         return 0;
