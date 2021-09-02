@@ -51,11 +51,11 @@ export default class Button extends LightningElement {
     }
 
     get setDefaultAutofocus() {
-        return this.setDefault(this.autofocus, false);
+        return this.autofocus === 'true' ? true : false;
     }
 
     get setDefaultDisabled() {
-        return this.setDefault(this.disabled, false);
+        return this.disabled === 'true' ? true : false;
     }
 
     get setDefaultValue() {
