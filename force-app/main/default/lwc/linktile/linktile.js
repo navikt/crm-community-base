@@ -5,6 +5,7 @@ export default class Linktile extends LightningElement {
     @api linkHeader;
     @api linkAddress;
     @api id;
+    @api chevron;
     @api maximumWidth;
     @api maximumHeight;
     @api borderOpacity; //"solid" or no argument for normal bordered tile and "solid transparent" for no border tile
@@ -68,8 +69,8 @@ export default class Linktile extends LightningElement {
         return this.setDefaultValue(this.imageMaxHeight, '100%');
     }
 
-    get linkId() {
-        return this.setDefaultValue(this.id, 'link');
+    get defaultId() {
+        return this.setDefaultValue(this.id, 'linkid');
     }
 
     get altImgText() {
@@ -104,9 +105,17 @@ export default class Linktile extends LightningElement {
     get defaultImageStyle() {
         return this.setDefaultValue(this.imageStyle, 'text-align: center');
     }
+    chevronValue = false;
+    setChevron() {
+        if (this.chevron !== undefined) {
+            this.chevronValue = this.chevron === 'true' ? true : false;
+        } else {
+            let rowOrColumn = this.setFlex() === 'row';
+            this.chevronValue = rowOrColumn ? true : false;
+        }
+    }
 
     image = false;
-    chevron = true;
     renderedCallback() {
         document.documentElement.style.setProperty('--maxWidth', this.maxWidth());
         document.documentElement.style.setProperty('--maxHeight', this.maxHeight());
@@ -114,10 +123,10 @@ export default class Linktile extends LightningElement {
         document.documentElement.style.setProperty('--flex', this.setFlex());
         document.documentElement.style.setProperty('--justifyContent', this.jContent());
         this.image = this.imageUrl !== undefined;
-        this.chevron = this.setFlex() === 'row'; // if flex-direction === column -> hide chevron
-
+        this.rowOrColumn = this.setFlex() === 'row'; // True if row, false if column
+        this.setChevron();
         // Row
-        if (this.chevron && this.image) {
+        if (this.rowOrColumn && this.image) {
             document.documentElement.style.setProperty('--marginBlockStart', '1rem');
             document.documentElement.style.setProperty('--marginBlockEnd', '1rem');
             document.documentElement.style.setProperty('--navdsPanelPadding', '1rem');
@@ -126,7 +135,7 @@ export default class Linktile extends LightningElement {
             document.documentElement.style.setProperty('--imgWidth', this.imgMaxWidth());
         }
         // Column
-        if (!this.chevron && this.image) {
+        if (!this.rowOrColumn && this.image) {
             document.documentElement.style.setProperty('--textMargin', '1rem');
             document.documentElement.style.setProperty('--backgroundColor', this.setBackgroundColor());
             document.documentElement.style.setProperty('--imgHeight', this.imgMaxHeight());

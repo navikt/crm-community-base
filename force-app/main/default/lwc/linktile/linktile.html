@@ -1,8 +1,8 @@
 <template>
-    <a class="navds-panel navds-link-panel navds-panel--border" href={linkAddress} id={linkId}>
+    <a class="navds-panel navds-link-panel navds-panel--border" href={linkAddress} id={defaultId}>
         <div style={setDefaultStyle}>
             <div if:true={image} class="imageClass" style={defaultImageStyle}>
-                <img src={imageUrl} alt={altImgText}/>
+                <img src={imageUrl} alt={altImgText} />
             </div>
             <div class="textClass">
                 <span class="navds-link-panel-title navds-title navds-title--m"> {linkHeader} </span>
@@ -10,7 +10,7 @@
             </div>
         </div>
         <svg
-            if:true={chevron}
+            if:true={chevronValue}
             width="1em"
             height="1em"
             viewBox="0 0 24 24"
