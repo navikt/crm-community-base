@@ -1,4 +1,5 @@
 import { api, LightningElement } from 'lwc';
+import { setDefaultValue, convertStringToBoolean} from 'c/componentHelperClass';
 
 export default class Checkbox extends LightningElement {
     @api label;
@@ -20,14 +21,14 @@ export default class Checkbox extends LightningElement {
     showErrorText = false;
     count = 0; // First render
     renderedCallback() {
-        if (this.defaultValue && this.count < 1) {
+        if (convertStringToBoolean(this.defaultValue) && this.count < 1) {
             this.checked = true;
             this.template.querySelector('input').checked = true;
             this.updateShowErrorTextValue();
             this.count++;
         }
 
-        if (this.disabled) {
+        if (convertStringToBoolean(this.disabled)) {
             this.template.querySelector('input').disabled = true;
         }
         document.documentElement.style.setProperty('--label-size', this.defaultLabelSize());
@@ -35,11 +36,11 @@ export default class Checkbox extends LightningElement {
     }
 
     defaultLabelSize() {
-        return this.setDefaultValue(this.labelSize, '1.125rem');
+        return setDefaultValue(this.labelSize, '1.125rem');
     }
 
     defaultErrorSize() {
-        return this.setDefaultValue(this.errorSize, '1.125rem');
+        return setDefaultValue(this.errorSize, '1.125rem');
     }
 
     connectedCallback() {
@@ -58,13 +59,6 @@ export default class Checkbox extends LightningElement {
     }
 
     get setId() {
-        return this.setDefaultValue(this.id, 'checkbox1');
-    }
-
-    setDefaultValue(value, valueToSet) {
-        if (value === undefined) {
-            return valueToSet;
-        }
-        return value;
+        return setDefaultValue(this.id, 'checkbox1');
     }
 }
