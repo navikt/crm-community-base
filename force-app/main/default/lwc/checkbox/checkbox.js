@@ -1,10 +1,9 @@
 import { api, LightningElement } from 'lwc';
-import { setDefaultValue, convertStringToBoolean} from 'c/componentHelperClass';
-
+import { setDefaultValue, convertStringToBoolean } from 'c/componentHelperClass';
 export default class Checkbox extends LightningElement {
     @api label;
-    @api id;
     @api errorText;
+    @api id;
     @api defaultValue;
     @api disabled;
     @api labelSize;
@@ -19,20 +18,24 @@ export default class Checkbox extends LightningElement {
     }
 
     showErrorText = false;
-    count = 0; // First render
+    defaultVal = false;
     renderedCallback() {
-        if (convertStringToBoolean(this.defaultValue) && this.count < 1) {
+        if (this.defaultVal) {
             this.checked = true;
             this.template.querySelector('input').checked = true;
-            this.updateShowErrorTextValue();
-            this.count++;
+            this.defaultVal = false;
         }
 
-        if (convertStringToBoolean(this.disabled)) {
+        if (this.disabled) {
             this.template.querySelector('input').disabled = true;
         }
         document.documentElement.style.setProperty('--label-size', this.defaultLabelSize());
         document.documentElement.style.setProperty('--error-size', this.defaultErrorSize());
+        this.updateShowErrorTextValue();
+    }
+
+    connectedCallback() {
+        this.defaultVal = convertStringToBoolean(this.defaultValue);
     }
 
     defaultLabelSize() {
@@ -43,8 +46,8 @@ export default class Checkbox extends LightningElement {
         return setDefaultValue(this.errorSize, '1.125rem');
     }
 
-    connectedCallback() {
-        this.updateShowErrorTextValue();
+    get setId() {
+        return setDefaultValue(this.id, 'checkbox1');
     }
 
     updateShowErrorTextValue() {
@@ -56,9 +59,5 @@ export default class Checkbox extends LightningElement {
             document.documentElement.style.setProperty('--box-shadow', '0 0 0 0');
             document.documentElement.style.setProperty('--border-color', '#a0a0a0');
         }
-    }
-
-    get setId() {
-        return setDefaultValue(this.id, 'checkbox1');
     }
 }
