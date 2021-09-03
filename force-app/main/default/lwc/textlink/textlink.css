@@ -1,0 +1,23 @@
+.navds-link {
+    color: #0067c5;
+    text-decoration: underline;
+    display: inline-grid;
+    grid-auto-flow: column;
+    align-items: center;
+    gap: 0.25rem;
+    font-family: 'Source Sans Pro', Arial, sans-serif;
+    line-height: 1.375;
+    font-size: var(--fontSize);
+}
+.navds-link:hover {
+    text-decoration: none;
+}
+
+.navds-link:active,
+.navds-link:focus {
+    outline: none;
+    color: #ffffff;
+    text-decoration: none;
+    background-color: #00347d;
+    box-shadow: 0 0 0 2px #00347d;
+}

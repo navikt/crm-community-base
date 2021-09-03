@@ -1,0 +1,24 @@
+<template>
+    <a href={address} target={target} class="navds-link" id={linkId} name={linkName} style={setDefaultStyle}>
+        <svg
+            if:true={iconBefore}
+            width={width}
+            height={height}
+            viewBox={viewbox}
+            fill={sFill}
+            xmlns="http://www.w3.org/2000/svg"
+        >
+            <path fill-rule={fillRule} clip-rule={clipRule} d={shape} fill={pFill}></path>
+        </svg>
+        <span>{label}</span>
+        <svg
+            if:true={iconAfter}
+            width={width}
+            height={height}
+            viewBox={viewbox}
+            fill={sFill}
+            xmlns="http://www.w3.org/2000/svg"
+        >
+            <path fill-rule={fillRule} clip-rule={clipRule} d={shape} fill={pFill}></path></svg
+    ></a>
+</template>
