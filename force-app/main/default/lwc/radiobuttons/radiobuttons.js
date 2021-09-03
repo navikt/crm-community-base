@@ -1,4 +1,5 @@
 import { api, LightningElement } from 'lwc';
+import { setDefaultValue } from 'c/componentHelperClass';
 
 export default class Radiobuttons extends LightningElement {
     @api radiobuttons = [];
@@ -75,33 +76,26 @@ export default class Radiobuttons extends LightningElement {
     }
 
     defaultLabelSize() {
-        return this.setDefaultValue(this.labelSize, '1.125rem');
+        return setDefaultValue(this.labelSize, '1.125rem');
     }
 
     defaultErrorSize() {
-        return this.setDefaultValue(this.errorSize, '1rem');
+        return setDefaultValue(this.errorSize, '1rem');
     }
 
     setFlex() {
-        let flex = this.setDefaultValue(this.flexDirection, 'column').toLowerCase();
+        let flex = setDefaultValue(this.flexDirection, 'column').toLowerCase();
         if (flex !== 'row' && flex !== 'column') {
             return 'column';
         }
         return flex;
     }
-
-    setDefaultValue(value, valueToSet) {
-        if (value === undefined) {
-            return valueToSet;
-        }
-        return value;
-    }
-
+    
     get setDefaultStyle() {
         let style = this.desktopStyle;
         if (window.screen.width < 576) {
             style = this.mobileStyle;
         }
-        return this.setDefaultValue(style, '');
+        return setDefaultValue(style, '');
     }
 }
