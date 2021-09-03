@@ -1,5 +1,5 @@
 import { LightningElement, api } from 'lwc';
-
+import { setDefaultValue } from 'c/componentHelperClass';
 export default class Picklist extends LightningElement {
     @api masterLabel;
     @api id;
@@ -18,15 +18,8 @@ export default class Picklist extends LightningElement {
         this.dispatchEvent(eventToSend);
     }
 
-    setDefaultValue(value, valueToSet) {
-        if (value === undefined) {
-            return valueToSet;
-        }
-        return value;
-    }
-
     get setDefaultId() {
-        return this.setDefaultValue(this.id, 'picklist');
+        return setDefaultValue(this.id, 'picklist');
     }
 
     get setDefaultStyle() {
@@ -34,6 +27,6 @@ export default class Picklist extends LightningElement {
         if (window.screen.width < 576) {
             style = this.mobileStyle;
         }
-        return this.setDefaultValue(style, '');
+        return setDefaultValue(style, '');
     }
 }
