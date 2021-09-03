@@ -1,4 +1,5 @@
 import { LightningElement, api } from 'lwc';
+import { setDefaultValue } from 'c/componentHelperClass';
 
 export default class DetailModal extends LightningElement {
     @api header;
@@ -24,34 +25,27 @@ export default class DetailModal extends LightningElement {
         if (window.screen.width < 576) {
             style = this.mobileStyle;
         }
-        return this.setDefaultValue(style, '');
+        return setDefaultValue(style, '');
     }
 
     get setContentAsPrimitive() {
-        return this.setDefaultValue(this.contentAsPrimitive, false);
+        return setDefaultValue(this.contentAsPrimitive, false);
     }
 
     defaultMaxWidth() {
-        return this.setDefaultValue(this.maxWidth, '100%');
+        return setDefaultValue(this.maxWidth, '100%');
     }
 
     defaultMaxHeight() {
-        return this.setDefaultValue(this.maxHeight, '100%');
+        return setDefaultValue(this.maxHeight, '100%');
     }
 
     defaultMarginLeft() {
-        return this.setDefaultValue(this.marginLeft, 0);
+        return setDefaultValue(this.marginLeft, 0);
     }
 
     defaultMarginRight() {
-        return this.setDefaultValue(this.marginRight, 0);
-    }
-
-    setDefaultValue(value, valueToSet) {
-        if (value === undefined) {
-            return valueToSet;
-        }
-        return value;
+        return setDefaultValue(this.marginRight, 0);
     }
 
     renderedCallback() {
