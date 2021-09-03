@@ -1,4 +1,5 @@
 import { LightningElement, api } from 'lwc';
+import { setDefaultValue, convertStringToBoolean } from 'c/componentHelperClass';
 
 export default class Linktile extends LightningElement {
     @api linkLabel;
@@ -20,15 +21,8 @@ export default class Linktile extends LightningElement {
     @api altImageText;
     @api imageStyle;
 
-    setDefaultValue(value, valueToSet) {
-        if (value === undefined) {
-            return valueToSet;
-        }
-        return value;
-    }
-
     setFlex() {
-        let flex = this.setDefaultValue(this.flexDirection, 'row').toLowerCase();
+        let flex = setDefaultValue(this.flexDirection, 'row').toLowerCase();
         if (flex !== 'row' && flex !== 'column') {
             return 'row';
         }
@@ -36,7 +30,7 @@ export default class Linktile extends LightningElement {
     }
 
     setBorderOpacity() {
-        let borderOpacityToSet = this.setDefaultValue(this.borderOpacity, 'solid').toLowerCase();
+        let borderOpacityToSet = setDefaultValue(this.borderOpacity, 'solid').toLowerCase();
         if (borderOpacityToSet !== 'solid' && borderOpacityToSet !== 'solid transparent') {
             return 'solid';
         }
@@ -45,36 +39,36 @@ export default class Linktile extends LightningElement {
 
     maxWidth() {
         return this.flexDirection === 'column'
-            ? this.setDefaultValue(this.maximumWidth, 'fit-content')
-            : this.setDefaultValue(this.maximumWidth, 'none');
+            ? setDefaultValue(this.maximumWidth, 'fit-content')
+            : setDefaultValue(this.maximumWidth, 'none');
     }
 
     maxHeight() {
-        return this.setDefaultValue(this.maximumHeight, 'fit-content');
+        return setDefaultValue(this.maximumHeight, 'fit-content');
     }
 
     jContent() {
-        return this.setDefaultValue(this.justifyContent, 'space-between');
+        return setDefaultValue(this.justifyContent, 'space-between');
     }
 
     setBackgroundColor() {
-        return this.setDefaultValue(this.backgroundColor, '');
+        return setDefaultValue(this.backgroundColor, '');
     }
 
     imgMaxWidth() {
-        return this.setDefaultValue(this.imageMaxWidth, '50%');
+        return setDefaultValue(this.imageMaxWidth, '50%');
     }
 
     imgMaxHeight() {
-        return this.setDefaultValue(this.imageMaxHeight, '100%');
+        return setDefaultValue(this.imageMaxHeight, '100%');
     }
 
     get defaultId() {
-        return this.setDefaultValue(this.id, 'linkid');
+        return setDefaultValue(this.id, 'linkid');
     }
 
     get altImgText() {
-        return this.setDefaultValue(this.altImageText, 'image');
+        return setDefaultValue(this.altImageText, 'image');
     }
 
     // If linkHeader === undefined -> set linkLabel to linkHeader class
@@ -91,24 +85,24 @@ export default class Linktile extends LightningElement {
             style = this.mobileStyle;
         }
         if (this.image && this.setFlex() === 'column') {
-            return this.setDefaultValue(style, 'text-align: center;');
+            return setDefaultValue(style, 'text-align: center;');
         }
         if (this.image && this.setFlex() === 'row') {
-            return this.setDefaultValue(
+            return setDefaultValue(
                 style,
                 'padding: 1rem; display: grid; grid-auto-flow: column; gap: 2rem; align-items: center;'
             );
         }
-        return this.setDefaultValue(style, '');
+        return setDefaultValue(style, '');
     }
 
     get defaultImageStyle() {
-        return this.setDefaultValue(this.imageStyle, 'text-align: center');
+        return setDefaultValue(this.imageStyle, 'text-align: center');
     }
     chevronValue = false;
     setChevron() {
         if (this.chevron !== undefined) {
-            this.chevronValue = this.chevron === 'true' ? true : false;
+            this.chevronValue = convertStringToBoolean(this.chevron);
         } else {
             let rowOrColumn = this.setFlex() === 'row';
             this.chevronValue = rowOrColumn ? true : false;
