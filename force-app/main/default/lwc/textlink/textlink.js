@@ -1,4 +1,5 @@
 import { LightningElement, api } from 'lwc';
+import { setDefaultValue } from 'c/componentHelperClass';
 
 export default class Textlink extends LightningElement {
     @api label;
@@ -20,44 +21,37 @@ export default class Textlink extends LightningElement {
     @api desktopStyle;
     @api mobileStyle;
 
-    setDefaultValue(value, valueToSet) {
-        if (value === undefined) {
-            return valueToSet;
-        }
-        return value;
-    }
-
     get linkId() {
-        return this.setDefaultValue(this.id, 'link');
+        return setDefaultValue(this.id, 'link');
     }
 
     get linkName() {
-        return this.setDefaultValue(this.name, 'name');
+        return setDefaultValue(this.name, 'name');
     }
 
     get width() {
-        return this.setDefaultValue(this.svgWidth, '1em');
+        return setDefaultValue(this.svgWidth, '1em');
     }
     get height() {
-        return this.setDefaultValue(this.svgHeight, '1em');
+        return setDefaultValue(this.svgHeight, '1em');
     }
     get viewbox() {
-        return this.setDefaultValue(this.svgViewbox, '0 0 24 24');
+        return setDefaultValue(this.svgViewbox, '0 0 24 24');
     }
     get sFill() {
-        return this.setDefaultValue(this.svgFill, 'none');
+        return setDefaultValue(this.svgFill, 'none');
     }
     get shape() {
-        return this.setDefaultValue(this.pathShape, 'M11 13v8h2v-8h8v-2h-8V3h-2v8H3v2h8z');
+        return setDefaultValue(this.pathShape, 'M11 13v8h2v-8h8v-2h-8V3h-2v8H3v2h8z');
     }
     get fillRule() {
-        return this.setDefaultValue(this.pathFillRule, 'evenodd');
+        return setDefaultValue(this.pathFillRule, 'evenodd');
     }
     get clipRule() {
-        return this.setDefaultValue(this.pathClipRule, 'evenodd');
+        return setDefaultValue(this.pathClipRule, 'evenodd');
     }
     get pFill() {
-        return this.setDefaultValue(this.pathFill, 'currentColor');
+        return setDefaultValue(this.pathFill, 'currentColor');
     }
 
     get setDefaultStyle() {
@@ -65,7 +59,7 @@ export default class Textlink extends LightningElement {
         if(window.screen.width < 576){
             style = this.mobileStyle;
         }
-        return this.setDefaultValue(style, '');
+        return setDefaultValue(style, '');
     }
 
     renderedCallback() {
