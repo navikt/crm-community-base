@@ -1,4 +1,5 @@
 import { LightningElement, api } from 'lwc';
+import { setDefaultValue, convertStringToBoolean} from 'c/componentHelperClass';
 
 // https://navikt.github.io/Designsystemet/?path=/story/ds-react-button--all
 export default class Button extends LightningElement {
@@ -35,35 +36,28 @@ export default class Button extends LightningElement {
         this.dispatchEvent(eventToSend);
     }
 
-    setDefault(value, valueToSet) {
-        if (value === undefined) {
-            value = valueToSet;
-        }
-        return value;
-    }
-
     get setDefaultId() {
-        return this.setDefault(this.id, 'button');
+        return setDefaultValue(this.id, 'button');
     }
 
     get setDefaultName() {
-        return this.setDefault(this.name, 'button');
+        return setDefaultValue(this.name, 'button');
     }
 
     get setDefaultAutofocus() {
-        return this.setDefault(this.autofocus, false);
+        return convertStringToBoolean(this.autofocus);
     }
 
     get setDefaultDisabled() {
-        return this.setDefault(this.disabled, false);
+        return convertStringToBoolean(this.disabled);
     }
 
     get setDefaultValue() {
-        return this.setDefault(this.value, 'defaultValue');
+        return setDefaultValue(this.value, 'defaultValue');
     }
 
     get setDefaultType() {
-        return this.setDefault(this.type, 'button');
+        return setDefaultValue(this.type, 'button');
     }
 
     get setDefaultStyle() {
@@ -71,6 +65,6 @@ export default class Button extends LightningElement {
         if (window.screen.width < 576) {
             style = this.mobileStyle;
         }
-        return this.setDefault(style, '');
+        return setDefaultValue(style, '');
     }
 }
