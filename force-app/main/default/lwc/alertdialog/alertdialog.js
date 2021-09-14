@@ -27,6 +27,7 @@ export default class Alertdialog extends LightningElement {
 
     @api showModal() {
         this.template.querySelector('.ReactModal__Overlay').classList.remove('hidden');
+        this.template.querySelector('[data-id="alertdialog modal"]').focus();
     }
 
     get defaultConfirmButtonLabel() {
