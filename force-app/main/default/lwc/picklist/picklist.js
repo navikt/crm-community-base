@@ -13,7 +13,11 @@ export default class Picklist extends LightningElement {
 
     @api choiceValue;
     handleChoiceMade(event) {
-        this.choiceValue = event.target.value;
+        for(let choice of this.choices){
+            if(choice.name === event.target.value){
+                this.choiceValue = choice;
+            }
+        }
         const eventToSend = new CustomEvent('picklistvaluechange', { detail: this.choiceValue });
         this.dispatchEvent(eventToSend);
     }
