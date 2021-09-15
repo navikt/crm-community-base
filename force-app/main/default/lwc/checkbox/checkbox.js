@@ -17,6 +17,20 @@ export default class Checkbox extends LightningElement {
         this.dispatchEvent(eventToSend);
     }
 
+    @api
+    validationHandler(errorMessage) {
+        let inputEle = this.template.querySelector('input');
+        inputEle.setCustomValidity(errorMessage);
+        inputEle.reportValidity();
+        if (errorMessage !== '') {
+            inputEle.focus();
+        }
+    }
+
+    @api focusCheckbox() {
+        this.template.querySelector('[data-id="checkbox dataid"]').focus();
+    }
+
     showErrorText = false;
     defaultVal = false;
     renderedCallback() {
