@@ -1,0 +1,40 @@
+<template>
+    <div class="ReactModalPortal">
+        <div class="ReactModal__Overlay ReactModal__Overlay--after-open navds-modal__overlay hidden">
+            <div
+                class="ReactModal__Content ReactModal__Content--after-open navds-modal"
+                tabindex="-1"
+                role="dialog"
+                aria-modal="true"
+                aria-hidden="false"
+                data-id="alertdialog modal"
+            >
+                <div style={setDefaultStyle}>
+                    <section>
+                        <h1>{header}</h1>
+                        <p>{content}</p>
+                    </section>
+                </div>
+                <div class="buttons">
+                    <span>
+                        <c-button
+                            button-label={defaultConfirmButtonLabel}
+                            button-styling="action"
+                            value="confirm"
+                            onbuttonclick={handleButtonClick}
+                        ></c-button>
+                    </span>
+
+                    <span class="spanButtonPadding" if:false={defaultNoCancelButton}>
+                        <c-button
+                            button-label={defaultCancelButtonLabel}
+                            button-styling="primary"
+                            value="cancel"
+                            onbuttonclick={handleButtonClick}
+                        ></c-button>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
