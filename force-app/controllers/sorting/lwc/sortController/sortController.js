@@ -5,11 +5,15 @@ export function getMobileSortingOptions(columns) {
         if (column.sortable) {
             mobileColumns.push({
                 label: column.label + (column.type == 'text' ? ' A - Å' : ' stigende'),
-                value: '{"fieldName": ' + JSON.stringify(column.fieldName) + ', "sortDirection": "asc"} '
+                name: column.fieldName + ' asc',
+                fieldName: column.fieldName,
+                sortDirection: "asc"
             });
             mobileColumns.push({
                 label: column.label + (column.type == 'text' ? ' Å - A' : ' synkende'),
-                value: '{"fieldName": ' + JSON.stringify(column.fieldName) + ', "sortDirection": "desc"} '
+                name: column.fieldName + ' desc',
+                fieldName: column.fieldName,
+                sortDirection: "desc"
             });
         }
     }
