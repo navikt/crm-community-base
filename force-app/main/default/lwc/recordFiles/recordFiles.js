@@ -2,13 +2,17 @@ import { LightningElement, api, wire } from 'lwc';
 import getContentDocuments from '@salesforce/apex/RecordFilesController.getContentDocuments';
 import getBaseDownloadUrl from '@salesforce/apex/RecordFilesController.getBaseDownloadUrl';
 import { setDefaultValue } from 'c/componentHelperClass';
-
-export default class recordFiles extends LightningElement {
+export default class hot_recordFiles extends LightningElement {
     @api recordId;
     @api title;
-    @api contentDocuments = [];
-    contentDocumentsToShow = [];
-    isContentDocumentsEmpty = true;
+    @api files = [];
+    isContentDocumentsEmpty = false;
+    contentDocuments = [];
+
+    get contentDocumentsArray() {
+        this.isContentDocumentsEmpty = this.contentDocuments.length === 0 && this.recordId !== undefined ? true : false;
+        return this.recordId === undefined ? this.files : this.contentDocuments;
+    }
 
     get defaultTitle() {
         return setDefaultValue(this.title, 'Vedlegg');
@@ -18,15 +22,12 @@ export default class recordFiles extends LightningElement {
     async wiredgetContentDocuments(result) {
         if (result.data) {
             const url = await getBaseDownloadUrl();
-            this.contentDocumentsToShow = result.data.map((item) => ({
+            this.contentDocuments = result.data.map((item) => ({
                 ...item,
                 downloadLink: url + item.Id
             }));
-            this.isContentDocumentsEmpty = this.contentDocumentsToShow.length === 0 ? true : false;
-        } else {
-            // User sent content documents via argument?
-            this.contentDocumentsToShow = this.contentDocuments;
-            this.isContentDocumentsEmpty = this.contentDocuments.length === 0 ? true : false;
+            this.isContentDocumentsEmpty =
+                this.contentDocuments.length === 0 && this.recordId !== undefined ? true : false;
         }
     }
 }
