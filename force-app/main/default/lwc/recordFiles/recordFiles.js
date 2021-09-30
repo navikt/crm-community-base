@@ -1,6 +1,6 @@
 import { LightningElement, api, wire } from 'lwc';
-import getContentDocuments from '@salesforce/apex/HOT_RelatedFilesListController.getContentDocuments';
-import getBaseDownloadUrl from '@salesforce/apex/HOT_RelatedFilesListController.getBaseDownloadUrl';
+import getContentDocuments from '@salesforce/apex/RecordFilesController.getContentDocuments';
+import getBaseDownloadUrl from '@salesforce/apex/RecordFilesController.getBaseDownloadUrl';
 import { setDefaultValue } from 'c/componentHelperClass';
 
 export default class recordFiles extends LightningElement {
