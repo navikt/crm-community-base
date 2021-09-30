@@ -2,7 +2,7 @@
     <section if:false={contentDocumentsEmpty}>
         <h3 class="header">{defaultTitle}</h3>
         <ul>
-            <template iterator:it={contentDocuments}>
+            <template iterator:it={contentDocumentsToShow}>
                 <li key={it.value.Id}>
                     <a class="listelement" href={it.value.downloadLink}>{it.value.Title} </a>
                 </li>
