@@ -2,7 +2,7 @@
 public with sharing class RecordFilesControllerTest {
     @testSetup
     static void setup() {
-        public static final Id PERSON_ACCOUNT_RECORDTYPEID = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName()
+        Id PERSON_ACCOUNT_RECORDTYPEID = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName()
         .get('PersonAccount')
         .getRecordTypeId();
         Account acc = new Account(
