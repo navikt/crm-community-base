@@ -11,26 +11,36 @@ public with sharing class RecordFilesControllerTest {
             RecordTypeId = PERSON_ACCOUNT_RECORDTYPEID
         );
         insert acc;
-       
-        ContentVersion contentVersion = HOT_TestDataFactory.createContentVersion();
-        insert contentVersion;
-        List<ContentDocument> documents = [SELECT Id, Title, LatestPublishedVersionId FROM ContentDocument];
-        ContentDocumentLink contentDocumentLink = HOT_TestDataFactory.createContentDocumentLink(
-            acc.Id,
-            documents[0].Id
+
+        ContentVersion contentVersion = new ContentVersion(
+            Title = 'title',
+            PathOnClient = 'pic.jpg',
+            VersionData = Blob.valueOf('test content'),
+            IsMajorVersion = true
         );
+        insert contentVersion;
+       
+      
+        List<ContentDocument> documents = [SELECT Id, Title, LatestPublishedVersionId FROM ContentDocument];
+        ContentDocumentLink contentDocumentLink = new ContentDocumentLink();
+        contentDocumentLink.LinkedEntityId = acc.Id;
+        contentDocumentLink.ContentDocumentId = documents[0].Id;
+        contentDocumentLink.shareType = 'V';
+        contentDocumentLink.visibility = 'AllUsers';
         insert contentDocumentLink;
     }
 
     @isTest
-    static void testMethod1() {
+    static void getContentDocumentsTest() {
         Account acc = [SELECT Id FROM Account LIMIT 1];
-        List<ContentDocument> contentDocuments = HOT_RelatedFilesListController.getContentDocuments(acc.Id);
+        Test.startTest();
+        List<ContentDocument> contentDocuments = RecordFilesController.getContentDocuments(acc.Id);
+        Test.stopTest();
         System.assertEquals(1, contentDocuments.size(), 'Could not get ContentDocuments related to account');
     }
     
     @isTest
-    static void testgetBaseDownloadUrl() {
+    static void getBaseDownloadUrlTest() {
         Test.startTest();
         String url = RecordFilesController.getBaseDownloadUrl();
         Test.stopTest();
