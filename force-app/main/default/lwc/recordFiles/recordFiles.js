@@ -6,11 +6,10 @@ export default class hot_recordFiles extends LightningElement {
     @api recordId;
     @api title;
     @api files = [];
-    isContentDocumentsEmpty = false;
     contentDocuments = [];
+    isContentDocumentsEmpty = false;
 
     get contentDocumentsArray() {
-        this.isContentDocumentsEmpty = this.contentDocuments.length === 0 && this.recordId !== undefined ? true : false;
         return this.recordId === undefined ? this.files : this.contentDocuments;
     }
 
@@ -18,16 +17,19 @@ export default class hot_recordFiles extends LightningElement {
         return setDefaultValue(this.title, 'Vedlegg');
     }
 
+    renderedCallback() {
+        this.isContentDocumentsEmpty = this.contentDocuments.length === 0 && this.files.length === 0 ? true : false;
+    }
+
     @wire(getContentDocuments, { recordId: '$recordId' })
     async wiredgetContentDocuments(result) {
         if (result.data) {
-            const url = await getBaseDownloadUrl();
+            const url = await createBaseUrlLink();
             this.contentDocuments = result.data.map((item) => ({
                 ...item,
                 downloadLink: url + item.Id
             }));
-            this.isContentDocumentsEmpty =
-                this.contentDocuments.length === 0 && this.recordId !== undefined ? true : false;
+            this.isContentDocumentsEmpty = this.contentDocuments.length === 0 && this.files.length === 0 ? true : false;
         }
     }
 }
