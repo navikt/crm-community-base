@@ -2,7 +2,7 @@ import { LightningElement, api, wire } from 'lwc';
 import getContentDocuments from '@salesforce/apex/RecordFilesController.getContentDocuments';
 import getBaseDownloadUrl from '@salesforce/apex/RecordFilesController.getBaseDownloadUrl';
 import { setDefaultValue } from 'c/componentHelperClass';
-export default class hot_recordFiles extends LightningElement {
+export default class recordFiles extends LightningElement {
     @api recordId;
     @api title;
     @api files = [];
