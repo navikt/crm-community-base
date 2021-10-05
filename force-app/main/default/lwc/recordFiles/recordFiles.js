@@ -24,7 +24,7 @@ export default class recordFiles extends LightningElement {
     @wire(getContentDocuments, { recordId: '$recordId' })
     async wiredgetContentDocuments(result) {
         if (result.data) {
-            const url = await createBaseUrlLink();
+            const url = await getBaseDownloadUrl();
             this.contentDocuments = result.data.map((item) => ({
                 ...item,
                 downloadLink: url + item.Id
