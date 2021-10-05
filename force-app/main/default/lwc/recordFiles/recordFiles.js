@@ -2,7 +2,7 @@ import { LightningElement, api, wire } from 'lwc';
 import getContentDocuments from '@salesforce/apex/RecordFilesController.getContentDocuments';
 import getBaseDownloadUrl from '@salesforce/apex/RecordFilesController.getBaseDownloadUrl';
 import { setDefaultValue } from 'c/componentHelperClass';
-export default class hot_recordFiles extends LightningElement {
+export default class recordFiles extends LightningElement {
     @api recordId;
     @api title;
     @api files = [];
@@ -24,7 +24,7 @@ export default class hot_recordFiles extends LightningElement {
     @wire(getContentDocuments, { recordId: '$recordId' })
     async wiredgetContentDocuments(result) {
         if (result.data) {
-            const url = await createBaseUrlLink();
+            const url = await getBaseDownloadUrl();
             this.contentDocuments = result.data.map((item) => ({
                 ...item,
                 downloadLink: url + item.Id
