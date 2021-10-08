@@ -203,6 +203,7 @@ export default class uploadFiles extends LightningElement {
             uploadFile({ files: filesToUpload, recordId: this.recordId });
             this.uploadComplete();
             this.fileData = [];
+            this.sendFileDataLength();
         }
     }
 }
