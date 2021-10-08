@@ -1,9 +1,6 @@
 import { LightningElement, api } from 'lwc';
 import uploadFile from '@salesforce/apex/UploadFilesController.uploadFile';
 import { setDefaultValue } from 'c/componentHelperClass';
-
-
-// TODO: Add HOT_RequestListContoller.uploadFile in community base
 export default class uploadFiles extends LightningElement {
     @api recordId;
     @api mobileStyle;
