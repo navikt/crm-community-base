@@ -201,6 +201,7 @@ export default class uploadFiles extends LightningElement {
                 filesToUpload[base64] = filename;
             });
             uploadFile({ files: filesToUpload, recordId: this.recordId });
+            // Consider adding spinner/loader here and also adding then+catch and do logic below in that
             this.uploadComplete();
             this.fileData = [];
             this.sendFileDataLength();
