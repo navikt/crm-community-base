@@ -17,7 +17,11 @@ public with sharing class UploadFilesControllerTest {
         Map<String, String> files = new Map<String, String>();
         files.put('base64test', 'filename');
 
+        Account acc = [SELECT Id FROM Account LIMIT 1];
+        Test.startTest();
         UploadFilesController.uploadFile(files, acc.Id);
+        Test.stopTest();
+        
         List<ContentDocumentLink> file = [
             SELECT ContentDocumentId
             FROM ContentDocumentLink
