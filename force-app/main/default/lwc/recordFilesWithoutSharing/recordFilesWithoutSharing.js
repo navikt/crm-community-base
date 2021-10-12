@@ -6,6 +6,7 @@ export default class recordFilesWithoutSharing extends LightningElement {
     @api recordId;
     @api title;
     @api files = [];
+    @api isGetAll;
     contentDocuments = [];
     isContentDocumentsEmpty = false;
 
@@ -21,7 +22,7 @@ export default class recordFilesWithoutSharing extends LightningElement {
         this.isContentDocumentsEmpty = this.contentDocuments.length === 0 && this.files.length === 0 ? true : false;
     }
 
-    @wire(getContentDocuments, { recordId: '$recordId' })
+    @wire(getContentDocuments, { recordId: '$recordId', isGetAll: '$isGetAll' })
     async wiredgetContentDocuments(result) {
         if (result.data) {
             const url = await getBaseDownloadUrl();

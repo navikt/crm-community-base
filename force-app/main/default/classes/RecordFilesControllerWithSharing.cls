@@ -1,4 +1,4 @@
-public with sharing class RecordFilesController {
+public with sharing class RecordFilesControllerWithSharing {
     @AuraEnabled(cacheable=true)
     public static List<ContentDocument> getContentDocuments(String recordId, Boolean isGetAll) {
         List<ContentDocumentLink> contentDocumentLinks = [

@@ -1,11 +1,12 @@
 import { LightningElement, api, wire } from 'lwc';
-import getContentDocuments from '@salesforce/apex/RecordFilesController.getContentDocuments';
-import getBaseDownloadUrl from '@salesforce/apex/RecordFilesController.getBaseDownloadUrl';
+import getContentDocuments from '@salesforce/apex/RecordFilesControllerWithSharing.getContentDocuments';
+import getBaseDownloadUrl from '@salesforce/apex/RecordFilesControllerWithSharing.getBaseDownloadUrl';
 import { setDefaultValue } from 'c/componentHelperClass';
-export default class recordFiles extends LightningElement {
+export default class recordFilesWithSharing extends LightningElement {
     @api recordId;
     @api title;
     @api files = [];
+    @api isGetAll;
     contentDocuments = [];
     isContentDocumentsEmpty = false;
 
@@ -21,7 +22,7 @@ export default class recordFiles extends LightningElement {
         this.isContentDocumentsEmpty = this.contentDocuments.length === 0 && this.files.length === 0 ? true : false;
     }
 
-    @wire(getContentDocuments, { recordId: '$recordId' })
+    @wire(getContentDocuments, { recordId: '$recordId', isGetAll: '$isGetAll' })
     async wiredgetContentDocuments(result) {
         if (result.data) {
             const url = await getBaseDownloadUrl();

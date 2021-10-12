@@ -1,5 +1,5 @@
 @isTest
-public with sharing class RecordFilesControllerTest {
+public with sharing class RecordFilesControllerWithSharingTest {
     @testSetup
     static void setup() {
         Id PERSON_ACCOUNT_RECORDTYPEID = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName()
@@ -29,7 +29,7 @@ public with sharing class RecordFilesControllerTest {
     static void getAllContentDocumentsTest() {
         Account acc = [SELECT Id FROM Account LIMIT 1];
         Test.startTest();
-        List<ContentDocument> contentDocuments = RecordFilesController.getContentDocuments(acc.Id, true);
+        List<ContentDocument> contentDocuments = RecordFilesControllerWithSharing.getContentDocuments(acc.Id, true);
         Test.stopTest();
         System.assertEquals(1, contentDocuments.size(), 'Could not get ContentDocuments related to account');
     }
@@ -69,7 +69,10 @@ public with sharing class RecordFilesControllerTest {
             insert contentDocumentLink;
 
             Test.startTest();
-            List<ContentDocument> contentDocuments = RecordFilesController.getContentDocuments(acc.Id, false);
+            List<ContentDocument> contentDocuments = RecordFilesControllerWithSharing.getContentDocuments(
+                acc.Id,
+                false
+            );
             Test.stopTest();
             System.assertEquals(1, contentDocuments.size(), 'Could not get ContentDocuments related to account');
         }
@@ -79,7 +82,7 @@ public with sharing class RecordFilesControllerTest {
     @isTest
     static void getBaseDownloadUrlTest() {
         Test.startTest();
-        String url = RecordFilesController.getBaseDownloadUrl();
+        String url = RecordFilesControllerWithSharing.getBaseDownloadUrl();
         Test.stopTest();
         System.assertNotEquals(null, url, 'Could not create Salesforce base download URL');
     }
