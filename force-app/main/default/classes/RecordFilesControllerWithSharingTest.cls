@@ -1,5 +1,5 @@
 @isTest
-public with sharing class RecordFilesControllerTest {
+public with sharing class RecordFilesControllerWithSharingTest {
     @testSetup
     static void setup() {
         Id PERSON_ACCOUNT_RECORDTYPEID = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName()
