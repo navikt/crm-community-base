@@ -1,0 +1,12 @@
+<template>
+    <section if:false={isContentDocumentsEmpty}>
+        <h3 class="header">{defaultTitle}</h3>
+        <ul>
+            <template iterator:it={contentDocumentsArray}>
+                <li key={it.value.Id}>
+                    <a class="listelement" href={it.value.downloadLink}>{it.value.Title} </a>
+                </li>
+            </template>
+        </ul>
+    </section>
+</template>
