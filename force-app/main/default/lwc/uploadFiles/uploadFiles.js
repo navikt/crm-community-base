@@ -84,6 +84,8 @@ export default class uploadFiles extends LightningElement {
         if (this.fileData.length === 0) {
             this.template.querySelector('.checkboxClass').classList.add('hidden');
             this.clearCheckboxValue();
+            this.checkboxValue = false;
+            this.getCheckboxValue();
         } else {
             this.template.querySelector('.checkboxClass').classList.remove('hidden');
             this.focusCheckbox();
