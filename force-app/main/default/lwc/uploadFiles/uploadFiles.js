@@ -190,7 +190,7 @@ export default class uploadFiles extends LightningElement {
     }
 
     @api
-    handleFileUpload() {
+    handleFileUpload(recordId) {
         if (this.fileData.length === 0) {
             return;
         }
@@ -200,7 +200,7 @@ export default class uploadFiles extends LightningElement {
                 const { base64, filename } = item;
                 filesToUpload[base64] = filename;
             });
-            uploadFile({ files: filesToUpload, recordId: this.recordId });
+            uploadFile({ files: filesToUpload, recordId: recordId });
             // Consider adding spinner/loader here and also adding then+catch and do logic below in that
             this.uploadComplete();
             this.fileData = [];
