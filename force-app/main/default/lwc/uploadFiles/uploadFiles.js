@@ -191,10 +191,9 @@ export default class uploadFiles extends LightningElement {
         this.dispatchEvent(new CustomEvent('uploadcomplete'));
     }
 
-    err;
-    uploadError() {
-        const selectedEvent = new CustomEvent('uploadError', {
-            detail: this.err
+    uploadError(err) {
+        const selectedEvent = new CustomEvent('uploaderror', {
+            detail: err
         });
         this.dispatchEvent(selectedEvent);
     }
@@ -214,9 +213,8 @@ export default class uploadFiles extends LightningElement {
                 .then(() => {
                     this.uploadComplete();
                 })
-                .catch((error) => {
-                    this.err = error;
-                    this.uploadError();
+                .catch((err) => {
+                    this.uploadError(err);
                 });
             this.fileData = [];
             this.sendFileDataLength();
