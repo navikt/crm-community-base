@@ -191,6 +191,13 @@ export default class uploadFiles extends LightningElement {
         this.dispatchEvent(new CustomEvent('uploadcomplete'));
     }
 
+    uploadError(err) {
+        const selectedEvent = new CustomEvent('uploaderror', {
+            detail: err
+        });
+        this.dispatchEvent(selectedEvent);
+    }
+
     @api
     handleFileUpload(recordId) {
         if (this.fileData.length === 0) {
@@ -202,9 +209,13 @@ export default class uploadFiles extends LightningElement {
                 const { base64, filename } = item;
                 filesToUpload[base64] = filename;
             });
-            uploadFile({ files: filesToUpload, recordId: recordId });
-            // Consider adding spinner/loader here and also adding then+catch and do logic below in that
-            this.uploadComplete();
+            uploadFile({ files: filesToUpload, recordId: recordId })
+                .then(() => {
+                    this.uploadComplete();
+                })
+                .catch((err) => {
+                    this.uploadError(err);
+                });
             this.fileData = [];
             this.sendFileDataLength();
         }
