@@ -216,7 +216,7 @@ export default class uploadFiles extends LightningElement {
                 })
                 .catch((error) => {
                     this.err = error;
-                    this.uploadError(error);
+                    this.uploadError();
                 });
             this.fileData = [];
             this.sendFileDataLength();
