@@ -17,11 +17,20 @@ public with sharing class CommunityUsersService {
             PersonAccountWrapper contact = new PersonAccountWrapper(personAccounts[0]);
             User user = createCommunityUser(contact, profile.Id);
             String permissionSetName = defaultCommunityProfiles.DefaultPermissionSet__c;
+            String permissionSetGroupName = defaultCommunityProfiles.DefaultPermissionSetGroup__c;
             List<PermissionSet> permissionSets = [SELECT Id FROM permissionSet WHERE Name = :permissionSetName];
             if (permissionSets.size() > 0) {
                 PermissionSetAssignment permSetAssignment = new PermissionSetAssignment(
                     AssigneeId = user.Id,
                     PermissionSetId = permissionSets[0].Id
+                );
+                insert permSetAssignment;
+            }
+            List<PermissionSetGroup> permsetGroups = [SELECT Id FROM PermissionSetGroup WHERE DeveloperName =: permissionSetGroupName];
+            if(!permsetGroups.isEmpty()){
+                PermissionSetAssignment permSetAssignment = new PermissionSetAssignment(
+                    AssigneeId = user.Id,
+                    PermissionSetGroupId = permsetGroups[0].Id
                 );
                 insert permSetAssignment;
             }
