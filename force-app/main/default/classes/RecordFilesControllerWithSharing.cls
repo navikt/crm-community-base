@@ -23,7 +23,8 @@ public with sharing class RecordFilesControllerWithSharing {
         ];
         return contentDocuments;
     }
-
+    
+    @AuraEnabled
     public static List<Id> getOnlyMyContentDocuments(List<Id> contentDocumentIds) {
         List<ContentDocumentLink> contentDocumentLinks = [
             SELECT ContentDocumentId
