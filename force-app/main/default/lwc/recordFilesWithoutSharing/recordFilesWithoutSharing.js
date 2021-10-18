@@ -4,7 +4,7 @@ import getBaseDownloadUrl from '@salesforce/apex/RecordFilesControllerWithoutSha
 import deleteFilesOnRecord from '@salesforce/apex/RecordFilesControllerWithoutSharing.deleteFilesOnRecord';
 import getOnlyMyContentDocuments from '@salesforce/apex/RecordFilesControllerWithoutSharing.getOnlyMyContentDocuments';
 import { setDefaultValue } from 'c/componentHelperClass';
-export default class recordFilesWithSharing extends LightningElement {
+export default class recordFilesWithoutSharing extends LightningElement {
     @api recordId;
     @api title;
     @api files = [];
