@@ -41,4 +41,20 @@ public without sharing class RecordFilesControllerWithoutSharing {
     public static String getBaseDownloadUrl() {
         return URL.getSalesforceBaseUrl().toExternalForm() + '/sfc/servlet.shepherd/document/download/';
     }
+
+    @AuraEnabled
+    public static void deleteFilesOnRecord(List<String> files) {
+        List<ContentDocument> contentDocuments = [SELECT Id FROM ContentDocument WHERE Id IN :files];
+        deleteFiles(contentDocuments);
+    }
+
+    private static void deleteFiles(List<ContentDocument> contentDocuments) {
+        try {
+            delete contentDocuments;
+        } catch (DMLException e) {
+            LoggerUtility logger = new LoggerUtility();
+            logger.exception(e, CRM_ApplicationDomain.Domain.HOT);
+            logger.publishSynch();
+        }
+    }
 }

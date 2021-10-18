@@ -76,7 +76,6 @@ public with sharing class RecordFilesControllerWithoutSharingTest {
             Test.stopTest();
             System.assertEquals(1, contentDocuments.size(), 'Could not get ContentDocuments related to account');
         }
-
     }
 
     @isTest
@@ -85,5 +84,18 @@ public with sharing class RecordFilesControllerWithoutSharingTest {
         String url = RecordFilesControllerWithoutSharing.getBaseDownloadUrl();
         Test.stopTest();
         System.assertNotEquals(null, url, 'Could not create Salesforce base download URL');
+    }
+
+    @isTest
+    static void deleteFilesOnRecordTest() {
+        List<ContentDocument> contentDocuments = [SELECT Id FROM ContentDocument];
+        List<String> files = new List<String>();
+        for (ContentDocument cd : contentDocuments) {
+            files.add(Id.valueOf(cd.Id));
+        }
+
+        Test.startTest();
+        RecordFilesControllerWithSharing.deleteFilesOnRecord(files);
+        Test.stopTest();
     }
 }
