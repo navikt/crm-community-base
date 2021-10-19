@@ -95,7 +95,7 @@ public with sharing class RecordFilesControllerWithoutSharingTest {
         }
 
         Test.startTest();
-        RecordFilesControllerWithSharing.deleteFilesOnRecord(files);
+        RecordFilesControllerWithoutSharing.deleteFilesOnRecord(files);
         Test.stopTest();
     }
 }
