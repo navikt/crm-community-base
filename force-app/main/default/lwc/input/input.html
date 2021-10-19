@@ -1,0 +1,19 @@
+<template>
+    <div class="navds-form-field navds-form-field--medium" style={setDefaultStyle}>
+        <p if:true={hasDescription} class="navds-text-field__description navds-body-short">{description}</p>
+        <input
+            aria-invalid="false"
+            class="navds-text-field__input navds-body-short navds-body-medium"
+            type={type}
+            id={id}
+            name={name}
+            alt={alt}
+            placeholder={placeholder}
+            autofocus={autofocus}
+            disabled={disabled}
+            required={required}
+            readonly={readonly}
+            oninput={sendValueOnChange}
+        />
+    </div>
+</template>
