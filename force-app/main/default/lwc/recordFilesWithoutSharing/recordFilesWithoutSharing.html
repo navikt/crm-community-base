@@ -6,7 +6,7 @@
                 <template for:each={filesToShow} for:item="file" for:index="index">
                     <li key={file.Title}>
                         <a class="listelement" href={file.downloadLink}>{file.Title} </a>
-                        <div if:true={isDeleteOption} style="display: inline">
+                        <div if:true={isDelete} style="display: inline">
                             <button
                                 if:true={file.isDeletable}
                                 onfocus={onFileFocus}
@@ -15,11 +15,7 @@
                                 key={file.Title}
                                 type="button"
                                 value={file.Title}
-                                class="
-                                    navds-button navds-button--secondary navds-button--s
-                                    navds-body-short
-                                    navds-body--s
-                                "
+                                class="navds-button"
                                 onclick={onFileDelete}
                             >
                                 Slett

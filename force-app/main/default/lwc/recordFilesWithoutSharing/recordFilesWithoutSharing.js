@@ -3,7 +3,7 @@ import getContentDocuments from '@salesforce/apex/RecordFilesControllerWithoutSh
 import getBaseDownloadUrl from '@salesforce/apex/RecordFilesControllerWithoutSharing.getBaseDownloadUrl';
 import deleteFilesOnRecord from '@salesforce/apex/RecordFilesControllerWithoutSharing.deleteFilesOnRecord';
 import getOnlyMyContentDocuments from '@salesforce/apex/RecordFilesControllerWithoutSharing.getOnlyMyContentDocuments';
-import { setDefaultValue } from 'c/componentHelperClass';
+import { setDefaultValue, convertStringToBoolean } from 'c/componentHelperClass';
 export default class recordFilesWithoutSharing extends LightningElement {
     @api recordId;
     @api title;
@@ -21,6 +21,10 @@ export default class recordFilesWithoutSharing extends LightningElement {
 
     get defaultTitle() {
         return setDefaultValue(this.title, 'Vedlegg');
+    }
+
+    get isDelete() {
+        return convertStringToBoolean(this.isDeleteOption);
     }
 
     renderedCallback() {
@@ -93,4 +97,3 @@ export default class recordFilesWithoutSharing extends LightningElement {
         }
     }
 }
-
