@@ -22,11 +22,9 @@
     background-color: #ffffff;
     border-radius: 4px;
     border: 1px solid #6a6a6a;
-    height: var(--height);
-    width: var(--width);
-    box-shadow: var(--box-shadow);
-    border-color: var(--border-color);
+    width: 100%;
 }
+
 .navds-body-short {
     font-size: 1.125rem;
     font-weight: 400;
@@ -47,4 +45,9 @@
 .navds-error-message {
     display: block;
     color: #ba3a26;
+}
+
+.navds-text-field--error > .navds-text-field__input:not(:hover):not(:focus):not(:disabled) {
+    box-shadow: 0 0 0 1px #ba3a26;
+    border-color: #ba3a26;
 }

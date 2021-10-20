@@ -19,6 +19,7 @@ export default class Checkbox extends LightningElement {
 
     @api
     validationHandler(errorMessage) {
+        this.updateShowErrorTextValue();
         let inputEle = this.template.querySelector('input');
         inputEle.setCustomValidity(errorMessage);
         inputEle.reportValidity();
@@ -49,7 +50,6 @@ export default class Checkbox extends LightningElement {
         }
         document.documentElement.style.setProperty('--label-size', this.defaultLabelSize());
         document.documentElement.style.setProperty('--error-size', this.defaultErrorSize());
-        this.updateShowErrorTextValue();
     }
 
     connectedCallback() {
@@ -71,11 +71,9 @@ export default class Checkbox extends LightningElement {
     updateShowErrorTextValue() {
         this.showErrorText = !this.checked && this.errorText !== undefined && this.errorText !== '' && !this.disabled;
         if (this.showErrorText) {
-            document.documentElement.style.setProperty('--box-shadow', '0 0 0 1px #ba3a26');
-            document.documentElement.style.setProperty('--border-color', '#ba3a26');
+            this.template.querySelector('.navds-checkbox').classList.add('navds-checkbox--error');
         } else {
-            document.documentElement.style.setProperty('--box-shadow', '0 0 0 0');
-            document.documentElement.style.setProperty('--border-color', '#a0a0a0');
+            this.template.querySelector('.navds-checkbox').classList.remove('navds-checkbox--error');
         }
     }
 }
