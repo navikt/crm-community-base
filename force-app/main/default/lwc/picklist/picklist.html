@@ -12,6 +12,7 @@
                     multiple={multiple}
                     required={required}
                     size={size}
+                    placeholder={placeholder}
                 >
                     <template for:each={choices} for:item="choice">
                         <option key={choice.name} value={choice.name} disabled={choice.disabled} selected={choice.selected}>
