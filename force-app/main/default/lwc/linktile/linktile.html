@@ -1,16 +1,18 @@
 <template>
-    <a class="navds-panel navds-link-panel navds-panel--border" href={linkAddress} id={defaultId}>
+    <a class="navds-panel navds-link-panel navds-panel--border" href={linkAddress} id={id} style={setMiscStyles}>
         <div style={setDefaultStyle}>
-            <div if:true={image} class="imageClass" style={defaultImageStyle}>
-                <img src={imageUrl} alt={altImgText} />
+            <div if:true={image} style={setImageStyle}>
+                <img src={imageUrl} alt={altImageText} style={setImgStyle} />
             </div>
-            <div class="textClass">
-                <span class="navds-link-panel-title navds-title navds-title--m"> {linkHeader} </span>
-                <p class={linkLabelClass}>{linkLabel}</p>
+            <div style={customTextClassStyle}>
+                <div if:true={hasLinkHeader} class="navds-link-panel-title navds-title navds-title--m">
+                    {linkHeader}
+                </div>
+                <div if:true={hasLinkLabel} class={linkLabelClass} style={setRowMarginStyling}>{linkLabel}</div>
             </div>
         </div>
         <svg
-            if:true={chevronValue}
+            if:true={setChevron}
             width="1em"
             height="1em"
             viewBox="0 0 24 24"
