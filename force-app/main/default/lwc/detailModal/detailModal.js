@@ -1,7 +1,7 @@
 import { LightningElement, api } from 'lwc';
 import { setDefaultValue } from 'c/componentHelperClass';
 
-export default class detailmodal extends LightningElement {
+export default class DetailModal extends LightningElement {
     @api header;
     @api contents = []; //subheader & content
     @api maxWidth;
