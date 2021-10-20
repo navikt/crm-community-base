@@ -5,7 +5,7 @@ export default class Input extends LightningElement {
     @api type = 'text';
     @api name = '';
     @api alt = ''; // Alternate text for image
-    @api description = '';
+    @api label = '';
     @api width;
     @api height;
     @api autofocus = false;
@@ -19,8 +19,17 @@ export default class Input extends LightningElement {
     @api mobileStyle;
     @api desktopStyle;
 
-    get hasDescription() {
-        return this.description !== '' && this.description !== undefined;
+    isLabel = false;
+    haslabel() {
+        this.isLabel = this.label !== '' && this.label !== undefined;
+    }
+
+    connectedCallback() {
+        this.haslabel();
+    }
+
+    get idValue() {
+        return this.id !== '' && this.id !== undefined ? this.id : 'inputcomponent';
     }
 
     // Call this when value is needed
