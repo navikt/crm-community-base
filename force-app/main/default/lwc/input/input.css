@@ -24,6 +24,8 @@
     border: 1px solid #6a6a6a;
     height: var(--height);
     width: var(--width);
+    box-shadow: var(--box-shadow);
+    border-color: var(--border-color);
 }
 .navds-body-short {
     font-size: 1.125rem;
@@ -40,4 +42,9 @@
 .navds-text-field__input:focus {
     outline: none;
     box-shadow: 0 0 0 3px #00347d;
+}
+
+.navds-error-message {
+    display: block;
+    color: #ba3a26;
 }

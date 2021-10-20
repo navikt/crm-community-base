@@ -3,6 +3,7 @@
         <label for={idValue} if:true={isLabel} class="navds-label">{label}</label>
         <input
             aria-invalid="false"
+            aria-describedby="errorTextId"
             class="navds-text-field__input navds-body-short navds-body-medium"
             type={type}
             id={idValue}
@@ -14,6 +15,10 @@
             required={required}
             readonly={readonly}
             oninput={sendValueOnChange}
+            onblur={updateError}
         />
+        <div if:true={showError} id="errorTextId" aria-relevant="additions removals" aria-live="polite">
+            <div class="navds-error-message navds-error-message--medium navds-label">{errorText}</div>
+        </div>
     </div>
 </template>

@@ -6,6 +6,7 @@ export default class Input extends LightningElement {
     @api name = '';
     @api alt = ''; // Alternate text for image
     @api label = '';
+    @api errorText = '';
     @api width;
     @api height;
     @api autofocus = false;
@@ -38,8 +39,23 @@ export default class Input extends LightningElement {
         return inputValue;
     }
 
+    showError = false;
+    updateError() {
+        this.showError =
+            this.template.querySelector('input').value === undefined ||
+            this.template.querySelector('input').value === '';
+        if (this.showError) {
+            document.documentElement.style.setProperty('--box-shadow', '0 0 0 1px #ba3a26');
+            document.documentElement.style.setProperty('--border-color', '#ba3a26');
+        } else {
+            document.documentElement.style.setProperty('--box-shadow', '0 0 0 0');
+            document.documentElement.style.setProperty('--border-color', '#a0a0a0');
+        }
+    }
+
     // Sends value on change
     sendValueOnChange() {
+        this.updateError();
         let inputValue = this.template.querySelector('input').value;
         const selectedEvent = new CustomEvent('getvalueonchange', {
             detail: inputValue
