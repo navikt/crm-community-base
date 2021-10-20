@@ -1,5 +1,5 @@
 <template>
-    <div class="navds-checkbox navds-checkbox--m">
+    <div class="navds-checkbox navds-checkbox--m" style={setDefaultStyle}>
         <input
             id={setId}
             aria-invalid="false"
@@ -8,7 +8,9 @@
             onclick={handleCheckboxClick}
             data-id="checkbox dataid"
         />
-        <label for={setId} class="navds-checkbox__label navds-body-short">{label}</label>
+        <label for={setId} class="navds-checkbox__label navds-body-short" style={labelFontSize}>{label}</label>
     </div>
-    <div if:true={showErrorText} class="navds-error-message navds-error-message--m navds-label">{errorText}</div>
+    <div if:true={showErrorText} class="navds-error-message navds-error-message--m navds-label" style={errorFontSize}>
+        {errorText}
+    </div>
 </template>

@@ -8,6 +8,8 @@ export default class Checkbox extends LightningElement {
     @api disabled;
     @api labelSize;
     @api errorSize;
+    @api desktopStyle;
+    @api mobileStyle;
 
     checked;
     handleCheckboxClick() {
@@ -48,20 +50,18 @@ export default class Checkbox extends LightningElement {
         if (this.disabled) {
             this.template.querySelector('input').disabled = true;
         }
-        document.documentElement.style.setProperty('--label-size', this.defaultLabelSize());
-        document.documentElement.style.setProperty('--error-size', this.defaultErrorSize());
     }
 
     connectedCallback() {
         this.defaultVal = convertStringToBoolean(this.defaultValue);
     }
 
-    defaultLabelSize() {
-        return setDefaultValue(this.labelSize, '1.125rem');
+    get labelFontSize() {
+        return 'font-size: ' + setDefaultValue(this.labelSize + ';', '1.125rem;');
     }
 
-    defaultErrorSize() {
-        return setDefaultValue(this.errorSize, '1.125rem');
+    get errorFontSize() {
+        return 'font-size: ' + setDefaultValue(this.errorSize + ';', '1.125rem;');
     }
 
     get setId() {
@@ -75,5 +75,13 @@ export default class Checkbox extends LightningElement {
         } else {
             this.template.querySelector('.navds-checkbox').classList.remove('navds-checkbox--error');
         }
+    }
+
+    get setDefaultStyle() {
+        let style = this.desktopStyle;
+        if (window.screen.width < 576) {
+            style = this.mobileStyle;
+        }
+        return setDefaultValue(style, '');
     }
 }
