@@ -7,8 +7,6 @@ export default class Radiobuttons extends LightningElement {
     @api groupName;
     @api flexDirection;
     @api errorText;
-    @api labelSize;
-    @api errorSize;
     @api desktopStyle;
     @api mobileStyle;
 
@@ -64,25 +62,6 @@ export default class Radiobuttons extends LightningElement {
         this.error = !checked && required && !disabled;
     }
 
-    renderedCallback() {
-        document.documentElement.style.setProperty('--label-size', this.defaultLabelSize());
-        document.documentElement.style.setProperty('--error-size', this.defaultErrorSize());
-        document.documentElement.style.setProperty('--flex', this.setFlex());
-        document.documentElement.style.setProperty('--gap', this.setFlex() === 'column' ? '' : '24px');
-        document.documentElement.style.setProperty(
-            '--alignItems',
-            this.setFlex() === 'column' ? 'flex-start' : 'center'
-        );
-    }
-
-    defaultLabelSize() {
-        return setDefaultValue(this.labelSize, '1.125rem');
-    }
-
-    defaultErrorSize() {
-        return setDefaultValue(this.errorSize, '1rem');
-    }
-
     setFlex() {
         let flex = setDefaultValue(this.flexDirection, 'column').toLowerCase();
         if (flex !== 'row' && flex !== 'column') {
@@ -90,7 +69,14 @@ export default class Radiobuttons extends LightningElement {
         }
         return flex;
     }
-    
+
+    get flex() {
+        let flex = 'display: flex; flex-direction: ' + this.setFlex() + '; ';
+        let align = this.setFlex() === 'column' ? ' align-items: flex-start; ' : 'align-items: center; ';
+        let gap = this.setFlex() === 'column' ? "gap: ''" : 'gap: 24px;';
+        return flex + align + gap;
+    }
+
     get setDefaultStyle() {
         let style = this.desktopStyle;
         if (window.screen.width < 576) {

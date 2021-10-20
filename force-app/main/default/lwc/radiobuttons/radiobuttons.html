@@ -1,7 +1,7 @@
 <template>
     <legend class="navds-fieldset__legend navds-label">{header}</legend>
     <div class={setDefaultStyle}>
-        <div class="navds-radio-buttons flexClass">
+        <div class="navds-radio-buttons" style={flex}>
             <template for:each={radiobuttons} for:item="radiobutton">
                 <div key={radiobutton.label} class="navds-radio navds-radio--m">
                     <input key={radiobutton.label} id={radiobutton.label} name={groupName} value={radiobutton.label}  data-id={radiobutton.label} onclick={handleRadiobuttonsClick} type="radio" class="navds-radio__input" aria-invalid="false" disabled={radiobutton.disabled} required={required}></input>
