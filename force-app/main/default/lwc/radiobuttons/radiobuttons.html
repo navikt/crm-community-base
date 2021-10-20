@@ -1,5 +1,5 @@
 <template>
-    <legend class="navds-fieldset__legend navds-label">{header}</legend>
+    <legend class="navds-fieldset__legend navds-label" style={labelFontSize}>{header}</legend>
     <div class={setDefaultStyle}>
         <div class="navds-radio-buttons" style={flex}>
             <template for:each={radiobuttons} for:item="radiobutton">
@@ -8,10 +8,10 @@
                     <label key={radiobutton.label} for={radiobutton.label} class="navds-radio__label navds-body-short">{radiobutton.label}</label>
                 </div>
             </template>
-            <div if:true={bottomErrorText} class="navds-error-message navds-error-message--s navds-label navds-label--s" aria-live="polite">{errorText}</div>
+            <div if:true={bottomErrorText} class="navds-error-message navds-error-message--s navds-label navds-label--s" aria-live="polite" style={errorFontSize}>{errorText}</div>
         </div>
     </div>
-    <div if:true={bottomErrorTextWhenRow} class="navds-error-message navds-error-message--s navds-label navds-label--s" aria-live="polite">{errorText}</div>
+    <div if:true={bottomErrorTextWhenRow} class="navds-error-message navds-error-message--s navds-label navds-label--s" aria-live="polite" style={errorFontSize}>{errorText}</div>
    </template>
 
 

@@ -7,6 +7,8 @@ export default class Radiobuttons extends LightningElement {
     @api groupName;
     @api flexDirection;
     @api errorText;
+    @api labelSize;
+    @api errorSize;
     @api desktopStyle;
     @api mobileStyle;
 
@@ -68,6 +70,14 @@ export default class Radiobuttons extends LightningElement {
             return 'column';
         }
         return flex;
+    }
+
+    get labelFontSize() {
+        return setDefaultValue(this.labelSize, '1.125rem');
+    }
+
+    get errorFontSize() {
+        return setDefaultValue(this.errorSize, '1.125rem');
     }
 
     get flex() {
