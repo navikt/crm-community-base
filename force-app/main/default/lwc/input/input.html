@@ -1,6 +1,6 @@
 <template>
     <div class="navds-form-field navds-form-field--medium" style={setDefaultStyle}>
-        <label for={idValue} if:true={isLabel} class="navds-label">{label}</label>
+        <label for={idValue} if:true={isLabel} class="navds-label" style={labelFontSize}>{label}</label>
         <input
             aria-invalid="false"
             aria-describedby="errorTextId"
@@ -18,7 +18,7 @@
             onblur={updateError}
         />
         <div if:true={showError} id="errorTextId" aria-relevant="additions removals" aria-live="polite">
-            <div class="navds-error-message navds-error-message--medium navds-label">{errorText}</div>
+            <div class="navds-error-message navds-error-message--medium navds-label" style={errorFontSize}>{errorText}</div>
         </div>
     </div>
 </template>

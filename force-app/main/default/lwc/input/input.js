@@ -7,6 +7,8 @@ export default class Input extends LightningElement {
     @api alt = ''; // Alternate text for image
     @api label = '';
     @api errorText = '';
+    @api labelSize;
+    @api errorSize;
     @api autofocus = false;
     @api disabled = false;
     @api required = false;
@@ -29,6 +31,14 @@ export default class Input extends LightningElement {
 
     get idValue() {
         return this.id !== '' && this.id !== undefined ? this.id : 'inputcomponent';
+    }
+
+    get labelFontSize() {
+        return setDefaultValue(this.labelSize, '1.125rem');
+    }
+
+    get errorFontSize() {
+        return setDefaultValue(this.errorSize, '1.125rem');
     }
 
     // Call this when value is needed
