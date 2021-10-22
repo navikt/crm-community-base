@@ -16,13 +16,9 @@
     padding: 1rem;
     border-radius: 4px;
     overflow: auto;
-    max-height: var(--maxHeight);
-    max-width: var(--maxWidth);
     z-index: 1010;
     top: 50%;
     transform: translateY(-50%);
-    margin-left: var(--marginRight);
-    margin-right: var(--marginRight);
 }
 
 .navds-modal__button {
