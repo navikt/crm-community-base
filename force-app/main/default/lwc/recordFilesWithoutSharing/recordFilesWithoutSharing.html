@@ -1,12 +1,29 @@
 <template>
     <section if:false={isContentDocumentsEmpty}>
         <h3 class="header">{defaultTitle}</h3>
-        <ul>
-            <template iterator:it={contentDocumentsArray}>
-                <li key={it.value.Id}>
-                    <a class="listelement" href={it.value.downloadLink}>{it.value.Title} </a>
-                </li>
-            </template>
-        </ul>
+        <div if:true={filesChanged} class="filesClass">
+            <ul>
+                <template for:each={filesToShow} for:item="file" for:index="index">
+                    <li key={file.Title}>
+                        <a class="listelement" href={file.downloadLink}>{file.Title} </a>
+                        <div if:true={isDelete} style="display: inline">
+                            <button
+                                if:true={file.isDeletable}
+                                onfocus={onFileFocus}
+                                aria-label={fileButtonLabel}
+                                data-index={index}
+                                key={file.Title}
+                                type="button"
+                                value={file.Title}
+                                class="navds-button"
+                                onclick={onFileDelete}
+                            >
+                                Slett
+                            </button>
+                        </div>
+                    </li>
+                </template>
+            </ul>
+        </div>
     </section>
 </template>
