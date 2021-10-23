@@ -21,9 +21,8 @@
 }
 .navds-panel {
     background-color: #ffffff;
-    padding: var(--navdsPanelPadding);
     border-radius: 4px;
-    border: 1px var(--borderOpacity);
+    padding: 1rem;
 }
 
 .navds-title {
@@ -42,13 +41,9 @@
 
 .navds-link-panel {
     display: flex;
-    flex-direction: var(--flex);
-    justify-content: var(--justifyContent);
     align-items: center;
     text-decoration: none;
     color: #262626;
-    max-width: var(--maxWidth);
-    max-height: var(--maxHeight);
 }
 
 .navds-label {
@@ -65,22 +60,6 @@
 
 p {
     display: block;
-    margin-block-start: var(--marginBlockStart);
-    margin-block-end: var(--marginBlockEnd);
     margin-inline-start: 0px;
     margin-inline-end: 0px;
-}
-
-.imageClass {
-    background-color: var(--backgroundColor);
-}
-
-.textClass {
-    margin: var(--textMargin);
-}
-
-img {
-    max-height: var(--imgHeight);
-    max-width: var(--imgWidth);
-    margin: var(--imgMargin);
 }
