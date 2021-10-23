@@ -1,17 +1,17 @@
 <template>
-    <legend class="navds-fieldset__legend navds-label">{header}</legend>
+    <legend class="navds-fieldset__legend navds-label" style={labelFontSize}>{header}</legend>
     <div class={setDefaultStyle}>
-        <div class="navds-radio-buttons flexClass">
+        <div class="navds-radio-buttons" style={flex}>
             <template for:each={radiobuttons} for:item="radiobutton">
                 <div key={radiobutton.label} class="navds-radio navds-radio--m">
                     <input key={radiobutton.label} id={radiobutton.label} name={groupName} value={radiobutton.label}  data-id={radiobutton.label} onclick={handleRadiobuttonsClick} type="radio" class="navds-radio__input" aria-invalid="false" disabled={radiobutton.disabled} required={required}></input>
                     <label key={radiobutton.label} for={radiobutton.label} class="navds-radio__label navds-body-short">{radiobutton.label}</label>
                 </div>
             </template>
-            <div if:true={bottomErrorText} class="navds-error-message navds-error-message--s navds-label navds-label--s" aria-live="polite">{errorText}</div>
+            <div if:true={bottomErrorText} class="navds-error-message navds-error-message--s navds-label navds-label--s" aria-live="polite" style={errorFontSize}>{errorText}</div>
         </div>
     </div>
-    <div if:true={bottomErrorTextWhenRow} class="navds-error-message navds-error-message--s navds-label navds-label--s" aria-live="polite">{errorText}</div>
+    <div if:true={bottomErrorTextWhenRow} class="navds-error-message navds-error-message--s navds-label navds-label--s" aria-live="polite" style={errorFontSize}>{errorText}</div>
    </template>
 
 
