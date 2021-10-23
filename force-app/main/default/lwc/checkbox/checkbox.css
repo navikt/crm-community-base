@@ -32,8 +32,6 @@
     height: 1.5rem;
     border-radius: 4px;
     flex-shrink: 0;
-    box-shadow: var(--box-shadow);
-    border-color: var(--border-color);
 }
 
 .navds-checkbox__input:hover + .navds-checkbox__label::before {
@@ -59,7 +57,7 @@
 }
 
 .navds-body-short {
-    font-size: var(--label-size);
+    font-size: 1.125rem;
     letter-spacing: 0;
     line-height: 1.3;
     margin: 0;
@@ -70,7 +68,7 @@
 }
 
 .navds-label {
-    font-size: var(--error-size);
+    font-size: 1.125rem;
     letter-spacing: 0;
     line-height: 1.3;
     font-weight: 600;

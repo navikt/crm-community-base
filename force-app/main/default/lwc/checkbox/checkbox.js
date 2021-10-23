@@ -8,6 +8,8 @@ export default class Checkbox extends LightningElement {
     @api disabled;
     @api labelSize;
     @api errorSize;
+    @api desktopStyle;
+    @api mobileStyle;
 
     checked;
     handleCheckboxClick() {
@@ -19,6 +21,7 @@ export default class Checkbox extends LightningElement {
 
     @api
     validationHandler(errorMessage) {
+        this.updateShowErrorTextValue();
         let inputEle = this.template.querySelector('input');
         inputEle.setCustomValidity(errorMessage);
         inputEle.reportValidity();
@@ -47,21 +50,18 @@ export default class Checkbox extends LightningElement {
         if (this.disabled) {
             this.template.querySelector('input').disabled = true;
         }
-        document.documentElement.style.setProperty('--label-size', this.defaultLabelSize());
-        document.documentElement.style.setProperty('--error-size', this.defaultErrorSize());
-        this.updateShowErrorTextValue();
     }
 
     connectedCallback() {
         this.defaultVal = convertStringToBoolean(this.defaultValue);
     }
 
-    defaultLabelSize() {
-        return setDefaultValue(this.labelSize, '1.125rem');
+    get labelFontSize() {
+        return 'font-size: ' + setDefaultValue(this.labelSize + ';', '1.125rem;');
     }
 
-    defaultErrorSize() {
-        return setDefaultValue(this.errorSize, '1.125rem');
+    get errorFontSize() {
+        return 'font-size: ' + setDefaultValue(this.errorSize + ';', '1.125rem;');
     }
 
     get setId() {
@@ -71,11 +71,17 @@ export default class Checkbox extends LightningElement {
     updateShowErrorTextValue() {
         this.showErrorText = !this.checked && this.errorText !== undefined && this.errorText !== '' && !this.disabled;
         if (this.showErrorText) {
-            document.documentElement.style.setProperty('--box-shadow', '0 0 0 1px #ba3a26');
-            document.documentElement.style.setProperty('--border-color', '#ba3a26');
+            this.template.querySelector('.navds-checkbox').classList.add('navds-checkbox--error');
         } else {
-            document.documentElement.style.setProperty('--box-shadow', '0 0 0 0');
-            document.documentElement.style.setProperty('--border-color', '#a0a0a0');
+            this.template.querySelector('.navds-checkbox').classList.remove('navds-checkbox--error');
         }
+    }
+
+    get setDefaultStyle() {
+        let style = this.desktopStyle;
+        if (window.screen.width < 576) {
+            style = this.mobileStyle;
+        }
+        return setDefaultValue(style, '');
     }
 }

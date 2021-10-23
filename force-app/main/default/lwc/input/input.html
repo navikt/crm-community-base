@@ -1,0 +1,24 @@
+<template>
+    <div class="navds-form-field navds-form-field--medium" style={setDefaultStyle}>
+        <label for={idValue} if:true={isLabel} class="navds-label" style={labelFontSize}>{label}</label>
+        <input
+            aria-invalid="false"
+            aria-describedby="errorTextId"
+            class="navds-text-field__input navds-body-short navds-body-medium"
+            type={type}
+            id={idValue}
+            name={name}
+            alt={alt}
+            placeholder={placeholder}
+            autofocus={autofocus}
+            disabled={disabled}
+            required={required}
+            readonly={readonly}
+            oninput={sendValueOnChange}
+            onblur={updateError}
+        />
+        <div if:true={showError} id="errorTextId" aria-relevant="additions removals" aria-live="polite">
+            <div class="navds-error-message navds-error-message--medium navds-label" style={errorFontSize}>{errorText}</div>
+        </div>
+    </div>
+</template>
