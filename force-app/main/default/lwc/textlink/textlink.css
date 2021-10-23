@@ -7,7 +7,7 @@
     gap: 0.25rem;
     font-family: 'Source Sans Pro', Arial, sans-serif;
     line-height: 1.375;
-    font-size: var(--fontSize);
+    font-size: 1.125rem;
 }
 .navds-link:hover {
     text-decoration: none;

@@ -16,13 +16,13 @@
     padding: 1rem;
     border-radius: 4px;
     overflow: auto;
-    max-height: var(--maxHeight);
-    max-width: var(--maxWidth);
+    max-height: 50%;
+    max-width: 50%;
     z-index: 1010;
     top: 50%;
     transform: translateY(-50%);
-    margin-left: var(--marginRight);
-    margin-right: var(--marginRight);
+    margin-left: auto;
+    margin-right: auto;
 }
 
 :focus {
@@ -66,11 +66,7 @@ body {
 
 .buttons {
     display: flex;
-    margin: var(--centerButtons);
+    margin: auto;
     justify-content: center;
     max-width: max-content;
-}
-
-.spanButtonPadding {
-    padding-left: var(--buttonPadding);
 }

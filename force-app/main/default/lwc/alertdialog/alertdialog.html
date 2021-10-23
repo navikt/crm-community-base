@@ -16,7 +16,7 @@
                         <p>{content}</p>
                     </section>
                 </div>
-                <div class="buttons">
+                <div class="buttons" style={setCenterButtons}>
                     <span>
                         <c-button
                             button-label={defaultConfirmButtonLabel}
@@ -26,7 +26,7 @@
                         ></c-button>
                     </span>
 
-                    <span class="spanButtonPadding" if:false={defaultNoCancelButton}>
+                    <span if:false={defaultNoCancelButton} style="padding: 0 0 0 10px">
                         <c-button
                             button-label={defaultCancelButtonLabel}
                             button-styling="primary"
