@@ -7,7 +7,6 @@ export default class Textlink extends LightningElement {
     @api target;
     @api id;
     @api name;
-    @api fontSize;
     @api iconAfter;
     @api iconBefore;
     @api svgWidth;
@@ -56,14 +55,9 @@ export default class Textlink extends LightningElement {
 
     get setDefaultStyle() {
         let style = this.desktopStyle;
-        if(window.screen.width < 576){
+        if (window.screen.width < 576) {
             style = this.mobileStyle;
         }
         return setDefaultValue(style, '');
-    }
-
-    renderedCallback() {
-        let fontSizeToSet = this.fontSize === undefined ? '1.125rem' : this.fontSize;
-        document.documentElement.style.setProperty('--fontSize', fontSizeToSet);
     }
 }

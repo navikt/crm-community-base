@@ -32,6 +32,14 @@ export default class DetailModal extends LightningElement {
         return setDefaultValue(this.contentAsPrimitive, false);
     }
 
+    get setMiscStyles() {
+        let maxWidth = 'max-width: ' + this.defaultMaxWidth() + '; ';
+        let maxHeight = 'max-height: ' + this.defaultMaxHeight() + '; ';
+        let marginLeft = 'margin-left: ' + this.defaultMarginLeft() + '; ';
+        let marginRight = 'margin-right: ' + this.defaultMarginRight() + '; ';
+        return maxWidth + maxHeight + marginLeft + marginRight;
+    }
+
     defaultMaxWidth() {
         return setDefaultValue(this.maxWidth, '100%');
     }
@@ -46,12 +54,5 @@ export default class DetailModal extends LightningElement {
 
     defaultMarginRight() {
         return setDefaultValue(this.marginRight, 0);
-    }
-
-    renderedCallback() {
-        document.documentElement.style.setProperty('--maxWidth', this.defaultMaxWidth());
-        document.documentElement.style.setProperty('--maxHeight', this.defaultMaxHeight());
-        document.documentElement.style.setProperty('--marginLeft', this.defaultMarginLeft());
-        document.documentElement.style.setProperty('--marginRight', this.defaultMarginRight());
     }
 }

@@ -91,7 +91,7 @@ public with sharing class RecordFilesControllerWithSharingTest {
         List<ContentDocument> contentDocuments = [SELECT Id FROM ContentDocument];
         List<String> files = new List<String>();
         for (ContentDocument cd : contentDocuments) {
-            files.add(Id.valueOf(cd.Id));
+            files.add(cd.Id);
         }
 
         Test.startTest();

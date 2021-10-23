@@ -1,10 +1,13 @@
 import { LightningElement, api } from 'lwc';
 import uploadFile from '@salesforce/apex/UploadFilesController.uploadFile';
-import { setDefaultValue } from 'c/componentHelperClass';
+import { setDefaultValue, convertStringToBoolean } from 'c/componentHelperClass';
 export default class uploadFiles extends LightningElement {
     @api recordId;
     @api mobileStyle;
     @api desktopStyle;
+    @api checkboxValidation = false;
+    @api checkboxTextPlural = '';
+    @api checkboxTextSingle = '';
 
     acceptedFileFormats =
         '[.pdf, .png, .svg, .jpg, .jpeg, .jpe, .jif, .gif, .tif, .tiff, .bmp, .doc, .docx, .doc, .odt, .xls, .xlsx, .ods, .ppt, pptx, .txt, .rtf]';
@@ -19,6 +22,10 @@ export default class uploadFiles extends LightningElement {
 
     get mobileStyleForLabels() {
         return window.screen.width < 576 ? 'display: flex; flex-direction: column; text-align: center' : '';
+    }
+
+    get checkboxValidationVal() {
+        return convertStringToBoolean(this.checkboxValidation);
     }
 
     isDrop = false;
@@ -54,11 +61,15 @@ export default class uploadFiles extends LightningElement {
     }
 
     focusCheckbox() {
-        this.template.querySelector('c-checkbox').focusCheckbox();
+        if (this.checkboxValidationVal) {
+            this.template.querySelector('c-checkbox').focusCheckbox();
+        }
     }
 
     clearCheckboxValue() {
-        this.template.querySelector('c-checkbox').clearCheckboxValue();
+        if (this.checkboxValidationVal) {
+            this.template.querySelector('c-checkbox').clearCheckboxValue();
+        }
     }
 
     setButtonStyleOnFocus() {
@@ -74,29 +85,32 @@ export default class uploadFiles extends LightningElement {
 
     checkboxContent;
     setCheckboxContent() {
-        this.checkboxContent =
-            this.fileData.length > 1
-                ? 'Dokumentene som er lagt ved gir bakgrunnsinformasjon om mitt innmeldte behov for tolk. Informasjonen er nødvendig for at behovet skal bli forsvarlig dekket. Jeg er klar over at vedleggene vil bli delt med tolken(e) som blir tildelt oppdraget.'
-                : 'Dokumentet som er lagt ved gir bakgrunnsinformasjon om mitt innmeldte behov for tolk. Informasjonen er nødvendig for at behovet skal bli forsvarlig dekket. Jeg er klar over at vedlegget vil bli delt med tolken(e) som blir tildelt oppdraget.';
+        if (this.checkboxValidationVal) {
+            this.checkboxContent = this.fileData.length > 1 ? this.checkboxTextPlural : this.checkboxTextSingle;
+        }
     }
 
     showOrHideCheckbox() {
-        if (this.fileData.length === 0) {
-            this.template.querySelector('.checkboxClass').classList.add('hidden');
-            this.clearCheckboxValue();
-            this.checkboxValue = false;
-            this.getCheckboxValue();
-        } else {
-            this.template.querySelector('.checkboxClass').classList.remove('hidden');
-            this.focusCheckbox();
+        if (this.checkboxValidationVal) {
+            if (this.fileData.length === 0) {
+                this.template.querySelector('.checkboxClass').classList.add('hidden');
+                this.clearCheckboxValue();
+                this.checkboxValue = false;
+                this.getCheckboxValue();
+            } else {
+                this.template.querySelector('.checkboxClass').classList.remove('hidden');
+                this.focusCheckbox();
+            }
         }
     }
 
     checkboxValue = false;
     handleCheckboxValue(event) {
-        this.checkboxValue = event.detail;
-        this.getCheckboxValue();
-        this.template.querySelector('c-checkbox').validationHandler(''); // Clear validation when clicking checkbox. Only validate on Submit.
+        if (this.checkboxValidationVal) {
+            this.checkboxValue = event.detail;
+            this.getCheckboxValue();
+            this.template.querySelector('c-checkbox').validationHandler(''); // Clear validation when clicking checkbox. Only validate on Submit.
+        }
     }
 
     getCheckboxValue() {
@@ -203,7 +217,10 @@ export default class uploadFiles extends LightningElement {
         if (this.fileData.length === 0) {
             return;
         }
-        if (this.checkboxValue) {
+        if (
+            (this.checkboxValue && this.checkboxValidationVal) ||
+            (!this.checkboxValue && !this.checkboxValidationVal)
+        ) {
             const filesToUpload = {};
             this.fileData.forEach((item) => {
                 const { base64, filename } = item;
