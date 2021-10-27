@@ -109,8 +109,9 @@ export default class uploadFiles extends LightningElement {
         if (this.checkboxValidationVal) {
             this.checkboxValue = event.detail;
             this.getCheckboxValue();
-            this.template.querySelector('c-checkbox').validationHandler(''); // Clear validation when clicking checkbox. Only validate on Submit.
+            return this.template.querySelector('c-checkbox').validationHandler(''); // Clear validation when clicking checkbox. Only validate on Submit.
         }
+        return false;
     }
 
     getCheckboxValue() {
@@ -123,12 +124,13 @@ export default class uploadFiles extends LightningElement {
     @api
     validateCheckbox() {
         if (!this.checkboxValue) {
-            this.template
+            return this.template
                 .querySelector('c-checkbox')
                 .validationHandler(
                     'For å legge til vedlegg må du gi samtykke til at formidler og tolk kan se vedleggene som lastes opp'
                 );
         }
+        return false;
     }
 
     fileButtonLabel;

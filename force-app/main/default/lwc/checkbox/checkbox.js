@@ -27,7 +27,9 @@ export default class Checkbox extends LightningElement {
         inputEle.reportValidity();
         if (errorMessage !== '') {
             inputEle.focus();
+            return true;
         }
+        return false;
     }
 
     @api clearCheckboxValue() {
