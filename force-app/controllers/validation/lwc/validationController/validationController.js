@@ -1,6 +1,6 @@
 export function validate(element, validationRules, ...args) {
     let errors = [];
-    let hasErrors = false;
+    let hasErrors = 0;
     if (element != null && element != {}) {
         element.setCustomValidity('');
         element.reportValidity();
@@ -11,7 +11,7 @@ export function validate(element, validationRules, ...args) {
                 element.reportValidity();
                 element.focus();
                 errors.push(errorMessage);
-                hasErrors = true;
+                hasErrors = 1;
             }
         }
     }
