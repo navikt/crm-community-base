@@ -14,8 +14,8 @@ export default class Picklist extends LightningElement {
 
     @api choiceValue;
     handleChoiceMade(event) {
-        for(let choice of this.choices){
-            if(choice.name === event.target.value){
+        for (let choice of this.choices) {
+            if (choice.name === event.target.value) {
                 this.choiceValue = choice;
             }
         }
@@ -33,5 +33,8 @@ export default class Picklist extends LightningElement {
             style = this.mobileStyle;
         }
         return setDefaultValue(style, '');
+    }
+    @api getElement() {
+        return this.template.querySelector('select');
     }
 }
