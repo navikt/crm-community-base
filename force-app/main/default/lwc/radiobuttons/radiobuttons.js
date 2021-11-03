@@ -1,7 +1,7 @@
 import { api, LightningElement } from 'lwc';
 import { setDefaultValue } from 'c/componentHelperClass';
 
-export default class Radiobuttons extends LightningElement {
+export default class radiobuttons extends LightningElement {
     @api radiobuttons = [];
     @api header;
     @api groupName;
@@ -13,9 +13,11 @@ export default class Radiobuttons extends LightningElement {
     @api mobileStyle;
 
     handleRadiobuttonsClick() {
-        let checkedValues = [];
+        let checkedValues = this.radiobuttons.map((obj) => ({ ...obj, checked: false }));
         for (let i = 0; i < this.radiobuttons.length; i++) {
-            checkedValues[i] = this.template.querySelector('[data-id="' + this.radiobuttons[i].label + '"]').checked;
+            checkedValues[i].checked = this.template.querySelector(
+                '[data-id="' + this.radiobuttons[i].label + '"]'
+            ).checked;
         }
         this.updateShowErrorTextValue();
         const eventToSend = new CustomEvent('radiobuttonsclick', { detail: checkedValues });
