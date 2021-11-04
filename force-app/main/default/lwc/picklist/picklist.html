@@ -1,7 +1,11 @@
 <template>
     <div style={setDefaultStyle}>
         <div class="skjemaelement">
-            <label class="skjemaelement__label" for="picklist">{masterLabel}</label>
+            <div style="flex-direction: row; display: flex; align-items: center">
+                <label class="skjemaelement__label" for="picklist">{masterLabel}</label>
+                <c-helptext if:true={helptext} text={helptextContent} style="padding-left: 5px"></c-helptext>
+            </div>
+
             <div class="selectContainer input--fullbredde">
                 <select
                     id={setDefaultId}
@@ -15,7 +19,12 @@
                     placeholder={placeholder}
                 >
                     <template for:each={choices} for:item="choice">
-                        <option key={choice.name} value={choice.name} disabled={choice.disabled} selected={choice.selected}>
+                        <option
+                            key={choice.name}
+                            value={choice.name}
+                            disabled={choice.disabled}
+                            selected={choice.selected}
+                        >
                             {choice.label}
                         </option>
                     </template>
@@ -23,5 +32,4 @@
             </div>
         </div>
     </div>
-    
 </template>
