@@ -22,7 +22,6 @@ export default class Picklist extends LightningElement {
                 this.choiceValue = choice;
             }
         }
-        this.updateShowErrorTextValue();
         const eventToSend = new CustomEvent('picklistvaluechange', { detail: this.choiceValue });
         this.dispatchEvent(eventToSend);
     }
