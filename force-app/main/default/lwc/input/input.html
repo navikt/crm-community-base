@@ -19,7 +19,6 @@
             required={required}
             readonly={readonly}
             oninput={sendValueOnChange}
-            onblur={updateError}
         />
         <div if:true={showError} id="errorTextId" aria-relevant="additions removals" aria-live="polite">
             <div class="navds-error-message navds-error-message--medium navds-label" style={errorFontSize}>
