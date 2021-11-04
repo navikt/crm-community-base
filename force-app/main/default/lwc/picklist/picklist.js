@@ -15,15 +15,23 @@ export default class Picklist extends LightningElement {
     @api desktopStyle;
     @api mobileStyle;
 
-    choiceValue = '';
+    choiceValue = { name: 'Placeholder', label: this.placeholderText, selected: true };
     handleChoiceMade(event) {
-        for (let choice of this.choices) {
+        for (let choice of this.choicesArray) {
             if (choice.name === event.target.value) {
                 this.choiceValue = choice;
             }
         }
+        this.updateShowErrorTextValue();
         const eventToSend = new CustomEvent('picklistvaluechange', { detail: this.choiceValue });
         this.dispatchEvent(eventToSend);
+    }
+
+    get choicesArray() {
+        if (this.placeholderText !== undefined) {
+            return [{ name: 'Placeholder', label: this.placeholderText, selected: true }, ...this.choices];
+        }
+        return this.choices;
     }
 
     get setDefaultId() {
