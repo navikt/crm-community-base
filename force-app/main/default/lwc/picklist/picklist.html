@@ -16,7 +16,6 @@
                     multiple={multiple}
                     required={required}
                     size={size}
-                    placeholder={placeholder}
                 >
                     <template for:each={choices} for:item="choice">
                         <option
@@ -29,6 +28,14 @@
                         </option>
                     </template>
                 </select>
+            </div>
+            <div
+                if:true={showErrorText}
+                id="textField-error-758708dd-9845-4de3-8520-c9cfabb5db44"
+                aria-relevant="additions removals"
+                aria-live="polite"
+            >
+                <div class="navds-error-message navds-error-message--medium navds-label">{errorText}</div>
             </div>
         </div>
     </div>
