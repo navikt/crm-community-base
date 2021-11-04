@@ -6,6 +6,8 @@ export default class Input extends LightningElement {
     @api name = '';
     @api alt = ''; // Alternate text for image
     @api label = '';
+    @api helptext = false;
+    @api helptextContent = '';
     @api errorText = '';
     @api labelSize;
     @api errorSize;
