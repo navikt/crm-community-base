@@ -9,6 +9,8 @@ export default class radiobuttons extends LightningElement {
     @api errorText;
     @api labelSize;
     @api errorSize;
+    @api helptext = false;
+    @api helptextContent = '';
     @api desktopStyle;
     @api mobileStyle;
 
