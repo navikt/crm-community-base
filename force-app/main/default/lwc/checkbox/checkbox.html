@@ -8,7 +8,10 @@
             onclick={handleCheckboxClick}
             data-id="checkbox dataid"
         />
-        <label for={setId} class="navds-checkbox__label navds-body-short" style={labelFontSize}>{label}</label>
+        <div style="flex-direction: row; display: flex; align-items: center">
+            <label for={setId} class="navds-checkbox__label navds-body-short" style={labelFontSize}>{label}</label>
+            <c-helptext if:true={helptext} text={helptextContent} style="padding-left: 5px"></c-helptext>
+        </div>
     </div>
     <div if:true={showErrorText} class="navds-error-message navds-error-message--m navds-label" style={errorFontSize}>
         {errorText}
