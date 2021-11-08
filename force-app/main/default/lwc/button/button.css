@@ -42,13 +42,13 @@
     border-color: #0067c5;
 }
 
-.navds-button--action,
+.navds-button--tertiary,
 .navds-button--danger {
     color: white;
     border-width: 1px;
 }
 
-.navds-button--action:hover {
+.navds-button--tertiary:hover {
     background-color: #0056b4;
     border-color: #0056b4;
 }
@@ -63,7 +63,7 @@
     border-color: #a32a17;
 }
 
-.navds-button--action {
+.navds-button--tertiary {
     background-color: #0067c5;
     border-color: #0067c5;
 }
@@ -167,7 +167,7 @@ button {
     box-shadow: 0 0 0 3px #00347d;
 }
 
-.navds-button--action:focus,
+.navds-button--tertiary:focus,
 .navds-button--danger:focus {
     border-color: white;
 }

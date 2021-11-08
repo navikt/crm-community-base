@@ -9,7 +9,7 @@ export default class Button extends LightningElement {
     @api disabled;
     @api type; // Button, Submit, Reset
     @api value;
-    @api buttonStyling; // Primary, Secondary, Action, Danger
+    @api buttonStyling; // Primary, Secondary, Tertiary, Danger
     @api buttonLabel;
     @api desktopStyle;
     @api mobileStyle;
@@ -23,7 +23,7 @@ export default class Button extends LightningElement {
         if (
             this.buttonStyling !== 'primary' &&
             this.buttonStyling !== 'secondary' &&
-            this.buttonStyling !== 'action' &&
+            this.buttonStyling !== 'tertiary' &&
             this.buttonStyling !== 'danger'
         ) {
             buttonStyle = 'primary'; // Set primary as default if invalid argument
