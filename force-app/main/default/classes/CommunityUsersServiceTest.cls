@@ -187,4 +187,15 @@ private class CommunityUsersServiceTest {
             System.assertEquals(1, [SELECT COUNT() FROM PermissionSetAssignment WHERE PermissionSetId=:permSet.Id AND AssigneeId=:user.Id], 'Expect perm set to be assigned to new user');
         }
     }
+
+    @IsTest
+    private static void assignCommunitySpecificPermissionSet(){
+        Id permissionSetId = [SELECT Id FROM permissionSet WHERE Name='TestCommunity' LIMIT 1].Id;
+        
+        Test.startTest();
+        CommunityUsersService.assignCommunitySpecificPermissionSet(UserInfo.getUserId(),'0DB1l0000008QNvGAX');
+        Test.stopTest();
+
+        System.assertEquals(1,[SELECT COUNT() FROM PermissionSetAssignment WHERE AssigneeId=:UserInfo.getUserId() AND PermissionSetId=:permissionSetId], 'Expect permission set to be assigned');
+    }
 }
