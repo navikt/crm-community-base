@@ -16,16 +16,21 @@ export default class radiobuttons extends LightningElement {
     @api desktopStyle;
     @api mobileStyle;
 
+    checkedValues = [];
     handleRadiobuttonsClick() {
-        let checkedValues = this.radiobuttons.map((obj) => ({ ...obj, checked: false }));
+        this.checkedValues = this.radiobuttons.map((obj) => ({ ...obj, checked: false }));
         for (let i = 0; i < this.radiobuttons.length; i++) {
-            checkedValues[i].checked = this.template.querySelector(
+            this.checkedValues[i].checked = this.template.querySelector(
                 '[data-id="' + this.radiobuttons[i].label + '"]'
             ).checked;
         }
         this.updateShowErrorTextValue();
-        const eventToSend = new CustomEvent('radiobuttonsclick', { detail: checkedValues });
+        const eventToSend = new CustomEvent('radiobuttonsclick', { detail: this.checkedValues });
         this.dispatchEvent(eventToSend);
+    }
+
+    @api getValue() {
+        return this.checkedValues;
     }
 
     bottomErrorText = false;
