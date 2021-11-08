@@ -135,6 +135,30 @@ public with sharing class CommunityUsersService {
 
         return user;
     }
+
+    public static void assignCommunitySpecificPermissionSet(Id userId, Id communityId){
+           List<DefaultCommunityPermissionSet__mdt> defaultPermissionSets=[SELECT PermissionSetId__c FROM DefaultCommunityPermissionSet__mdt WHERE NetworkId__c=:communityId];
+           
+           if(Test.isRunningTest()){
+            DefaultCommunityPermissionSet__mdt defaultPermSet=new DefaultCommunityPermissionSet__mdt();
+            defaultPermSet.PermissionSetId__c=[SELECT Id FROM permissionSet WHERE Name='TestCommunity' LIMIT 1].Id;
+            defaultPermSet.NetworkId__c='0DB1l0000008QNvGAX';
+            defaultPermissionSets.add(defaultPermSet);
+           }
+           
+           if(defaultPermissionSets.size()==0){
+                return;
+           } 
+
+           List<PermissionSetAssignment> assignments=[SELECT Id FROM PermissionSetAssignment WHERE AssigneeId=:userId AND PermissionSetId=:defaultPermissionSets[0].PermissionSetId__c];
+           if(assignments.size()==0){
+               PermissionSetAssignment assignment=new PermissionSetAssignment();
+               assignment.AssigneeId=userId;
+               assignment.PermissionSetId=defaultPermissionSets[0].PermissionSetId__c;
+               insert assignment;
+           }
+           
+    }
 }
         
         
