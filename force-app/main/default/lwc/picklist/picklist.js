@@ -3,6 +3,8 @@ import { setDefaultValue } from 'c/componentHelperClass';
 export default class Picklist extends LightningElement {
     @api masterLabel;
     @api id;
+    @api form;
+    @api name = 'picklist';
     @api choices = [];
     @api disabled;
     @api multiple;
@@ -43,6 +45,10 @@ export default class Picklist extends LightningElement {
             style = this.mobileStyle;
         }
         return setDefaultValue(style, '');
+    }
+
+    @api getValue() {
+        return this.choiceValue;
     }
 
     @api getElement() {

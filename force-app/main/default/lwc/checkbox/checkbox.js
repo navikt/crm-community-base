@@ -4,6 +4,8 @@ export default class Checkbox extends LightningElement {
     @api label;
     @api errorText;
     @api id;
+    @api name;
+    @api form;
     @api defaultValue;
     @api disabled;
     @api labelSize;
@@ -18,6 +20,10 @@ export default class Checkbox extends LightningElement {
         this.checked = this.template.querySelector('input').checked;
         const eventToSend = new CustomEvent('checkboxclick', { detail: this.checked });
         this.dispatchEvent(eventToSend);
+    }
+
+    @api getValue() {
+        return this.checked;
     }
 
     @api

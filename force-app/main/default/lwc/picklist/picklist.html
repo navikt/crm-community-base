@@ -10,12 +10,13 @@
                 <select
                     id={setDefaultId}
                     class="skjemaelement__input"
-                    name="picklist"
+                    name={name}
                     onchange={handleChoiceMade}
                     disabled={disabled}
                     multiple={multiple}
                     required={required}
                     size={size}
+                    form={form}
                 >
                     <template for:each={choices} for:item="choice">
                         <option

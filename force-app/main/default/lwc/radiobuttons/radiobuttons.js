@@ -5,6 +5,8 @@ export default class radiobuttons extends LightningElement {
     @api radiobuttons = [];
     @api header;
     @api groupName;
+    @api id;
+    @api form;
     @api flexDirection;
     @api errorText;
     @api labelSize;

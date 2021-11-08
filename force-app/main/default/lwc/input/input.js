@@ -3,9 +3,10 @@ import { setDefaultValue } from 'c/componentHelperClass';
 
 export default class Input extends LightningElement {
     @api type = 'text';
-    @api name = '';
+    @api name = 'input';
     @api alt = ''; // Alternate text for image
     @api label = '';
+    @api form;
     @api helptext = false;
     @api helptextContent = '';
     @api errorText = '';
@@ -44,9 +45,8 @@ export default class Input extends LightningElement {
     }
 
     // Call this when value is needed
-    @api sendValue() {
-        let inputValue = this.template.querySelector('input').value;
-        return inputValue;
+    @api getValue() {
+        return this.template.querySelector('input').value;
     }
 
     showError = false;
