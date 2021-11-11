@@ -8,7 +8,6 @@ export default class uploadFiles extends LightningElement {
     @api checkboxValidation = false;
     @api checkboxTextPlural = '';
     @api checkboxTextSingle = '';
-    @api helptext = false;
     @api helptextContent = '';
     @api validationMessage = '';
 
@@ -29,6 +28,10 @@ export default class uploadFiles extends LightningElement {
 
     get checkboxValidationVal() {
         return convertStringToBoolean(this.checkboxValidation);
+    }
+
+    get isHelpText() {
+        return this.helptextContent !== '' && this.helptextContent !== undefined ? true : false;
     }
 
     isDrop = false;

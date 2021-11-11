@@ -7,7 +7,6 @@ export default class Input extends LightningElement {
     @api alt = ''; // Alternate text for image
     @api label = '';
     @api form;
-    @api helptext = false;
     @api helptextContent = '';
     @api errorText = '';
     @api labelSize;
@@ -42,6 +41,10 @@ export default class Input extends LightningElement {
 
     get errorFontSize() {
         return setDefaultValue(this.errorSize, '1.125rem');
+    }
+
+    get isHelpText() {
+        return this.helptextContent !== '' && this.helptextContent !== undefined ? true : false;
     }
 
     // Call this when value is needed

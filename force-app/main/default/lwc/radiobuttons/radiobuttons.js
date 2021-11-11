@@ -11,7 +11,6 @@ export default class radiobuttons extends LightningElement {
     @api errorText;
     @api labelSize;
     @api errorSize;
-    @api helptext = false;
     @api helptextContent = '';
     @api desktopStyle;
     @api mobileStyle;
@@ -19,11 +18,11 @@ export default class radiobuttons extends LightningElement {
     checkedValues = [];
     handleRadiobuttonsClick() {
         this.checkedValues = this.radiobuttons.map((obj) => ({ ...obj, checked: false }));
-        for (let i = 0; i < this.radiobuttons.length; i++) {
-            this.checkedValues[i].checked = this.template.querySelector(
-                '[data-id="' + this.radiobuttons[i].label + '"]'
+        this.radiobuttons.forEach((element, index) => {
+            this.checkedValues[index].checked = this.template.querySelector(
+                '[data-id="' + this.checkedValues[index].label + '"]'
             ).checked;
-        }
+        });
         this.updateShowErrorTextValue();
         const eventToSend = new CustomEvent('radiobuttonsclick', { detail: this.checkedValues });
         this.dispatchEvent(eventToSend);
@@ -31,6 +30,10 @@ export default class radiobuttons extends LightningElement {
 
     @api getValue() {
         return this.checkedValues;
+    }
+
+    get isHelpText() {
+        return this.helptextContent !== '' && this.helptextContent !== undefined ? true : false;
     }
 
     bottomErrorText = false;

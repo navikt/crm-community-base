@@ -12,7 +12,6 @@ export default class Picklist extends LightningElement {
     @api size;
     @api errorText;
     @api placeholderText;
-    @api helptext = false;
     @api helptextContent = '';
     @api desktopStyle;
     @api mobileStyle;
@@ -60,10 +59,14 @@ export default class Picklist extends LightningElement {
         return this.updateShowErrorTextValue();
     }
 
+    get isHelpText() {
+        return this.helptextContent !== '' && this.helptextContent !== undefined ? true : false;
+    }
+
     showErrorText = false;
     updateShowErrorTextValue() {
         this.showErrorText =
-            this.choiceValue.label === this.placeholderText &&
+            this.choiceValue.name !== 'Placeholder' &&
             this.errorText !== undefined &&
             this.errorText !== '' &&
             !this.disabled;
