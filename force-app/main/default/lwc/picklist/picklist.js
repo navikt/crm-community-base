@@ -66,7 +66,7 @@ export default class Picklist extends LightningElement {
     showErrorText = false;
     updateShowErrorTextValue() {
         this.showErrorText =
-            this.choiceValue.name !== 'Placeholder' &&
+            this.choiceValue.name === 'Placeholder' &&
             this.errorText !== undefined &&
             this.errorText !== '' &&
             !this.disabled;
