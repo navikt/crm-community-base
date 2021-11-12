@@ -8,7 +8,6 @@ export default class Checkbox extends LightningElement {
     @api disabled;
     @api labelSize;
     @api errorSize;
-    @api helptext = false;
     @api helptextContent = '';
     @api name = '';
     @api form = '';
@@ -21,6 +20,10 @@ export default class Checkbox extends LightningElement {
         this.updateShowErrorTextValue();
         const eventToSend = new CustomEvent('checkboxclick', { detail: this.checked });
         this.dispatchEvent(eventToSend);
+    }
+
+    get isHelpText() {
+        return this.helptextContent !== '' && this.helptextContent !== undefined ? true : false;
     }
 
     @api getCheckboxValue() {

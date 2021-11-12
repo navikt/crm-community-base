@@ -10,7 +10,6 @@ export default class Picklist extends LightningElement {
     @api size;
     @api errorText;
     @api placeholderText;
-    @api helptext = false;
     @api helptextContent = '';
     @api form;
     @api desktopStyle;
@@ -29,6 +28,10 @@ export default class Picklist extends LightningElement {
         this.updateShowErrorTextValue();
         const eventToSend = new CustomEvent('picklistvaluechange', { detail: this.choiceValue });
         this.dispatchEvent(eventToSend);
+    }
+
+    get isHelpText() {
+        return this.helptextContent !== '' && this.helptextContent !== undefined ? true : false;
     }
 
     get choicesArray() {
