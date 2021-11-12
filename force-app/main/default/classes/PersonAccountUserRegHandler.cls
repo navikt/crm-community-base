@@ -10,7 +10,7 @@ global class PersonAccountUserRegHandler implements Auth.RegistrationHandler {
             return CommunityUsersService.getOrcreateCommunityPlusLoginUser(personIdent);
         }
         User user= CommunityUsersService.getOrCreatePersonAccountUser(personIdent);
-        if(communityId=='0DB2o000000Ug9IGAS' || communityId=='0DB1l0000008QNvGAM'){
+        if(communityId=='0DB2o000000Ug9I' || communityId=='0DB1l0000008QNv'){
             CommunityUsersService.assignCommunitySpecificPermissionSet(user.Id,communityId);
         }
         return user;
