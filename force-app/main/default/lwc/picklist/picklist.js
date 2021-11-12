@@ -3,6 +3,8 @@ import { setDefaultValue } from 'c/componentHelperClass';
 export default class Picklist extends LightningElement {
     @api masterLabel;
     @api id;
+    @api form;
+    @api name = 'picklist';
     @api choices = [];
     @api disabled;
     @api multiple;
@@ -11,7 +13,6 @@ export default class Picklist extends LightningElement {
     @api errorText;
     @api placeholderText;
     @api helptextContent = '';
-    @api form;
     @api desktopStyle;
     @api mobileStyle;
 
@@ -28,6 +29,10 @@ export default class Picklist extends LightningElement {
         this.updateShowErrorTextValue();
         const eventToSend = new CustomEvent('picklistvaluechange', { detail: this.choiceValue });
         this.dispatchEvent(eventToSend);
+    }
+
+    @api getValue() {
+        return this.choiceValue;
     }
 
     get isHelpText() {
@@ -71,8 +76,7 @@ export default class Picklist extends LightningElement {
             !this.disabled;
         if (this.showErrorText) {
             this.template.querySelector('.skjemaelement').classList.add('navds-select--error');
-            let inputComponent = this.template.querySelector('select');
-            inputComponent.focus();
+            this.template.querySelector('select').focus();
         } else {
             this.template.querySelector('.skjemaelement').classList.remove('navds-select--error');
         }

@@ -26,7 +26,7 @@ export default class Checkbox extends LightningElement {
         return this.helptextContent !== '' && this.helptextContent !== undefined ? true : false;
     }
 
-    @api getCheckboxValue() {
+    @api getValue() {
         return this.checked;
     }
 
