@@ -6,9 +6,10 @@ export default class Input extends LightningElement {
     @api name = 'input';
     @api alt = ''; // Alternate text for image
     @api label = '';
+    @api value = '';
     @api form;
     @api helptextContent = '';
-    @api errorText = '';
+    @api errorText;
     @api labelSize;
     @api errorSize;
     @api autofocus = false;
@@ -53,20 +54,28 @@ export default class Input extends LightningElement {
     }
 
     showError = false;
-    updateError() {
+    updateShowErrorTextValue() {
         this.showError =
-            this.template.querySelector('input').value === undefined ||
-            this.template.querySelector('input').value === '';
+            this.errorText !== undefined &&
+            this.errorText !== '' &&
+            !this.disabled &&
+            (this.template.querySelector('input').value === undefined ||
+                this.template.querySelector('input').value === '');
         if (this.showError) {
             this.template.querySelector('.navds-form-field').classList.add('navds-text-field--error');
+            this.template.querySelector('input').focus();
         } else {
             this.template.querySelector('.navds-form-field').classList.remove('navds-text-field--error');
         }
+        return this.showError;
     }
 
     // Sends value on change
     sendValueOnChange() {
-        this.updateError();
+        // Only run when showError === true to avoid aggressive validation
+        if (this.showError) {
+            this.updateShowErrorTextValue();
+        }
         let inputValue = this.template.querySelector('input').value;
         const selectedEvent = new CustomEvent('getvalueonchange', {
             detail: inputValue
@@ -75,14 +84,8 @@ export default class Input extends LightningElement {
     }
 
     @api
-    validationHandler(errorMessage) {
-        this.updateError();
-        let inputEle = this.template.querySelector('input');
-        inputEle.setCustomValidity(errorMessage);
-        inputEle.reportValidity();
-        if (errorMessage !== '') {
-            inputEle.focus();
-        }
+    validationHandler() {
+        return this.updateShowErrorTextValue();
     }
 
     get setDefaultStyle() {

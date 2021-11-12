@@ -3,20 +3,19 @@
         <div class="skjemaelement">
             <div style="flex-direction: row; display: flex; align-items: center">
                 <label class="skjemaelement__label" for="picklist">{masterLabel}</label>
-                <c-helptext if:true={isHelpText} text={helptextContent} style="padding-left: 5px"></c-helptext>
+                <c-helptext if:true={helptext} text={helptextContent} style="padding-left: 5px"></c-helptext>
             </div>
 
             <div class="selectContainer input--fullbredde">
                 <select
                     id={setDefaultId}
                     class="skjemaelement__input"
-                    name={name}
+                    name="picklist"
                     onchange={handleChoiceMade}
                     disabled={disabled}
                     multiple={multiple}
                     required={required}
                     size={size}
-                    form={form}
                 >
                     <template for:each={choices} for:item="choice">
                         <option

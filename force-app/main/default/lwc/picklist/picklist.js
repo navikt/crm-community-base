@@ -3,8 +3,6 @@ import { setDefaultValue } from 'c/componentHelperClass';
 export default class Picklist extends LightningElement {
     @api masterLabel;
     @api id;
-    @api form;
-    @api name = 'picklist';
     @api choices = [];
     @api disabled;
     @api multiple;
@@ -12,6 +10,7 @@ export default class Picklist extends LightningElement {
     @api size;
     @api errorText;
     @api placeholderText;
+    @api helptext = false;
     @api helptextContent = '';
     @api desktopStyle;
     @api mobileStyle;
@@ -23,6 +22,10 @@ export default class Picklist extends LightningElement {
                 this.choiceValue = choice;
             }
         }
+        if (this.choiceValue.name === '' || this.choiceValue.name === undefined) {
+            this.choiceValue = { name: 'Placeholder', label: this.placeholderText, selected: true };
+        }
+        this.updateShowErrorTextValue();
         const eventToSend = new CustomEvent('picklistvaluechange', { detail: this.choiceValue });
         this.dispatchEvent(eventToSend);
     }
@@ -46,10 +49,6 @@ export default class Picklist extends LightningElement {
         return setDefaultValue(style, '');
     }
 
-    @api getValue() {
-        return this.choiceValue;
-    }
-
     @api getElement() {
         return this.template.querySelector('select');
     }
@@ -59,19 +58,17 @@ export default class Picklist extends LightningElement {
         return this.updateShowErrorTextValue();
     }
 
-    get isHelpText() {
-        return this.helptextContent !== '' && this.helptextContent !== undefined ? true : false;
-    }
-
     showErrorText = false;
     updateShowErrorTextValue() {
         this.showErrorText =
-            this.choiceValue.name !== 'Placeholder' &&
+            this.choiceValue.name === 'Placeholder' &&
             this.errorText !== undefined &&
             this.errorText !== '' &&
             !this.disabled;
         if (this.showErrorText) {
             this.template.querySelector('.skjemaelement').classList.add('navds-select--error');
+            let inputComponent = this.template.querySelector('select');
+            inputComponent.focus();
         } else {
             this.template.querySelector('.skjemaelement').classList.remove('navds-select--error');
         }

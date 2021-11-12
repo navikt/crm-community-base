@@ -4,42 +4,32 @@ export default class Checkbox extends LightningElement {
     @api label;
     @api errorText;
     @api id;
-    @api name;
-    @api form;
     @api defaultValue;
     @api disabled;
     @api labelSize;
     @api errorSize;
+    @api helptext = false;
     @api helptextContent = '';
+    @api name = '';
+    @api form = '';
     @api desktopStyle;
     @api mobileStyle;
 
-    checked;
+    checked = false;
     handleCheckboxClick() {
         this.checked = this.template.querySelector('input').checked;
+        this.updateShowErrorTextValue();
         const eventToSend = new CustomEvent('checkboxclick', { detail: this.checked });
         this.dispatchEvent(eventToSend);
     }
 
-    @api getValue() {
+    @api getCheckboxValue() {
         return this.checked;
     }
 
-    get isHelpText() {
-        return this.helptextContent !== '' && this.helptextContent !== undefined ? true : false;
-    }
-
     @api
-    validationHandler(errorMessage) {
-        this.updateShowErrorTextValue();
-        let inputEle = this.template.querySelector('input');
-        inputEle.setCustomValidity(errorMessage);
-        inputEle.reportValidity();
-        if (errorMessage !== '') {
-            inputEle.focus();
-            return 1;
-        }
-        return 0;
+    validationHandler() {
+        return this.updateShowErrorTextValue();
     }
 
     @api clearCheckboxValue() {
@@ -50,7 +40,6 @@ export default class Checkbox extends LightningElement {
         this.template.querySelector('[data-id="checkbox dataid"]').focus();
     }
 
-    showErrorText = false;
     defaultVal = false;
     renderedCallback() {
         if (this.defaultVal) {
@@ -80,13 +69,16 @@ export default class Checkbox extends LightningElement {
         return setDefaultValue(this.id, 'checkbox1');
     }
 
+    showErrorText = false;
     updateShowErrorTextValue() {
         this.showErrorText = !this.checked && this.errorText !== undefined && this.errorText !== '' && !this.disabled;
         if (this.showErrorText) {
             this.template.querySelector('.navds-checkbox').classList.add('navds-checkbox--error');
+            this.focusCheckbox();
         } else {
             this.template.querySelector('.navds-checkbox').classList.remove('navds-checkbox--error');
         }
+        return this.showErrorText;
     }
 
     get setDefaultStyle() {
