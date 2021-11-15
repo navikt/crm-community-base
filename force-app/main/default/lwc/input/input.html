@@ -1,6 +1,10 @@
 <template>
     <div class="navds-form-field navds-form-field--medium" style={setDefaultStyle}>
-        <label for={idValue} if:true={isLabel} class="navds-label" style={labelFontSize}>{label}</label>
+        <div style="flex-direction: row; display: flex; align-items: center">
+            <label for={idValue} if:true={isLabel} class="navds-label" style={labelFontSize}>{label}</label>
+            <c-helptext if:true={isHelpText} text={helptextContent} style="padding-left: 5px"></c-helptext>
+        </div>
+
         <input
             aria-invalid="false"
             aria-describedby="errorTextId"
@@ -15,10 +19,13 @@
             required={required}
             readonly={readonly}
             oninput={sendValueOnChange}
-            onblur={updateError}
+            form={form}
+            value={value}
         />
         <div if:true={showError} id="errorTextId" aria-relevant="additions removals" aria-live="polite">
-            <div class="navds-error-message navds-error-message--medium navds-label" style={errorFontSize}>{errorText}</div>
+            <div class="navds-error-message navds-error-message--medium navds-label" style={errorFontSize}>
+                {errorText}
+            </div>
         </div>
     </div>
 </template>

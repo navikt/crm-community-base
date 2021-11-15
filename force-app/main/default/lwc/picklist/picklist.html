@@ -1,27 +1,43 @@
 <template>
     <div style={setDefaultStyle}>
         <div class="skjemaelement">
-            <label class="skjemaelement__label" for="picklist">{masterLabel}</label>
+            <div style="flex-direction: row; display: flex; align-items: center">
+                <label class="skjemaelement__label" for="picklist">{masterLabel}</label>
+                <c-helptext if:true={isHelpText} text={helptextContent} style="padding-left: 5px"></c-helptext>
+            </div>
+
             <div class="selectContainer input--fullbredde">
                 <select
                     id={setDefaultId}
                     class="skjemaelement__input"
-                    name="picklist"
+                    name={name}
                     onchange={handleChoiceMade}
                     disabled={disabled}
                     multiple={multiple}
                     required={required}
                     size={size}
-                    placeholder={placeholder}
+                    form={form}
                 >
                     <template for:each={choices} for:item="choice">
-                        <option key={choice.name} value={choice.name} disabled={choice.disabled} selected={choice.selected}>
+                        <option
+                            key={choice.name}
+                            value={choice.name}
+                            disabled={choice.disabled}
+                            selected={choice.selected}
+                        >
                             {choice.label}
                         </option>
                     </template>
                 </select>
             </div>
+            <div
+                if:true={showErrorText}
+                id="textField-error-758708dd-9845-4de3-8520-c9cfabb5db44"
+                aria-relevant="additions removals"
+                aria-live="polite"
+            >
+                <div class="navds-error-message navds-error-message--medium navds-label">{errorText}</div>
+            </div>
         </div>
     </div>
-    
 </template>

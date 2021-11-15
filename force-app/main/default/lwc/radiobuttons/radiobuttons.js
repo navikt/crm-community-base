@@ -1,55 +1,65 @@
 import { api, LightningElement } from 'lwc';
 import { setDefaultValue } from 'c/componentHelperClass';
 
-export default class Radiobuttons extends LightningElement {
+export default class radiobuttons extends LightningElement {
     @api radiobuttons = [];
     @api header;
     @api groupName;
+    @api id;
+    @api form;
     @api flexDirection;
     @api errorText;
     @api labelSize;
     @api errorSize;
+    @api helptextContent = '';
     @api desktopStyle;
     @api mobileStyle;
 
+    checkedValues = [];
     handleRadiobuttonsClick() {
-        let checkedValues = [];
-        for (let i = 0; i < this.radiobuttons.length; i++) {
-            checkedValues[i] = this.template.querySelector('[data-id="' + this.radiobuttons[i].label + '"]').checked;
-        }
         this.updateShowErrorTextValue();
-        const eventToSend = new CustomEvent('radiobuttonsclick', { detail: checkedValues });
+        this.checkedValues = this.radiobuttons.map((obj) => ({ ...obj, checked: false }));
+        for (let i = 0; i < this.radiobuttons.length; i++) {
+            this.checkedValues[i].checked = this.template.querySelector(
+                '[data-id="' + this.checkedValues[i].label + '"]'
+            ).checked;
+        }
+        const eventToSend = new CustomEvent('radiobuttonsclick', { detail: this.checkedValues });
         this.dispatchEvent(eventToSend);
+    }
+
+    @api getValue() {
+        return this.checkedValues;
+    }
+
+    get isHelpText() {
+        return this.helptextContent !== '' && this.helptextContent !== undefined ? true : false;
     }
 
     bottomErrorText = false;
     bottomErrorTextWhenRow = false;
-    error = false;
+    // TODO: Fix so that user does not have to press twice on radiobutton to check it if error is shown
     updateShowErrorTextValue() {
+        let error = false;
         this.bottomErrorText = false;
         this.bottomErrorTextWhenRow = false;
         let checked = false;
         // Check for checked values and error
-        for (let i = 0; i < this.radiobuttons.length; i++) {
-            checked = this.template.querySelector('[data-id="' + this.radiobuttons[i].label + '"]').checked;
-            this.checkIfError(checked, this.radiobuttons[i].required, this.radiobuttons[i].disabled);
-
-            if (this.error) {
-                this.template.querySelectorAll('label')[i].style.setProperty('--border-color', '#ba3a26');
-                this.template.querySelectorAll('label')[i].style.setProperty('--box-shadow', '0 0 0 1px #ba3a26');
-                this.showError(i);
+        this.radiobuttons.forEach((element, index) => {
+            checked = this.template.querySelector('[data-id="' + element.label + '"]').checked;
+            if (this.checkIfError(checked, element.required, element.disabled)) {
+                error = true;
+                this.template.querySelectorAll('label')[index].classList.add('navds-error__label');
+                this.showError(index);
             } else {
-                this.template.querySelectorAll('label')[i].style.setProperty('--border-color', '#a0a0a0');
-                this.template.querySelectorAll('label')[i].style.setProperty('--box-shadow', '0 0 0 0');
-                this.template.querySelectorAll('input')[i].setCustomValidity('');
+                this.template.querySelectorAll('label')[index].classList.remove('navds-error__label');
             }
-            this.template.querySelectorAll('input')[i].reportValidity();
-        }
+        });
+        return error;
     }
 
     showError(i) {
         let inputComponent = this.template.querySelectorAll('input')[i];
-        //inputComponent.setCustomValidity(this.errorText);
         inputComponent.focus();
         if (this.setFlex() !== 'row') {
             this.bottomErrorText = true;
@@ -59,9 +69,16 @@ export default class Radiobuttons extends LightningElement {
         }
     }
 
-    // True if err
+    @api
+    validationHandler() {
+        return this.updateShowErrorTextValue();
+    }
+
     checkIfError(checked, required, disabled) {
-        this.error = !checked && required && !disabled;
+        if (required === undefined || !required || disabled) {
+            return false;
+        }
+        return this.errorText !== undefined && this.errorText !== '' && !checked;
     }
 
     setFlex() {

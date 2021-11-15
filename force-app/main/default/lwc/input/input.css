@@ -51,3 +51,12 @@
     box-shadow: 0 0 0 1px #ba3a26;
     border-color: #ba3a26;
 }
+
+.navds-text-field__input:disabled,
+.navds-text-field__input[readonly] {
+    background-color: #f1f1f1;
+    border-color: #a0a0a0;
+    box-shadow: none;
+    color: 262626;
+    cursor: not-allowed;
+}

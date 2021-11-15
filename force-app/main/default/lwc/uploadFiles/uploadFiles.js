@@ -8,6 +8,8 @@ export default class uploadFiles extends LightningElement {
     @api checkboxValidation = false;
     @api checkboxTextPlural = '';
     @api checkboxTextSingle = '';
+    @api helptextContent = '';
+    @api validationMessage = '';
 
     acceptedFileFormats =
         '[.pdf, .png, .svg, .jpg, .jpeg, .jpe, .jif, .gif, .tif, .tiff, .bmp, .doc, .docx, .doc, .odt, .xls, .xlsx, .ods, .ppt, pptx, .txt, .rtf]';
@@ -26,6 +28,10 @@ export default class uploadFiles extends LightningElement {
 
     get checkboxValidationVal() {
         return convertStringToBoolean(this.checkboxValidation);
+    }
+
+    get isHelpText() {
+        return this.helptextContent !== '' && this.helptextContent !== undefined ? true : false;
     }
 
     isDrop = false;
@@ -124,11 +130,7 @@ export default class uploadFiles extends LightningElement {
     @api
     validateCheckbox() {
         if (!this.checkboxValue) {
-            return this.template
-                .querySelector('c-checkbox')
-                .validationHandler(
-                    'For å legge til vedlegg må du gi samtykke til at formidler og tolk kan se vedleggene som lastes opp'
-                );
+            return this.template.querySelector('c-checkbox').validationHandler(this.validationMessage);
         }
         return false;
     }

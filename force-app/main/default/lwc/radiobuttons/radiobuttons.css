@@ -65,8 +65,8 @@ legend {
     border-radius: 4px;
     flex-shrink: 0;
     border-radius: 50%;
-    box-shadow: var(--box-shadow);
-    border-color: var(--border-color);
+    box-shadow: 0 0 0 0;
+    border-color: #a0a0a0;
 }
 
 body {
@@ -83,6 +83,11 @@ body {
 .navds-radio__input:checked + .navds-radio__label::before {
     border: 2px solid #0067c5;
     box-shadow: 0 0 0 3px #fff inset, 0 0 0 2rem #0067c5 inset;
+}
+
+.navds-error__label::before {
+    box-shadow: 0 0 0 1px #ba3a26;
+    border-color: #ba3a26;
 }
 
 .navds-radio--error

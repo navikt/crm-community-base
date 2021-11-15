@@ -23,7 +23,7 @@ export default class Button extends LightningElement {
         if (
             this.buttonStyling !== 'primary' &&
             this.buttonStyling !== 'secondary' &&
-            this.buttonStyling !== 'action' &&
+            this.buttonStyling !== 'tertiary' &&
             this.buttonStyling !== 'danger'
         ) {
             buttonStyle = 'primary'; // Set primary as default if invalid argument

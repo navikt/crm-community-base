@@ -15,13 +15,13 @@
     padding: calc(0.75rem - 2px) 0.75rem;
 }
 
-.navds-button--primary:hover,
-.navds-button--primary:active {
+.navds-button--secondary:hover,
+.navds-button--secondary:active {
     color: #ffffff;
     background-color: #0056b4;
     border-color: transparent;
 }
-.navds-button--primary:active {
+.navds-button--secondary:active {
     background-color: #005b82;
 }
 
@@ -32,23 +32,23 @@
     margin: 0;
 }
 
-.navds-button--secondary {
+.navds-button--tertiary {
     border-color: transparent;
     background-color: transparent;
 }
 
-.navds-button--secondary:hover,
-.navds-button--secondary:focus {
+.navds-button--tertiary:hover,
+.navds-button--tertiary:focus {
     border-color: #0067c5;
 }
 
-.navds-button--action,
+.navds-button--primary,
 .navds-button--danger {
     color: white;
     border-width: 1px;
 }
 
-.navds-button--action:hover {
+.navds-button--primary:hover {
     background-color: #0056b4;
     border-color: #0056b4;
 }
@@ -63,7 +63,7 @@
     border-color: #a32a17;
 }
 
-.navds-button--action {
+.navds-button--primary {
     background-color: #0067c5;
     border-color: #0067c5;
 }
@@ -167,7 +167,7 @@ button {
     box-shadow: 0 0 0 3px #00347d;
 }
 
-.navds-button--action:focus,
+.navds-button--primary:focus,
 .navds-button--danger:focus {
     border-color: white;
 }

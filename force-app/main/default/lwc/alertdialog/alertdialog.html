@@ -20,7 +20,7 @@
                     <span>
                         <c-button
                             button-label={defaultConfirmButtonLabel}
-                            button-styling="action"
+                            button-styling="primary"
                             value="confirm"
                             onbuttonclick={handleButtonClick}
                         ></c-button>
@@ -29,7 +29,7 @@
                     <span if:false={defaultNoCancelButton} style="padding: 0 0 0 10px">
                         <c-button
                             button-label={defaultCancelButtonLabel}
-                            button-styling="primary"
+                            button-styling="secondary"
                             value="cancel"
                             onbuttonclick={handleButtonClick}
                         ></c-button>
