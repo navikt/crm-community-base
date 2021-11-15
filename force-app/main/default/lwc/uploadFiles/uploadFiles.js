@@ -130,7 +130,7 @@ export default class uploadFiles extends LightningElement {
     @api
     validateCheckbox() {
         if (!this.checkboxValue) {
-            return this.template.querySelector('c-checkbox').validationHandler(this.validationMessage);
+            return this.template.querySelector('c-checkbox').validationHandler();
         }
         return false;
     }
