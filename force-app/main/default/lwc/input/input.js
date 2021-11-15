@@ -6,7 +6,7 @@ export default class Input extends LightningElement {
     @api name = 'input';
     @api alt = ''; // Alternate text for image
     @api label = '';
-    @api value = '';
+    @api value;
     @api form;
     @api helptextContent = '';
     @api errorText;
@@ -22,6 +22,7 @@ export default class Input extends LightningElement {
     @api id = 'inputcomponent';
     @api mobileStyle;
     @api desktopStyle;
+    setValue;
 
     isLabel = false;
     haslabel() {
@@ -29,6 +30,7 @@ export default class Input extends LightningElement {
     }
 
     connectedCallback() {
+        this.setValue = this.value;
         this.haslabel();
     }
 
@@ -60,7 +62,8 @@ export default class Input extends LightningElement {
             this.errorText !== '' &&
             !this.disabled &&
             (this.template.querySelector('input').value === undefined ||
-                this.template.querySelector('input').value === '');
+                this.template.querySelector('input').value === '' ||
+                this.template.querySelector('input').value === null);
         if (this.showError) {
             this.template.querySelector('.navds-form-field').classList.add('navds-text-field--error');
             this.template.querySelector('input').focus();
@@ -72,15 +75,19 @@ export default class Input extends LightningElement {
 
     // Sends value on change
     sendValueOnChange() {
-        // Only run when showError === true to avoid aggressive validation
-        if (this.showError) {
-            this.updateShowErrorTextValue();
-        }
         let inputValue = this.template.querySelector('input').value;
         const selectedEvent = new CustomEvent('getvalueonchange', {
             detail: inputValue
         });
         this.dispatchEvent(selectedEvent);
+    }
+
+    validateOnBlur() {
+        this.setValue = this.template.querySelector('input').value;
+        // Only run when showError === true to avoid aggressive validation
+        if (this.showError) {
+            this.updateShowErrorTextValue();
+        }
     }
 
     @api
