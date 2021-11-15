@@ -43,7 +43,7 @@
         </div>
     </div>
     <div class="checkboxClass hidden">
-        <c-checkbox label={checkboxContent} oncheckboxclick={handleCheckboxValue}></c-checkbox>
+        <c-checkbox label={checkboxContent} oncheckboxclick={handleCheckboxValue} error-text="Du må gi samtykke for å laste opp filer."></c-checkbox>
     </div>
     <div if:true={filesChanged} class="filesClass">
         <ul aria-label="Liste over filer">

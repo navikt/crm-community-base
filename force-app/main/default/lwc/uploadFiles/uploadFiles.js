@@ -115,9 +115,8 @@ export default class uploadFiles extends LightningElement {
         if (this.checkboxValidationVal) {
             this.checkboxValue = event.detail;
             this.getCheckboxValue();
-            return this.template.querySelector('c-checkbox').validationHandler(''); // Clear validation when clicking checkbox. Only validate on Submit.
+            this.template.querySelector('c-checkbox').validationHandler(); // Clear validation when clicking checkbox. Only validate on Submit.
         }
-        return 0;
     }
 
     getCheckboxValue() {
@@ -130,7 +129,7 @@ export default class uploadFiles extends LightningElement {
     @api
     validateCheckbox() {
         if (!this.checkboxValue) {
-            return this.template.querySelector('c-checkbox').validationHandler(this.validationMessage);
+            return this.template.querySelector('c-checkbox').validationHandler();
         }
         return false;
     }
