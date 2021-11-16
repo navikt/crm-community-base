@@ -40,7 +40,6 @@ export default class Checkbox extends LightningElement {
     }
 
     @api setCheckboxValue(value) {
-        console.log('setCheckboxValue');
         this.template.querySelector('input').checked = value;
     }
 
