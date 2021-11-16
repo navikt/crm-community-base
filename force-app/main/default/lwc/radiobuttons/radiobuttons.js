@@ -5,7 +5,6 @@ export default class radiobuttons extends LightningElement {
     @api radiobuttons = [];
     @api header;
     @api groupName;
-    @api id;
     @api form;
     @api flexDirection;
     @api errorText;
@@ -38,7 +37,6 @@ export default class radiobuttons extends LightningElement {
 
     bottomErrorText = false;
     bottomErrorTextWhenRow = false;
-    // TODO: Fix so that user does not have to press twice on radiobutton to check it if error is shown
     updateShowErrorTextValue() {
         let error = false;
         this.bottomErrorText = false;
@@ -56,6 +54,16 @@ export default class radiobuttons extends LightningElement {
             }
         });
         return error;
+    }
+
+    // Need to set value again on render to avoid user having to click twice on radiobutton
+    renderedCallback() {
+        if (this.checkedValues.length > 0) {
+            for (let i = 0; i < this.radiobuttons.length; i++) {
+                this.template.querySelector('[data-id="' + this.radiobuttons[i].label + '"]').checked =
+                    this.checkedValues[i].checked;
+            }
+        }
     }
 
     showError(i) {

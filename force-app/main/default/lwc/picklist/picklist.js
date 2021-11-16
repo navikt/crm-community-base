@@ -2,7 +2,7 @@ import { LightningElement, api } from 'lwc';
 import { setDefaultValue } from 'c/componentHelperClass';
 export default class Picklist extends LightningElement {
     @api masterLabel;
-    @api id;
+    @api id = 'picklistId';
     @api form;
     @api name = 'picklist';
     @api choices = [];
@@ -10,13 +10,24 @@ export default class Picklist extends LightningElement {
     @api multiple;
     @api required;
     @api size;
-    @api errorText;
+    @api errorText = '';
     @api placeholderText;
     @api helptextContent = '';
     @api desktopStyle;
     @api mobileStyle;
 
-    choiceValue = { name: 'Placeholder', label: this.placeholderText, selected: true };
+    choiceValue;
+    choicesArray = [];
+    connectedCallback() {
+        if (this.placeholderText) {
+            this.choiceValue = { name: 'Placeholder', label: this.placeholderText, selected: true };
+            this.choicesArray = [this.choiceValue, ...this.choices];
+        } else {
+            this.choiceValue = { name: 'Placeholder', label: 'Velg et alternativ', selected: true };
+            this.choicesArray = [...this.choices];
+        }
+    }
+
     handleChoiceMade(event) {
         for (let choice of this.choicesArray) {
             if (choice.name === event.target.value) {
@@ -26,7 +37,9 @@ export default class Picklist extends LightningElement {
         if (this.choiceValue.name === '' || this.choiceValue.name === undefined) {
             this.choiceValue = { name: 'Placeholder', label: this.placeholderText, selected: true };
         }
-        this.updateShowErrorTextValue();
+        if (this.showErrorText) {
+            this.updateShowErrorTextValue();
+        }
         const eventToSend = new CustomEvent('picklistvaluechange', { detail: this.choiceValue });
         this.dispatchEvent(eventToSend);
     }
@@ -37,13 +50,6 @@ export default class Picklist extends LightningElement {
 
     get isHelpText() {
         return this.helptextContent !== '' && this.helptextContent !== undefined ? true : false;
-    }
-
-    get choicesArray() {
-        if (this.placeholderText !== undefined) {
-            return [{ name: 'Placeholder', label: this.placeholderText, selected: true }, ...this.choices];
-        }
-        return this.choices;
     }
 
     get setDefaultId() {
