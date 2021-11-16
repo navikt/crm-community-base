@@ -79,15 +79,11 @@ export default class Input extends LightningElement {
         const selectedEvent = new CustomEvent('getvalueonchange', {
             detail: inputValue
         });
-        this.dispatchEvent(selectedEvent);
-    }
-
-    validateOnBlur() {
-        this.setValue = this.template.querySelector('input').value;
-        // Only run when showError === true to avoid aggressive validation
         if (this.showError) {
+            this.setValue = this.template.querySelector('input').value;
             this.updateShowErrorTextValue();
         }
+        this.dispatchEvent(selectedEvent);
     }
 
     @api
