@@ -39,6 +39,11 @@ export default class Checkbox extends LightningElement {
         this.template.querySelector('input').checked = false;
     }
 
+    @api setCheckboxValue(value) {
+        console.log('setCheckboxValue');
+        this.template.querySelector('input').checked = value;
+    }
+
     @api focusCheckbox() {
         this.template.querySelector('[data-id="checkbox dataid"]').focus();
     }
