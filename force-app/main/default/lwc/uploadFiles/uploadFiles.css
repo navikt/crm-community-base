@@ -37,7 +37,7 @@
 }
 
 .dropzone {
-    padding: 0.125rem;
+    padding: 0.125rem 0.125rem 0.125rem 0;
     border: 1px dashed #d4d4d4;
     border-radius: 0.25rem;
     width: auto;
