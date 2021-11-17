@@ -48,6 +48,18 @@ export default class Picklist extends LightningElement {
         return this.choiceValue;
     }
 
+    /*@api setValue(label) {
+        console.log(JSON.stringify(label));
+        let labelToCheck = JSON.parse(JSON.stringify(label));
+        console.log('labelToCHeck: ', labeltoCheck);
+        this.choicesArray.forEach(element => {
+            element.selected = false;
+            if (element.label === labelToCheck) {
+                element.selected = true;
+            }
+        });
+    }*/
+
     get isHelpText() {
         return this.helptextContent !== '' && this.helptextContent !== undefined ? true : false;
     }
