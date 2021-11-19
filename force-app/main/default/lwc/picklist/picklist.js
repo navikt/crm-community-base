@@ -8,34 +8,26 @@ export default class Picklist extends LightningElement {
     @api choices = [];
     @api disabled;
     @api multiple;
-    @api required;
     @api size;
     @api errorText = '';
-    @api placeholderText;
     @api helptextContent = '';
     @api desktopStyle;
     @api mobileStyle;
 
     choiceValue;
-    choicesArray = [];
     connectedCallback() {
-        if (this.placeholderText) {
-            this.choiceValue = { name: 'Placeholder', label: this.placeholderText, selected: true };
-            this.choicesArray = [this.choiceValue, ...this.choices];
-        } else {
-            this.choiceValue = { name: 'Placeholder', label: 'Velg et alternativ', selected: true };
-            this.choicesArray = [...this.choices];
+        for (let choice of this.choices) {
+            if (choice.selected) {
+                this.choiceValue = choice;
+            }
         }
     }
 
     handleChoiceMade(event) {
-        for (let choice of this.choicesArray) {
+        for (let choice of this.choices) {
             if (choice.name === event.target.value) {
                 this.choiceValue = choice;
             }
-        }
-        if (this.choiceValue.name === '' || this.choiceValue.name === undefined) {
-            this.choiceValue = { name: 'Placeholder', label: this.placeholderText, selected: true };
         }
         if (this.showErrorText) {
             this.updateShowErrorTextValue();
@@ -47,18 +39,6 @@ export default class Picklist extends LightningElement {
     @api getValue() {
         return this.choiceValue;
     }
-
-    /*@api setValue(label) {
-        console.log(JSON.stringify(label));
-        let labelToCheck = JSON.parse(JSON.stringify(label));
-        console.log('labelToCHeck: ', labeltoCheck);
-        this.choicesArray.forEach(element => {
-            element.selected = false;
-            if (element.label === labelToCheck) {
-                element.selected = true;
-            }
-        });
-    }*/
 
     get isHelpText() {
         return this.helptextContent !== '' && this.helptextContent !== undefined ? true : false;

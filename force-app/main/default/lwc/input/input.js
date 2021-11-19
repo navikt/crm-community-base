@@ -39,11 +39,11 @@ export default class Input extends LightningElement {
     }
 
     get labelFontSize() {
-        return setDefaultValue(this.labelSize, '1.125rem');
+        return 'font-size: ' + setDefaultValue(this.labelSize, '1.125rem') + ';';
     }
 
     get errorFontSize() {
-        return setDefaultValue(this.errorSize, '1.125rem');
+        return 'font-size: ' + setDefaultValue(this.errorSize, '1.125rem') + ';';
     }
 
     get isHelpText() {
