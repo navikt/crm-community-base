@@ -12,10 +12,6 @@ export default class Helptext extends LightningElement {
         if (window.screen.width < 576) {
             style = this.mobileStyle;
         }
-        return setDefaultValue(style, '');
-    }
-
-    get mobileWrapStyle() {
-        return window.screen.width < 576 ? 'white-space: normal;' : '';
+        return setDefaultValue(style, 'white-space: normal; width: 50vw');
     }
 }
