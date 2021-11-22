@@ -73,14 +73,42 @@ export default class Input extends LightningElement {
         return this.showError;
     }
 
+    // Checks if number is mobile, ref: https://no.wikipedia.org/wiki/Nummerplan_(E.164)
+    // Returns true if mobile
+    @api
+    validatePhone() {
+        let num = this.template.querySelector('input').value.replace(' ', '');
+        if (num.substring(0, 3) === '+47') {
+            num = num.substring(3, num.length);
+        }
+        if (num.substring(0, 4) === '0047') {
+            num = num.substring(4, num.length);
+        }
+        if (num.substring(0,2) === '47' && num.length === 10) {
+            num = num.substring(2, num.length);
+        }
+        if (num.substring(0,3) === '047' && num.length === 11) {
+            num = num.substring(3, num.length);
+        }
+        if (num.length === 8 && num.charAt(0) === '4' || num.charAt(0) === '9') {
+            this.showError = false;
+            this.template.querySelector('.navds-form-field').classList.remove('navds-text-field--error');
+            return true;
+        }
+        this.showError = true;
+        this.template.querySelector('.navds-form-field').classList.add('navds-text-field--error');
+        this.template.querySelector('input').focus();
+        return false;
+    }
+
     // Sends value on change
     sendValueOnChange() {
         let inputValue = this.template.querySelector('input').value;
+        this.setValue = inputValue;
         const selectedEvent = new CustomEvent('getvalueonchange', {
             detail: inputValue
         });
         if (this.showError) {
-            this.setValue = this.template.querySelector('input').value;
             this.updateShowErrorTextValue();
         }
         this.dispatchEvent(selectedEvent);
