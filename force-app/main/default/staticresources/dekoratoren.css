@@ -1824,8 +1824,8 @@
   color: #3E3832;
 }
 .decorator-wrapper .alertstripe--info {
-  border: 1px solid #5690a2;
-  background-color: #e0f5fb;
+  border: 1px solid #368DA8;
+  background-color: #D8F9FF;
 }
 .decorator-wrapper .alertstripe--suksess {
   border: 1px solid #06893A;
@@ -1858,6 +1858,7 @@
   max-width: 37.5rem;
   display: block;
   flex: 1;
+  color: #262626;
 }
 .decorator-wrapper .sr-only {
   position: absolute;

@@ -9,6 +9,7 @@ export default class GlobalCommunityFooter extends LightningElement {
     arrowupicon = icons + '/arrowupicon.svg';
     logosvart = logos + '/navLogoBlack.svg';
     @api NAVarea;
+    @api navareapicklist;
 
     @track isArbeidsgiver;
     @track isPrivatperson;
@@ -19,9 +20,12 @@ export default class GlobalCommunityFooter extends LightningElement {
     }
 
     connectedCallback() {
-        this.isPrivatperson = this.NAVarea == 'Privatperson';
-        this.isArbeidsgiver = this.NAVarea == 'Arbeidsgiver';
-        this.isSamarbeidspartner = this.NAVarea == 'Samarbeidspartner';
+        // The new LWR template doesn't support properties with uppercase first character ¯\_(ツ)_/¯
+        this.NAVarea = this.NAVarea ?? this.navareapicklist;
+
+        this.isPrivatperson = this.navareapicklist == 'Privatperson';
+        this.isArbeidsgiver = this.navareapicklist == 'Arbeidsgiver';
+        this.isSamarbeidspartner = this.navareapicklist == 'Samarbeidspartner';
     }
 
     scrollToTop() {
