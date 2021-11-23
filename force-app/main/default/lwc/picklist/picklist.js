@@ -2,31 +2,36 @@ import { LightningElement, api } from 'lwc';
 import { setDefaultValue } from 'c/componentHelperClass';
 export default class Picklist extends LightningElement {
     @api masterLabel;
-    @api id;
+    @api id = 'picklistId';
     @api form;
     @api name = 'picklist';
     @api choices = [];
     @api disabled;
     @api multiple;
-    @api required;
     @api size;
-    @api errorText;
-    @api placeholderText;
+    @api errorText = '';
     @api helptextContent = '';
     @api desktopStyle;
     @api mobileStyle;
 
-    choiceValue = { name: 'Placeholder', label: this.placeholderText, selected: true };
+    choiceValue;
+    connectedCallback() {
+        for (let choice of this.choices) {
+            if (choice.selected) {
+                this.choiceValue = choice;
+            }
+        }
+    }
+
     handleChoiceMade(event) {
-        for (let choice of this.choicesArray) {
+        for (let choice of this.choices) {
             if (choice.name === event.target.value) {
                 this.choiceValue = choice;
             }
         }
-        if (this.choiceValue.name === '' || this.choiceValue.name === undefined) {
-            this.choiceValue = { name: 'Placeholder', label: this.placeholderText, selected: true };
+        if (this.showErrorText) {
+            this.updateShowErrorTextValue();
         }
-        this.updateShowErrorTextValue();
         const eventToSend = new CustomEvent('picklistvaluechange', { detail: this.choiceValue });
         this.dispatchEvent(eventToSend);
     }
@@ -37,13 +42,6 @@ export default class Picklist extends LightningElement {
 
     get isHelpText() {
         return this.helptextContent !== '' && this.helptextContent !== undefined ? true : false;
-    }
-
-    get choicesArray() {
-        if (this.placeholderText !== undefined) {
-            return [{ name: 'Placeholder', label: this.placeholderText, selected: true }, ...this.choices];
-        }
-        return this.choices;
     }
 
     get setDefaultId() {
