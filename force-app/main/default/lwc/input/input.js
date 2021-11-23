@@ -108,7 +108,7 @@ export default class Input extends LightningElement {
             detail: inputValue
         });
         if (this.showError) {
-            this.showError = this.updateShowErrorTextValue();
+            this.updateShowErrorTextValue();
         }
         this.dispatchEvent(selectedEvent);
     }
