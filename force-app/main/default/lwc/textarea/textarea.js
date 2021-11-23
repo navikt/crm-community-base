@@ -3,7 +3,6 @@ import { setDefaultValue } from 'c/componentHelperClass';
 
 export default class Textarea extends LightningElement {
     @api name = 'textarea';
-    @api alt = ''; // Alternate text for image
     @api label = '';
     @api value;
     @api form;
