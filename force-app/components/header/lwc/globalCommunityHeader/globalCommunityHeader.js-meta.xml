@@ -1,21 +1,29 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
-    <apiVersion>48.0</apiVersion>
+    <apiVersion>53.0</apiVersion>
     <isExposed>true</isExposed>
 	<description>Global Community Header</description>
 	<masterLabel>Global Community Header</masterLabel>
 	<targets>
 		<target>lightningCommunity__Page</target>
-	<target>lightningCommunity__Default</target>
-</targets>
-<targetConfigs>
-	<targetConfig targets="lightningCommunity__Default">
-		<property
+		<target>lightningCommunity__Default</target>
+        <target>lightningCommunity__Page_Layout</target>
+        <target>lightningCommunity__Theme_Layout</target>
+	</targets>
+	<targetConfigs>
+		<targetConfig targets="lightningCommunity__Default">
+            <property
                 name="NAVarea"
                 type="String"
                 label="NAV Område (Privatperson, Arbeidsgiver, Samarbeidspartner)"
                 default="Privatperson"
             />
-	</targetConfig>
-</targetConfigs>
+            <property
+                name="navareapicklist"
+                type="String"
+                label="NAV Område dropdown, brukes hvis feltet over er undefined (pga. LWR template); ubrukelig utenom."
+                datasource="Privatperson, Arbeidsgiver, Samarbeidspartner"
+            />
+		</targetConfig>
+	</targetConfigs>
 </LightningComponentBundle>
