@@ -55,7 +55,7 @@ export default class Input extends LightningElement {
         return this.template.querySelector('input').value;
     }
 
-    showError = false;
+    showError;
     updateShowErrorTextValue() {
         this.showError = this.errorText !== undefined && this.errorText !== '' && !this.disabled && 
         (this.template.querySelector('input').value === undefined || 
@@ -115,6 +115,13 @@ export default class Input extends LightningElement {
 
     @api validateOrgNumber() {
         let regExp = RegExp('\\d{9}');
+        this.showError = regExp.test(this.template.querySelector('input').value) ? false : true;
+        this.setErrorCss();
+        return this.showError;
+    }
+
+    @api validatePersonNumber() {
+        let regExp = RegExp('[0-7][0-9][0-1][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]');
         this.showError = regExp.test(this.template.querySelector('input').value) ? false : true;
         this.setErrorCss();
         return this.showError;
