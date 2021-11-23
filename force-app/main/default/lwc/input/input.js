@@ -57,20 +57,21 @@ export default class Input extends LightningElement {
 
     showError = false;
     updateShowErrorTextValue() {
-        this.showError =
-            this.errorText !== undefined &&
-            this.errorText !== '' &&
-            !this.disabled &&
-            (this.template.querySelector('input').value === undefined ||
-                this.template.querySelector('input').value === '' ||
-                this.template.querySelector('input').value === null);
+        this.showError = this.errorText !== undefined && this.errorText !== '' && !this.disabled && 
+        (this.template.querySelector('input').value === undefined || 
+        this.template.querySelector('input').value === '' || 
+        this.template.querySelector('input').value === null);
+        this.setErrorCss();
+        return this.showError;
+    }
+
+    setErrorCss() {
         if (this.showError) {
             this.template.querySelector('.navds-form-field').classList.add('navds-text-field--error');
             this.template.querySelector('input').focus();
         } else {
             this.template.querySelector('.navds-form-field').classList.remove('navds-text-field--error');
         }
-        return this.showError;
     }
 
     // Checks if number is mobile, ref: https://no.wikipedia.org/wiki/Nummerplan_(E.164)
@@ -92,13 +93,11 @@ export default class Input extends LightningElement {
         }
         if (num.length === 8 && num.charAt(0) === '4' || num.charAt(0) === '9') {
             this.showError = false;
-            this.template.querySelector('.navds-form-field').classList.remove('navds-text-field--error');
-            return true;
+        } else {
+            this.showError = true;
         }
-        this.showError = true;
-        this.template.querySelector('.navds-form-field').classList.add('navds-text-field--error');
-        this.template.querySelector('input').focus();
-        return false;
+        this.setErrorCss();
+        return this.showError;
     }
 
     // Sends value on change
@@ -109,14 +108,22 @@ export default class Input extends LightningElement {
             detail: inputValue
         });
         if (this.showError) {
-            this.updateShowErrorTextValue();
+            this.showError = this.updateShowErrorTextValue();
         }
         this.dispatchEvent(selectedEvent);
+    }
+
+    @api validateOrgNumber() {
+        let regExp = RegExp('\\d{9}');
+        this.showError = regExp.test(this.template.querySelector('input').value) ? false : true;
+        this.setErrorCss();
+        return this.showError;
     }
 
     @api
     validationHandler() {
         return this.updateShowErrorTextValue();
+        
     }
 
     get setDefaultStyle() {
