@@ -12,7 +12,6 @@ export default class Textarea extends LightningElement {
     @api errorSize;
     @api autofocus = false;
     @api disabled = false;
-    @api required = false;
     @api readonly = false;
     @api placeholder = '';
     @api maxLength;
