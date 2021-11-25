@@ -35,7 +35,7 @@ export default class uploadFiles extends LightningElement {
     }
 
     isDrop = false;
-    dropHandler(event) {
+    @api dropHandler(event) {
         event.preventDefault();
         this.isDrop = true;
         this.onFileUpload(event);
