@@ -1,6 +1,9 @@
 .navds-checkbox {
     position: relative;
     padding: 0.75rem 0;
+    flex-direction: row; 
+    display: flex; 
+    align-items: center;
 }
 
 .navds-checkbox__input {
