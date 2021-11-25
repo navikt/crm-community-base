@@ -115,7 +115,6 @@ export default class uploadFiles extends LightningElement {
         if (this.checkboxValidationVal) {
             this.checkboxValue = event.detail;
             this.getCheckboxValue();
-            this.template.querySelector('c-checkbox').validationHandler(); // Clear validation when clicking checkbox. Only validate on Submit.
         }
     }
 

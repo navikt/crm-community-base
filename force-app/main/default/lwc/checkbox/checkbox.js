@@ -17,7 +17,9 @@ export default class Checkbox extends LightningElement {
     checked = false;
     handleCheckboxClick() {
         this.checked = this.template.querySelector('input').checked;
-        this.updateShowErrorTextValue();
+        if (this.showErrorText) {
+            this.updateShowErrorTextValue();
+        }
         const eventToSend = new CustomEvent('checkboxclick', { detail: this.checked });
         this.dispatchEvent(eventToSend);
     }
