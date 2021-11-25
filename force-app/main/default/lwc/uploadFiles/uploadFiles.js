@@ -76,6 +76,7 @@ export default class uploadFiles extends LightningElement {
         if (this.checkboxValidationVal) {
             this.template.querySelector('c-checkbox').clearCheckboxValue();
         }
+        this.checkboxValue = false;
     }
 
     setButtonStyleOnFocus() {
@@ -99,10 +100,9 @@ export default class uploadFiles extends LightningElement {
     showOrHideCheckbox() {
         if (this.checkboxValidationVal) {
             if (this.fileData.length === 0) {
-                this.template.querySelector('.checkboxClass').classList.add('hidden');
                 this.clearCheckboxValue();
-                this.checkboxValue = false;
-                this.getCheckboxValue();
+                this.sendCheckboxValue();
+                this.template.querySelector('.checkboxClass').classList.add('hidden');
             } else {
                 this.template.querySelector('.checkboxClass').classList.remove('hidden');
                 this.focusCheckbox();
@@ -114,11 +114,11 @@ export default class uploadFiles extends LightningElement {
     handleCheckboxValue(event) {
         if (this.checkboxValidationVal) {
             this.checkboxValue = event.detail;
-            this.getCheckboxValue();
+            this.sendCheckboxValue();
         }
     }
 
-    getCheckboxValue() {
+    sendCheckboxValue() {
         const selectedEvent = new CustomEvent('getcheckboxvalue', {
             detail: this.checkboxValue
         });

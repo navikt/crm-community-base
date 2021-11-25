@@ -14,13 +14,12 @@ export default class Checkbox extends LightningElement {
     @api desktopStyle;
     @api mobileStyle;
 
-    checked = false;
     handleCheckboxClick() {
-        this.checked = this.template.querySelector('input').checked;
+        let checked = this.template.querySelector('input').checked;
         if (this.showErrorText) {
             this.updateShowErrorTextValue();
         }
-        const eventToSend = new CustomEvent('checkboxclick', { detail: this.checked });
+        const eventToSend = new CustomEvent('checkboxclick', { detail: checked });
         this.dispatchEvent(eventToSend);
     }
 
@@ -29,7 +28,7 @@ export default class Checkbox extends LightningElement {
     }
 
     @api getValue() {
-        return this.checked;
+        return this.template.querySelector('input').checked;
     }
 
     @api
@@ -52,7 +51,6 @@ export default class Checkbox extends LightningElement {
     defaultVal;
     renderedCallback() {
         if (this.defaultVal) {
-            this.checked = true;
             this.template.querySelector('input').checked = true;
             this.defaultVal = false;
         }
@@ -80,7 +78,7 @@ export default class Checkbox extends LightningElement {
 
     showErrorText = false;
     updateShowErrorTextValue() {
-        this.showErrorText = !this.checked && this.errorText !== undefined && this.errorText !== '' && !this.disabled;
+        this.showErrorText = !this.template.querySelector('input').checked && this.errorText !== undefined && this.errorText !== '' && !this.disabled;
         if (this.showErrorText) {
             this.template.querySelector('.navds-checkbox').classList.add('navds-checkbox--error');
             this.focusCheckbox();
