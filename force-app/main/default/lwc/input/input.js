@@ -22,7 +22,7 @@ export default class Input extends LightningElement {
     @api id = 'inputcomponent';
     @api mobileStyle;
     @api desktopStyle;
-    setValue;
+    valueToSet;
 
     isLabel = false;
     haslabel() {
@@ -30,7 +30,7 @@ export default class Input extends LightningElement {
     }
 
     connectedCallback() {
-        this.setValue = this.value;
+        this.valueToSet = this.value;
         this.haslabel();
     }
 
@@ -53,6 +53,10 @@ export default class Input extends LightningElement {
     // Call this when value is needed
     @api getValue() {
         return this.template.querySelector('input').value;
+    }
+
+    @api setValue(val) {
+        this.template.querySelector('input').value = val;
     }
 
     showError;
@@ -78,15 +82,22 @@ export default class Input extends LightningElement {
     // Returns true if mobile
     @api
     validatePhone() {
-        let num = this.template.querySelector('input').value.replaceAll(' ', '');
-        if (num.length < 8) {
-            this.showError = true;
+        let num = this.template.querySelector('input').value.replace(' ', '');
+        if (num.substring(0, 3) === '+47') {
+            num = num.substring(3, num.length);
         }
-        // Assume all numbers with prefix '+' are mobile
-        if (num.substring(0, 4) === '0047' && num.length === 12) {
+        if (num.substring(0, 4) === '0047') {
             num = num.substring(4, num.length);
         }
-        if (num.length === 8 && num.charAt(0) !== '4' && num.charAt(0) !== '9') { // Norwegian mobile number
+        if (num.substring(0,2) === '47' && num.length === 10) {
+            num = num.substring(2, num.length);
+        }
+        if (num.substring(0,3) === '047' && num.length === 11) {
+            num = num.substring(3, num.length);
+        }
+        if (num.length === 8 && num.charAt(0) === '4' || num.charAt(0) === '9') {
+            this.showError = false;
+        } else {
             this.showError = true;
         }
         this.setErrorCss();
@@ -96,7 +107,7 @@ export default class Input extends LightningElement {
     // Sends value on change
     sendValueOnChange() {
         let inputValue = this.template.querySelector('input').value;
-        this.setValue = inputValue;
+        this.valueToSet = inputValue;
         const selectedEvent = new CustomEvent('getvalueonchange', {
             detail: inputValue
         });
@@ -108,16 +119,14 @@ export default class Input extends LightningElement {
 
     @api validateOrgNumber() {
         let regExp = RegExp('\\d{9}');
-        let orgNumber = this.template.querySelector('input').value.replaceAll(' ', '');
-        this.showError = regExp.test(orgNumber) ? false : true;
+        this.showError = regExp.test(this.template.querySelector('input').value) ? false : true;
         this.setErrorCss();
         return this.showError;
     }
 
     @api validatePersonNumber() {
         let regExp = RegExp('[0-7][0-9][0-1][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]');
-        let personNumber = this.template.querySelector('input').value.replaceAll(' ', '');
-        this.showError = regExp.test(personNumber) ? false : true;
+        this.showError = regExp.test(this.template.querySelector('input').value) ? false : true;
         this.setErrorCss();
         return this.showError;
     }
