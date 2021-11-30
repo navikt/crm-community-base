@@ -6,6 +6,7 @@
             aria-expanded="true"
             aria-haspopup="dialog"
             title={hoverText}
+            onclick={setHelptextPostition}
         >
             <svg
                 width="1em"
@@ -34,10 +35,10 @@
             data-popper-reference-hidden="false"
             data-popper-escaped="false"
             data-popper-placement="top"
-            style={setDefaultStyle}
+            style={defaultStyle}
         >
             <div class="navds-popover__content">{text}</div>
-            <div data-popper-arrow="true" class="navds-popover__arrow"></div>
+            <div data-popper-arrow="true" class="navds-popover__arrow" style={arrowStyle}></div>
         </div>
     </div>
 </template>

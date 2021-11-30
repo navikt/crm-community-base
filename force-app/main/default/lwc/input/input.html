@@ -2,7 +2,7 @@
     <div class="navds-form-field navds-form-field--medium" style={setDefaultStyle}>
         <div style="flex-direction: row; display: flex; align-items: center">
             <label for={idValue} if:true={isLabel} class="navds-label" style={labelFontSize}>{label}</label>
-            <c-helptext if:true={isHelpText} text={helptextContent} style="padding-left: 5px"></c-helptext>
+            <c-helptext if:true={isHelpText} text={helptextContent}></c-helptext>
         </div>
 
         <input
@@ -23,7 +23,7 @@
             value={setValue}
             maxlength={maxLength}
             minlength={minLength}
-            />
+        />
         <div if:true={showError} id="errorTextId" aria-relevant="additions removals" aria-live="polite">
             <div class="navds-error-message navds-error-message--medium navds-label" style={errorFontSize}>
                 {errorText}
