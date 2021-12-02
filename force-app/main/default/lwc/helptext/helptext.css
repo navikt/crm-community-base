@@ -38,6 +38,7 @@
     white-space: normal;
     width: 40vw;
     padding-left: 5px;
+    width: fit-content;
 }
 
 .navds-popover__content {
@@ -93,7 +94,7 @@
 
 .navds-popover__arrow {
     position: absolute;
-    left: calc(50% - 9.5px);
+    left: calc(50% - 7px);
     bottom: calc(1rem / -2);
 }
 

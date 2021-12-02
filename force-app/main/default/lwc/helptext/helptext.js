@@ -18,13 +18,10 @@ export default class Helptext extends LightningElement {
         if (window.screen.width < 576) {
             let element = this.template.querySelector('.navds-help-text__button');
             let rect = element.getBoundingClientRect();
-            console.log(rect.top, rect.right, rect.bottom, rect.left);
-
             let left = 3 - rect.left;
             let right = 3 + rect.right - window.screen.width;
             let arrowRight = window.screen.width - rect.right;
             let moveToRight = window.screen.width * 0.55 < rect.left;
-            //this.arrowStyle = 'left: ' + rect.left + 'px;';
             this.defaultStyle = 'left: ' + left + 'px;';
             this.arrowStyle = 'left: ' + rect.left + 'px;';
             if (moveToRight) {
