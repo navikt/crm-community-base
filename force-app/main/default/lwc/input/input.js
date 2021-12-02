@@ -82,22 +82,21 @@ export default class Input extends LightningElement {
     // Returns true if mobile
     @api
     validatePhone() {
-        let num = this.template.querySelector('input').value.replace(' ', '');
-        if (num.substring(0, 3) === '+47') {
-            num = num.substring(3, num.length);
-        }
-        if (num.substring(0, 4) === '0047') {
+        let num = this.template.querySelector('input').value.replaceAll(' ', '');
+        if (num.substring(0, 4) === '0047' && num.length === 12) {
             num = num.substring(4, num.length);
         }
-        if (num.substring(0,2) === '47' && num.length === 10) {
-            num = num.substring(2, num.length);
+        if (num.length < 8) {
+            this.showError = true;
         }
-        if (num.substring(0,3) === '047' && num.length === 11) {
+        if (num.substring(0,3) === '+47') {
+            if (num.length < 11) {
+                this.showError = true;
+            }
             num = num.substring(3, num.length);
         }
-        if (num.length === 8 && num.charAt(0) === '4' || num.charAt(0) === '9') {
-            this.showError = false;
-        } else {
+        
+        if (num.length === 8 && num.charAt(0) !== '4' && num.charAt(0) !== '9') { // Norwegian mobile number
             this.showError = true;
         }
         this.setErrorCss();
@@ -119,14 +118,16 @@ export default class Input extends LightningElement {
 
     @api validateOrgNumber() {
         let regExp = RegExp('\\d{9}');
-        this.showError = regExp.test(this.template.querySelector('input').value) ? false : true;
+        let orgNumber = this.template.querySelector('input').value.replaceAll(' ', '');
+        this.showError = regExp.test(orgNumber) ? false : true;
         this.setErrorCss();
         return this.showError;
     }
 
     @api validatePersonNumber() {
         let regExp = RegExp('[0-7][0-9][0-1][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]');
-        this.showError = regExp.test(this.template.querySelector('input').value) ? false : true;
+        let personNumber = this.template.querySelector('input').value.replaceAll(' ', '');
+        this.showError = regExp.test(personNumber) ? false : true;
         this.setErrorCss();
         return this.showError;
     }
