@@ -13,8 +13,8 @@ export default class Picklist extends LightningElement {
     @api helptextContent = '';
     @api desktopStyle;
     @api mobileStyle;
-
     choiceValue;
+
     connectedCallback() {
         for (let choice of this.choices) {
             if (choice.selected) {
@@ -24,15 +24,33 @@ export default class Picklist extends LightningElement {
     }
 
     handleChoiceMade(event) {
-        for (let choice of this.choices) {
-            if (choice.name === event.target.value) {
-                this.choiceValue = choice;
+        let eventToSend;
+        let selectedValuesOnly = [];
+        this.selectedValues = this.choices.map((obj) => ({ ...obj, selected: false }));
+        if (this.multiple) {
+            for (let i = 0; i < this.selectedValues.length; i++) {
+                if (this.template.querySelector(
+                    '[data-id="' + this.selectedValues[i].name + '"]'
+                ).selected) {
+                    this.selectedValues[i].selected = true;
+                    selectedValuesOnly.push(this.selectedValues[i]);
+                }
             }
+            if (selectedValuesOnly.length > 0) {
+                this.choiceValue = selectedValuesOnly[0]; // To prevent err from showing
+            }
+            eventToSend = new CustomEvent('picklistvaluechange', { detail: selectedValuesOnly });
+        } else {
+            for (let choice of this.choices) {
+                if (choice.name === event.target.value) {
+                    this.choiceValue = choice;
+                }
+            }
+            eventToSend = new CustomEvent('picklistvaluechange', { detail: this.choiceValue  });
         }
         if (this.showErrorText) {
             this.updateShowErrorTextValue();
         }
-        const eventToSend = new CustomEvent('picklistvaluechange', { detail: this.choiceValue });
         this.dispatchEvent(eventToSend);
     }
 
