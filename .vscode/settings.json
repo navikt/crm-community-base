@@ -27,5 +27,6 @@
         "**/.sfdx": true,
         "**/.vscode": true,
         "**/.idea": true
-    }
+    },
+    "salesforcedx-vscode-core.push-or-deploy-on-save.enabled": true
 }
