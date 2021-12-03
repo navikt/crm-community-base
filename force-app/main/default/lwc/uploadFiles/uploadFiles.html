@@ -39,11 +39,15 @@
                     </div>
                 </label>
             </div>
-            <c-helptext if:true={isHelpText} text={helptextContent} style="padding-left: 5px"></c-helptext>
+            <c-helptext if:true={isHelpText} text={helptextContent}></c-helptext>
         </div>
     </div>
     <div class="checkboxClass hidden">
-        <c-checkbox label={checkboxContent} oncheckboxclick={handleCheckboxValue} error-text="Du må gi samtykke for å laste opp filer."></c-checkbox>
+        <c-checkbox
+            label={checkboxContent}
+            oncheckboxclick={handleCheckboxValue}
+            error-text="Du må gi samtykke for å laste opp filer."
+        ></c-checkbox>
     </div>
     <div if:true={filesChanged} class="filesClass">
         <ul aria-label="Liste over filer">
