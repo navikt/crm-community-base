@@ -26,4 +26,15 @@ public inherited sharing class AccountsSelector_Community extends ApplicationSel
                 .toSOQL()
         );
     }
+
+    public List<Account> selectByIdentIgnoreConfidential(String ident) {
+        return (List<Account>) Database.query(
+            newQueryFactory()
+                .selectField('CRM_Person__r.INT_FirstName__c')
+                .selectField('CRM_Person__r.INT_MiddleName__c')
+                .selectField('CRM_Person__r.INT_LastName__c')
+                .setCondition('INT_PersonIdent__c=:ident')
+                .toSOQL()
+        );
+    }
 }

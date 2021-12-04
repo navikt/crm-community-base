@@ -106,6 +106,32 @@ private class CommunityUsersServiceTest {
         System.assertEquals('User', user.LastName);
     }
 
+    @IsTest 
+    private static void getOrCreatePersonAccountUserWithConfidentialAddress(){
+        User navEmployee = TestDataFactory_Community.getUsers(1, 'System Administrator', true, true)[0];
+        System.runAs(navEmployee) {
+            Account personAccount = TestDataFactory_Community.getPersonAccounts(1)[0];
+            Person__c person=[SELECT ID, INT_Confidential__c FROM Person__c WHERE CRM_Account__c=:personAccount.Id];
+            person.INT_Confidential__c='FORTROLIG';
+            update person;
+            Test.startTest();
+            User user = CommunityUsersService.getOrCreatePersonAccountUser('1');
+            Test.stopTest();
+            System.assert(user != null);
+            System.assertEquals(personAccount.FirstName, user.FirstName);
+            System.assertEquals(personAccount.LastName, user.LastName);
+            List<PermissionSet> permissionSets = [SELECT Id FROM permissionSet WHERE Name = 'CRM_ManageAsyncRequests'];
+            System.assertEquals(
+                0,
+                [
+                    SELECT COUNT()
+                    FROM PermissionSetAssignment
+                    WHERE AssigneeId = :user.Id AND PermissionSetId = :permissionSets[0].Id
+                ]
+            );
+        }
+    }
+
     @IsTest
     private static void createCommunityPlusUser() {
         User officeUser = TestDataFactory_Community.getUsers(1, 'System Administrator', true, true)[0];
