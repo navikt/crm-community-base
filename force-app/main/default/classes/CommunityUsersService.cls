@@ -31,6 +31,29 @@ public with sharing class CommunityUsersService {
         return null;
     }
 
+    public static User getOrCreatePersonAccountUserWithConfidentialAddress(String personIdent) {
+        //check if related Person__c is ugradert
+        List<Account> personAccounts = new AccountsSelector_Community().selectByIdentIgnoreConfidential(personIdent);
+        if (personAccounts == null || personAccounts.size() == 0)
+            return null;
+
+        List<User> existingUsers = new UsersSelector_Community().selectByAccountIdent(new Set<String>{ personIdent });
+        if (existingUsers.size() > 0)
+            return existingUsers[0];
+
+        DefaultCommunityProfile__c defaultCommunityProfiles = DefaultCommunityProfile__c.getOrgDefaults();
+        String profileName = defaultCommunityProfiles.DefaultProfile__c;
+        Profile profile = [SELECT Id FROM Profile WHERE Name = :profileName];
+
+        if (personAccounts.size() > 0 && profile != null) {
+            PersonAccountWrapper contact = new PersonAccountWrapper(personAccounts[0]);
+            User user = createCommunityUser(contact, profile.Id);
+            return user;
+        }
+
+        return null;
+    }
+
     @TestVisible
     private static User createCommunityUser(PersonAccountWrapper contact, Id profileId) {
         User user = new User();

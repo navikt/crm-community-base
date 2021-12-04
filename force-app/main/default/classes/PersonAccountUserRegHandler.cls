@@ -10,7 +10,10 @@ global class PersonAccountUserRegHandler implements Auth.RegistrationHandler {
             return CommunityUsersService.getOrcreateCommunityPlusLoginUser(personIdent);
         }
         User user= CommunityUsersService.getOrCreatePersonAccountUser(personIdent);
-        if(communityId=='0DB2o000000Ug9I' || communityId=='0DB1l0000008QNv'){
+        if(user==null){
+            user=CommunityUsersService.getOrCreatePersonAccountUserWithConfidentialAddress(personIdent);
+        }
+        if(communityId=='0DB2o000000Ug9I' || communityId=='0DB1l0000008QNv' || communityId=='0DB2o000000Ug9D' || communityId=='0DB1l0000008QKh'){
             CommunityUsersService.assignCommunitySpecificPermissionSet(user.Id,communityId);
         }
         return user;
@@ -26,7 +29,7 @@ global class PersonAccountUserRegHandler implements Auth.RegistrationHandler {
             CommunityUsersService.getOrcreateCommunityPlusLoginUser(personIdent);
         }
 
-        if(communityId=='0DB2o000000Ug9I' || communityId=='0DB1l0000008QNv'){
+        if(communityId=='0DB2o000000Ug9I' || communityId=='0DB1l0000008QNv' || communityId=='0DB2o000000Ug9D' || communityId=='0DB1l0000008QKh'){
             CommunityUsersService.assignCommunitySpecificPermissionSet(userId,communityId);
         }
     }
