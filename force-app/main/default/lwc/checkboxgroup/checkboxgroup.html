@@ -1,0 +1,27 @@
+<template>
+    <div style="flex-direction: row; display: flex; align-items: center">
+        <legend class="navds-fieldset__legend navds-label" style={labelFontSize}>{header}</legend>
+        <c-helptext if:true={isHelpText} text={helptextContent}></c-helptext>
+    </div>
+    <div class={setDefaultStyle}>
+        <div class="navds-checkbox" style={flex}>
+            <template for:each={checkboxes} for:item="checkbox">
+                <div key={checkbox.label} style="position: relative">
+                    <input
+                        aria-invalid="false"
+                        type="checkbox"
+                        class="navds-checkbox__input"
+                        onclick={handleCheckboxClick}
+                        data-id={checkbox.label}
+                        name={groupName}
+                        form={form}
+                        key={checkbox.label} id={checkbox.label}
+                    />
+                    <label key={checkbox.label} for={checkbox.label} class="navds-checkbox__label navds-body-short">{checkbox.label}</label>
+                </div>
+            </template>
+            <div if:true={bottomErrorText} class="navds-error-message navds-error-message--s navds-label navds-label--s" aria-live="polite" style={errorFontSize}>{errorText}</div>
+        </div>
+    </div>
+    <div if:true={bottomErrorTextWhenRow} class="navds-error-message navds-error-message--s navds-label navds-label--s" aria-live="polite" style={errorFontSize}>{errorText}</div>
+   </template>

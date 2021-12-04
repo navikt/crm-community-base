@@ -2,9 +2,8 @@
     <div class="navds-form-field navds-form-field--medium" style={setDefaultStyle}>
         <div style="flex-direction: row; display: flex; align-items: center">
             <label for={idValue} if:true={isLabel} class="navds-label" style={labelFontSize}>{label}</label>
-            <c-helptext if:true={isHelpText} text={helptextContent} style="padding-left: 5px"></c-helptext>
+            <c-helptext if:true={isHelpText} text={helptextContent}></c-helptext>
         </div>
-
         <input
             aria-invalid="false"
             aria-describedby="errorTextId"
@@ -20,7 +19,7 @@
             readonly={readonly}
             oninput={sendValueOnChange}
             form={form}
-            value={setValue}
+            value={valueToSet}
             maxlength={maxLength}
             minlength={minLength}
             />
