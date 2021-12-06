@@ -59,12 +59,20 @@ export default class Input extends LightningElement {
         this.template.querySelector('input').value = val;
     }
 
+    @api sendErrorMessage(errorMessage) {
+        this.errorText = errorMessage;
+        this.showError = errorMessage !== '';
+        this.setErrorCss();
+    }
     showError;
     updateShowErrorTextValue() {
-        this.showError = this.errorText !== undefined && this.errorText !== '' && !this.disabled && 
-        (this.template.querySelector('input').value === undefined || 
-        this.template.querySelector('input').value === '' || 
-        this.template.querySelector('input').value === null);
+        this.showError =
+            this.errorText !== undefined &&
+            this.errorText !== '' &&
+            !this.disabled &&
+            (this.template.querySelector('input').value === undefined ||
+                this.template.querySelector('input').value === '' ||
+                this.template.querySelector('input').value === null);
         this.setErrorCss();
         return this.showError;
     }
@@ -89,14 +97,15 @@ export default class Input extends LightningElement {
         if (num.length < 8) {
             this.showError = true;
         }
-        if (num.substring(0,3) === '+47') {
+        if (num.substring(0, 3) === '+47') {
             if (num.length < 11) {
                 this.showError = true;
             }
             num = num.substring(3, num.length);
         }
-        
-        if (num.length === 8 && num.charAt(0) !== '4' && num.charAt(0) !== '9') { // Norwegian mobile number
+
+        if (num.length === 8 && num.charAt(0) !== '4' && num.charAt(0) !== '9') {
+            // Norwegian mobile number
             this.showError = true;
         }
         this.setErrorCss();
@@ -135,7 +144,6 @@ export default class Input extends LightningElement {
     @api
     validationHandler() {
         return this.updateShowErrorTextValue();
-        
     }
 
     get setDefaultStyle() {
