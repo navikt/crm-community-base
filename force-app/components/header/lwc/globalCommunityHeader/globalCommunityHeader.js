@@ -1,6 +1,7 @@
 import { LightningElement, track, wire, api } from 'lwc';
 import { loadStyle } from 'lightning/platformResourceLoader';
 import dekoratoren from '@salesforce/resourceUrl/dekoratoren';
+import dist from '@salesforce/resourceUrl/dist';
 
 export default class GlobalCommunityHeader extends LightningElement {
     @api NAVarea;
@@ -12,6 +13,7 @@ export default class GlobalCommunityHeader extends LightningElement {
 
     renderedCallback() {
         loadStyle(this, dekoratoren);
+        loadStyle(this, dist);
     }
 
     connectedCallback() {
