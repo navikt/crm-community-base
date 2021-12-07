@@ -57,6 +57,7 @@ export default class Input extends LightningElement {
 
     @api setValue(val) {
         this.template.querySelector('input').value = val;
+        this.sendValueOnChange();
     }
 
     @api sendErrorMessage(errorMessage) {
@@ -80,7 +81,6 @@ export default class Input extends LightningElement {
     }
 
     setErrorCss() {
-        console.log(this.showError);
         if (this.showError) {
             this.template.querySelector('.navds-form-field').classList.add('navds-text-field--error');
             this.template.querySelector('input').focus();
@@ -119,7 +119,8 @@ export default class Input extends LightningElement {
     // Sends value on change
     sendValueOnChange() {
         let inputValue = this.template.querySelector('input').value;
-        this.valueToSet = inputValue;
+        console.log('sendValueOnChange ' + this.label + ': ' + inputValue);
+        this.value = inputValue;
         const selectedEvent = new CustomEvent('getvalueonchange', {
             detail: inputValue
         });
