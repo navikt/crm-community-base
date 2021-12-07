@@ -6,7 +6,6 @@
         </div>
         <input
             aria-invalid="false"
-            aria-describedby="errorTextId"
             class="navds-text-field__input navds-body-short navds-body-medium"
             type={type}
             id={idValue}
@@ -23,7 +22,7 @@
             maxlength={maxLength}
             minlength={minLength}
         />
-        <div if:true={showError} id="errorTextId" aria-relevant="additions removals" aria-live="polite">
+        <div if:true={showError} id="errorTextId" aria-relevant="additions removals" aria-live="polite" role="alert" >
             <div class="navds-error-message navds-error-message--medium navds-label" style={errorFontSize}>
                 {errorText}
             </div>
