@@ -119,7 +119,6 @@ export default class Input extends LightningElement {
     // Sends value on change
     sendValueOnChange() {
         let inputValue = this.template.querySelector('input').value;
-        console.log('sendValueOnChange ' + this.label + ': ' + inputValue);
         this.value = inputValue;
         const selectedEvent = new CustomEvent('getvalueonchange', {
             detail: inputValue
