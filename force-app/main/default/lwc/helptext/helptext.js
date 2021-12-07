@@ -14,6 +14,28 @@ export default class Helptext extends LightningElement {
         }
         return setDefaultValue(style, '');
     }
+
+    ariaHidden = true;
+    ariaExpanded = false;
+    helptextFocus() {
+        console.log('onFocus');
+        this.template.querySelector('.navds-popover').classList.remove('navds-popover--hidden');
+        this.ariaHidden = false;
+        this.ariaExpanded = true;
+        this.setHelptextPostition();
+    }
+
+    helptextBlur() {
+        console.log('onBlur');
+        this.template.querySelector('.navds-popover').classList.add('navds-popover--hidden');
+        this.ariaHidden = true;
+        this.ariaExpanded = false;
+    }
+
+    get defaultHoverText() {
+        return setDefaultValue(this.hoverText, 'Vis hjelpetekst');
+    }
+
     setHelptextPostition() {
         if (window.screen.width < 576) {
             let element = this.template.querySelector('.navds-help-text__button');
