@@ -18,7 +18,6 @@ export default class Helptext extends LightningElement {
     ariaHidden = true;
     ariaExpanded = false;
     helptextFocus() {
-        console.log('onFocus');
         this.template.querySelector('.navds-popover').classList.remove('navds-popover--hidden');
         this.ariaHidden = false;
         this.ariaExpanded = true;
@@ -26,14 +25,13 @@ export default class Helptext extends LightningElement {
     }
 
     helptextBlur() {
-        console.log('onBlur');
         this.template.querySelector('.navds-popover').classList.add('navds-popover--hidden');
         this.ariaHidden = true;
         this.ariaExpanded = false;
     }
 
     get defaultHoverText() {
-        return setDefaultValue(this.hoverText, 'Vis hjelpetekst');
+        return setDefaultValue(this.hoverText, 'Hjelpeknapp');
     }
 
     setHelptextPostition() {
