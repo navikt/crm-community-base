@@ -60,11 +60,12 @@ export default class Input extends LightningElement {
     }
 
     @api sendErrorMessage(errorMessage) {
-        this.errorText = errorMessage;
-        this.showError = errorMessage !== '';
+        this.showError = errorMessage !== '' && errorMessage !== undefined;
+        this.actualErrorText = errorMessage;
         this.setErrorCss();
     }
     showError;
+    actualErrorText;
     updateShowErrorTextValue() {
         this.showError =
             this.errorText !== undefined &&
@@ -73,11 +74,13 @@ export default class Input extends LightningElement {
             (this.template.querySelector('input').value === undefined ||
                 this.template.querySelector('input').value === '' ||
                 this.template.querySelector('input').value === null);
+        this.actualErrorText = this.errorText;
         this.setErrorCss();
         return this.showError;
     }
 
     setErrorCss() {
+        console.log(this.showError);
         if (this.showError) {
             this.template.querySelector('.navds-form-field').classList.add('navds-text-field--error');
             this.template.querySelector('input').focus();
@@ -108,6 +111,7 @@ export default class Input extends LightningElement {
             // Norwegian mobile number
             this.showError = true;
         }
+        this.actualErrorText = this.errorText;
         this.setErrorCss();
         return this.showError;
     }
@@ -129,6 +133,7 @@ export default class Input extends LightningElement {
         let regExp = RegExp('\\d{9}');
         let orgNumber = this.template.querySelector('input').value.replaceAll(' ', '');
         this.showError = regExp.test(orgNumber) ? false : true;
+        this.actualErrorText = this.errorText;
         this.setErrorCss();
         return this.showError;
     }
@@ -137,6 +142,7 @@ export default class Input extends LightningElement {
         let regExp = RegExp('[0-7][0-9][0-1][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]');
         let personNumber = this.template.querySelector('input').value.replaceAll(' ', '');
         this.showError = regExp.test(personNumber) ? false : true;
+        this.actualErrorText = this.errorText;
         this.setErrorCss();
         return this.showError;
     }
