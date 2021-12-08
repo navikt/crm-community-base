@@ -3,10 +3,10 @@
         <button
             class="navds-help-text__button"
             type="button"
-            aria-expanded="true"
-            aria-haspopup="dialog"
-            title={hoverText}
-            onclick={setHelptextPostition}
+            aria-expanded={ariaExpanded}
+            title={defaultHoverText}
+            onclick={helptextFocus}
+            onblur={helptextBlur}
         >
             <svg
                 width="1em"
@@ -25,11 +25,12 @@
                     fill="currentColor"
                 ></path>
             </svg>
+            <span class="navds-sr-only">{defaultHoverText}</span>
         </button>
 
         <div
-            class="navds-popover navds-help-text__popover"
-            aria-hidden="false"
+            class="navds-popover navds-help-text__popover navds-popover--hidden"
+            aria-hidden={ariaHidden}
             tabindex="-1"
             role="tooltip"
             data-popper-reference-hidden="false"
@@ -37,7 +38,7 @@
             data-popper-placement="top"
             style={defaultStyle}
         >
-            <div class="navds-popover__content">{text}</div>
+            <div class="navds-popover__content" role="alert" aria-live="polite">{text}</div>
             <div data-popper-arrow="true" class="navds-popover__arrow" style={arrowStyle}></div>
         </div>
     </div>

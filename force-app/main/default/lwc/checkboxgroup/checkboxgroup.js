@@ -35,6 +35,21 @@ export default class checkboxgroup extends LightningElement {
         return this.helptextContent !== '' && this.helptextContent !== undefined ? true : false;
     }
 
+    @api sendErrorMessage(errorMessage) {
+        this.bottomErrorText = errorMessage !== '';
+        this.errorText = errorMessage;
+        if (this.bottomErrorText) {
+            this.template.querySelectorAll('label').forEach((element) => {
+                element.classList.add('navds-error__label');
+            });
+        } else {
+            this.template.querySelectorAll('label').forEach((element) => {
+                element.classList.remove('navds-error__label');
+            });
+        }
+        this.template.querySelector('fieldset').focus();
+    }
+
     bottomErrorText = false;
     bottomErrorTextWhenRow = false;
     updateShowErrorTextValue() {

@@ -14,6 +14,26 @@ export default class Helptext extends LightningElement {
         }
         return setDefaultValue(style, '');
     }
+
+    ariaHidden = true;
+    ariaExpanded = false;
+    helptextFocus() {
+        this.template.querySelector('.navds-popover').classList.remove('navds-popover--hidden');
+        this.ariaHidden = false;
+        this.ariaExpanded = true;
+        this.setHelptextPostition();
+    }
+
+    helptextBlur() {
+        this.template.querySelector('.navds-popover').classList.add('navds-popover--hidden');
+        this.ariaHidden = true;
+        this.ariaExpanded = false;
+    }
+
+    get defaultHoverText() {
+        return setDefaultValue(this.hoverText, 'Hjelpeknapp');
+    }
+
     setHelptextPostition() {
         if (window.screen.width < 576) {
             let element = this.template.querySelector('.navds-help-text__button');
