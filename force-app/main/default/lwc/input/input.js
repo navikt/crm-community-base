@@ -83,10 +83,26 @@ export default class Input extends LightningElement {
         }
     }
 
+    // Sends value on change
+    sendValueOnChange() {
+        let inputValue = this.template.querySelector('input').value;
+        this.value = inputValue;
+        const selectedEvent = new CustomEvent('getvalueonchange', {
+            detail: inputValue
+        });
+        if (this.showError) {
+            this.updateShowErrorTextValue();
+        }
+        this.dispatchEvent(selectedEvent);
+    }
+
     // Checks if number is mobile, ref: https://no.wikipedia.org/wiki/Nummerplan_(E.164)
     // Returns true if mobile
     @api
     validatePhone(errMsg) {
+        if (errMsg === undefined) {
+            errMsg = this.errorText;
+        }
         this.showError = false;
         let num = this.template.querySelector('input').value.replaceAll(' ', '');
         if (num.substring(0, 4) === '0047' && num.length === 12) {
@@ -111,33 +127,26 @@ export default class Input extends LightningElement {
         return this.showError;
     }
 
-    // Sends value on change
-    sendValueOnChange() {
-        let inputValue = this.template.querySelector('input').value;
-        this.value = inputValue;
-        const selectedEvent = new CustomEvent('getvalueonchange', {
-            detail: inputValue
-        });
-        if (this.showError) {
-            this.updateShowErrorTextValue();
+    @api validateOrgNumber(errMsg) {
+        if (errMsg === undefined) {
+            errMsg = this.errorText;
         }
-        this.dispatchEvent(selectedEvent);
-    }
-
-    @api validateOrgNumber() {
         let regExp = RegExp('\\d{9}');
         let orgNumber = this.template.querySelector('input').value.replaceAll(' ', '');
         this.showError = regExp.test(orgNumber) ? false : true;
-        this.actualErrorText = this.errorText;
+        this.actualErrorText = errMsg;
         this.setErrorCss();
         return this.showError;
     }
 
-    @api validatePersonNumber() {
+    @api validatePersonNumber(errMsg) {
+        if (errMsg === undefined) {
+            errMsg = this.errorText;
+        }
         let regExp = RegExp('[0-7][0-9][0-1][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]');
         let personNumber = this.template.querySelector('input').value.replaceAll(' ', '');
         this.showError = regExp.test(personNumber) ? false : true;
-        this.actualErrorText = this.errorText;
+        this.actualErrorText = errMsg;
         this.setErrorCss();
         return this.showError;
     }
