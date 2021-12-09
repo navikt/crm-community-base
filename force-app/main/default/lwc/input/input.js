@@ -87,6 +87,7 @@ export default class Input extends LightningElement {
     // Returns true if mobile
     @api
     validatePhone(errMsg) {
+        this.showError = false;
         let num = this.template.querySelector('input').value.replaceAll(' ', '');
         if (num.substring(0, 4) === '0047' && num.length === 12) {
             num = num.substring(4, num.length);
