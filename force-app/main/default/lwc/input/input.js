@@ -22,16 +22,10 @@ export default class Input extends LightningElement {
     @api id = 'inputcomponent';
     @api mobileStyle;
     @api desktopStyle;
-    valueToSet;
 
     isLabel = false;
-    haslabel() {
-        this.isLabel = this.label !== '' && this.label !== undefined;
-    }
-
-    connectedCallback() {
-        this.valueToSet = this.value;
-        this.haslabel();
+    get haslabel() {
+        return this.label !== '' && this.label !== undefined;
     }
 
     get idValue() {
@@ -92,7 +86,7 @@ export default class Input extends LightningElement {
     // Checks if number is mobile, ref: https://no.wikipedia.org/wiki/Nummerplan_(E.164)
     // Returns true if mobile
     @api
-    validatePhone() {
+    validatePhone(errMsg) {
         let num = this.template.querySelector('input').value.replaceAll(' ', '');
         if (num.substring(0, 4) === '0047' && num.length === 12) {
             num = num.substring(4, num.length);
@@ -111,7 +105,7 @@ export default class Input extends LightningElement {
             // Norwegian mobile number
             this.showError = true;
         }
-        this.actualErrorText = this.errorText;
+        this.actualErrorText = errMsg;
         this.setErrorCss();
         return this.showError;
     }
