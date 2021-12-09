@@ -100,9 +100,7 @@ export default class Input extends LightningElement {
     // Returns true if mobile
     @api
     validatePhone(errMsg) {
-        if (errMsg === undefined) {
-            errMsg = this.errorText;
-        }
+        errMsg = setDefaultValue(errMsg, this.errorText);
         this.showError = false;
         let num = this.template.querySelector('input').value.replaceAll(' ', '');
         if (num.substring(0, 4) === '0047' && num.length === 12) {
@@ -128,9 +126,7 @@ export default class Input extends LightningElement {
     }
 
     @api validateOrgNumber(errMsg) {
-        if (errMsg === undefined) {
-            errMsg = this.errorText;
-        }
+        errMsg = setDefaultValue(errMsg, this.errorText);
         let regExp = RegExp('\\d{9}');
         let orgNumber = this.template.querySelector('input').value.replaceAll(' ', '');
         this.showError = regExp.test(orgNumber) ? false : true;
@@ -140,9 +136,7 @@ export default class Input extends LightningElement {
     }
 
     @api validatePersonNumber(errMsg) {
-        if (errMsg === undefined) {
-            errMsg = this.errorText;
-        }
+        errMsg = setDefaultValue(errMsg, this.errorText);
         let regExp = RegExp('[0-7][0-9][0-1][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]');
         let personNumber = this.template.querySelector('input').value.replaceAll(' ', '');
         this.showError = regExp.test(personNumber) ? false : true;
