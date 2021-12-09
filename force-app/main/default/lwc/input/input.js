@@ -22,16 +22,10 @@ export default class Input extends LightningElement {
     @api id = 'inputcomponent';
     @api mobileStyle;
     @api desktopStyle;
-    valueToSet;
 
     isLabel = false;
-    haslabel() {
-        this.isLabel = this.label !== '' && this.label !== undefined;
-    }
-
-    connectedCallback() {
-        this.valueToSet = this.value;
-        this.haslabel();
+    get haslabel() {
+        return this.label !== '' && this.label !== undefined;
     }
 
     get idValue() {
@@ -89,10 +83,25 @@ export default class Input extends LightningElement {
         }
     }
 
+    // Sends value on change
+    sendValueOnChange() {
+        let inputValue = this.template.querySelector('input').value;
+        this.value = inputValue;
+        const selectedEvent = new CustomEvent('getvalueonchange', {
+            detail: inputValue
+        });
+        if (this.showError) {
+            this.updateShowErrorTextValue();
+        }
+        this.dispatchEvent(selectedEvent);
+    }
+
     // Checks if number is mobile, ref: https://no.wikipedia.org/wiki/Nummerplan_(E.164)
     // Returns true if mobile
     @api
-    validatePhone() {
+    validatePhone(errMsg) {
+        errMsg = setDefaultValue(errMsg, this.errorText);
+        this.showError = false;
         let num = this.template.querySelector('input').value.replaceAll(' ', '');
         if (num.substring(0, 4) === '0047' && num.length === 12) {
             num = num.substring(4, num.length);
@@ -111,38 +120,27 @@ export default class Input extends LightningElement {
             // Norwegian mobile number
             this.showError = true;
         }
-        this.actualErrorText = this.errorText;
+        this.actualErrorText = errMsg;
         this.setErrorCss();
         return this.showError;
     }
 
-    // Sends value on change
-    sendValueOnChange() {
-        let inputValue = this.template.querySelector('input').value;
-        this.value = inputValue;
-        const selectedEvent = new CustomEvent('getvalueonchange', {
-            detail: inputValue
-        });
-        if (this.showError) {
-            this.updateShowErrorTextValue();
-        }
-        this.dispatchEvent(selectedEvent);
-    }
-
-    @api validateOrgNumber() {
+    @api validateOrgNumber(errMsg) {
+        errMsg = setDefaultValue(errMsg, this.errorText);
         let regExp = RegExp('\\d{9}');
         let orgNumber = this.template.querySelector('input').value.replaceAll(' ', '');
         this.showError = regExp.test(orgNumber) ? false : true;
-        this.actualErrorText = this.errorText;
+        this.actualErrorText = errMsg;
         this.setErrorCss();
         return this.showError;
     }
 
-    @api validatePersonNumber() {
+    @api validatePersonNumber(errMsg) {
+        errMsg = setDefaultValue(errMsg, this.errorText);
         let regExp = RegExp('[0-7][0-9][0-1][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]');
         let personNumber = this.template.querySelector('input').value.replaceAll(' ', '');
         this.showError = regExp.test(personNumber) ? false : true;
-        this.actualErrorText = this.errorText;
+        this.actualErrorText = errMsg;
         this.setErrorCss();
         return this.showError;
     }

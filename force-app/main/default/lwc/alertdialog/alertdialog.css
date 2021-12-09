@@ -19,8 +19,6 @@
     max-height: 50%;
     max-width: 50%;
     z-index: 1010;
-    top: 50%;
-    transform: translateY(-50%);
     margin-left: auto;
     margin-right: auto;
 }
