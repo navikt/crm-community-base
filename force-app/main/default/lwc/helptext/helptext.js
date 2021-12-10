@@ -20,7 +20,7 @@ export default class Helptext extends LightningElement {
     helptextFocus() {
         const hidden = this.template.querySelector('.navds-popover--hidden');
         if (hidden === null) {
-            this.template.querySelector('.navds-popover').classList.add('navds-popover--hidden');
+            this.helptextBlur();
         } else {
             this.template.querySelector('.navds-popover').classList.remove('navds-popover--hidden');
             this.ariaExpanded = true;
