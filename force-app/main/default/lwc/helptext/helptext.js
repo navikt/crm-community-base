@@ -15,19 +15,24 @@ export default class Helptext extends LightningElement {
         return setDefaultValue(style, '');
     }
 
-    ariaHidden = true;
+    textToShow = '';
     ariaExpanded = false;
     helptextFocus() {
-        this.template.querySelector('.navds-popover').classList.remove('navds-popover--hidden');
-        this.ariaHidden = false;
-        this.ariaExpanded = true;
-        this.setHelptextPostition();
+        const hidden = this.template.querySelector('.navds-popover--hidden');
+        if (hidden === null) {
+            this.template.querySelector('.navds-popover').classList.add('navds-popover--hidden');
+        } else {
+            this.template.querySelector('.navds-popover').classList.remove('navds-popover--hidden');
+            this.ariaExpanded = true;
+            this.textToShow = this.text;
+            this.setHelptextPostition();
+        }
     }
 
     helptextBlur() {
         this.template.querySelector('.navds-popover').classList.add('navds-popover--hidden');
-        this.ariaHidden = true;
         this.ariaExpanded = false;
+        this.textToShow = '';
     }
 
     get defaultHoverText() {
