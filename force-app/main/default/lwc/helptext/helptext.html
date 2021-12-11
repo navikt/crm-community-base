@@ -30,7 +30,6 @@
 
         <div
             class="navds-popover navds-help-text__popover navds-popover--hidden"
-            aria-hidden={ariaHidden}
             tabindex="-1"
             role="tooltip"
             data-popper-reference-hidden="false"
@@ -38,7 +37,7 @@
             data-popper-placement="top"
             style={defaultStyle}
         >
-            <div class="navds-popover__content" role="alert" aria-live="polite">{text}</div>
+            <div class="navds-popover__content" role="alert" aria-live="polite">{textToShow}</div>
             <div data-popper-arrow="true" class="navds-popover__arrow" style={arrowStyle}></div>
         </div>
     </div>
