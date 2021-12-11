@@ -61,7 +61,7 @@
                         key={file.filename}
                         type="button"
                         value={file.filename}
-                        class="navds-button navds-button--secondary navds-button--s navds-body-short navds-body--s"
+                        class="navds-button"
                         onclick={onFileDelete}
                     >
                         Slett
@@ -74,7 +74,8 @@
     <c-alertdialog
         header="Noe gikk galt"
         content={modalContent}
-        desktop-style="text-align: center;"
+        desktop-style="text-align: center; width: 50%"
+        mobile-style="max-width: 100%"
         center-buttons="true"
         onbuttonclick={handleClick}
         no-cancel-button="true"

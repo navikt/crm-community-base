@@ -4,7 +4,7 @@
     justify-content: center;
     font-weight: 600;
     font-family: Source Sans Pro, Arial, sans-serif;
-    font-size: 1em;
+    font-size: 1rem;
     white-space: nowrap;
     border-radius: 0.125em;
     cursor: pointer;
@@ -33,7 +33,7 @@
     color: #0067c5;
     text-transform: uppercase;
     padding: 0.5rem;
-    font-size: 13.33px;
+    font-size: 1rem;
 }
 
 .dropzone {
@@ -71,11 +71,12 @@
     align-items: center;
     padding: 0;
     font-weight: bold;
+    font-size: 1rem;
     border-color: transparent;
     background-color: transparent;
 }
 
-.navds-button--secondary:hover {
+.navds-button:hover {
     opacity: 0.7;
 }
 
