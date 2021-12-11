@@ -9,14 +9,13 @@ export default class uploadFiles extends LightningElement {
     @api checkboxTextPlural = '';
     @api checkboxTextSingle = '';
     @api helptextContent = '';
-    @api validationMessage = '';
 
     acceptedFileFormats =
         '[.pdf, .png, .svg, .jpg, .jpeg, .jpe, .jif, .gif, .tif, .tiff, .bmp, .doc, .docx, .doc, .odt, .xls, .xlsx, .ods, .ppt, pptx, .txt, .rtf]';
 
     get setDefaultStyle() {
         let style = this.desktopStyle;
-        if (window.screen.width < 576) {
+        if (window.screen.width < 576) {    
             style = this.mobileStyle;
         }
         return setDefaultValue(style, '');

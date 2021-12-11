@@ -14,7 +14,6 @@ export default class Input extends LightningElement {
     @api errorSize;
     @api autofocus = false;
     @api disabled = false;
-    @api required = false;
     @api readonly = false;
     @api maxLength = '255';
     @api minLength = '0';
