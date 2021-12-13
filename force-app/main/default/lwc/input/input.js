@@ -9,6 +9,7 @@ export default class Input extends LightningElement {
     @api value;
     @api form;
     @api helptextContent = '';
+    @api helptextHovertext;
     @api errorText;
     @api labelSize;
     @api errorSize;
