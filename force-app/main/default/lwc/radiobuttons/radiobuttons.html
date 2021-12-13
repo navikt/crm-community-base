@@ -1,20 +1,23 @@
 <template>
-    <div style="flex-direction: row; display: flex; align-items: center">
-        <legend class="navds-fieldset__legend navds-label" style={labelFontSize}>{header}</legend>
-        <c-helptext if:true={isHelpText} text={helptextContent} hover-text={helptextHovertext}></c-helptext>
-    </div>
-    <div class={setDefaultStyle}>
-        <div class="navds-radio-buttons" style={flex}>
-            <template for:each={radiobuttons} for:item="radiobutton">
-                <div key={radiobutton.label} class="navds-radio">
-                    <input key={radiobutton.label} id={radiobutton.label} form=[form} name={groupName} value={radiobutton.label}  data-id={radiobutton.label} onclick={handleRadiobuttonsClick} type="radio" class="navds-radio__input" aria-invalid="false" disabled={radiobutton.disabled} required={radiobutton.required} checked={radiobutton.checked}></input>
-                    <label key={radiobutton.label} for={radiobutton.label} class="navds-radio__label navds-body-short">{radiobutton.label}</label>
-                </div>
-            </template>
-            <div if:true={bottomErrorText} class="navds-error-message navds-label navds-label--s" aria-live="polite" style={errorFontSize}>{errorText}</div>
+    <fieldset tabindex="-1">
+        <legend class="navds-fieldset__legend navds-label" style={labelFontSize}>{header}
+            <c-helptext if:true={isHelpText} text={helptextContent} hover-text={helptextHovertext}></c-helptext>
+        </legend>
+        
+        <div class={setDefaultStyle}>
+            <div class="navds-radio-buttons" style={flex}>
+                <template for:each={radiobuttons} for:item="radiobutton">
+                    <div key={radiobutton.label} class="navds-radio">
+                        <input key={radiobutton.label} id={radiobutton.label} form=[form} name={groupName} value={radiobutton.label}  data-id={radiobutton.label} onclick={handleRadiobuttonsClick} type="radio" class="navds-radio__input" aria-invalid="false" disabled={radiobutton.disabled} required={radiobutton.required} checked={radiobutton.checked}></input>
+                        <label key={radiobutton.label} for={radiobutton.label} class="navds-radio__label navds-body-short">{radiobutton.label}</label>
+                    </div>
+                </template>
+                <div if:true={bottomErrorText} class="navds-error-message navds-label navds-label--s" aria-live="polite" style={errorFontSize}>{errorText}</div>
+            </div>
         </div>
-    </div>
-    <div if:true={bottomErrorTextWhenRow} class="navds-error-message navds-label navds-label--s" aria-live="polite" style={errorFontSize}>{errorText}</div>
+        <div if:true={bottomErrorTextWhenRow} class="navds-error-message navds-label navds-label--s" aria-live="polite" style={errorFontSize}>{errorText}</div>
+    </fieldset>
+    
    </template>
 
 
