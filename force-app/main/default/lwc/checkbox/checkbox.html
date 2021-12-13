@@ -12,7 +12,7 @@
         />
         <div class="navds-checkbox__label navds-body-short">
             <label for={setId} style={labelFontSize}>{label}</label>
-            <c-helptext if:true={isHelpText} text={helptextContent}></c-helptext>
+            <c-helptext if:true={isHelpText} text={helptextContent} hover-text={helptextHovertext}></c-helptext>
         </div>
     </div>
     <div if:true={showErrorText} class="navds-error-message navds-error-message--m navds-label" style={errorFontSize}>

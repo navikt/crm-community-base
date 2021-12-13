@@ -9,6 +9,7 @@ export default class uploadFiles extends LightningElement {
     @api checkboxTextPlural = '';
     @api checkboxTextSingle = '';
     @api helptextContent = '';
+    @api helptextHovertext;
 
     acceptedFileFormats =
         '[.pdf, .png, .svg, .jpg, .jpeg, .jpe, .jif, .gif, .tif, .tiff, .bmp, .doc, .docx, .doc, .odt, .xls, .xlsx, .ods, .ppt, pptx, .txt, .rtf]';

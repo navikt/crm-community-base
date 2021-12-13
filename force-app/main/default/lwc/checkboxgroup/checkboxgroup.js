@@ -11,6 +11,7 @@ export default class checkboxgroup extends LightningElement {
     @api labelSize;
     @api errorSize;
     @api helptextContent = '';
+    @api helptextHovertext;
     @api desktopStyle;
     @api mobileStyle;
 

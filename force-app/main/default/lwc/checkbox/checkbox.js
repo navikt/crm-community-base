@@ -9,6 +9,7 @@ export default class Checkbox extends LightningElement {
     @api labelSize;
     @api errorSize;
     @api helptextContent = '';
+    @api helptextHovertext;
     @api name = '';
     @api form = '';
     @api desktopStyle;
