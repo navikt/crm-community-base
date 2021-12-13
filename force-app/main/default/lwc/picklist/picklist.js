@@ -11,6 +11,7 @@ export default class Picklist extends LightningElement {
     @api size;
     @api errorText = '';
     @api helptextContent = '';
+    @api helptextHovertext;
     @api desktopStyle;
     @api mobileStyle;
     choiceValue;
