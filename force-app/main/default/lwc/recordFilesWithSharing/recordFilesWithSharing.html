@@ -5,7 +5,7 @@
             <ul>
                 <template for:each={filesToShow} for:item="file" for:index="index">
                     <li key={file.Title}>
-                        <a class="listelement" href={file.downloadLink}>{file.Title} </a>
+                        <a class="listelement" style="margin: 0 0.5em 0 0;" href={file.downloadLink}>{file.Title} </a>
                         <div if:true={isDelete} style="display: inline">
                             <button
                                 if:true={file.isDeletable}
