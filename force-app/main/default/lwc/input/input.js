@@ -121,11 +121,11 @@ export default class Input extends LightningElement {
             this.showError = true;
         }
         this.actualErrorText = errMsg;
-        if (!this.disabled) {
-            this.setErrorCss();
-            return this.showError;
+        if (this.disabled) {
+            return false;
         }
-        return false;
+        this.setErrorCss();
+        return this.showError;
     }
 
     @api validateOrgNumber(errMsg) {
@@ -134,11 +134,11 @@ export default class Input extends LightningElement {
         let orgNumber = this.template.querySelector('input').value.replaceAll(' ', '');
         this.showError = regExp.test(orgNumber) ? false : true;
         this.actualErrorText = errMsg;
-        if (!this.disabled) {
-            this.setErrorCss();
-            return this.showError;
+        if (this.disabled) {
+            return false;
         }
-        return false;
+        this.setErrorCss();
+        return this.showError;
     }
 
     @api validatePersonNumber(errMsg) {
@@ -147,11 +147,11 @@ export default class Input extends LightningElement {
         let personNumber = this.template.querySelector('input').value.replaceAll(' ', '');
         this.showError = regExp.test(personNumber) ? false : true;
         this.actualErrorText = errMsg;
-        if (!this.disabled) {
-            this.setErrorCss();
-            return this.showError;
+        if (this.disabled) {
+            return false;
         }
-        return false;
+        this.setErrorCss();
+        return this.showError;
     }
 
     @api
