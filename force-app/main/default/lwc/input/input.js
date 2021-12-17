@@ -150,8 +150,11 @@ export default class Input extends LightningElement {
         let number = this.template.querySelector('input').value.replaceAll(' ', '');
         this.showError = number.length < 8 ? true : false;
         this.actualErrorText = errMsg;
-        this.setErrorCss();
-        return this.showError;
+        if (!this.disabled) {
+            this.setErrorCss();
+            return this.showError;
+        }
+        return false;
     }
 
     @api
