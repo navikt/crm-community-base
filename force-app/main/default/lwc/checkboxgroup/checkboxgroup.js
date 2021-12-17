@@ -23,6 +23,9 @@ export default class checkboxgroup extends LightningElement {
             this.checkboxValues[i].checked = this.template.querySelector(
                 '[data-id="' + this.checkboxValues[i].label + '"]'
             ).checked;
+            this.checkboxValues[i].value = this.template.querySelector(
+                '[data-id="' + this.checkboxValues[i].label + '"]'
+            ).checked;
         }
         const eventToSend = new CustomEvent('checkboxgroupclick', { detail: this.checkboxValues });
         this.dispatchEvent(eventToSend);
