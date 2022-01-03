@@ -1,44 +1,23 @@
 import { LightningElement, api } from 'lwc';
 
 export default class Breadcrumbs extends LightningElement {
-/*
-urlList eks: 
-breadcrumbs = [
-        {
-            label: 'Tolketjenesten',
-            href: ''
-        },
-        {
-            label: 'Ny bestilling',
-            href: 'ny-bestilling'
-        },
-        {
-            label: 'johnny',
-            href: 'ny-bestilling/johnny'
-        }
-    ];
-*/
-
     @api urlList = [];
     urlListToShow = [];
+    @api desktopStyle;
+    @api mobileStyle;
 
     connectedCallback() {
         let baseURLArray = window.location.pathname.split('/');
         baseURLArray.pop();
         let baseURL = baseURLArray.join('/');
+
         this.urlList.forEach(element => {
-            this.urlListToShow.push({...element});
+            this.urlListToShow.push({...element}); // Copy arr
         });
         this.urlListToShow.forEach(element => {
             element.href = baseURL + '/' + element.href;
         });
         this.removeElementsAfterIndex();
-    }
-
-    // TODO: Hide all elements with index > current clicked index
-    // TODO: Can remove this, already done in removelementsafterindex. Need it for something else?
-    handleHrefClick(event) {
-        //this.urlListToShow.length = event.currentTarget.dataset.id;
     }
 
     removeElementsAfterIndex() {
@@ -49,5 +28,13 @@ breadcrumbs = [
             }
         });
         this.urlListToShow.length = indexToSet;
+    }
+
+    get setDefaultStyle() {
+        let style = this.desktopStyle;
+        if (window.screen.width < 576) {
+            style = this.mobileStyle;
+        }
+        return setDefaultValue(style, '');
     }
 }
