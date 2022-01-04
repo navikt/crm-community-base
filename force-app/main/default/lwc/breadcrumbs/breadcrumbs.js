@@ -1,4 +1,5 @@
 import { LightningElement, api } from 'lwc';
+import { setDefaultValue } from 'c/componentHelperClass';
 
 export default class Breadcrumbs extends LightningElement {
     @api urlList = [];
