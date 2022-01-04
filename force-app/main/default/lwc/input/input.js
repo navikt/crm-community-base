@@ -121,6 +121,9 @@ export default class Input extends LightningElement {
             this.showError = true;
         }
         this.actualErrorText = errMsg;
+        if (this.disabled) {
+            return false;
+        }
         this.setErrorCss();
         return this.showError;
     }
@@ -131,6 +134,9 @@ export default class Input extends LightningElement {
         let orgNumber = this.template.querySelector('input').value.replaceAll(' ', '');
         this.showError = regExp.test(orgNumber) ? false : true;
         this.actualErrorText = errMsg;
+        if (this.disabled) {
+            return false;
+        }
         this.setErrorCss();
         return this.showError;
     }
@@ -141,6 +147,21 @@ export default class Input extends LightningElement {
         let personNumber = this.template.querySelector('input').value.replaceAll(' ', '');
         this.showError = regExp.test(personNumber) ? false : true;
         this.actualErrorText = errMsg;
+        if (this.disabled) {
+            return false;
+        }
+        this.setErrorCss();
+        return this.showError;
+    }
+
+    @api validatePhoneLength(errMsg) {
+        errMsg = setDefaultValue(errMsg, this.errorText);
+        let number = this.template.querySelector('input').value.replaceAll(' ', '');
+        this.showError = number.length < 8 ? true : false;
+        this.actualErrorText = errMsg;
+        if (this.disabled) {
+            return false;
+        }
         this.setErrorCss();
         return this.showError;
     }
