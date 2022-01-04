@@ -12,7 +12,7 @@ export default class Breadcrumbs extends LightningElement {
         baseURLArray.pop();
         let baseURL = baseURLArray.join('/');
 
-        this.urlList.forEach((element) => {
+        this.urlList.forEach(element => {
             this.urlListToShow.push({...element}); // Copy arr
         });
         this.urlListToShow.forEach(element => {
