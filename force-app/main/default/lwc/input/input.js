@@ -157,7 +157,15 @@ export default class Input extends LightningElement {
     @api validatePhoneLength(errMsg) {
         errMsg = setDefaultValue(errMsg, this.errorText);
         let number = this.template.querySelector('input').value.replaceAll(' ', '');
-        this.showError = number.length < 8 ? true : false;
+        if (number.length < 8) {
+            this.showError = true;
+        }
+        if (number.substring(0,1) === '+') {
+            this.showError = true;
+        }
+        if (isNaN(number)) {
+            this.showError = true;
+        }
         this.actualErrorText = errMsg;
         if (this.disabled) {
             return false;
