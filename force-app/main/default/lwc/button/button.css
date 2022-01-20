@@ -8,6 +8,7 @@
     text-decoration: none;
     border: none;
     border-color: #0067c5;
+    border: none;
     border-radius: 2px;
     min-height: 48px;
     align-items: center;
@@ -170,4 +171,3 @@ button {
 .navds-button--danger:focus {
     border-color: white;
 }
-

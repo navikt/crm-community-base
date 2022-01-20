@@ -49,6 +49,7 @@ label {
     padding-right: 1.5em;
     -webkit-appearance: none;
     appearance: none;
+    min-height: 48px;
     width: 100%;
 }
 .skjemaelement__input {
