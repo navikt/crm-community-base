@@ -1,0 +1,19 @@
+.breadcrumb {
+    flex-direction: row;
+    display: flex;    
+}
+
+.listElement {
+    font-family: 'Source Sans Pro', Arial, sans-serif;
+    font-size: 1.125rem;
+    line-height: 1.333;
+    color: #0067c5;
+}
+
+.listElement:focus {
+    outline: none;
+    color: rgba(255, 255, 255, 1);
+    text-decoration: none;
+    background-color: rgba(0, 52, 125, 1);
+    box-shadow: 0 0 0 2px rgba(0, 52, 125, 1);
+}
