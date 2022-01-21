@@ -89,6 +89,7 @@ body {
     gap: 12px;
     cursor: pointer;
     padding-bottom: 5px;
+    font-family: 'Source Sans Pro', Arial, sans-serif;
 }
 
 .navds-checkbox__label::before {
