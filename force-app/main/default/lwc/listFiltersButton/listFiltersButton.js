@@ -12,22 +12,25 @@ export default class ListFiltersButton extends LightningElement {
         document.documentElement.style.setProperty('--filterButtonBorderColor', '#929292');
     }
 
-    openFilters() {
-        if (window.screen.width > 576) {
-            this.isOpen = !this.isOpen;
-            if (this.isOpen) {
-                document.documentElement.style.setProperty('--filterButtonColor', '#ffffff');
-                document.documentElement.style.setProperty('--filterButtonBackgroundColor', '#0056b4');
-            } else {
-                document.documentElement.style.setProperty('--filterButtonColor', '#262626');
-                document.documentElement.style.setProperty('--filterButtonBackgroundColor', '#EFEFEF');
-            }
-            this.template.querySelector('c-list-filters').openFilters();
+    setFilterButtonColor() {
+        if (this.isOpen) {
+            document.documentElement.style.setProperty('--filterButtonColor', '#ffffff');
+            document.documentElement.style.setProperty('--filterButtonBackgroundColor', '#0056b4');
         } else {
-            this.template.querySelector('c-list-filters').openFilters();
+            document.documentElement.style.setProperty('--filterButtonColor', '#262626');
+            document.documentElement.style.setProperty('--filterButtonBackgroundColor', '#EFEFEF');
         }
     }
+
+    openFilters() {
+        this.isOpen = !this.isOpen;
+        this.setFilterButtonColor();
+        this.template.querySelector('c-list-filters').openFilters();
+    }
+
     applyFilter(event) {
+        this.isOpen = !this.isOpen;
+        this.setFilterButtonColor();
         const eventToSend = new CustomEvent('applyfilter', { detail: event.detail });
         this.dispatchEvent(eventToSend);
     }
