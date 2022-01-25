@@ -9,7 +9,7 @@ global class TestUserSelfRegHandler implements Auth.ConfigurableSelfRegHandler {
 			if(value!=null) personIdent=value;
 		}
         
-        List<Account> personAccounts = new AccountsSelector_Community().selectByIdentIgnoreConfidential((personIdent);
+        List<Account> personAccounts = new AccountsSelector_Community().selectByIdentIgnoreConfidential(personIdent);
 
         DefaultCommunityProfile__c defaultCommunityProfiles = DefaultCommunityProfile__c.getOrgDefaults();
         String profileName = defaultCommunityProfiles.DefaultProfile__c;
