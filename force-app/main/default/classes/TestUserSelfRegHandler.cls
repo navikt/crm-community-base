@@ -2,7 +2,11 @@ global class TestUserSelfRegHandler implements Auth.ConfigurableSelfRegHandler {
     private static final String COMMUNITY_ID= '0DB2o000000Ug9D';
 
     global Id createUser(Id accountId, Id profileId, Map<SObjectField, String> registrationAttributes, String password) {
+        Boolean isSandbox=[SELECT IsSandbox FROM Organization LIMIT 1].IsSandbox;
 
+        if(!isSandbox){
+            return null;
+        }
         String personIdent='';
         for (SObjectField field : registrationAttributes.keySet()) {
 			String value = registrationAttributes.get(field);
