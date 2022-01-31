@@ -20,7 +20,6 @@ export default class ListFilters extends LightningElement {
             arr.push(temp);
         });
         this.filterArray = arr;
-        console.log(JSON.stringify(this.filterArray));
     }
 
     isOpen = false;
