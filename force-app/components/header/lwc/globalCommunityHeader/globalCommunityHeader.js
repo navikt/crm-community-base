@@ -38,6 +38,7 @@ export default class GlobalCommunityHeader extends LightningElement {
 
     disconnectedCallback() {
         this.unsubscribe(this.subscription);
+        this.subscription = null;
     }
 
     handleModalChannel = (event) => {

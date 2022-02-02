@@ -42,6 +42,7 @@ export default class GlobalCommunityFooter extends LightningElement {
 
     disconnectedCallback() {
         this.unsubscribe(this.subscription);
+        this.subscription = null;
     }
 
     scrollToTop() {
