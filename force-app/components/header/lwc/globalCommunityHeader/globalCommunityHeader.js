@@ -37,7 +37,7 @@ export default class GlobalCommunityHeader extends LightningElement {
     }
 
     disconnectedCallback() {
-        this.unsubscribe(this.subscription);
+        unsubscribe(this.subscription);
         this.subscription = null;
     }
 

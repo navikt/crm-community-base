@@ -41,7 +41,7 @@ export default class GlobalCommunityFooter extends LightningElement {
     }
 
     disconnectedCallback() {
-        this.unsubscribe(this.subscription);
+        unsubscribe(this.subscription);
         this.subscription = null;
     }
 
