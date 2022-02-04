@@ -27,14 +27,16 @@ export default class ListFilters extends LightningElement {
     openFilters() {
         this.isOpen = !this.isOpen;
     }
+
     applyFilter() {
-        const eventToSend = new CustomEvent('applyfilter', { detail: this.filterArray });
+        const eventToSend = new CustomEvent('applyfilter', {detail: {filterArray: this.filterArray, setRecords: true}});
         this.dispatchEvent(eventToSend);
         this.closeFilters();
     }
+
     handleRowClick(event) {
         let filterindex = event.currentTarget.dataset.filterindex;
-        this.filterArray[filterindex].isOpen = !this.filterArray[filterindex].isOpen;
+        this.filterArray[filterindex].isOpen = !this.filterArray[filterindex].isOpen;        
     }
 
     handleCheckboxChange(event) {
@@ -43,6 +45,7 @@ export default class ListFilters extends LightningElement {
             this.filterArray[filterindex].value[index].value = element.checked;
             this.filterArray[filterindex].value[index].checked = element.checked;
         });
+        this.getFilteredRecordsLength();
     }
 
     handleDateChange(event) {
@@ -53,6 +56,7 @@ export default class ListFilters extends LightningElement {
         localTimeValue = localTimeValue.substring(0, localTimeValue.length - 10);
         this.filterArray[filterindex].value[valueindex].localTimeValue = localTimeValue;
         this.filterArray[filterindex].value[valueindex].value = event.detail;
+        this.getFilteredRecordsLength();
     }
 
     removeFilter(event) {
@@ -60,6 +64,7 @@ export default class ListFilters extends LightningElement {
         let filterindex = event.currentTarget.dataset.filterindex;
         let valueindex = event.currentTarget.dataset.valueindex;
         this.filterArray[filterindex].value[valueindex].value = false;
+        this.getFilteredRecordsLength();
     }
 
     overlayContainerClick(event) {
@@ -71,5 +76,17 @@ export default class ListFilters extends LightningElement {
     }
     closeFilters() {
         this.isOpen = false;
+    }
+
+    getFilteredRecordsLength() {
+        console.log('getFilteredRecordsLength filterarray: ', JSON.stringify(this.filterArray));
+        let detail = {filterArray: this.filterArray, setRecords: false};
+        const eventToSend = new CustomEvent('getfilteredrecordslength', {detail: detail});
+        this.dispatchEvent(eventToSend);
+    }
+
+    buttonLabel = 'Vis treff';
+    @api setFilteredRecordsLength(filteredRecordsLength) {
+        this.buttonLabel = 'Vis ' + filteredRecordsLength + ' treff';
     }
 }

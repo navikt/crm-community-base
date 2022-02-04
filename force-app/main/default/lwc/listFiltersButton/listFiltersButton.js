@@ -27,8 +27,18 @@ export default class ListFiltersButton extends LightningElement {
             this.template.querySelector('c-list-filters').openFilters();
         }
     }
+
     applyFilter(event) {
         const eventToSend = new CustomEvent('applyfilter', { detail: event.detail });
         this.dispatchEvent(eventToSend);
+    }
+
+    getFilteredRecordsLength(event) {
+        const eventToSend = new CustomEvent('getfilteredrecordslength', {detail: event.detail});
+        this.dispatchEvent(eventToSend);
+    }
+
+    @api setFilteredRecordsLength(filteredRecordsLength) {
+        this.template.querySelector('c-list-filters').setFilteredRecordsLength(filteredRecordsLength);
     }
 }
