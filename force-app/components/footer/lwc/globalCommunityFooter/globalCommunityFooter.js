@@ -1,11 +1,13 @@
-import { LightningElement, track, api } from 'lwc';
+import { track, api } from 'lwc';
 import { loadStyle } from 'lightning/platformResourceLoader';
 
 import dekoratoren from '@salesforce/resourceUrl/dekoratoren';
 import icons from '@salesforce/resourceUrl/icons';
 import logos from '@salesforce/resourceUrl/logos';
 
-export default class GlobalCommunityFooter extends LightningElement {
+import ContextInterface from 'c/contextInterface';
+
+export default class GlobalCommunityFooter extends ContextInterface {
     arrowupicon = icons + '/arrowupicon.svg';
     logosvart = logos + '/navLogoBlack.svg';
     @api NAVarea;
@@ -26,6 +28,12 @@ export default class GlobalCommunityFooter extends LightningElement {
         this.isPrivatperson = this.navareapicklist == 'Privatperson';
         this.isArbeidsgiver = this.navareapicklist == 'Arbeidsgiver';
         this.isSamarbeidspartner = this.navareapicklist == 'Samarbeidspartner';
+
+        this.addModalContext();
+    }
+
+    disconnectedCallback() {
+        this.removeModalContext;
     }
 
     scrollToTop() {
