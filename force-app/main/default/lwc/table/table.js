@@ -19,6 +19,7 @@ export default class Table extends LightningElement {
                     field.value = this.getValue(record, column);
                     if (column.svg !== undefined && this.iconByValue[record[column.name]] !== undefined) {
                         field.svg = this.iconByValue[record[column.name]];
+                        console.log(JSON.stringify(field.svg));
                     }
                     fields.push(field);
                 }
@@ -29,6 +30,7 @@ export default class Table extends LightningElement {
                 this.recordMap[record.Id] = record;
             }
         }
+        console.log(JSON.stringify(records));
         return records;
     }
 
