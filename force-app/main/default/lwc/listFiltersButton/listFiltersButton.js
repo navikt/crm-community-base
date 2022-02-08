@@ -12,14 +12,14 @@ export default class ListFiltersButton extends LightningElement {
         document.documentElement.style.setProperty('--filterButtonBorderColor', '#929292');
     }
 
-    openFilters() {       
+    openFilters() {
         this.isOpen = !this.isOpen;
         this.buttonStyling();
         this.template.querySelector('c-list-filters').openFilters();
     }
 
     buttonStyling() {
-        if (window.screen.width < 576) { 
+        if (window.screen.width < 576) {
             return; // Don't need styling on mobile - got overlay
         }
         if (this.isOpen) {
@@ -39,7 +39,7 @@ export default class ListFiltersButton extends LightningElement {
     }
 
     getFilteredRecordsLength(event) {
-        const eventToSend = new CustomEvent('getfilteredrecordslength', {detail: event.detail});
+        const eventToSend = new CustomEvent('getfilteredrecordslength', { detail: event.detail });
         this.dispatchEvent(eventToSend);
     }
 

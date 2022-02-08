@@ -29,14 +29,16 @@ export default class ListFilters extends LightningElement {
     }
 
     applyFilter() {
-        const eventToSend = new CustomEvent('applyfilter', {detail: {filterArray: this.filterArray, setRecords: true}});
+        const eventToSend = new CustomEvent('applyfilter', {
+            detail: { filterArray: this.filterArray, setRecords: true }
+        });
         this.dispatchEvent(eventToSend);
         this.closeFilters();
     }
 
     handleRowClick(event) {
         let filterindex = event.currentTarget.dataset.filterindex;
-        this.filterArray[filterindex].isOpen = !this.filterArray[filterindex].isOpen;        
+        this.filterArray[filterindex].isOpen = !this.filterArray[filterindex].isOpen;
     }
 
     handleCheckboxChange(event) {
@@ -79,9 +81,8 @@ export default class ListFilters extends LightningElement {
     }
 
     getFilteredRecordsLength() {
-        console.log('getFilteredRecordsLength filterarray: ', JSON.stringify(this.filterArray));
-        let detail = {filterArray: this.filterArray, setRecords: false};
-        const eventToSend = new CustomEvent('getfilteredrecordslength', {detail: detail});
+        let detail = { filterArray: this.filterArray, setRecords: false };
+        const eventToSend = new CustomEvent('getfilteredrecordslength', { detail: detail });
         this.dispatchEvent(eventToSend);
     }
 
