@@ -14,10 +14,13 @@
                             key={it.value.name}
                             class="row-element"
                             onclick={handleRowClick}
+                            onkeypress={handleRowClick}
                             data-filterindex={it.index}
+                            tabindex={it.index}
+                            aria-expanded={it.value.isOpen}
                         >
                             <p class="filter-label">{it.value.label}</p>
-                            <div class="active-filters-wrapper">
+                            <div class="active-filters-wrapper" aria-hidden="true">
                                 <template iterator:element={it.value.value}>
                                     <div
                                         if:true={element.value.value}
@@ -34,6 +37,7 @@
                                             data-filter={it.value.name}
                                             data-id={element.value.name}
                                             onclick={removeFilter}
+                                            onkeypress={removeFilter}
                                             icon="ErrorFilled"
                                             data-filterindex={it.index}
                                             data-valueindex={element.index}
@@ -44,7 +48,7 @@
                             <c-icon class="expander-icon" if:false={it.value.isOpen} icon="Expand"></c-icon>
                             <c-icon class="expander-icon" if:true={it.value.isOpen} icon="Collapse"></c-icon>
                         </li>
-                        <div if:true={it.value.isOpen} key={it.value.name} class="expanded-filter">
+                        <div if:true={it.value.isOpen} key={it.value.name} class="expanded-filter" aria-expanded={it.value.isOpen}>
                             <c-checkboxgroup
                                 if:true={it.value.isCheckboxgroup}
                                 checkboxes={it.value.value}
