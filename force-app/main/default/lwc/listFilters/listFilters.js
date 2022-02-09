@@ -26,6 +26,7 @@ export default class ListFilters extends LightningElement {
     @api
     openFilters() {
         this.isOpen = !this.isOpen;
+        this.getFilteredRecordsLength();
     }
 
     applyFilter() {
