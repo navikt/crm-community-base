@@ -26,6 +26,7 @@
                                         if:true={element.value.value}
                                         key={element.value.name}
                                         class="active-filter-container"
+                                        onclick={doNothing}
                                     >
                                         <p if:true={it.value.isDateInterval} class="active-filter-text">
                                             {element.value.labelprefix}{element.value.localTimeValue}
@@ -41,6 +42,7 @@
                                             icon="ErrorFilled"
                                             data-filterindex={it.index}
                                             data-valueindex={element.index}
+                                            class="icon-class"
                                         ></c-icon>
                                     </div>
                                 </template>

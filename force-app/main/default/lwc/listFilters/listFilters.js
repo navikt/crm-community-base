@@ -91,4 +91,8 @@ export default class ListFilters extends LightningElement {
     @api setFilteredRecordsLength(filteredRecordsLength) {
         this.buttonLabel = 'Vis ' + filteredRecordsLength + ' treff';
     }
+
+    doNothing(event) {
+        event.stopPropagation();
+    }
 }
