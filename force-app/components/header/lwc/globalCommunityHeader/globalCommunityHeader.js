@@ -1,9 +1,11 @@
-import { LightningElement, track, wire, api } from 'lwc';
+import { track, api } from 'lwc';
 import { loadStyle } from 'lightning/platformResourceLoader';
 import dekoratoren from '@salesforce/resourceUrl/dekoratoren';
 import index from '@salesforce/resourceUrl/index';
 
-export default class GlobalCommunityHeader extends LightningElement {
+import ContextInterface from 'c/contextInterface';
+
+export default class GlobalCommunityHeader extends ContextInterface {
     @api NAVarea;
     @api navareapicklist;
 
@@ -22,5 +24,11 @@ export default class GlobalCommunityHeader extends LightningElement {
         this.isPrivatperson = this.NAVarea == 'Privatperson';
         this.isArbeidsgiver = this.NAVarea == 'Arbeidsgiver';
         this.isSamarbeidspartner = this.NAVarea == 'Samarbeidspartner';
+
+        this.addModalContext();
+    }
+
+    disconnectedCallback() {
+        this.removeModalContext();
     }
 }

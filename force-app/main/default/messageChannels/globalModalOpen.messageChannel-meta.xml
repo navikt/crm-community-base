@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningMessageChannel xmlns="http://soap.sforce.com/2006/04/metadata">
+    <masterLabel>GlobalModalOpen</masterLabel>
+    <isExposed>true</isExposed>
+    <description>This is used to hide the footer and header whenever a modal is opened.</description>
+    <lightningMessageFields>
+        <fieldName>status</fieldName>
+        <description>This is the status of the change</description>
+    </lightningMessageFields>
+</LightningMessageChannel>
