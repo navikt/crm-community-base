@@ -1,4 +1,4 @@
-import { LightningElement, api, wire } from 'lwc';
+import { LightningElement, api, wire, track } from 'lwc';
 import getContentDocuments from '@salesforce/apex/RecordFilesControllerWithSharing.getContentDocuments';
 import getBaseDownloadUrl from '@salesforce/apex/RecordFilesControllerWithSharing.getBaseDownloadUrl';
 import deleteFilesOnRecord from '@salesforce/apex/RecordFilesControllerWithSharing.deleteFilesOnRecord';
@@ -10,10 +10,11 @@ export default class recordFilesWithSharing extends LightningElement {
     @api files = [];
     @api isGetAll = false;
     @api isDeleteOption = false;
+    @api deleteFileOnButtonClick = false;
     contentDocuments = [];
     myContentDocuments = [];
     isContentDocumentsEmpty = false;
-    filesToShow = [];
+    @track filesToShow = [];
 
     get contentDocumentsArray() {
         return this.recordId === undefined ? this.files : this.contentDocuments;
@@ -35,13 +36,6 @@ export default class recordFilesWithSharing extends LightningElement {
         this.isContentDocumentsEmpty = this.contentDocuments.length === 0 && this.files.length === 0 ? true : false;
     }
 
-    filesChanged = true; // If true -> shows new files added in list
-    // Make boolean value change and set it to true to show new files added
-    boolSwitch() {
-        this.filesChanged = false;
-        this.filesChanged = true;
-    }
-
     fileButtonLabel;
     onFileFocus(event) {
         this.fileButtonLabel = '';
@@ -51,6 +45,7 @@ export default class recordFilesWithSharing extends LightningElement {
 
     markFilesAvailableForDeletion() {
         this.filesToShow = [...this.contentDocumentsArray]; // Copy value to be able to set new attribute
+        this.filesToShowLength = this.filesToShow.length > 0;
         this.filesToShow.forEach((item) => {
             this.myContentDocuments.forEach((myItem) => {
                 if (item.Id === myItem) {
@@ -69,6 +64,7 @@ export default class recordFilesWithSharing extends LightningElement {
     }
 
     filesToDelete = [];
+    filesToShowLength = false;
     onFileDelete(event) {
         const index = event.currentTarget.dataset.index;
         if (this.filesToShow.length < index) {
@@ -76,7 +72,10 @@ export default class recordFilesWithSharing extends LightningElement {
         }
         this.filesToDelete.push(this.filesToShow[index].Id);
         this.filesToShow.splice(index, 1);
-        this.boolSwitch();
+        this.filesToShowLength = this.filesToShow.length > 0;
+        if (this.deleteFileOnButtonClick) {
+            this.deleteMarkedFiles();
+        }
     }
 
     @wire(getContentDocuments, { recordId: '$recordId', isGetAll: '$isGetAll' })

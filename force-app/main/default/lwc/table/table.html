@@ -3,21 +3,21 @@
         <thead class="mobile-header-hidden">
             <tr>
                 <template iterator:column={columns}>
-                    <th tabindex={column.index} key={column.value.name} scope="col">{column.value.label}</th>
+                    <th tabindex="0" key={column.value.name} scope="col">{column.value.label}</th>
                 </template>
             </tr>
         </thead>
         <tbody>
             <template iterator:record={recordsToShow}>
-                <tr class="row" key={record.value.id} data-id={record.value.id} onclick={handleOnRowClick}>
+                <tr class="row" key={record.value.id} data-id={record.value.id} onclick={handleOnRowClick} onkeypress={handleOnRowClick}>
                     <template iterator:field={record.value.fields}>
                         <template if:false={field.value.svg}>
-                            <td tabindex={field.index} key={field.value.name}>{field.value.value}</td>
+                            <td tabindex="0" key={field.value.name}>{field.value.value}</td>
                         </template>
                         <template if:true={field.value.svg}>
-                            <td key={field.value.name} class="icon" tabindex={field.index}>
-                                <div aria-label="Ingen status" if:false={field.value.svg.icon}></div>
-                                <div class="tooltip" if:true={field.value.svg.icon}>
+                            <td key={field.value.name} class="icon" tabindex="0" aria-label="Ingen status" if:false={field.value.svg.icon}></td>
+                            <td key={field.value.name} class="icon" tabindex="0" if:true={field.value.svg.icon}>
+                                <div class="tooltip">
                                     <c-icon
                                         icon={field.value.svg.icon}
                                         fill={field.value.svg.fill}

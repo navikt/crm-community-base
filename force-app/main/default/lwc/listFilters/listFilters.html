@@ -16,7 +16,7 @@
                             onclick={handleRowClick}
                             onkeypress={handleRowClick}
                             data-filterindex={it.index}
-                            tabindex={it.index}
+                            tabindex="0"
                             aria-expanded={it.value.isOpen}
                         >
                             <p class="filter-label">{it.value.label}</p>
@@ -26,6 +26,7 @@
                                         if:true={element.value.value}
                                         key={element.value.name}
                                         class="active-filter-container"
+                                        onclick={doNothing}
                                     >
                                         <p if:true={it.value.isDateInterval} class="active-filter-text">
                                             {element.value.labelprefix}{element.value.localTimeValue}
@@ -41,6 +42,7 @@
                                             icon="ErrorFilled"
                                             data-filterindex={it.index}
                                             data-valueindex={element.index}
+                                            class="icon-class"
                                         ></c-icon>
                                     </div>
                                 </template>
@@ -76,7 +78,8 @@
                         </div>
                     </template>
                 </ul>
-                <c-button button-label="Vis treff" button-styling="primary" onbuttonclick={applyFilter}></c-button>
+                <c-button button-label={buttonLabel} button-styling="primary" onbuttonclick={applyFilter} desktop-style="width: 8rem; justify-content: center"
+                mobile-style="width: 8rem; justify-content: center"></c-button>
             </div>
         </div>
     </div>

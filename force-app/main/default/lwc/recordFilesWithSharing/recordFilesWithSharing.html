@@ -1,7 +1,6 @@
 <template>
     <section if:false={isContentDocumentsEmpty}>
-        <h3 class="header">{defaultTitle}</h3>
-        <div if:true={filesChanged} class="filesClass">
+        <h3 class="header" if:true={filesToShowLength}>{defaultTitle}</h3>
             <ul>
                 <template for:each={filesToShow} for:item="file" for:index="index">
                     <li key={file.Title}>
@@ -24,6 +23,5 @@
                     </li>
                 </template>
             </ul>
-        </div>
     </section>
 </template>
