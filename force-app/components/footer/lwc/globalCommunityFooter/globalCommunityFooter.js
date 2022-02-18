@@ -33,7 +33,7 @@ export default class GlobalCommunityFooter extends ContextInterface {
     }
 
     disconnectedCallback() {
-        this.removeModalContext;
+        this.removeModalContext();
     }
 
     scrollToTop() {
