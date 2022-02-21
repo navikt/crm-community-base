@@ -4,7 +4,7 @@
     position: fixed;
     top: 0;
     left: 0;
-    z-index: 2000;
+    z-index: 2001;
     background-color: rgba(242, 242, 242, 0.7);
 }
 .overlay-container {
@@ -13,11 +13,10 @@
     position: fixed;
     top: 30%;
     left: 0;
-    z-index: 2001;
+    z-index: 2002;
     background-color: white;
     border-radius: 10px;
     padding: 0.5rem;
-    z-index: 999;
 }
 .overlay-content {
     display: flex;
