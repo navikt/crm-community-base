@@ -1,0 +1,2 @@
+<apex:page controller="PageRedirection" action="{!urlRedirection}">
+</apex:page>
