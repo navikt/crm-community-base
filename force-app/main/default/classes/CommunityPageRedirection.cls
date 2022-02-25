@@ -1,5 +1,5 @@
 public class CommunityPageRedirection {
-    public CommunityPageReference urlRedirectionError() {
+    public PageReference urlRedirectionError() {
         String url = 'https://www.nav.no/error';
 
         PageReference page = new PageReference(url);
