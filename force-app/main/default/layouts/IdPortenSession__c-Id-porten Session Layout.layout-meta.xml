@@ -12,7 +12,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>PID__c</field>
+                <field>UserId__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
