@@ -32,7 +32,7 @@ global class PersonAccountUserRegHandler implements Auth.RegistrationHandler {
         String personIdent = data.attributeMap.get('pid');
         String communityId = data.attributeMap.get('sfdc_networkid');
         String sid=data.attributeMap.get('sid');
-        logSession(sid,userid);
+        
         DefaultCommunityProfile__c defaultCommunityProfiles = DefaultCommunityProfile__c.getOrgDefaults();
         String defaultCommunityPlusLoginCommunityId= defaultCommunityProfiles.DefaultCommunityPlusLoginCommunityId__c;
         if(communityId!=null && defaultCommunityPlusLoginCommunityId!=null &&  communityId==defaultCommunityPlusLoginCommunityId){
@@ -43,6 +43,7 @@ global class PersonAccountUserRegHandler implements Auth.RegistrationHandler {
         if(communityId=='0DB2o000000Ug9I' || communityId=='0DB1l0000008QNv' || communityId=='0DB2o000000Ug9D'){
             CommunityUsersService.assignCommunitySpecificPermissionSet(userId,communityId);
         }
+        logSession(sid,userid);
     }
 
     private static void logSession(string sid, Id userId){

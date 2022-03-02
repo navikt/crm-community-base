@@ -6,7 +6,7 @@ global class IdPorten extends Auth.AuthProviderPluginClass {
     private String userInfoEndpointUrl;
     private String customMetadataTypeApiName='ID_porten__mdt';
     private String scope='openid';
-    private String redirectUrl='https://sandbox-business-flow-6622-17f40b22d6d.cs88.force.com/services/authcallback/ID_porten_level_4';
+    private String redirectUrl;
     private String acrValues;
     private String codeVerifier='1BkMwOpYkl8AdGpEohP98_qz7vaEck1XRo50wspo35khhFbXgt.57y81ziTssrAlFb~~1SRsplbpTNAulcgUrDWeWEvR_J4WY1ZAmxmnrEWFaCrKVRnfed_pRF0bqa66';
     private String SID='';
@@ -18,6 +18,7 @@ global class IdPorten extends Auth.AuthProviderPluginClass {
         authorizeEndpointUrl = authProviderConfiguration.get('AuthorizeEndpointUrl__c');
         consumerKey = authProviderConfiguration.get('ConsumerKey__c');
         acrValues = authProviderConfiguration.get('AcrValues__c');
+        redirectUrl = authProviderConfiguration.get('RedirectUrl__c');
         String codeChallenge=PKCEOAuthHelper.getCodeChallenge(codeVerifier);
         String url =  authorizeEndpointUrl + '?client_id='+ consumerKey +'&acr_values=' + acrValues + '&scope=' + scope +'&redirect_uri='+ redirectUrl + '&response_type=code&state=' + stateToPropagate +'&code_challenge=' + codeChallenge + '&code_challenge_method=S256&ui_locales=nb';
         return new PageReference(url);
@@ -27,12 +28,13 @@ global class IdPorten extends Auth.AuthProviderPluginClass {
         consumerKey = authProviderConfiguration.get('ConsumerKey__c');
         consumerSecret = authProviderConfiguration.get('ConsumerSecret__c');
         tokenEndpointUrl = authProviderConfiguration.get('TokenEndpointUrl__c');
+        redirectUrl = authProviderConfiguration.get('RedirectUrl__c');
         String encodedRedirectUrl=EncodingUtil.urlEncode(redirectUrl,'UTF-8');     
         Map<String,String> queryParams = state.queryParameters;
         String code = queryParams.get('code');
         String sfdcState = queryParams.get('state');     
+       
         HttpRequest req = new HttpRequest();
-        //String url = tokenEndpointUrl;+'?grant_type=authorization_code&redirect_url=' + redirectUrl + '&code=' + code + '&code_challenge=' + codeChallenge;
         req.setEndpoint(tokenEndpointUrl);
         req.setHeader('Content-Type','application/x-www-form-urlencoded');
         req.setMethod('POST');
@@ -63,12 +65,13 @@ global class IdPorten extends Auth.AuthProviderPluginClass {
         String responseBody = res.getBody();
         String sub = getTokenValueFromResponse(responseBody, 'sub');
         String pid = getTokenValueFromResponse(responseBody, 'pid');
+        String networkId = authProviderConfiguration.get('NetworkId__c');
         
         Map<String,String> provMap = new Map<String,String>();
         provMap.put('sub', sub);
         provMap.put('pid', pid);
         provMap.put('sid', SID);
-        provMap.put('sfdc_networkid', null);
+        provMap.put('sfdc_networkid', networkId);
         
         
         return new Auth.UserData(sub, null, null, null, null,
