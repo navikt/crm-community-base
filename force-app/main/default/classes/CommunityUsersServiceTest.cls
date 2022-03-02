@@ -100,8 +100,8 @@ private class CommunityUsersServiceTest {
         User user = CommunityUsersService.createCommunityUser(wrapper, communityProfile.Id);
         Test.stopTest();
 
-        System.assertEquals(contactId + '@nav.portal', user.Username);
-        System.assertEquals(contactId + '@nav.portal', user.Email);
+        System.assertEquals(contactId + '@portal.nav.no', user.Username);
+        System.assertEquals(contactId + '@portal.nav.no', user.Email);
         System.assertEquals('Test', user.FirstName);
         System.assertEquals('User', user.LastName);
     }
