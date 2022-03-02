@@ -9,6 +9,7 @@ global class IdPorten extends Auth.AuthProviderPluginClass {
     private String redirectUrl='https://sandbox-business-flow-6622-17f40b22d6d.cs88.force.com/services/authcallback/ID_porten_level_4';
     private String acrValues;
     private String codeVerifier='1BkMwOpYkl8AdGpEohP98_qz7vaEck1XRo50wspo35khhFbXgt.57y81ziTssrAlFb~~1SRsplbpTNAulcgUrDWeWEvR_J4WY1ZAmxmnrEWFaCrKVRnfed_pRF0bqa66';
+    private String SID='';
     global String getCustomMetadataType() {
         return customMetadataTypeApiName;
     }
@@ -42,8 +43,9 @@ global class IdPorten extends Auth.AuthProviderPluginClass {
         String accessToken = getTokenValueFromResponse(res.getBody(), 'access_token');
         String refreshToken = getTokenValueFromResponse(res.getBody(), 'refresh_token');
         String idToken = getTokenValueFromResponse(res.getBody(), 'id_token');
-        system.debug('**idToken ' + idToken);
-        return new Auth.AuthProviderTokenResponse('IdPorten', accessToken, 'refreshToken', sfdcState);
+        JWTClaims decodedIdToken=decodeIdToken(idToken);
+        SID=decodedIdToken.SID;
+        return new Auth.AuthProviderTokenResponse('ID-porten', accessToken, refreshToken, sfdcState);
         
      }
 
@@ -59,18 +61,18 @@ global class IdPorten extends Auth.AuthProviderPluginClass {
         Http http = new Http();
         HTTPResponse res = http.send(req);
         String responseBody = res.getBody();
-        system.debug(responseBody);
-        String id = getTokenValueFromResponse(responseBody, 'LoginId');
-        String fname = getTokenValueFromResponse(responseBody, 'FirstName');
-        String lname = getTokenValueFromResponse(responseBody, 'LastName');
-        String flname = fname + ' ' + lname;
-        String uname = getTokenValueFromResponse(responseBody, 'EmailAddress');
-        String locale = getTokenValueFromResponse(responseBody, 'LocaleName');
+        String sub = getTokenValueFromResponse(responseBody, 'sub');
+        String pid = getTokenValueFromResponse(responseBody, 'pid');
+        
         Map<String,String> provMap = new Map<String,String>();
-        provMap.put('what1', 'noidea1');
-        provMap.put('what2', 'noidea2');
-        return new Auth.UserData(id, fname, lname, flname, uname,
-             'what', locale, null, 'IdPorten', null, provMap);
+        provMap.put('sub', sub);
+        provMap.put('pid', pid);
+        provMap.put('sid', SID);
+        provMap.put('sfdc_networkid', null);
+        
+        
+        return new Auth.UserData(sub, null, null, null, null,
+             null, null, null, 'IdPorten', null, provMap);
      }
 
      private static String getTokenValueFromResponse(String response, String token) {
@@ -85,4 +87,22 @@ global class IdPorten extends Auth.AuthProviderPluginClass {
 
         return tokenValue;
     }
+
+    private static JWTClaims decodeIdToken(String encodedJWT){
+        Integer headerLength = encodedJWT.indexOf('.');
+        Integer claimsLength = encodedJWT.lastIndexOf('.');
+        String jwtClaims = encodedJWT.mid(headerLength + 1, claimsLength - headerLength - 1);
+
+        JWTClaims claimsDeserialized = (JWTClaims) Json.deserialize(
+            EncodingUtil.base64Decode(jwtClaims).toString(),
+            JWTClaims.class
+        );
+        return claimsDeserialized;
+    }
+
+    private class JWTClaims {
+        String sid;
+        String pid;
+    }
+
 }
