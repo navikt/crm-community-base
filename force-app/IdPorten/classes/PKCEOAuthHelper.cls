@@ -1,12 +1,13 @@
 public class PKCEOAuthHelper {
 
-    public static void printDetails(){
-        String code_verifier;
-        Blob sha256           = Crypto.generateDigest('SHA-256', Blob.valueOf(code_verifier));
-        String code_challenge = base64URLencode(sha256);
-        
-        System.debug('**** code_verifier **** \n  '+code_verifier);
-        System.debug('**** code_challenge **** \n '+code_challenge);
+    public static String generateCodeVerifier() {
+        final String chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghijklmnopqrstuvwxyz.~';
+        String randStr = '';
+        while (randStr.length() < 128) {
+            Integer idx = Math.mod(Math.abs(Crypto.getRandomInteger()), chars.length());
+            randStr += chars.substring(idx, idx+1);
+        }
+        return randStr; 
     }
 
     public static String getCodeChallenge(string codeVerifier){
@@ -24,13 +25,5 @@ public class PKCEOAuthHelper {
         return output;
     }
     
-    public static String generateCodeVerifier() {
-        final String chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghijklmnopqrstuvwxyz.~';
-        String randStr = '';
-        while (randStr.length() < 128) {
-            Integer idx = Math.mod(Math.abs(Crypto.getRandomInteger()), chars.length());
-            randStr += chars.substring(idx, idx+1);
-        }
-        return randStr; 
-    }
+    
     }

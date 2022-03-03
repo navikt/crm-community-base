@@ -14,47 +14,23 @@ global class IdPorten extends Auth.AuthProviderPluginClass {
     }
 
     global PageReference initiate(Map<string,string> authProviderConfiguration, String stateToPropagate) {
-        system.debug('init');
+
         authorizeEndpointUrl = authProviderConfiguration.get('AuthorizeEndpointUrl__c');
         consumerKey = authProviderConfiguration.get('ConsumerKey__c');
         acrValues = authProviderConfiguration.get('AcrValues__c');
         redirectUrl = authProviderConfiguration.get('RedirectUrl__c');
-        String codeVerifier=stateToPropagate.subString(0,128);
-        
+        String codeVerifier=PKCEOAuthHelper.generateCodeVerifier();
         String codeChallenge=PKCEOAuthHelper.getCodeChallenge(codeVerifier);
-        
-        //get Salesforce access token
-        HttpRequest req = new HttpRequest();
-        req.setEndpoint('callout:IdPortenCodeVerifier');
-        req.setMethod('POST');
         String codeVerifierKey=authProviderConfiguration.get('CodeVerifierKey__c');
         String codeVerifierSecret = authProviderConfiguration.get('CodeVerifierSecret__c');
-        system.debug(codeVerifierKey);
-        system.debug(codeVerifierSecret);
-        req.setBody('grant_type=password&client_id=' + codeVerifierKey + '&client_secret=' + codeVerifierSecret +'&username={!$Credential.Username}&password={!$Credential.Password}');
-        
-        Http http = new Http();
-        HTTPResponse res = http.send(req);
-        String accessToken = getTokenValueFromResponse(res.getBody(), 'access_token');
-        System.debug(res.getBody());
+        CodeVerifierApiCallout.storeCodeVerifier(codeVerifier, stateToPropagate, codeVerifierKey, codeVerifierSecret);
 
-
-        //store code verifier
-        http = new Http();
-        req = new HttpRequest();
-        req.setEndpoint(URL.getOrgDomainUrl().toExternalForm() + '/services/apexrest/idporten/codeverifier');
-        req.setHeader('Content-Type', 'application/json;charset=UTF-8');
-        req.setHeader('Authorization', 'Bearer ' + accessToken);
-        req.setMethod('POST');
-        req.setBody('{"codeVerifier":"' + codeVerifier + '","state":"' + stateToPropagate + '"}');                   
-        http = new Http();
-        res = http.send(req);
-        system.debug(res.getBody());
         String url =  authorizeEndpointUrl + '?client_id='+ consumerKey +'&acr_values=' + acrValues + '&scope=' + scope +'&redirect_uri='+ redirectUrl + '&response_type=code&state=' + stateToPropagate +'&code_challenge=' + codeChallenge + '&code_challenge_method=S256&ui_locales=nb';
         return new Pagereference(url);
      }
 
      global Auth.AuthProviderTokenResponse handleCallback(Map<string,string> authProviderConfiguration, Auth.AuthProviderCallbackState state ) {
+        
         consumerKey = authProviderConfiguration.get('ConsumerKey__c');
         consumerSecret = authProviderConfiguration.get('ConsumerSecret__c');
         tokenEndpointUrl = authProviderConfiguration.get('TokenEndpointUrl__c');
@@ -62,8 +38,11 @@ global class IdPorten extends Auth.AuthProviderPluginClass {
         String encodedRedirectUrl=EncodingUtil.urlEncode(redirectUrl,'UTF-8');     
         Map<String,String> queryParams = state.queryParameters;
         String code = queryParams.get('code');
-        String sfdcState = queryParams.get('state');    
-        String codeVerifier=sfdcState.subString(0,128);
+        String sfdcState = queryParams.get('state');  
+        String codeVerifierKey=authProviderConfiguration.get('CodeVerifierKey__c');
+        String codeVerifierSecret = authProviderConfiguration.get('CodeVerifierSecret__c');  
+        String codeVerifier=CodeVerifierApiCallout.getCodeVerifier(sfdcState,codeVerifierKey,codeVerifierSecret);
+
         HttpRequest req = new HttpRequest();
         req.setEndpoint(tokenEndpointUrl);
         req.setHeader('Content-Type','application/x-www-form-urlencoded');

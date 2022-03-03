@@ -23,9 +23,6 @@ global class PersonAccountUserRegHandler implements Auth.RegistrationHandler {
     }
 
     global void updateUser(Id userId, Id portalId, Auth.UserData data) {
-        system.debug(portalId);
-        system.debug(data);
-        system.debug(data.attributeMap);
         String personIdent = data.attributeMap.get('pid');
         String communityId = data.attributeMap.get('sfdc_networkid');
         String sid=data.attributeMap.get('sid');
