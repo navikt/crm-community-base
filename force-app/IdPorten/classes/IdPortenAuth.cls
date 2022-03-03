@@ -1,4 +1,4 @@
-global class IdPorten extends Auth.AuthProviderPluginClass {
+global class IdPortenAuth extends Auth.AuthProviderPluginClass {
     private String authorizeEndpointUrl;
     private String consumerKey;
     private String consumerSecret;

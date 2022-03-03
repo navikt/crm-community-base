@@ -1,5 +1,5 @@
 @RestResource(urlMapping='/idporten/codeverifier/*')
-global with sharing class IdPortenCodeVerifierResource {
+global with sharing class CodeVerifierRestService {
 
     @HttpPost
     global static void storeCodeVerifier(String codeVerifier, String state) {
