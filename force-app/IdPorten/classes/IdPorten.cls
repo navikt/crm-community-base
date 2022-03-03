@@ -8,20 +8,50 @@ global class IdPorten extends Auth.AuthProviderPluginClass {
     private String scope='openid';
     private String redirectUrl;
     private String acrValues;
-    private String codeVerifier='1BkMwOpYkl8AdGpEohP98_qz7vaEck1XRo50wspo35khhFbXgt.57y81ziTssrAlFb~~1SRsplbpTNAulcgUrDWeWEvR_J4WY1ZAmxmnrEWFaCrKVRnfed_pRF0bqa66';
-    private String SID='';
+    private String sid;
     global String getCustomMetadataType() {
         return customMetadataTypeApiName;
     }
 
     global PageReference initiate(Map<string,string> authProviderConfiguration, String stateToPropagate) {
+        system.debug('init');
         authorizeEndpointUrl = authProviderConfiguration.get('AuthorizeEndpointUrl__c');
         consumerKey = authProviderConfiguration.get('ConsumerKey__c');
         acrValues = authProviderConfiguration.get('AcrValues__c');
         redirectUrl = authProviderConfiguration.get('RedirectUrl__c');
+        String codeVerifier=stateToPropagate.subString(0,128);
+        
         String codeChallenge=PKCEOAuthHelper.getCodeChallenge(codeVerifier);
+        
+        //get Salesforce access token
+        HttpRequest req = new HttpRequest();
+        req.setEndpoint('callout:IdPortenCodeVerifier');
+        req.setMethod('POST');
+        String codeVerifierKey=authProviderConfiguration.get('CodeVerifierKey__c');
+        String codeVerifierSecret = authProviderConfiguration.get('CodeVerifierSecret__c');
+        system.debug(codeVerifierKey);
+        system.debug(codeVerifierSecret);
+        req.setBody('grant_type=password&client_id=' + codeVerifierKey + '&client_secret=' + codeVerifierSecret +'&username={!$Credential.Username}&password={!$Credential.Password}');
+        
+        Http http = new Http();
+        HTTPResponse res = http.send(req);
+        String accessToken = getTokenValueFromResponse(res.getBody(), 'access_token');
+        System.debug(res.getBody());
+
+
+        //store code verifier
+        http = new Http();
+        req = new HttpRequest();
+        req.setEndpoint(URL.getOrgDomainUrl().toExternalForm() + '/services/apexrest/idporten/codeverifier');
+        req.setHeader('Content-Type', 'application/json;charset=UTF-8');
+        req.setHeader('Authorization', 'Bearer ' + accessToken);
+        req.setMethod('POST');
+        req.setBody('{"codeVerifier":"' + codeVerifier + '","state":"' + stateToPropagate + '"}');                   
+        http = new Http();
+        res = http.send(req);
+        system.debug(res.getBody());
         String url =  authorizeEndpointUrl + '?client_id='+ consumerKey +'&acr_values=' + acrValues + '&scope=' + scope +'&redirect_uri='+ redirectUrl + '&response_type=code&state=' + stateToPropagate +'&code_challenge=' + codeChallenge + '&code_challenge_method=S256&ui_locales=nb';
-        return new PageReference(url);
+        return new Pagereference(url);
      }
 
      global Auth.AuthProviderTokenResponse handleCallback(Map<string,string> authProviderConfiguration, Auth.AuthProviderCallbackState state ) {
@@ -32,8 +62,8 @@ global class IdPorten extends Auth.AuthProviderPluginClass {
         String encodedRedirectUrl=EncodingUtil.urlEncode(redirectUrl,'UTF-8');     
         Map<String,String> queryParams = state.queryParameters;
         String code = queryParams.get('code');
-        String sfdcState = queryParams.get('state');     
-       
+        String sfdcState = queryParams.get('state');    
+        String codeVerifier=sfdcState.subString(0,128);
         HttpRequest req = new HttpRequest();
         req.setEndpoint(tokenEndpointUrl);
         req.setHeader('Content-Type','application/x-www-form-urlencoded');
@@ -46,7 +76,7 @@ global class IdPorten extends Auth.AuthProviderPluginClass {
         String refreshToken = getTokenValueFromResponse(res.getBody(), 'refresh_token');
         String idToken = getTokenValueFromResponse(res.getBody(), 'id_token');
         JWTClaims decodedIdToken=decodeIdToken(idToken);
-        SID=decodedIdToken.SID;
+        sid=decodedIdToken.sid;
         return new Auth.AuthProviderTokenResponse('ID-porten', accessToken, refreshToken, sfdcState);
         
      }
@@ -70,7 +100,7 @@ global class IdPorten extends Auth.AuthProviderPluginClass {
         Map<String,String> provMap = new Map<String,String>();
         provMap.put('sub', sub);
         provMap.put('pid', pid);
-        provMap.put('sid', SID);
+        provMap.put('sid', sid);
         provMap.put('sfdc_networkid', networkId);
         
         

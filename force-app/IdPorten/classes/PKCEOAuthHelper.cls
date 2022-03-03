@@ -1,7 +1,7 @@
 public class PKCEOAuthHelper {
 
     public static void printDetails(){
-        String code_verifier  = generateRandomString(34);
+        String code_verifier;
         Blob sha256           = Crypto.generateDigest('SHA-256', Blob.valueOf(code_verifier));
         String code_challenge = base64URLencode(sha256);
         
@@ -24,10 +24,10 @@ public class PKCEOAuthHelper {
         return output;
     }
     
-    private static String generateRandomString(Integer len) {
-        final String chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghijklmnopqrstuvwxyz';
+    public static String generateCodeVerifier() {
+        final String chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghijklmnopqrstuvwxyz.~';
         String randStr = '';
-        while (randStr.length() < len) {
+        while (randStr.length() < 128) {
             Integer idx = Math.mod(Math.abs(Crypto.getRandomInteger()), chars.length());
             randStr += chars.substring(idx, idx+1);
         }

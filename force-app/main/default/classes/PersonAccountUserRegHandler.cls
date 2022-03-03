@@ -1,8 +1,5 @@
 global class PersonAccountUserRegHandler implements Auth.RegistrationHandler {
     global User createUser(Id portalId, Auth.UserData data) {
-        system.debug(portalId);
-        system.debug(data);
-        system.debug(data.attributeMap);
         String personIdent = data.attributeMap.get('pid');
         String communityId = data.attributeMap.get('sfdc_networkid');
         
@@ -48,10 +45,11 @@ global class PersonAccountUserRegHandler implements Auth.RegistrationHandler {
 
     private static void logSession(string sid, Id userId){
         if(sid!=null){
-            IdPortenSession__c session=new IdPortenSession__c();
-            session.Name=sid;
-            session.UserId__c=userId;
-            insert session;
+            IdPortenCache__c cache=new IdPortenCache__c();
+            cache.Name=sid;
+            cache.UserId__c=userId;
+            cache.Type__c='Session';
+            insert cache;
         }
     }
 }
