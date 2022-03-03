@@ -6,7 +6,6 @@ global class IdPortenAuth extends Auth.AuthProviderPluginClass {
     private String userInfoEndpointUrl;
     private String customMetadataTypeApiName='ID_porten__mdt';
     private String scope='openid';
-    private String redirectUrl;
     private String acrValues;
     private String sid;
     global String getCustomMetadataType() {
@@ -18,13 +17,12 @@ global class IdPortenAuth extends Auth.AuthProviderPluginClass {
         authorizeEndpointUrl = authProviderConfiguration.get('AuthorizeEndpointUrl__c');
         consumerKey = authProviderConfiguration.get('ConsumerKey__c');
         acrValues = authProviderConfiguration.get('AcrValues__c');
-        redirectUrl = authProviderConfiguration.get('RedirectUrl__c');
         String codeVerifier=PKCEOAuthHelper.generateCodeVerifier();
         String codeChallenge=PKCEOAuthHelper.getCodeChallenge(codeVerifier);
         String codeVerifierKey=authProviderConfiguration.get('CodeVerifierKey__c');
         String codeVerifierSecret = authProviderConfiguration.get('CodeVerifierSecret__c');
         CodeVerifierApiCallout.storeCodeVerifier(codeVerifier, stateToPropagate, codeVerifierKey, codeVerifierSecret);
-
+        String redirectUrl=getRedirectUrl(authProviderConfiguration.get('UrlSuffix__c'));
         String url =  authorizeEndpointUrl + '?client_id='+ consumerKey +'&acr_values=' + acrValues + '&scope=' + scope +'&redirect_uri='+ redirectUrl + '&response_type=code&state=' + stateToPropagate +'&code_challenge=' + codeChallenge + '&code_challenge_method=S256&ui_locales=nb';
         return new Pagereference(url);
      }
@@ -34,7 +32,7 @@ global class IdPortenAuth extends Auth.AuthProviderPluginClass {
         consumerKey = authProviderConfiguration.get('ConsumerKey__c');
         consumerSecret = authProviderConfiguration.get('ConsumerSecret__c');
         tokenEndpointUrl = authProviderConfiguration.get('TokenEndpointUrl__c');
-        redirectUrl = authProviderConfiguration.get('RedirectUrl__c');
+        String redirectUrl = getRedirectUrl(authProviderConfiguration.get('UrlSuffix__c'));
         String encodedRedirectUrl=EncodingUtil.urlEncode(redirectUrl,'UTF-8');     
         Map<String,String> queryParams = state.queryParameters;
         String code = queryParams.get('code');
@@ -74,13 +72,12 @@ global class IdPortenAuth extends Auth.AuthProviderPluginClass {
         String responseBody = res.getBody();
         String sub = getTokenValueFromResponse(responseBody, 'sub');
         String pid = getTokenValueFromResponse(responseBody, 'pid');
-        String networkId = authProviderConfiguration.get('NetworkId__c');
         
         Map<String,String> provMap = new Map<String,String>();
         provMap.put('sub', sub);
         provMap.put('pid', pid);
         provMap.put('sid', sid);
-        provMap.put('sfdc_networkid', networkId);
+        provMap.put('sfdc_networkid', Network.getNetworkId());
         
         
         return new Auth.UserData(sub, null, null, null, null,
@@ -112,6 +109,14 @@ global class IdPortenAuth extends Auth.AuthProviderPluginClass {
         return claimsDeserialized;
     }
 
+    private static String getRedirectUrl(String urlSuffix){
+        system.debug(urlSuffix);
+        String redirectUrl=Network.getLoginUrl(Network.getNetworkId());
+        redirectUrl=redirectUrl.replace('/login', '/services/authcallback/');
+        redirectUrl+=urlSuffix;
+        system.debug(redirectUrl);
+        return redirectUrl;
+    }
     private class JWTClaims {
         String sid;
         String pid;
