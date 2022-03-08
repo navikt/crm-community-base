@@ -7,6 +7,7 @@ global class IdPortenAuth extends Auth.AuthProviderPluginClass {
     private String customMetadataTypeApiName='ID_porten__mdt';
     private String scope='openid';
     private String acrValues;
+    @TestVisible
     private String sid;
     global String getCustomMetadataType() {
         return customMetadataTypeApiName;
@@ -81,7 +82,7 @@ global class IdPortenAuth extends Auth.AuthProviderPluginClass {
         
         
         return new Auth.UserData(sub, null, null, null, null,
-             null, null, null, 'IdPorten', null, provMap);
+             null, null, null, 'ID-porten', null, provMap);
      }
 
      private static String getTokenValueFromResponse(String response, String token) {
@@ -110,11 +111,13 @@ global class IdPortenAuth extends Auth.AuthProviderPluginClass {
     }
 
     private static String getRedirectUrl(String urlSuffix){
-        system.debug(urlSuffix);
+        if(Test.isRunningTest()){
+            return 'https://callback';
+        }
         String redirectUrl=Network.getLoginUrl(Network.getNetworkId());
         redirectUrl=redirectUrl.replace('/login', '/services/authcallback/');
         redirectUrl+=urlSuffix;
-        system.debug(redirectUrl);
+
         return redirectUrl;
     }
     private class JWTClaims {

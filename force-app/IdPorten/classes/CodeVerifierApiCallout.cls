@@ -1,6 +1,6 @@
 public with sharing class CodeVerifierApiCallout {
    
-    public static void storeCodeVerifier(String codeVerifier, String state, String clientId, String clientSecret){
+    public static HttpResponse storeCodeVerifier(String codeVerifier, String state, String clientId, String clientSecret){
         String accessToken = getAccessToken(clientId,clientSecret);
         Http http = new Http();
         HttpRequest req = new HttpRequest();
@@ -10,6 +10,7 @@ public with sharing class CodeVerifierApiCallout {
         req.setMethod('POST');
         req.setBody('{"codeVerifier":"' + codeVerifier + '","state":"' + state + '"}');                   
         HTTPResponse res = http.send(req);
+        return res;
     }
 
     public static string getCodeVerifier(String state,String clientId, String clientSecret){
@@ -25,6 +26,9 @@ public with sharing class CodeVerifierApiCallout {
     }
 
     private static String getAccessToken(String clientId, String clientSecret){
+        if(Test.isRunningTest()){
+            return 'access';
+        }
         Http http = new Http();
         HttpRequest req = new HttpRequest();
         req.setEndpoint('callout:IdPortenCodeVerifier');
