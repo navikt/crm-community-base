@@ -45,8 +45,8 @@ global class TestUserSelfRegHandler implements Auth.ConfigurableSelfRegHandler {
         user.FirstName = contact.firstName;
         user.MiddleName = contact.middleName;
         user.LastName = contact.lastName;
-        user.Username = personIdent + '@nav.portal';
-        user.Email = contact.recordId + '@nav.portal';
+        user.Username = personIdent + '@portal.nav.no';
+        user.Email = contact.recordId + '@portal.nav.no';
         String contactIdString = (String) contact.recordId;
         user.Alias = contactIdString.right(8);
         user.TimeZoneSidKey = 'Europe/Paris';
