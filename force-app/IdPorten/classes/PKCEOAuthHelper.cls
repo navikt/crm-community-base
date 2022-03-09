@@ -9,11 +9,12 @@ public class PKCEOAuthHelper {
     }
 
     public static String generateNonce(){
-        String nonce=generateRandomString(128);
+        String nonce=generateRandomString(90);
+        String nonceEncoded= base64URLencode(Blob.valueOf(nonce));
         if(Test.isRunningTest()){
             return 'anw.HT3EPhTDA3j9GAg77ZLEupFB915wEdW2vyyqRgkFFbC11DQAIgQ6jG03kLwIiPY_TFY47h3M2SWFG0jDtyJb4suN8OQffFLqGONqlEhyv2hgLV7r7EfF-LpgSH~a';
         }
-        return nonce;
+        return nonceEncoded;
     }
 
     private static String generateRandomString(Integer length){
