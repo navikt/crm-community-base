@@ -18,7 +18,9 @@ global class PersonAccountUserRegHandler implements Auth.RegistrationHandler {
         }
 
         String sid=data.attributeMap.get('sid');
-        logSession(sid,user.Id);
+        if(sid!=null){
+            logSession(sid,user.id);
+        }
         return user;
     }
 
@@ -36,16 +38,17 @@ global class PersonAccountUserRegHandler implements Auth.RegistrationHandler {
         if(communityId=='0DB2o000000Ug9I' || communityId=='0DB1l0000008QNv' || communityId=='0DB2o000000Ug9D'){
             CommunityUsersService.assignCommunitySpecificPermissionSet(userId,communityId);
         }
-        logSession(sid,userid);
+        if(sid!=null){
+            logSession(sid,userid);
+        }
     }
 
-    private static void logSession(string sid, Id userId){
-        if(sid!=null){
-            IdPortenCache__c cache=new IdPortenCache__c();
-            cache.Name=sid;
-            cache.UserId__c=userId;
-            cache.Type__c='Session';
-            insert cache;
-        }
+    @future
+    public static void logSession(string sid, Id userId){
+        IdPortenCache__c cache=new IdPortenCache__c();
+        cache.Name=sid;
+        cache.UserId__c=userId;
+        cache.Type__c='Session';
+        insert cache;
     }
 }
