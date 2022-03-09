@@ -14,6 +14,7 @@ private class IdPortenAuth_Test {
     private static final String SCOPE='openid';
     private static final String REDIRECT_URL='https://callback';
     private static final String CODE_VERIFIER='kVrLZpcSnucojj-YzCjsMTg-bbyVJffWBLu5RuyPx~gh5l-PX6gL.PNiKxAMIjCaNpJCYS88m8KdX2OuVB2eA1I.w-~ZHNSe9O9XklFX_IH_dDbG~mdHxsswvSA5XtZD';
+    private static final String NONCE='anw.HT3EPhTDA3j9GAg77ZLEupFB915wEdW2vyyqRgkFFbC11DQAIgQ6jG03kLwIiPY_TFY47h3M2SWFG0jDtyJb4suN8OQffFLqGONqlEhyv2hgLV7r7EfF-LpgSH~a';
     
     private static Map<String,String> setupAuthProviderConfig () {
         Map<String,String> authProviderConfiguration = new Map<String,String>();
@@ -39,7 +40,7 @@ private class IdPortenAuth_Test {
         PageReference expectedUrl =  new PageReference(AUTHORIZE_ENDPOINT_URL + '?client_id='+ 
                                             CONSUMER_KEY + '&acr_values=' + ARC_VALUES + '&response_type=code&scope=' + scope + '&redirect_uri='+ 
                                             REDIRECT_URL + '&state=' + 
-                                            stateToPropogate + '&code_challenge=' + codeChallenge  + '&code_challenge_method=S256&ui_locales=nb');
+                                            stateToPropogate + '&code_challenge=' + codeChallenge  + '&code_challenge_method=S256&ui_locales=nb&nonce=' + NONCE);
 
         PageReference actualUrl = auth.initiate(authProviderConfiguration, stateToPropogate);
         System.assertEquals(expectedUrl.getUrl(), actualUrl.getUrl());
@@ -56,8 +57,7 @@ private class IdPortenAuth_Test {
         queryParams.put('state','mocktestState');
         Auth.AuthProviderCallbackState cbState = new Auth.AuthProviderCallbackState(null,null,queryParams);
         Auth.AuthProviderTokenResponse actualAuthProvResponse = auth.handleCallback(authProviderConfiguration, cbState);
-        Auth.AuthProviderTokenResponse expectedAuthProvResponse = new Auth.AuthProviderTokenResponse('ID-porten', 'access', 'refresh', null);
-        
+        Auth.AuthProviderTokenResponse expectedAuthProvResponse = new Auth.AuthProviderTokenResponse('ID-porten', 'access', 'refresh', 'mockTestState');
         System.assertEquals(expectedAuthProvResponse.provider, actualAuthProvResponse.provider);
         System.assertEquals(expectedAuthProvResponse.oauthToken, actualAuthProvResponse.oauthToken);
         System.assertEquals(expectedAuthProvResponse.oauthSecretOrRefreshToken, actualAuthProvResponse.oauthSecretOrRefreshToken);
@@ -81,8 +81,11 @@ private class IdPortenAuth_Test {
         public HTTPResponse respond(HTTPRequest request) {
             HttpResponse res = new HttpResponse();
             res.setHeader('Content-Type', 'application/xml');
-            String idToken='eyJraWQiOiJ2UHBaZW9HOGRkTHpmdHMxLWxnc3VnOHNyYVd3bW04dHhJaGJ3Y1h3R01JIiwiYWxnIjoiUlMyNTYifQ.eyJhdF9oYXNoIjoiSGs1TDE4WVVDTVZHbjFLNFBpckY2QSIsInN1YiI6Ii10c01LdWxFNUZHQUU1WkhRRUVlLWNsT2ZqS1VheGpYVmNXc2RsaHFBRWM9IiwiYW1yIjpbIkJhbmtJRCJdLCJpc3MiOiJodHRwczpcL1wvb2lkYy12ZXIyLmRpZmkubm9cL2lkcG9ydGVuLW9pZGMtcHJvdmlkZXJcLyIsInBpZCI6IjE2MTIwMTAxMTgxIiwibG9jYWxlIjoibmIiLCJzaWQiOiJRc1NvZGZDRFVwS1JJWVFiX2ZMMktVZC03VVVCeEVuUXo3bWNKeE1YMzQ0IiwiYXVkIjoiYTA2OTY2MTItZWZjNC00NmU5LWE3YzktYmZmNjU2ZTU1NGMyIiwiYWNyIjoiTGV2ZWw0IiwiYXV0aF90aW1lIjoxNjQ2MjI1ODIyLCJleHAiOjE2NDYyMjcxNjMsImlhdCI6MTY0NjIyNzA0MywianRpIjoiTjVSTUpCZmFieU5OSWRlQWlyYzFlQmYxRlhfVVA0eGNrNVlQSjJ1aFBCdyJ9.0uyhTX5EWknLBc2U3OGpBK9bmsfNPV6V8pQdYDnSa6jsMyqMErn8rPVwpwiY82alkQLuzdEVb6xPJuCWqx3gwXCyIdK-jdPUU0ck9qIs5zvmzBTaegIU2TEhAMHB-q21JvTRe2LdJCSUuZRyUddhEwbxTU0gPv14ktJSMG8_69Qvqqc3DjNg_vhGD2J3Yf4V3aXcL1LqlsXVrkqk1p41dQ1iwAsSTAlEHhWHaXjbal60849dxguZZhdtx-fCJ8aobGZr1puicoE0GVZTaO0flGsCQtaGr4gwmFcTnqd0iymAfez2WkaxjprluT1m8-1ZVAf_wYDc9gwsR-liwQiuQg';
-            res.setBody('{"access_token":"access","refresh_token":"refresh", "id_token":"' + idToken + '"}'); 
+            String nonce='noncetest';
+            String codeVerifier='verifier';
+            String idToken='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdF9oYXNoIjoiSGs1TDE4WVVDTVZHbjFLNFBpckY2QSIsInN1YiI6Ii10c01LdWxFNUZHQUU1WkhRRUVlLWNsT2ZqS1VheGpYVmNXc2RsaHFBRWM9IiwiYW1yIjpbIkJhbmtJRCJdLCJpc3MiOiJodHRwczovL29pZGMtdmVyMi5kaWZpLm5vL2lkcG9ydGVuLW9pZGMtcHJvdmlkZXIvIiwicGlkIjoiMTYxMjAxMDExODEiLCJsb2NhbGUiOiJuYiIsInNpZCI6IlFzU29kZkNEVXBLUklZUWJfZkwyS1VkLTdVVUJ4RW5RejdtY0p4TVgzNDQiLCJhdWQiOiJhMDY5NjYxMi1lZmM0LTQ2ZTktYTdjOS1iZmY2NTZlNTU0YzIiLCJhY3IiOiJMZXZlbDQiLCJhdXRoX3RpbWUiOjE2NDYyMjU4MjIsImV4cCI6MTY0NjIyNzE2MywiaWF0IjoxNjQ2MjI3MDQzLCJub25jZSI6Im5vbmNldGVzdCIsImp0aSI6Ik41Uk1KQmZhYnlOTklkZUFpcmMxZUJmMUZYX1VQNHhjazVZUEoydWhQQncifQ.5-MEpzms1cH97aAFVM2bNATADrdSiWxt1s_ZtiOgJ1w';
+            res.setBody('{"access_token":"access","refresh_token":"refresh", "id_token":"' + idToken + '","codeVerifier":"' + codeVerifier + '","nonce":"' + nonce +'"}'); 
+            
             res.setStatusCode(200);
             return res; 
         }

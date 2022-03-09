@@ -1,6 +1,6 @@
 public with sharing class CodeVerifierApiCallout {
    
-    public static HttpResponse storeCodeVerifier(String codeVerifier, String state, String clientId, String clientSecret){
+    public static HttpResponse storeCodeVerifier(String codeVerifier, String nonce, String state, String clientId, String clientSecret){
         String accessToken = getAccessToken(clientId,clientSecret);
         Http http = new Http();
         HttpRequest req = new HttpRequest();
@@ -8,12 +8,12 @@ public with sharing class CodeVerifierApiCallout {
         req.setHeader('Content-Type', 'application/json;charset=UTF-8');
         req.setHeader('Authorization', 'Bearer ' + accessToken);
         req.setMethod('POST');
-        req.setBody('{"codeVerifier":"' + codeVerifier + '","state":"' + state + '"}');                   
+        req.setBody('{"codeVerifier":"' + codeVerifier + '","nonce":"' + nonce + '","state":"' + state + '"}');                     
         HTTPResponse res = http.send(req);
         return res;
     }
 
-    public static string getCodeVerifier(String state,String clientId, String clientSecret){
+    public static IdPortenCache getCodeVerifier(String state,String clientId, String clientSecret){
         String accessToken = getAccessToken(clientId,clientSecret);
         Http http = new Http();
         HttpRequest req = new HttpRequest();
@@ -22,7 +22,7 @@ public with sharing class CodeVerifierApiCallout {
         req.setHeader('Authorization', 'Bearer ' + accessToken);
         req.setMethod('GET');
         HTTPResponse res = http.send(req);
-        return res.getBody().replaceAll('"','');
+        return (IdPortenCache) System.JSON.deserialize(res.getBody(),IdPortenCache.class);
     }
 
     private static String getAccessToken(String clientId, String clientSecret){

@@ -11,6 +11,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>IdPortenCache__c.Nonce__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>IdPortenCache__c.State__c</field>
         <readable>true</readable>
     </fieldPermissions>
