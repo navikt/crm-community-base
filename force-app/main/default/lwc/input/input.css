@@ -26,6 +26,10 @@
     width: 100%;
 }
 
+.without::-webkit-datetime-edit-ampm-field {
+    display: none;
+}
+
 .navds-body-short {
     font-size: 1.125rem;
     font-weight: 400;
