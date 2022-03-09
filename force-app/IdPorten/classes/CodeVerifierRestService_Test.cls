@@ -3,13 +3,13 @@ private class CodeVerifierRestService_Test {
     
     @IsTest
     private static void testStoreCodeVerifier(){
-        CodeVerifierRestService.storeCodeVerifier('verifier','mockState');
+        CodeVerifierRestService.storeCodeVerifier('verifier','nonce','mockState');
         System.assertEquals(1,[SELECT COUNT() FROM IdPortenCache__c WHERE Type__c='Code Verifier']);
     }
 
     @IsTest
     private static void testGetCodeVerifier(){
-        CodeVerifierRestService.storeCodeVerifier('verifier','mockState');
+        CodeVerifierRestService.storeCodeVerifier('verifier','nonce','mockState');
 
         RestRequest req = new RestRequest(); 
         RestResponse res = new RestResponse();
@@ -21,10 +21,10 @@ private class CodeVerifierRestService_Test {
         RestContext.response = res;
         
         Test.startTest();
-        String actualVerifier=CodeVerifierRestService.getCodeVerifier();
+        IdPortenCache cache=CodeVerifierRestService.getCodeVerifier();
         Test.stopTest();
         
-        System.assertEquals('verifier',actualVerifier);
+        System.assertEquals('verifier',cache.codeVerifier);
         System.assertEquals(0,[SELECT COUNT() FROM IdPortenCache__c WHERE Type__c='Code Verifier'], 'Record is deleted');
     }
 }

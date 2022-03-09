@@ -5,7 +5,7 @@ private class CodeVerifierApiCallout_Test {
     private static void testStoreCodeVerifier(){
         Test.setMock(HttpCalloutMock.class, new CodeVerifierPostMock());
 
-        HttpResponse res= CodeVerifierApiCallout.storeCodeVerifier('verifier', 'state','clientId', 'secret');
+        HttpResponse res= CodeVerifierApiCallout.storeCodeVerifier('verifier','nonce', 'state','clientId', 'secret');
         System.assertEquals(200,res.getStatusCode());
     }
 
@@ -13,9 +13,12 @@ private class CodeVerifierApiCallout_Test {
     private static void testGetCodeVerifier(){
         Test.setMock(HttpCalloutMock.class, new GetCodeVerifierMock());
 
-        String codeverifier= CodeVerifierApiCallout.getCodeVerifier('state','clientId', 'secret');
+        IdPortenCache cache = CodeVerifierApiCallout.getCodeVerifier('state','clientId', 'secret');
         String expectedVerifier='kVrLZpcSnucojj-YzCjsMTg-bbyVJffWBLu5RuyPx~gh5l-PX6gL.PNiKxAMIjCaNpJCYS88m8KdX2OuVB2eA1I.w-~ZHNSe9O9XklFX_IH_dDbG~mdHxsswvSA5XtZD';
-        System.assertEquals(expectedVerifier,codeVerifier);
+        System.assertEquals(expectedVerifier,cache.codeVerifier);
+
+        String expectedNonce='anw.HT3EPhTDA3j9GAg77ZLEupFB915wEdW2vyyqRgkFFbC11DQAIgQ6jG03kLwIiPY_TFY47h3M2SWFG0jDtyJb4suN8OQffFLqGONqlEhyv2hgLV7r7EfF-LpgSH~a';
+        System.assertEquals(expectedNonce,cache.nonce);
     }
 
 }

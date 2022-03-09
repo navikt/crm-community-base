@@ -1,14 +1,27 @@
 public class PKCEOAuthHelper {
 
     public static String generateCodeVerifier() { 
-        final String chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghijklmnopqrstuvwxyz.~';
-        String randStr = '';
-        while (randStr.length() < 128) {
-            Integer idx = Math.mod(Math.abs(Crypto.getRandomInteger()), chars.length());
-            randStr += chars.substring(idx, idx+1);
-        }
+        String codeVerifier=generateRandomString(128);
         if(Test.isRunningTest()){
             return 'kVrLZpcSnucojj-YzCjsMTg-bbyVJffWBLu5RuyPx~gh5l-PX6gL.PNiKxAMIjCaNpJCYS88m8KdX2OuVB2eA1I.w-~ZHNSe9O9XklFX_IH_dDbG~mdHxsswvSA5XtZD';
+        }
+        return codeVerifier;
+    }
+
+    public static String generateNonce(){
+        String nonce=generateRandomString(128);
+        if(Test.isRunningTest()){
+            return 'anw.HT3EPhTDA3j9GAg77ZLEupFB915wEdW2vyyqRgkFFbC11DQAIgQ6jG03kLwIiPY_TFY47h3M2SWFG0jDtyJb4suN8OQffFLqGONqlEhyv2hgLV7r7EfF-LpgSH~a';
+        }
+        return nonce;
+    }
+
+    private static String generateRandomString(Integer length){
+        final String chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghijklmnopqrstuvwxyz.~';
+        String randStr = '';
+        while (randStr.length() < length) {
+            Integer idx = Math.mod(Math.abs(Crypto.getRandomInteger()), chars.length());
+            randStr += chars.substring(idx, idx+1);
         }
         return randStr; 
     }

@@ -2,22 +2,25 @@
 global with sharing class CodeVerifierRestService {
 
     @HttpPost
-    global static void storeCodeVerifier(String codeVerifier, String state) {
+    global static void storeCodeVerifier(String codeVerifier, String nonce, String state) {
         IdPortenCache__c cache=new IdPortenCache__c();
         cache.CodeVerifier__c=codeVerifier;
+        cache.Nonce__c=nonce;
         cache.State__c=state;
         cache.Type__c='Code Verifier';
         insert cache;
     }
 
     @HttpGet
-    global static string getCodeVerifier() {
+    global static IdPortenCache getCodeVerifier() {
         String state = getRequestParam('state');
-        for(IdPortenCache__c cache:[SELECT State__c, CodeVerifier__c FROM IdPortenCache__c WHERE CreatedDate> :Datetime.now().addMinutes(-1) AND Type__c='Code Verifier' ORDER BY CreatedDate DESC]){
+        for(IdPortenCache__c cache:[SELECT State__c, Nonce__c, CodeVerifier__c FROM IdPortenCache__c WHERE CreatedDate> :Datetime.now().addMinutes(-1) AND Type__c='Code Verifier' ORDER BY CreatedDate DESC]){
             if(cache.State__c==state){
-                String codeVerifier=cache.CodeVerifier__c;
+                IdPortenCache idPortenCache=new IdPortenCache();
+                idPortenCache.codeVerifier=cache.CodeVerifier__c;
+                idportenCache.nonce=cache.Nonce__c;
                 delete cache;
-                return codeVerifier;
+                return idPortenCache;
             }
         }
         return null;

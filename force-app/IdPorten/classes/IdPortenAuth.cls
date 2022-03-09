@@ -20,11 +20,12 @@ global class IdPortenAuth extends Auth.AuthProviderPluginClass {
         acrValues = authProviderConfiguration.get('AcrValues__c');
         String codeVerifier=PKCEOAuthHelper.generateCodeVerifier();
         String codeChallenge=PKCEOAuthHelper.getCodeChallenge(codeVerifier);
+        String nonce=PKCEOAuthHelper.generateNonce();
         String codeVerifierKey=authProviderConfiguration.get('CodeVerifierKey__c');
         String codeVerifierSecret = authProviderConfiguration.get('CodeVerifierSecret__c');
-        CodeVerifierApiCallout.storeCodeVerifier(codeVerifier, stateToPropagate, codeVerifierKey, codeVerifierSecret);
+        CodeVerifierApiCallout.storeCodeVerifier(codeVerifier, nonce, stateToPropagate, codeVerifierKey, codeVerifierSecret);
         String redirectUrl=getRedirectUrl(authProviderConfiguration.get('UrlSuffix__c'));
-        String url =  authorizeEndpointUrl + '?client_id='+ consumerKey +'&acr_values=' + acrValues + '&scope=' + scope +'&redirect_uri='+ redirectUrl + '&response_type=code&state=' + stateToPropagate +'&code_challenge=' + codeChallenge + '&code_challenge_method=S256&ui_locales=nb';
+        String url =  authorizeEndpointUrl + '?client_id='+ consumerKey +'&acr_values=' + acrValues + '&scope=' + scope +'&redirect_uri='+ redirectUrl + '&response_type=code&state=' + stateToPropagate +'&code_challenge=' + codeChallenge + '&code_challenge_method=S256&ui_locales=nb&nonce=' + nonce;
         return new Pagereference(url);
      }
 
@@ -40,7 +41,16 @@ global class IdPortenAuth extends Auth.AuthProviderPluginClass {
         String sfdcState = queryParams.get('state');  
         String codeVerifierKey=authProviderConfiguration.get('CodeVerifierKey__c');
         String codeVerifierSecret = authProviderConfiguration.get('CodeVerifierSecret__c');  
-        String codeVerifier=CodeVerifierApiCallout.getCodeVerifier(sfdcState,codeVerifierKey,codeVerifierSecret);
+       
+        //chceck state and get code verifer and nonce
+        IdPortenCache cache=CodeVerifierApiCallout.getCodeVerifier(sfdcState,codeVerifierKey,codeVerifierSecret);
+        String codeVerifier=cache.codeVerifier;
+        String nonce=cache.nonce;
+
+        //check sate code verifer and nonce are found
+        if(sfdcState==null || codeVerifier==null || nonce==null){
+            return null;
+        }
 
         HttpRequest req = new HttpRequest();
         req.setEndpoint(tokenEndpointUrl);
@@ -55,8 +65,11 @@ global class IdPortenAuth extends Auth.AuthProviderPluginClass {
         String idToken = getTokenValueFromResponse(res.getBody(), 'id_token');
         JWTClaims decodedIdToken=decodeIdToken(idToken);
         sid=decodedIdToken.sid;
-        return new Auth.AuthProviderTokenResponse('ID-porten', accessToken, refreshToken, sfdcState);
-        
+
+        if(decodedIdToken.nonce!=null && decodedIdToken.nonce==nonce){
+            return new Auth.AuthProviderTokenResponse('ID-porten', accessToken, refreshToken, sfdcState);
+        }
+        return null;
      }
 
      global Auth.UserData getUserInfo(Map<string,string> authProviderConfiguration, Auth.AuthProviderTokenResponse response) { 
@@ -122,7 +135,7 @@ global class IdPortenAuth extends Auth.AuthProviderPluginClass {
     }
     private class JWTClaims {
         String sid;
-        String pid;
+        String nonce;
     }
 
 }
