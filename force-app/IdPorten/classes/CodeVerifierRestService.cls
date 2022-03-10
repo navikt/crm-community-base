@@ -14,7 +14,7 @@ global with sharing class CodeVerifierRestService {
     @HttpGet
     global static IdPortenCache getCodeVerifier() {
         String state = getRequestParam('state');
-        for(IdPortenCache__c cache:[SELECT State__c, Nonce__c, CodeVerifier__c FROM IdPortenCache__c WHERE CreatedDate> :Datetime.now().addMinutes(-1) AND Type__c='Code Verifier' ORDER BY CreatedDate DESC]){
+        for(IdPortenCache__c cache:[SELECT State__c, Nonce__c, CodeVerifier__c FROM IdPortenCache__c WHERE CreatedDate> :Datetime.now().addMinutes(-15) AND Type__c='Code Verifier' ORDER BY CreatedDate DESC]){
             if(cache.State__c==state){
                 IdPortenCache idPortenCache=new IdPortenCache();
                 idPortenCache.codeVerifier=cache.CodeVerifier__c;
