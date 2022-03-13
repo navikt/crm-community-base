@@ -10,8 +10,6 @@ public with sharing class CodeVerifierApiCallout {
         req.setMethod('POST');
         req.setBody('{"codeVerifier":"' + codeVerifier + '","nonce":"' + nonce + '","state":"' + state + '"}');                     
         HTTPResponse res = http.send(req);
-        system.debug(res);
-        system.debug(res.getBody());
         return res;
     }
 
