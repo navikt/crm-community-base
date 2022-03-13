@@ -25,6 +25,7 @@ global class IdPortenAuth extends Auth.AuthProviderPluginClass {
         String codeVerifierSecret = authProviderConfiguration.get('CodeVerifierSecret__c');
         CodeVerifierApiCallout.storeCodeVerifier(codeVerifier, nonce, stateToPropagate, codeVerifierKey, codeVerifierSecret);
         String redirectUrl=getRedirectUrl(authProviderConfiguration.get('UrlSuffix__c'));
+        system.debug(redirectUrl);
         String url =  authorizeEndpointUrl + '?client_id='+ consumerKey +'&acr_values=' + acrValues + '&scope=' + scope +'&redirect_uri='+ redirectUrl + '&response_type=code&state=' + stateToPropagate +'&code_challenge=' + codeChallenge + '&code_challenge_method=S256&ui_locales=nb&nonce=' + nonce;
         return new Pagereference(url);
      }
