@@ -8,6 +8,9 @@ global with sharing class CodeVerifierRestService {
         cache.Nonce__c=nonce;
         cache.State__c=state;
         cache.Type__c='Code Verifier';
+        system.debug(codeVerifier);
+        system.debug(nonce);
+        system.debug(state);
         insert cache;
     }
 
