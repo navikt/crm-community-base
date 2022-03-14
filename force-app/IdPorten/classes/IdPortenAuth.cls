@@ -64,9 +64,7 @@ global class IdPortenAuth extends Auth.AuthProviderPluginClass {
         String refreshToken = getTokenValueFromResponse(res.getBody(), 'refresh_token');
         String idToken = getTokenValueFromResponse(res.getBody(), 'id_token');
         JWTClaims decodedIdToken=decodeIdToken(idToken);
-        system.debug(idToken);
         sid=decodedIdToken.sid;
-        system.debug(sid);
         if(decodedIdToken.nonce!=null && decodedIdToken.nonce==nonce){
             return new Auth.AuthProviderTokenResponse('ID-porten', accessToken, refreshToken, sfdcState);
         }
