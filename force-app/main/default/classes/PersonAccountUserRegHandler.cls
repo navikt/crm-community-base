@@ -45,10 +45,17 @@ global class PersonAccountUserRegHandler implements Auth.RegistrationHandler {
 
     @future
     public static void logSession(string sid, Id userId){
+        system.debug('##sid: ' + sid + ' ##userid: ' + userId);
         IdPortenCache__c cache=new IdPortenCache__c();
         cache.Name=sid;
         cache.UserId__c=userId;
         cache.Type__c='Session';
-        insert cache;
+        try {
+            insert cache;
+        } catch (Exception e) {
+            LoggerUtility logger = new LoggerUtility();
+            logger.exception(e, CRM_ApplicationDomain.Domain.HOT);
+            logger.publishSynch();
+        }
     }
 }
