@@ -14,6 +14,7 @@
         "PersonAccounts",
         "ProcessBuilder",
         "API",
+        "Knowledge",
         "ServiceCloud",
         "LiveAgent",
         "LightningServiceConsole",
@@ -55,6 +56,13 @@
         },
         "liveAgentSettings": {
             "enableLiveAgent": true
+        },
+        "knowledgeSettings": {
+            "enableKnowledge": true,
+            "enableLightningKnowledge": true
+        },
+        "omniChannelSettings": {
+            "enableOmniChannel": true
         }
     }
 }
