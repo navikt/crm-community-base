@@ -2,6 +2,7 @@ global class PersonAccountUserRegHandler implements Auth.RegistrationHandler {
     global User createUser(Id portalId, Auth.UserData data) {
         String personIdent = data.attributeMap.get('pid');
         String communityId = data.attributeMap.get('sfdc_networkid');
+        String sid=data.attributeMap.get('sid');
         
         DefaultCommunityProfile__c defaultCommunityProfiles = DefaultCommunityProfile__c.getOrgDefaults();
         String defaultCommunityPlusLoginCommunityId= defaultCommunityProfiles.DefaultCommunityPlusLoginCommunityId__c;
@@ -21,7 +22,6 @@ global class PersonAccountUserRegHandler implements Auth.RegistrationHandler {
             CommunityUsersService.assignCommunitySpecificPermissionSet(user.Id,communityId);
         }
 
-        String sid=data.attributeMap.get('sid');
         if(sid!=null){
             logSession(sid,user.id);
         }
