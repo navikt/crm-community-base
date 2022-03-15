@@ -2,12 +2,17 @@ global class PersonAccountUserRegHandler implements Auth.RegistrationHandler {
     global User createUser(Id portalId, Auth.UserData data) {
         String personIdent = data.attributeMap.get('pid');
         String communityId = data.attributeMap.get('sfdc_networkid');
+        String sid=data.attributeMap.get('sid');
         
         DefaultCommunityProfile__c defaultCommunityProfiles = DefaultCommunityProfile__c.getOrgDefaults();
         String defaultCommunityPlusLoginCommunityId= defaultCommunityProfiles.DefaultCommunityPlusLoginCommunityId__c;
         if(communityId!=null && defaultCommunityPlusLoginCommunityId!=null &&  communityId==defaultCommunityPlusLoginCommunityId){
             //return community plus login user
-            return CommunityUsersService.getOrcreateCommunityPlusLoginUser(personIdent);
+            User user=CommunityUsersService.getOrcreateCommunityPlusLoginUser(personIdent);
+            if(sid!=null){
+            	logSession(sid,user.id);
+        	}
+            return user;
         }
         User user= CommunityUsersService.getOrCreatePersonAccountUser(personIdent);
         if(user==null){
@@ -17,7 +22,6 @@ global class PersonAccountUserRegHandler implements Auth.RegistrationHandler {
             CommunityUsersService.assignCommunitySpecificPermissionSet(user.Id,communityId);
         }
 
-        String sid=data.attributeMap.get('sid');
         if(sid!=null){
             logSession(sid,user.id);
         }
@@ -45,13 +49,12 @@ global class PersonAccountUserRegHandler implements Auth.RegistrationHandler {
 
     @future
     public static void logSession(string sid, Id userId){
-        system.debug('##sid: ' + sid + ' ##userid: ' + userId);
         IdPortenCache__c cache=new IdPortenCache__c();
         cache.Name=sid;
         cache.UserId__c=userId;
         cache.Type__c='Session';
         try {
-            insert cache;
+            insert cache;   
         } catch (Exception e) {
             LoggerUtility logger = new LoggerUtility();
             logger.exception(e, CRM_ApplicationDomain.Domain.HOT);
