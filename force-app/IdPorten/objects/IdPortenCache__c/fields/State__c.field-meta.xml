@@ -3,7 +3,7 @@
     <fullName>State__c</fullName>
     <externalId>false</externalId>
     <label>State</label>
-    <length>500</length>
+    <length>3000</length>
     <trackTrending>false</trackTrending>
     <type>LongTextArea</type>
     <visibleLines>3</visibleLines>
