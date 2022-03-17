@@ -4,6 +4,7 @@
     justify-content: space-between;
     align-items: center;
     height: 48px;
+    width: 6rem;
     padding: 0.5rem;
     border: 1px solid var(--filterButtonBorderColor);
     border-radius: 3px;
