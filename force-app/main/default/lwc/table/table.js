@@ -6,6 +6,10 @@ export default class Table extends LightningElement {
     @api iconByValue;
     @api hideMobileHeader;
 
+    get mobileHeaderStyle() {
+        return this.hideMobileHeader && window.screen.width < 576 ? 'position: absolute; left: -10000px;' : '';
+    }
+
     recordMap = {};
     get recordsToShow() {
         let records = [];

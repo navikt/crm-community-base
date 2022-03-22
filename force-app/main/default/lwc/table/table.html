@@ -1,6 +1,6 @@
 <template>
     <table class="table-wrapper">
-        <thead class="mobile-header-hidden">
+        <thead style={mobileHeaderStyle}>
             <tr>
                 <template iterator:column={columns}>
                     <th tabindex="0" key={column.value.name} scope="col">{column.value.label}</th>
