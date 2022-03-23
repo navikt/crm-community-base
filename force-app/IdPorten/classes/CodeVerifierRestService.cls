@@ -3,12 +3,20 @@ global with sharing class CodeVerifierRestService {
 
     @HttpPost
     global static void storeCodeVerifier(String codeVerifier, String nonce, String state) {
-        IdPortenCache__c cache=new IdPortenCache__c();
-        cache.CodeVerifier__c=codeVerifier;
-        cache.Nonce__c=nonce;
-        cache.State__c=state;
-        cache.Type__c='Code Verifier';
-        insert cache;
+        try{
+            IdPortenCache__c cache=new IdPortenCache__c();
+            cache.CodeVerifier__c=codeVerifier;
+            cache.Nonce__c=nonce;
+            cache.State__c=state;
+            cache.Type__c='Code Verifier';
+            insert cache;
+        	}   
+        	catch (Exception e) {
+            LoggerUtility logger = new LoggerUtility();
+            logger.exception(e, CRM_ApplicationDomain.Domain.NKS);
+            logger.publishSynch();
+        }
+        
     }
 
     @HttpGet
@@ -23,6 +31,10 @@ global with sharing class CodeVerifierRestService {
                 return idPortenCache;
             }
         }
+        //unable to find cache. Log as error
+        LoggerUtility logger = new LoggerUtility();
+        logger.error('Unable to find cache record ' + state,null, CRM_ApplicationDomain.Domain.NKS);
+        logger.publishSynch();
         return null;
     }
 
