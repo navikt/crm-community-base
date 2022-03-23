@@ -57,10 +57,11 @@ export default class recordFilesWithoutSharing extends LightningElement {
     }
 
     // Call this when submit/save is run to delete selected files
-    // Should probably force a refresh when file is deleted so that the new list of files is shown
     @api deleteMarkedFiles() {
         if (this.filesToDelete.length > 0) {
-            deleteFilesOnRecord({ files: this.filesToDelete });
+            deleteFilesOnRecord({ files: this.filesToDelete }).then(() => {
+                refreshApex(this.wiredGetContentDocumentsResult);
+            });
         }
     }
 
