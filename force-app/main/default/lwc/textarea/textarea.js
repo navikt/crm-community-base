@@ -41,7 +41,6 @@ export default class Textarea extends LightningElement {
         if (this.rows === undefined) {
             toReturn += "height: 114px; "
         }
-        toReturn += "overflow: hidden;";
         return toReturn;
     }
 
