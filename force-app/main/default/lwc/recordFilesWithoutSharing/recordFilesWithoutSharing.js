@@ -4,6 +4,7 @@ import getBaseDownloadUrl from '@salesforce/apex/RecordFilesControllerWithoutSha
 import deleteFilesOnRecord from '@salesforce/apex/RecordFilesControllerWithoutSharing.deleteFilesOnRecord';
 import getOnlyMyContentDocuments from '@salesforce/apex/RecordFilesControllerWithoutSharing.getOnlyMyContentDocuments';
 import { setDefaultValue, convertStringToBoolean } from 'c/componentHelperClass';
+import { refreshApex } from '@salesforce/apex';
 export default class recordFilesWithoutSharing extends LightningElement {
     @api recordId;
     @api title;
@@ -78,8 +79,10 @@ export default class recordFilesWithoutSharing extends LightningElement {
         }
     }
 
+    wiredGetContentDocumentsResult;
     @wire(getContentDocuments, { recordId: '$recordId', isGetAll: '$isGetAll' })
     async wiredgetContentDocuments(result) {
+        this.wiredGetContentDocumentsResult = result;
         if (result.data) {
             const url = await getBaseDownloadUrl();
             this.contentDocuments = result.data.map((item) => ({
@@ -96,5 +99,8 @@ export default class recordFilesWithoutSharing extends LightningElement {
                 this.markFilesAvailableForDeletion();
             });
         }
+    }
+    @api refreshContentDocuments() {
+        refreshApex(this.wiredGetContentDocumentsResult);
     }
 }
