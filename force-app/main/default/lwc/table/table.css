@@ -21,15 +21,15 @@ th {
 }
 
 @media (max-width: 576px) {
-    .mobile-header-hidden {
-        position: absolute;
-        left: -10000px;
-    }
     .iconPadding {
         padding-right: 10px;
     }
     .icon {
         width: 5%;
+    }
+    th { /* Overwrite experience cloud default styling */
+        padding-left: 0;
+        border-bottom: unset;
     }
 }
 

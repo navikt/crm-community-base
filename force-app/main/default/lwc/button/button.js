@@ -9,6 +9,7 @@ export default class Button extends LightningElement {
     @api disabled;
     @api type; // Button, Submit, Reset
     @api value;
+    @api title;
     @api buttonStyling; // Primary, Secondary, Action, Danger
     @api buttonLabel;
     @api desktopStyle;

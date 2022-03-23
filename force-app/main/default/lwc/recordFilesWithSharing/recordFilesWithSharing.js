@@ -4,6 +4,7 @@ import getBaseDownloadUrl from '@salesforce/apex/RecordFilesControllerWithSharin
 import deleteFilesOnRecord from '@salesforce/apex/RecordFilesControllerWithSharing.deleteFilesOnRecord';
 import getOnlyMyContentDocuments from '@salesforce/apex/RecordFilesControllerWithSharing.getOnlyMyContentDocuments';
 import { setDefaultValue, convertStringToBoolean } from 'c/componentHelperClass';
+import { refreshApex } from '@salesforce/apex';
 export default class recordFilesWithSharing extends LightningElement {
     @api recordId;
     @api title;
@@ -56,10 +57,11 @@ export default class recordFilesWithSharing extends LightningElement {
     }
 
     // Call this when submit/save is run to delete selected files
-    // Should probably force a refresh when file is deleted so that the new list of files is shown
     @api deleteMarkedFiles() {
         if (this.filesToDelete.length > 0) {
-            deleteFilesOnRecord({ files: this.filesToDelete });
+            deleteFilesOnRecord({ files: this.filesToDelete }).then(() => {
+                refreshApex(this.wiredGetContentDocumentsResult);
+            });
         }
     }
 
@@ -78,8 +80,10 @@ export default class recordFilesWithSharing extends LightningElement {
         }
     }
 
+    wiredGetContentDocumentsResult;
     @wire(getContentDocuments, { recordId: '$recordId', isGetAll: '$isGetAll' })
     async wiredgetContentDocuments(result) {
+        this.wiredGetContentDocumentsResult = result;
         if (result.data) {
             const url = await getBaseDownloadUrl();
             this.contentDocuments = result.data.map((item) => ({
@@ -96,5 +100,8 @@ export default class recordFilesWithSharing extends LightningElement {
                 this.markFilesAvailableForDeletion();
             });
         }
+    }
+    @api refreshContentDocuments() {
+        refreshApex(this.wiredGetContentDocumentsResult);
     }
 }
