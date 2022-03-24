@@ -8,9 +8,6 @@ global class IdPortenLogoutRestService {
         if(cache.size()>0){
             //delete users all active sessions
             delete [SELECT Id FROM AuthSession WHERE UsersId=:cache[0].UserId__c AND LoginType='Chatter Communities External User Third Party SSO'];
-            
-            //delete session cache records
-            delete cache;
         }
     }
 }
