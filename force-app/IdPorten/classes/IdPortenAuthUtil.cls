@@ -21,6 +21,27 @@ public with sharing class IdPortenAuthUtil {
             return response;
         }
 
+        public void storeSid(String sid, Id userId){
+            if(sid!=null){
+                IdPortenCache__c cache=new IdPortenCache__c();
+                cache.Name=sid;
+                cache.UserId__c=userId;
+                cache.Type__c='Session';
+                try {
+                    insert cache;   
+                } catch (Exception e) {
+                    LoggerUtility logger = new LoggerUtility();
+                    logger.exception(e, CRM_ApplicationDomain.Domain.NKS);
+                    logger.publishSynch();
+                }
+            }
+            else{
+                LoggerUtility logger = new LoggerUtility();
+                logger.error('Finner ikke SID fra ID-token ',null, CRM_ApplicationDomain.Domain.NKS);
+                logger.publishSynch();
+            }
+        }
+        
         public String getSidFromIdToken(String code, String codeVerifier, String nonce){
             String consumerKey=authProviderConfiguration.get('ConsumerKey');
             String consumerSecret=authProviderConfiguration.get('ConsumerSecret');
@@ -46,7 +67,7 @@ public with sharing class IdPortenAuthUtil {
             String idToken = getTokenValueFromResponse(res.getBody(), 'id_token');
             JWTClaims decodedIdToken=decodeIdToken(idToken);
 
-            if(decodedIdToken.nonce==null || decodedIdToken.nonce==nonce){
+            if(decodedIdToken.nonce==null || decodedIdToken.nonce!=nonce){
                 LoggerUtility logger = new LoggerUtility();
                 logger.error('Nonce samsvarer ikke',null, CRM_ApplicationDomain.Domain.NKS);
                 logger.publishSynch();

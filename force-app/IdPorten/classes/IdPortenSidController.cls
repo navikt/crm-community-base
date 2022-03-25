@@ -51,9 +51,8 @@ public with sharing class IdPortenSidController {
 
         IdPortenAuthUtil authUtil=new IdPortenAuthUtil();
         String sid=authUtil.getSidFromIdToken(code,codeVerifierFromCookie,nonceFromCookie);
-        system.debug(sid);
-
-
+        Id userId=UserInfo.getUserId();
+        authUtil.storeSid(sid,userId);
         return Auth.SessionManagement.finishLoginFlow();
     }
 }
