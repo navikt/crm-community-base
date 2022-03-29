@@ -26,7 +26,6 @@ public with sharing class IdPortenAuthUtil {
                 IdPortenCache__c cache=new IdPortenCache__c();
                 cache.Name=sid;
                 cache.UserId__c=userId;
-                cache.Type__c='Session';
                 try {
                     insert cache;   
                 } catch (Exception e) {
