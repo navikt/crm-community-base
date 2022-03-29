@@ -17,6 +17,15 @@ public class PKCEOAuthHelper {
         return nonceEncoded;
     }
 
+
+    public static String generateState() { 
+        String codeVerifier=generateRandomString(1200);
+        if(Test.isRunningTest()){
+            return 'zVrLZpcSnucojj-YzCjsMTg-bbyVJffWBLu5RuyPx~gh5l-PX6gL.PNiKxAMIjCaNpJCYS88m8KdX2OuVB2eA1I.w-~ZHNSf9O9XklFX_IH_dDbG~mdHxsswvSA5XtZD';
+        }
+        return codeVerifier;
+    }
+
     private static String generateRandomString(Integer length){
         final String chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghijklmnopqrstuvwxyz.~';
         String randStr = '';

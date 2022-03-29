@@ -1,0 +1,5 @@
+<apex:page controller="IdPortenSidController" action="{!redirect}">
+
+    <h1>En feil oppsto</h1>
+    Pålogging feilet. Vennligst forsøk igjen.
+  </apex:page>
