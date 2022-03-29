@@ -10,9 +10,9 @@ public with sharing class IdPortenSidController {
         if (code == null) {
             IdPortenAuthUtil authUtil=new IdPortenAuthUtil();
             IdPortenAuthUtil.AuthResponse authResponse=authUtil.initiate();
-            codeVerifierCookie = new Cookie('codeverifier',authResponse.codeVerifier,null,-1,true);
-            stateCookie = new Cookie('state',authResponse.state,null,-1,true);
-            nonceCookie = new Cookie('nonce',authResponse.nonce,null,-1,true);
+            codeVerifierCookie = new Cookie('codeverifier',authResponse.codeVerifier,null,1800,true,'Strict');
+            stateCookie = new Cookie('state',authResponse.state,null,1800,true,'Strict');
+            nonceCookie = new Cookie('nonce',authResponse.nonce,null,1800,true,'Strict');
 	        ApexPages.currentPage().setCookies(new Cookie[]{codeVerifierCookie, stateCookie, nonceCookie });
             pageReference pg = new pageReference(authResponse.initiateUrl);
             return pg.setRedirect(true);
