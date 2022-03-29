@@ -77,6 +77,9 @@ public with sharing class IdPortenAuthUtil {
         }
 
         public String getRedirectUrl(){
+            if(Test.isRunningTest()){
+                return 'https://callback';
+            }
             String redirectUrl=Network.getLoginUrl(Network.getNetworkId());
             redirectUrl=redirectUrl.replace('/login', '/IdPortenSid');
             return redirectUrl;
@@ -84,6 +87,16 @@ public with sharing class IdPortenAuthUtil {
 
         private Map<string,string> getAuthProviderConfiguration(){
             Map<string,string> authProviderConfiguration=new Map<String,String>();
+            
+            if(Test.isRunningTest()){
+                authProviderConfiguration.put('AcrValues','arc');
+                authProviderConfiguration.put('AuthorizeEndpointUrl','https://auth');
+                authProviderConfiguration.put('ConsumerKey','key');
+                authProviderConfiguration.put('ConsumerSecret','secret');
+                authProviderConfiguration.put('TokenEndpointUrl','https://token');
+                return authProviderConfiguration;
+            }
+            
             ID_porten__mdt mdt=[SELECT	AcrValues__c, AuthorizeEndpointUrl__c,ConsumerKey__c, ConsumerSecret__c, TokenEndpointUrl__c FROM ID_porten__mdt WHERE 	DeveloperName='IdPorten'];
             authProviderConfiguration.put('AcrValues',mdt.AcrValues__c);
             authProviderConfiguration.put('AuthorizeEndpointUrl',mdt.AuthorizeEndpointUrl__c);
@@ -94,27 +107,43 @@ public with sharing class IdPortenAuthUtil {
         }
 
         private static String getTokenValueFromResponse(String response, String token) {
-            JSONParser parser = JSON.createParser(response);
             String tokenValue = '';
-            while (parser.nextToken() != null) {
-                if (parser.getText() == token) {
-                    parser.nextToken();
-                    tokenValue = parser.getText();
+            try{
+                JSONParser parser = JSON.createParser(response);
+            
+                while (parser.nextToken() != null) {
+                    if (parser.getText() == token) {
+                        parser.nextToken();
+                        tokenValue = parser.getText();
+                 }
                 }
-            }
+            } catch (Exception e) {
+                LoggerUtility logger = new LoggerUtility();
+                logger.exception(e, CRM_ApplicationDomain.Domain.NKS);
+                logger.publishSynch();
+        }
             return tokenValue;
         }
 
         private static JWTClaims decodeIdToken(String encodedJWT){
-            Integer headerLength = encodedJWT.indexOf('.');
-            Integer claimsLength = encodedJWT.lastIndexOf('.');
-            String jwtClaims = encodedJWT.mid(headerLength + 1, claimsLength - headerLength - 1);
+            try{
+                Integer headerLength = encodedJWT.indexOf('.');
+                Integer claimsLength = encodedJWT.lastIndexOf('.');
+                String jwtClaims = encodedJWT.mid(headerLength + 1, claimsLength - headerLength - 1);
     
-            JWTClaims claimsDeserialized = (JWTClaims) Json.deserialize(
-                EncodingUtil.base64Decode(jwtClaims).toString(),
-                JWTClaims.class
-            );
-            return claimsDeserialized;
+                JWTClaims claimsDeserialized = (JWTClaims) Json.deserialize(
+                    EncodingUtil.base64Decode(jwtClaims).toString(),
+                    JWTClaims.class
+                );
+                return claimsDeserialized;
+            
+            } catch (Exception e) {
+                LoggerUtility logger = new LoggerUtility();
+                logger.exception(e, CRM_ApplicationDomain.Domain.NKS);
+                logger.publishSynch();
+            }
+            return new JWTClaims();
+            
         }
 
     public class AuthResponse {

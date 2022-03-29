@@ -22,10 +22,18 @@ public with sharing class IdPortenSidController {
          String state = apexpages.currentPage().getParameters().get('state');
          
          codeVerifierCookie  = ApexPages.currentPage().getCookies().get('codeVerifier');
-         String codeVerifierFromCookie=codeVerifierCookie.getValue();
          stateCookie = ApexPages.currentPage().getCookies().get('state');
-         String stateFromCookie=stateCookie.getValue();
          nonceCookie  = ApexPages.currentPage().getCookies().get('nonce');
+         
+         if(codeVerifierCookie ==null || stateCookie==null || nonceCookie==null){
+            LoggerUtility logger = new LoggerUtility();
+            logger.error('Cookies er ikke satt',null, CRM_ApplicationDomain.Domain.NKS);
+            logger.publishSynch();
+            return Auth.SessionManagement.finishLoginFlow();
+        }
+        
+         String codeVerifierFromCookie=codeVerifierCookie.getValue();
+         String stateFromCookie=stateCookie.getValue();
          String nonceFromCookie=nonceCookie.getValue();
 
         if(state==null || state!=stateFromCookie){
