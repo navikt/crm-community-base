@@ -3,7 +3,7 @@ global class IdPortenLogoutRestService {
    
     @HttpPost
     global static void logoutBySessionId(String sid) {
-        List<IdPortenCache__c> cache=[SELECT UserId__c FROM IdPortenCache__c WHERE Name=:sid AND Type__c='Session'];
+        List<IdPortenCache__c> cache=[SELECT UserId__c FROM IdPortenCache__c WHERE Name=:sid];
 
         if(cache.size()>0){
             //delete users all active sessions
