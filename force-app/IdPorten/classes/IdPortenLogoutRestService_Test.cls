@@ -6,7 +6,6 @@ private class IdPortenLogoutRestService_Test {
         IdPortenCache__c cache=new IdPortenCache__c();    
         cache.Name='sid';
         cache.UserId__c='0051j000009na8sAAA';
-        cache.Type__c='Session';
         insert cache;
     }
 
