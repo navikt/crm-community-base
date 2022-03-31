@@ -49,8 +49,13 @@ jobs:
         run: git pull && git checkout -B ${{ steps.branch.outputs.branch }}
 
       # Install SFDX
-      - name: Install SFDX
-        uses: sfdx-actions/setup-sfdx@v1
+      - name: Install Salesforce CLI
+        run: |
+           wget https://developer.salesforce.com/media/salesforce-cli/sfdx/channels/stable/sfdx-linux-x64.tar.xz
+           mkdir ~/sfdx
+           tar xJf sfdx-linux-x64.tar.xz -C ~/sfdx --strip-components 1
+           echo "$HOME/sfdx/bin" >> $GITHUB_PATH
+           ~/sfdx/bin/sfdx version
       
       # Authenticate dev hub
       - name: Authenticate Dev Hub
@@ -128,7 +133,7 @@ jobs:
       # Authenticate
       - name: Authenticate
         run: |
-          wget https://developer.salesforce.com/media/salesforce-cli/sfdx/channels/stable/sfdx-linux-x64.tar.gz
+          wget https://developer.salesforce.com/media/salesforce-cli/sfdx-linux-amd64.tar.xz
           mkdir sfdx-cli
           tar xJf sfdx-linux-amd64.tar.xz -C sfdx-cli --strip-components 1
           ./sfdx-cli/install
@@ -182,7 +187,7 @@ jobs:
           git pull
           git checkout -B ${{ needs.setup.outputs.branch }}
           
-          wget https://developer.salesforce.com/media/salesforce-cli/sfdx/channels/stable/sfdx-linux-x64.tar.gz
+          wget https://developer.salesforce.com/media/salesforce-cli/sfdx-linux-amd64.tar.xz
           mkdir sfdx-cli
           tar xJf sfdx-linux-amd64.tar.xz -C sfdx-cli --strip-components 1
           ./sfdx-cli/install

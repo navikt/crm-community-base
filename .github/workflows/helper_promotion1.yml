@@ -31,8 +31,13 @@ jobs:
           fetch-depth: 0 # otherwise, you will failed to push refs to dest repo
 
       # Install SFDX
-      - name: Authorize SFDX
-        uses: sfdx-actions/setup-sfdx@v1
+      - name: Install Salesforce CLI
+        run: |
+           wget https://developer.salesforce.com/media/salesforce-cli/sfdx/channels/stable/sfdx-linux-x64.tar.xz
+           mkdir ~/sfdx
+           tar xJf sfdx-linux-x64.tar.xz -C ~/sfdx --strip-components 1
+           echo "$HOME/sfdx/bin" >> $GITHUB_PATH
+           ~/sfdx/bin/sfdx version
 
       # Authenticate prod
       - name: Authenticate prod
