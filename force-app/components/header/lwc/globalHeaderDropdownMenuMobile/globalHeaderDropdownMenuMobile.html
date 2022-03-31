@@ -201,7 +201,7 @@
                                         </a>
                                     </li>
                                     <br/>
-                                    <form action="/secur/logout.jsp">
+                                    <form action="/secur/logout.jsp" if:true={isGuestUser}>
                                         <c-button button-label="Logg ut" button-styling="secondary" type="submit" mobile-style="width: 8rem; justify-content: center; font-weight: 600; font-size: 1.25rem"></c-button>
                                     </form>
                                 </ul>
