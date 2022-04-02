@@ -4,7 +4,12 @@ public with sharing class IdPortenSidController {
         Cookie nonceCookie;
         Cookie codeVerifierCookie;
         String code = apexpages.currentPage().getParameters().get('code');
-    
+        
+        //stop login flow when mobile app
+        String userAgent =ApexPages.currentPage().getHeaders().get('USER-AGENT');
+        if(userAgent!=null && userAgent.contains('SalesforceMobileSDK')){
+            return Auth.SessionManagement.finishLoginFlow();
+        }
         
         //initiate
         if (code == null) {
