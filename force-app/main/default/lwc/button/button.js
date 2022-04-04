@@ -22,10 +22,10 @@ export default class Button extends LightningElement {
             buttonStyle = this.buttonStyling.toLowerCase();
         }
         if (
-            this.buttonStyling !== 'primary' &&
-            this.buttonStyling !== 'secondary' &&
-            this.buttonStyling !== 'tertiary' &&
-            this.buttonStyling !== 'danger'
+            buttonStyle !== 'primary' &&
+            buttonStyle !== 'secondary' &&
+            buttonStyle !== 'tertiary' &&
+            buttonStyle !== 'danger'
         ) {
             buttonStyle = 'primary'; // Set primary as default if invalid argument
         }
