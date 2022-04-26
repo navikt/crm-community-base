@@ -23,15 +23,19 @@
                             button-styling="primary"
                             value="confirm"
                             onbuttonclick={handleButtonClick}
+                            desktop-style="width: 8rem; justify-content: center"
+                            mobile-style="width: 8rem; justify-content: center"
                         ></c-button>
                     </span>
 
-                    <span if:false={defaultNoCancelButton} style="padding: 0 0 0 10px">
+                    <span if:false={defaultNoCancelButton} style="padding-left: 1rem">
                         <c-button
                             button-label={defaultCancelButtonLabel}
                             button-styling="secondary"
                             value="cancel"
                             onbuttonclick={handleButtonClick}
+                            desktop-style="width: 8rem; justify-content: center"
+                            mobile-style="width: 8rem; justify-content: center"
                         ></c-button>
                     </span>
                 </div>
