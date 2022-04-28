@@ -5,10 +5,14 @@ public with sharing class IdPortenSidController {
         Cookie codeVerifierCookie;
         String code = apexpages.currentPage().getParameters().get('code');
         
+        //Handling potential retUrl if the redirect should not go directly to experience home page
+        String retUrl = apexpages.currentPage().getParameters().get('retUrl');
+        retUrl = String.isNotBlank(retUrl) ? EncodingUtil.base64Decode(retUrl).toString() : retUrl;
+        
         //stop login flow when mobile app
         String userAgent =ApexPages.currentPage().getHeaders().get('USER-AGENT');
         if(userAgent!=null && userAgent.contains('SalesforceMobileSDK')){
-            return Auth.SessionManagement.finishLoginFlow();
+            return String.isNotBlank(retUrl) ? Auth.SessionManagement.finishLoginFlow(retUrl) : Auth.SessionManagement.finishLoginFlow();
         }
         
         //initiate
