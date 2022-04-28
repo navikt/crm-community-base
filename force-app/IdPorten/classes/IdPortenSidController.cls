@@ -6,7 +6,7 @@ public with sharing class IdPortenSidController {
         String code = apexpages.currentPage().getParameters().get('code');
         
         //Handling potential retUrl if the redirect should not go directly to experience home page
-        String retUrl = apexpages.currentPage().getParameters().get('retUrl');
+        String retUrl = apexpages.currentPage().getParameters().get('retURL');
         retUrl = String.isNotBlank(retUrl) ? EncodingUtil.base64Decode(retUrl).toString() : retUrl;
         
         //stop login flow when mobile app
