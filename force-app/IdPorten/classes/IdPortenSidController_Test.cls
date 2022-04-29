@@ -24,8 +24,9 @@ private class IdPortenSidController_Test {
         Cookie codeVerifierCookie = new Cookie('codeverifier','codeverifier',null,-1,true);
         Cookie stateCookie = new Cookie('state','state',null,-1,true);
         Cookie nonceCookie = new Cookie('nonce','noncetest',null,-1,true);
+        Cookie retUrlCookie = new Cookie('retUrl','/',null,-1,true);
         Pagereference pageRef = Page.IdPortenSid;
-	    pageRef.setCookies(new Cookie[]{codeVerifierCookie, stateCookie, nonceCookie });
+	    pageRef.setCookies(new Cookie[]{codeVerifierCookie, stateCookie, nonceCookie, retUrlCookie });
         
         Test.startTest();
        
@@ -55,8 +56,8 @@ private class IdPortenSidController_Test {
         Test.stopTest();
         
         System.assertEquals('/', nextPage, 'Expected to finish login flow');
-        List<Application_Log__c> errorLogs=[SELECT 	Log_Message__c FROM Application_Log__c WHERE Source_Class__c='IdPortenSidController'];
-        System.assertEquals(1,errorLogs.size(), 'Throw 1 error');
+        List<Application_Log__c> errorLogs=[SELECT 	Log_Message__c FROM Application_Log__c WHERE Source_Class__c='IdPortenSidController' ORDER BY CreatedDate];
+        System.assertEquals(2,errorLogs.size(), 'Throw 2 errors');
         System.assertEquals('Cookies er ikke satt', errorLogs[0].Log_Message__c);
 
     }
@@ -69,8 +70,9 @@ private class IdPortenSidController_Test {
         Cookie codeVerifierCookie = new Cookie('codeverifier','codeverifier',null,-1,true);
         Cookie stateCookie = new Cookie('state','state',null,-1,true);
         Cookie nonceCookie = new Cookie('nonce','noncetest',null,-1,true);
+        Cookie retUrlCookie = new Cookie('retUrl','/',null,-1,true);
         Pagereference pageRef = Page.IdPortenSid;
-	    pageRef.setCookies(new Cookie[]{codeVerifierCookie, stateCookie, nonceCookie });
+	    pageRef.setCookies(new Cookie[]{codeVerifierCookie, stateCookie, nonceCookie, retUrlCookie });
         
         Test.startTest();
        
@@ -96,8 +98,9 @@ private class IdPortenSidController_Test {
         Cookie codeVerifierCookie = new Cookie('codeverifier','codeverifier',null,-1,true);
         Cookie stateCookie = new Cookie('state','state',null,-1,true);
         Cookie nonceCookie = new Cookie('nonce',null,null,-1,true);
+        Cookie retUrlCookie = new Cookie('retUrl','/',null,-1,true);
         Pagereference pageRef = Page.IdPortenSid;
-	    pageRef.setCookies(new Cookie[]{codeVerifierCookie, stateCookie, nonceCookie });
+	    pageRef.setCookies(new Cookie[]{codeVerifierCookie, stateCookie, nonceCookie, retUrlCookie });
         
         Test.startTest();
        
@@ -123,8 +126,9 @@ private class IdPortenSidController_Test {
         Cookie codeVerifierCookie = new Cookie('codeverifier',null,null,-1,true);
         Cookie stateCookie = new Cookie('state','state',null,-1,true);
         Cookie nonceCookie = new Cookie('nonce','noncetest',null,-1,true);
+        Cookie retUrlCookie = new Cookie('retUrl','/',null,-1,true);
         Pagereference pageRef = Page.IdPortenSid;
-	    pageRef.setCookies(new Cookie[]{codeVerifierCookie, stateCookie, nonceCookie });
+	    pageRef.setCookies(new Cookie[]{codeVerifierCookie, stateCookie, nonceCookie, retUrlCookie });
         
         Test.startTest();
        
