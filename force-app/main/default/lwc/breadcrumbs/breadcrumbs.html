@@ -4,7 +4,7 @@
             <template iterator:it={urlListToShow}>
                 <li key={it.value.href}>
                     <a if:false={it.last} href={it.value.href} class="listElement" aria-current={it.last} style={setDefaultStyle}>{it.value.label}</a>
-                    <span if:true={it.last} aria-current={it.last} style={setDefaultStyle}>{it.value.label}</span>
+                    <span if:true={it.last} aria-current={it.last} style={setDefaultStyle} tabindex="0">{it.value.label}</span>
                     <svg if:false={it.last} aria-hidden="true" width="1em" height="1em" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" focusable="false" role="img">
                         <path fill-rule="evenodd" clip-rule="evenodd" d="M17 12L8.429 3 7 4.5l7.143 7.5L7 19.5 8.429 21 17 12z" fill="black"></path>
                     </svg>
