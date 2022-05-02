@@ -21,7 +21,8 @@ public with sharing class IdPortenSidController {
             nonceCookie = new Cookie('nonce',authResponse.nonce,null,1800,true);
 	        
             //cache retUrl to be used in finishLoginFlow
-            retUrlCookie = new Cookie('retUrl',retUrl,null,1800,true);
+            String relativeRetUrl=getRelativeRetUrl(retUrl);
+            retUrlCookie = new Cookie('retUrl',relativeRetUrl,null,1800,true);
 	        
             ApexPages.currentPage().setCookies(new Cookie[]{codeVerifierCookie, stateCookie, nonceCookie, retUrlCookie });
             pageReference pg = new pageReference(authResponse.initiateUrl);
@@ -87,5 +88,20 @@ public with sharing class IdPortenSidController {
             return Auth.SessionManagement.finishLoginFlow(retUrl);
         }
         return Auth.SessionManagement.finishLoginFlow();
+    }
+
+    private static String getRelativeRetUrl(String retUrl){
+        String communityBaseUrl=Network.getLoginUrl(Network.getNetworkId());
+        if(Test.isRunningTest()){
+           communityBaseUrl='https://test-comunity.com/login';
+        }
+        communityBaseUrl=communityBaseUrl.replace('/login', '');
+        //remove base url from retUrl
+        if(retUrl!=null){
+           retUrl=retUrl.replace(communityBaseUrl,'');
+           //remove spaces
+           retUrl=retUrl.replaceAll(' ','%20');
+        }
+        return retUrl;
     }
 }
