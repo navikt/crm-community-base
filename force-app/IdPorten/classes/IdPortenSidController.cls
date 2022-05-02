@@ -20,8 +20,14 @@ public with sharing class IdPortenSidController {
             stateCookie = new Cookie('state',authResponse.state,null,1800,true);
             nonceCookie = new Cookie('nonce',authResponse.nonce,null,1800,true);
 	        
-            //cache retUrl to be used in finishLoginFlow
-            retUrlCookie = new Cookie('retUrl',retUrl,null,1800,true);
+             //cache retUrl to be used in finishLoginFlow
+             String communityBaseUrl=Network.getLoginUrl(Network.getNetworkId());
+             communityBaseUrl=communityBaseUrl.replace('/login', '');
+             //remove base url from retUrl
+             retUrl=retUrl.replace(communityBaseUrl,'');
+             //remove spaces
+             retUrl=retUrl.replaceAll(' ','%20');
+             retUrlCookie = new Cookie('retUrl',retUrl,null,1800,true);
 	        
             ApexPages.currentPage().setCookies(new Cookie[]{codeVerifierCookie, stateCookie, nonceCookie, retUrlCookie });
             pageReference pg = new pageReference(authResponse.initiateUrl);
