@@ -11,9 +11,6 @@ export default class uploadFiles extends LightningElement {
     @api helptextContent = '';
     @api helptextHovertext;
 
-    acceptedFileFormats =
-        '[.pdf, .png, .svg, .jpg, .jpeg, .jpe, .jif, .gif, .tif, .tiff, .bmp, .doc, .docx, .doc, .odt, .xls, .xlsx, .ods, .ppt, pptx, .txt, .rtf, .mp4, .mov]';
-
     get setDefaultStyle() {
         let style = this.desktopStyle;
         if (window.screen.width < 576) {    
