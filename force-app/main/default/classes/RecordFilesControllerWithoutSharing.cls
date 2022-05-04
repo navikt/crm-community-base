@@ -1,6 +1,9 @@
 public without sharing class RecordFilesControllerWithoutSharing {
     @AuraEnabled(cacheable=true)
     public static List<ContentDocument> getContentDocuments(String recordId, Boolean isGetAll) {
+        if (recordId == null) {
+            return new List<ContentDocument>{};
+        }
         List<ContentDocumentLink> contentDocumentLinks = [
             SELECT ContentDocumentId
             FROM ContentDocumentLink
