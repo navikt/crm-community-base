@@ -49,7 +49,7 @@
             error-text="Du må gi samtykke for å laste opp filer."
         ></c-checkbox>
     </div>
-    <div if:true={filesChanged} class="filesClass">
+    <div class="filesClass">
         <ul aria-label="Liste over filer">
             <template for:each={fileData} for:item="file" for:index="index">
                 <li key={file.filename} class="fileAndButton">
