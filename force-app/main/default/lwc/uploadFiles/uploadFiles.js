@@ -139,7 +139,6 @@ export default class uploadFiles extends LightningElement {
 
     fileButtonLabel;
     onFileFocus(event) {
-        this.fileButtonLabel = '';
         const index = event.currentTarget.dataset.index;
         this.fileButtonLabel = 'Slett vedlegg ' + this.fileData[index].filename;
     }
