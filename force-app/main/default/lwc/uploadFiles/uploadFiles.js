@@ -1,6 +1,11 @@
-import { LightningElement, api } from 'lwc';
+import { LightningElement, api, track } from 'lwc';
 import uploadFile from '@salesforce/apex/UploadFilesController.uploadFile';
 import { setDefaultValue, convertStringToBoolean } from 'c/componentHelperClass';
+
+/* NOTE:
+By encoding filedata into a base64 string using Filereader, the maximum file size is restricted to ~9 MB.
+To support uploading larger files, use the REST API or the standard lightning-file-upload component. 
+*/
 export default class uploadFiles extends LightningElement {
     @api recordId;
     @api mobileStyle;
@@ -12,7 +17,7 @@ export default class uploadFiles extends LightningElement {
     @api helptextHovertext;
 
     acceptedFileFormats =
-        '[.pdf, .png, .svg, .jpg, .jpeg, .jpe, .jif, .gif, .tif, .tiff, .bmp, .doc, .docx, .doc, .odt, .xls, .xlsx, .ods, .ppt, pptx, .txt, .rtf, .mp4, .mov]';
+        '.pdf, .png, .svg, .jpeg, .jpe, .jif, .gif, .tif, .tiff, .bmp, .doc, .docx, .doc, .odt, .xls, .xlsx, .ods, .ppt, pptx, .txt, .rtf, audio/*, video/*, image/*';
 
     get setDefaultStyle() {
         let style = this.desktopStyle;
@@ -57,8 +62,6 @@ export default class uploadFiles extends LightningElement {
         }
         this.fileData.splice(index, 1);
         this.sendFileDataLength();
-        this.boolSwitch();
-        this.setCheckboxContent();
         this.showOrHideCheckbox();
     }
 
@@ -105,6 +108,7 @@ export default class uploadFiles extends LightningElement {
                 this.template.querySelector('.checkboxClass').classList.add('hidden');
             } else {
                 this.template.querySelector('.checkboxClass').classList.remove('hidden');
+                this.setCheckboxContent();
                 this.focusCheckbox();
             }
         }
@@ -135,20 +139,12 @@ export default class uploadFiles extends LightningElement {
 
     fileButtonLabel;
     onFileFocus(event) {
-        this.fileButtonLabel = '';
         const index = event.currentTarget.dataset.index;
         this.fileButtonLabel = 'Slett vedlegg ' + this.fileData[index].filename;
     }
 
-    // Make boolean value change and set it to true to show new files added
-    boolSwitch() {
-        this.filesChanged = false;
-        this.filesChanged = true;
-    }
-
-    filesChanged = false; // If true -> shows new files added in list
     modalContent;
-    fileData = [];
+    @track fileData = [];
     async onFileUpload(event) {
         try {
             const result = this.isDrop
@@ -158,11 +154,9 @@ export default class uploadFiles extends LightningElement {
                 // Only push new files
                 if (this.fileData.findIndex((storedItem) => storedItem.base64 === item.base64) === -1) {
                     this.fileData.push(item);
-                    this.boolSwitch();
                 }
             });
             this.resetFileValue();
-            this.setCheckboxContent();
             this.showOrHideCheckbox();
             this.sendFileDataLength();
         } catch (err) {
