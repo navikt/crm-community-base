@@ -60,9 +60,9 @@
 
 .navds-text-field__input:disabled,
 .navds-text-field__input[readonly] {
-    background-color: #f1f1f1;
+    background-color: lightgray;
     border-color: #a0a0a0;
     box-shadow: none;
-    color: 262626;
+    color: #262626;
     cursor: not-allowed;
 }
