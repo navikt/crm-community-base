@@ -10,6 +10,7 @@ export default class Checkbox extends LightningElement {
     @api errorSize;
     @api helptextContent = '';
     @api helptextHovertext;
+    @api ariaLabel;
     @api name = '';
     @api form = '';
     @api desktopStyle;
@@ -26,6 +27,10 @@ export default class Checkbox extends LightningElement {
 
     get isHelpText() {
         return this.helptextContent !== '' && this.helptextContent !== undefined ? true : false;
+    }
+
+    get ariaLabelValue() {
+        return this.ariaLabel === undefined ? this.label : this.ariaLabel;
     }
 
     @api getValue() {

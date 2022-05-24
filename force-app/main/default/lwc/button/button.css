@@ -164,7 +164,7 @@ button {
 
 .navds-button:focus {
     outline: none;
-    box-shadow: 0 0 0 3px #00347d;
+    box-shadow: 0 0 0 3px #00347d !important;
 }
 
 .navds-button--primary:focus,
