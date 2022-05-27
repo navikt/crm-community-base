@@ -1,5 +1,5 @@
 import { LightningElement, api } from 'lwc';
-import { setDefaultValue } from 'c/componentHelperClass';
+import { setDefaultValue, convertStringToBoolean} from 'c/componentHelperClass';
 
 export default class Input extends LightningElement {
     @api type = 'text';
@@ -13,7 +13,7 @@ export default class Input extends LightningElement {
     @api errorText;
     @api labelSize;
     @api errorSize;
-    @api autofocus = false;
+    @api autofocus;
     @api disabled = false;
     @api readonly = false;
     @api maxLength = '255';
@@ -42,6 +42,10 @@ export default class Input extends LightningElement {
 
     get isHelpText() {
         return this.helptextContent !== '' && this.helptextContent !== undefined ? true : false;
+    }
+
+    get setDefaultAutofocus() {
+        return convertStringToBoolean(this.autofocus);
     }
 
     // Call this when value is needed

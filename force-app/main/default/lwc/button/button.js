@@ -12,6 +12,7 @@ export default class Button extends LightningElement {
     @api title;
     @api buttonStyling; // Primary, Secondary, Action, Danger
     @api buttonLabel;
+    @api ariaLabel;
     @api desktopStyle;
     @api mobileStyle;
 
@@ -35,6 +36,10 @@ export default class Button extends LightningElement {
     handleClick(event) {
         const eventToSend = new CustomEvent('buttonclick', { detail: event.target.value });
         this.dispatchEvent(eventToSend);
+    }
+
+    get ariaLabelValue() {
+        return this.ariaLabel === undefined ? this.buttonLabel : this.ariaLabel;
     }
 
     get setDefaultId() {
