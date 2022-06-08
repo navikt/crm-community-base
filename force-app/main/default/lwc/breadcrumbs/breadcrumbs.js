@@ -4,12 +4,15 @@ import { setDefaultValue } from 'c/componentHelperClass';
 export default class Breadcrumbs extends LightningElement {
     @api urlList = [];
     urlListToShow = [];
+    @api numPops = 1;
     @api desktopStyle;
     @api mobileStyle;
 
     connectedCallback() {
         let baseURLArray = window.location.pathname.split('/');
-        baseURLArray.pop();
+        for (let i = 0; i < this.numPops; i++) {
+            baseURLArray.pop();
+        }
         let baseURL = baseURLArray.join('/');
         this.urlListToShow = this.urlList.map(x => ({...x, href: baseURL + '/' + x.href}));
         this.removeElementsAfterIndex();
