@@ -5,6 +5,7 @@ export default class Table extends LightningElement {
     @api records;
     @api iconByValue;
     @api hideMobileHeader;
+    @api checkbox = false;
 
     get mobileHeaderStyle() {
         return this.hideMobileHeader && window.screen.width < 576 ? 'position: absolute; left: -10000px;' : '';

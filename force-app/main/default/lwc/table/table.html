@@ -2,6 +2,9 @@
     <table class="table-wrapper">
         <thead style={mobileHeaderStyle}>
             <tr>
+                <th if:true={checkbox}>
+                <c-checkbox></c-checkbox>
+                </th>
                 <template iterator:column={columns}>
                     <th tabindex="0" key={column.value.name} scope="col">{column.value.label}</th>
                 </template>
@@ -10,6 +13,9 @@
         <tbody>
             <template iterator:record={recordsToShow}>
                 <tr class="row" key={record.value.id} data-id={record.value.id} onclick={handleOnRowClick} onkeypress={handleOnRowClick}>
+                    <td if:true={checkbox}>
+                        <c-checkbox></c-checkbox>
+                    </td>
                     <template iterator:field={record.value.fields}>
                         <template if:false={field.value.svg}>
                             <td tabindex="0" key={field.value.name}>{field.value.value}</td>
