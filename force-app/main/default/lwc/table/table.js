@@ -63,4 +63,38 @@ export default class Table extends LightningElement {
         const eventToSend = new CustomEvent('rowclick', { detail: this.recordMap[event.currentTarget.dataset.id] });
         this.dispatchEvent(eventToSend);
     }
+
+    checkedRows = [];
+    @api getCheckedRows() {
+        return this.checkedRows;
+    }
+
+    @api unsetCheckboxes() {
+        this.template.querySelectorAll('c-checkbox').forEach((element) => {
+            element.clearCheckboxValue();
+        });
+    }
+
+    handleSingleCheckboxClick() {
+        let recordArray = Object.entries(this.recordMap);
+        let recordIdArray = [];
+        recordArray.forEach(element => {
+            recordIdArray.push( {id: element[0], checked: false });
+        });
+        this.template.querySelectorAll('c-checkbox').forEach((element, index) => {
+            if (element.getValue()) {
+                recordIdArray[index-1].checked = true; // Index-1 to account for the first checkbox in header
+            }
+        });
+        this.checkedRows = recordIdArray;
+        console.log('this.checkedRows:', this.checkedRows);
+    }
+
+    handleAllCheckboxesClick(event) {
+        this.template.querySelectorAll('c-checkbox').forEach((element) => {
+            element.setCheckboxValue(event.detail);
+        });
+        this.checkedRows = this.checkedRows.map(x => ({ ...x, checked: event.detail }));
+        console.log('this.checkedRows:', this.checkedRows);
+    }
 }
