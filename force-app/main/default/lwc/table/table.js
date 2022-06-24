@@ -89,7 +89,6 @@ export default class Table extends LightningElement {
                 this.checkedRows.push(element.id);
             }
         });
-        console.log('this.checkedRows:', this.checkedRows);
     }
 
     handleAllCheckboxesClick(event) {
@@ -103,7 +102,6 @@ export default class Table extends LightningElement {
                 this.checkedRows.push(element.id);
             }
         });
-        console.log('this.checkedRows:', this.checkedRows);
     }
 
     resetRecordIdArray() {
