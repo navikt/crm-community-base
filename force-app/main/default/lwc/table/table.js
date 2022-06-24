@@ -69,32 +69,50 @@ export default class Table extends LightningElement {
         return this.checkedRows;
     }
 
+    // TODO: Unset checkboxes when navigating through lists
     @api unsetCheckboxes() {
         this.template.querySelectorAll('c-checkbox').forEach((element) => {
             element.clearCheckboxValue();
         });
     }
 
+    // TODO: Checkbox functionality needs to be thoroughly tested when sorting / filtering
     handleSingleCheckboxClick() {
-        let recordArray = Object.entries(this.recordMap);
-        let recordIdArray = [];
-        recordArray.forEach(element => {
-            recordIdArray.push( {id: element[0], checked: false });
-        });
+        let recordIdArray = this.resetRecordIdArray();
         this.template.querySelectorAll('c-checkbox').forEach((element, index) => {
             if (element.getValue()) {
                 recordIdArray[index-1].checked = true; // Index-1 to account for the first checkbox in header
             }
         });
-        this.checkedRows = recordIdArray;
+        recordIdArray.forEach(element => {
+            if (element.checked) {
+                this.checkedRows.push(element.id);
+            }
+        });
         console.log('this.checkedRows:', this.checkedRows);
     }
 
     handleAllCheckboxesClick(event) {
+        let recordIdArray = this.resetRecordIdArray();
         this.template.querySelectorAll('c-checkbox').forEach((element) => {
             element.setCheckboxValue(event.detail);
         });
-        this.checkedRows = this.checkedRows.map(x => ({ ...x, checked: event.detail }));
+        let tempArr = recordIdArray.map(x => ({ ...x, checked: event.detail }));
+        tempArr.forEach(element => {
+            if (element.checked) {
+                this.checkedRows.push(element.id);
+            }
+        });
         console.log('this.checkedRows:', this.checkedRows);
+    }
+
+    resetRecordIdArray() {
+        this.checkedRows = [];
+        let recordArray = Object.entries(this.recordMap);
+        let recordIdArray = [];
+        recordArray.forEach(element => {
+            recordIdArray.push( {id: element[0], checked: false });
+        });
+        return recordIdArray;
     }
 }
