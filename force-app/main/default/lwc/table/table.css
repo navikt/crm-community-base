@@ -27,7 +27,8 @@ th {
     .icon {
         width: 5%;
     }
-    th { /* Overwrite experience cloud default styling */
+    th {
+        /* Overwrite experience cloud default styling */
         padding-left: 0;
         border-bottom: unset;
     }
@@ -70,4 +71,8 @@ tr.row:hover {
 
 .tooltip:hover .tooltiptext {
     visibility: visible;
+}
+
+.checkbox-column {
+    width: 5%;
 }

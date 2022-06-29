@@ -2,7 +2,7 @@
     <table class="table-wrapper">
         <thead style={mobileHeaderStyle}>
             <tr>
-                <th if:true={checkbox}>
+                <th class="checkbox-column" if:true={checkbox}>
                     <c-checkbox oncheckboxclick={handleAllCheckboxesClick}></c-checkbox>
                 </th>
                 <template iterator:column={columns}>
@@ -12,8 +12,14 @@
         </thead>
         <tbody>
             <template iterator:record={recordsToShow}>
-                <tr class="row" key={record.value.id} data-id={record.value.id} onclick={handleOnRowClick} onkeypress={handleOnRowClick}>
-                    <td if:true={checkbox}>
+                <tr
+                    class="row"
+                    key={record.value.id}
+                    data-id={record.value.id}
+                    onclick={handleOnRowClick}
+                    onkeypress={handleOnRowClick}
+                >
+                    <td if:true={checkbox} class="checkbox-column">
                         <c-checkbox oncheckboxclick={handleSingleCheckboxClick}></c-checkbox>
                     </td>
                     <template iterator:field={record.value.fields}>
@@ -21,7 +27,13 @@
                             <td tabindex="0" key={field.value.name}>{field.value.value}</td>
                         </template>
                         <template if:true={field.value.svg}>
-                            <td key={field.value.name} class="icon" tabindex="0" aria-label="Ingen status" if:false={field.value.svg.icon}></td>
+                            <td
+                                key={field.value.name}
+                                class="icon"
+                                tabindex="0"
+                                aria-label="Ingen status"
+                                if:false={field.value.svg.icon}
+                            ></td>
                             <td key={field.value.name} class="icon" tabindex="0" if:true={field.value.svg.icon}>
                                 <div class="tooltip">
                                     <c-icon
