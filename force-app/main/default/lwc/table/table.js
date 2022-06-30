@@ -55,9 +55,6 @@ export default class Table extends LightningElement {
     }
 
     setDateFormat(value) {
-        value = new Date(value);
-        value = value.toLocaleString();
-        value = value.substring(0, value.length - 3);
         return value;
     }
 
