@@ -1,4 +1,5 @@
 <template>
+    <button onclick={test1}>test</button>
     <table class="table-wrapper">
         <thead style={mobileHeaderStyle}>
             <tr>
@@ -20,7 +21,10 @@
                     onkeypress={handleOnRowClick}
                 >
                     <td if:true={checkbox} class="checkbox-column">
-                        <c-checkbox oncheckboxclick={handleSingleCheckboxClick}></c-checkbox>
+                        <c-checkbox
+                            default-value={record.value.checked}
+                            oncheckboxclick={handleSingleCheckboxClick}
+                        ></c-checkbox>
                     </td>
                     <template iterator:field={record.value.fields}>
                         <template if:false={field.value.svg}>

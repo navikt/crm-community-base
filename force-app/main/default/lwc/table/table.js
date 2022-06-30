@@ -31,6 +31,7 @@ export default class Table extends LightningElement {
                 }
                 records.push({
                     id: record.Id,
+                    checked: this.checkedRows.includes(record.Id),
                     fields: fields
                 });
                 this.recordMap[record.Id] = record;
@@ -63,7 +64,7 @@ export default class Table extends LightningElement {
         this.dispatchEvent(eventToSend);
     }
 
-    checkedRows = [];
+    @api checkedRows = [];
     @api getCheckedRows() {
         return this.checkedRows;
     }
