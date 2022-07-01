@@ -55,8 +55,14 @@ export default class Table extends LightningElement {
         return value;
     }
 
-    setDateFormat(value) {
-        return value;
+    setDateFormat(initialValue) {
+        if (!isNaN(new Date(initialValue))) {
+            let value = new Date(initialValue);
+            value = value.toLocaleString();
+            value = value.substring(0, value.length - 3);
+            return value;
+        }
+        return initialValue;
     }
 
     handleOnRowClick(event) {
