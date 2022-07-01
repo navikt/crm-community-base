@@ -6,8 +6,6 @@ export default class Table extends LightningElement {
     @api iconByValue;
     @api hideMobileHeader;
     @api checkbox = false;
-    @api startDateField = 'StartDate';
-    @api endDateField = 'EndDate';
 
     get mobileHeaderStyle() {
         return this.hideMobileHeader && window.screen.width < 576 ? 'position: absolute; left: -10000px;' : '';
@@ -23,7 +21,7 @@ export default class Table extends LightningElement {
                     let field = {
                         name: column.name
                     };
-                    field.value = this.getValue(record, column);
+                    field.value = record[column.name];
                     if (column.svg !== undefined && this.iconByValue[record[column.name]] !== undefined) {
                         field.svg = this.iconByValue[record[column.name]];
                     }
@@ -38,31 +36,6 @@ export default class Table extends LightningElement {
             }
         }
         return records;
-    }
-
-    getValue(record, column) {
-        if (column.name === 'StartAndEndDate') {
-            let startDate = this.setDateFormat(record[this.startDateField]);
-            let endDate = this.setDateFormat(record[this.endDateField]);
-            let startDateSplit = startDate.split(',');
-            let endDateSplit = endDate.split(',');
-            if (startDateSplit[0] === endDateSplit[0]) {
-                return startDate + ' - ' + endDateSplit[1];
-            }
-            return startDate + ' - ' + endDate;
-        }
-        let value = record[column.name];
-        return value;
-    }
-
-    setDateFormat(initialValue) {
-        if (!isNaN(new Date(initialValue))) {
-            let value = new Date(initialValue);
-            value = value.toLocaleString();
-            value = value.substring(0, value.length - 3);
-            return value;
-        }
-        return initialValue;
     }
 
     handleOnRowClick(event) {
