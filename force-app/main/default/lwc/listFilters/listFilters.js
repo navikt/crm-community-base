@@ -6,7 +6,7 @@ export default class ListFilters extends LightningElement {
     @api filters;
     @track filterArray = [];
 
-    connectedCallback() {
+    setFilterArray() {
         let arr = [];
         this.filters.forEach((element) => {
             let temp = { ...element };
@@ -22,9 +22,14 @@ export default class ListFilters extends LightningElement {
         this.filterArray = arr;
     }
 
+    connectedCallback() {
+        this.setFilterArray();
+    }
+
     isOpen = false;
     @api
     openFilters() {
+        this.setFilterArray();
         this.isOpen = !this.isOpen;
         this.getFilteredRecordsLength();
     }
