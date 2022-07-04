@@ -16,7 +16,8 @@ export default class Checkbox extends LightningElement {
     @api desktopStyle;
     @api mobileStyle;
 
-    handleCheckboxClick() {
+    handleCheckboxClick(event) {
+        event.stopPropagation();
         let checked = this.template.querySelector('input').checked;
         if (this.showErrorText) {
             this.updateShowErrorTextValue();

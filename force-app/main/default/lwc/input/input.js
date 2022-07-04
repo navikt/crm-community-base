@@ -110,7 +110,7 @@ export default class Input extends LightningElement {
         if (num.substring(0, 4) === '0047' && num.length === 12) {
             num = num.substring(4, num.length);
         }
-        if (num.length < 8) {
+        if (num.charAt(0) === '+') {
             this.showError = true;
         }
         if (num.substring(0, 3) === '+47') {
@@ -119,9 +119,14 @@ export default class Input extends LightningElement {
             }
             num = num.substring(3, num.length);
         }
-
-        if (num.length === 8 && num.charAt(0) !== '4' && num.charAt(0) !== '9') {
+        if (isNaN(num)) {
+            this.showError = true;
+        }
+        if (num.charAt(0) !== '4' && num.charAt(0) !== '9') {
             // Norwegian mobile number
+            this.showError = true;
+        }
+        if (num.length !== 8) {
             this.showError = true;
         }
         this.actualErrorText = errMsg;
@@ -161,7 +166,7 @@ export default class Input extends LightningElement {
     @api validatePhoneLength(errMsg) {
         errMsg = setDefaultValue(errMsg, this.errorText);
         let number = this.template.querySelector('input').value.replaceAll(' ', '');
-        if (number.length < 8) {
+        if (number.length !== 8) {
             this.showError = true;
         }
         if (number.substring(0,1) === '+') {
