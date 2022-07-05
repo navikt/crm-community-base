@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <actionCalls>
         <name>Create_Community_Plus_User</name>
@@ -10,6 +10,7 @@
         <connector>
             <targetReference>End_Screen</targetReference>
         </connector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>personIdents</name>
             <value>
@@ -18,6 +19,7 @@
         </inputParameters>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </actionCalls>
+    <apiVersion>49.0</apiVersion>
     <decisions>
         <name>Access</name>
         <label>Access?</label>
@@ -82,6 +84,12 @@
         </value>
     </processMetadataValues>
     <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>FREE_FORM_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
         <name>OriginBuilderType</name>
         <value>
             <stringValue>LightningFlowBuilder</stringValue>
@@ -97,6 +105,7 @@
         <connector>
             <targetReference>Get_User</targetReference>
         </connector>
+        <filterLogic>and</filterLogic>
         <filters>
             <field>Name</field>
             <operator>EqualTo</operator>
@@ -117,6 +126,7 @@
         <connector>
             <targetReference>Access</targetReference>
         </connector>
+        <filterLogic>and</filterLogic>
         <filters>
             <field>AssigneeId</field>
             <operator>EqualTo</operator>
@@ -148,6 +158,7 @@
         <connector>
             <targetReference>Get_Current_User_Permission_Set_Assignment</targetReference>
         </connector>
+        <filterLogic>and</filterLogic>
         <filters>
             <field>Name</field>
             <operator>EqualTo</operator>
@@ -170,6 +181,7 @@
         <connector>
             <targetReference>Create_Community_Plus_User</targetReference>
         </connector>
+        <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
             <operator>EqualTo</operator>
@@ -194,6 +206,7 @@
         <connector>
             <targetReference>Existing_User</targetReference>
         </connector>
+        <filterLogic>and</filterLogic>
         <filters>
             <field>AccountId</field>
             <operator>EqualTo</operator>
@@ -242,8 +255,7 @@
         <allowPause>true</allowPause>
         <fields>
             <name>Success_Message</name>
-            <fieldText
-            >&lt;p&gt;Bruker er nå lagt til som frilanstolk. Neste steg er å sette opp en tjenesteressurs for brukeren.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Bruker er nå lagt til som frilanstolk. Neste steg er å sette opp en tjenesteressurs for brukeren.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <showFooter>true</showFooter>
@@ -259,7 +271,7 @@
         <allowPause>true</allowPause>
         <fields>
             <name>No_Access_Text</name>
-            <fieldText>&lt;p&gt;Du har ikke tilgang til denne funksjonen.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Du har ikke tilgang til denne funksjonen.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;TEST&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <showFooter>true</showFooter>
