@@ -6,7 +6,7 @@ export default class ListFilters extends LightningElement {
     @api filters;
     @track filterArray = [];
 
-    connectedCallback() {
+    setFilterArray() {
         let arr = [];
         this.filters.forEach((element) => {
             let temp = { ...element };
@@ -22,9 +22,14 @@ export default class ListFilters extends LightningElement {
         this.filterArray = arr;
     }
 
+    connectedCallback() {
+        this.setFilterArray();
+    }
+
     isOpen = false;
     @api
     openFilters() {
+        this.setFilterArray();
         this.isOpen = !this.isOpen;
         this.getFilteredRecordsLength();
     }
@@ -94,5 +99,14 @@ export default class ListFilters extends LightningElement {
 
     doNothing(event) {
         event.stopPropagation();
+    }
+
+    markAllCheckboxes(event) {
+        let filterindex = event.currentTarget.dataset.filterindex;
+        let bool = event.detail;
+        this.filterArray[filterindex].value.forEach((element) => {
+            element.value = bool;
+            element.checked = bool;
+        });
     }
 }
