@@ -23,7 +23,7 @@ export default class GlobalCommunityFooter extends ContextInterface {
 
     connectedCallback() {
         // The new LWR template doesn't support properties with uppercase first character ¯\_(ツ)_/¯
-        this.NAVarea = (this.NAVarea != null && this.NAVarea != undefined) ? this.NAVarea : this.navareapicklist;
+        this.NAVarea = this.NAVarea != null && this.NAVarea != undefined ? this.NAVarea : this.navareapicklist;
 
         this.isPrivatperson = this.navareapicklist == 'Privatperson';
         this.isArbeidsgiver = this.navareapicklist == 'Arbeidsgiver';
@@ -46,7 +46,7 @@ export default class GlobalCommunityFooter extends ContextInterface {
         this.isDelSkjerm = !this.isDelSkjerm;
     }
 
-    @track isSkjermdelingLesMer = false;
+    @track isSkjermdelingLesMer = false; TEST
     onHandleClickSkjermdelingInfo() {
         this.isSkjermdelingLesMer = !this.isSkjermdelingLesMer;
     }
