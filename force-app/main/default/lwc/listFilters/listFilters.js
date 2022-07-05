@@ -100,4 +100,13 @@ export default class ListFilters extends LightningElement {
     doNothing(event) {
         event.stopPropagation();
     }
+
+    markAllCheckboxes(event) {
+        let filterindex = event.currentTarget.dataset.filterindex;
+        let bool = event.detail;
+        this.filterArray[filterindex].value.forEach((element) => {
+            element.value = bool;
+            element.checked = bool;
+        });
+    }
 }

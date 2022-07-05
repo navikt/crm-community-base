@@ -50,7 +50,19 @@
                             <c-icon class="expander-icon" if:false={it.value.isOpen} icon="Expand"></c-icon>
                             <c-icon class="expander-icon" if:true={it.value.isOpen} icon="Collapse"></c-icon>
                         </li>
-                        <div if:true={it.value.isOpen} key={it.value.name} class="expanded-filter" aria-expanded={it.value.isOpen}>
+                        <div
+                            if:true={it.value.isOpen}
+                            key={it.value.name}
+                            class="expanded-filter"
+                            aria-expanded={it.value.isOpen}
+                        >
+                            <c-checkbox
+                                if:true={it.value.showMarkAllCheckbox}
+                                oncheckboxclick={markAllCheckboxes}
+                                aria-label="Merk alle"
+                                default-value={it.value.allMarked}
+                                data-filterindex={it.index}
+                            ></c-checkbox>
                             <c-checkboxgroup
                                 if:true={it.value.isCheckboxgroup}
                                 checkboxes={it.value.value}
@@ -78,8 +90,13 @@
                         </div>
                     </template>
                 </ul>
-                <c-button button-label={buttonLabel} button-styling="primary" onbuttonclick={applyFilter} desktop-style="width: 8rem; justify-content: center"
-                mobile-style="width: 8rem; justify-content: center"></c-button>
+                <c-button
+                    button-label={buttonLabel}
+                    button-styling="primary"
+                    onbuttonclick={applyFilter}
+                    desktop-style="width: 8rem; justify-content: center"
+                    mobile-style="width: 8rem; justify-content: center"
+                ></c-button>
             </div>
         </div>
     </div>
