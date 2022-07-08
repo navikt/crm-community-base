@@ -1,18 +1,18 @@
 import { LightningElement, track, wire } from 'lwc';
-import { loadStyle } from 'lightning/platformResourceLoader';
+// import { loadStyle } from 'lightning/platformResourceLoader';
 import { getRecord, getFieldValue } from 'lightning/uiRecordApi';
 import ID from '@salesforce/user/Id';
 import FIRST_NAME from '@salesforce/schema/User.FirstName';
 import MIDDLE_NAME from '@salesforce/schema/User.MiddleName';
 import LAST_NAME from '@salesforce/schema/User.LastName';
 
-import dekoratoren from '@salesforce/resourceUrl/dekoratoren';
+// import dekoratoren from '@salesforce/resourceUrl/dekoratoren';
 
 const fields = [FIRST_NAME, MIDDLE_NAME, LAST_NAME];
 
 export default class GlobalHeaderLoggedInButtons extends LightningElement {
     renderedCallback() {
-        loadStyle(this, dekoratoren);
+        // loadStyle(this, dekoratoren);
     }
 
     @track varslerPressed = false;

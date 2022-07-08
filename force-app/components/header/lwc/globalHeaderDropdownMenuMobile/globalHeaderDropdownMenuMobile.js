@@ -1,6 +1,6 @@
 import { LightningElement, track, api } from 'lwc';
-import dekoratoren from '@salesforce/resourceUrl/dekoratoren';
-import { loadStyle, loadScript } from 'lightning/platformResourceLoader';
+// import dekoratoren from '@salesforce/resourceUrl/dekoratoren';
+// import { loadStyle, loadScript } from 'lightning/platformResourceLoader';
 import isGuest from '@salesforce/user/isGuest';
 
 export default class GlobalHeaderDropdownMenuMobile extends LightningElement {
@@ -12,7 +12,7 @@ export default class GlobalHeaderDropdownMenuMobile extends LightningElement {
     body;
     isGuestUser = isGuest;
     renderedCallback() {
-        loadStyle(this, dekoratoren);
+        // loadStyle(this, dekoratoren);
     }
 
     connectedCallback() {

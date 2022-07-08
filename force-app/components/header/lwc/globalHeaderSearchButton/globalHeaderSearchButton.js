@@ -1,6 +1,6 @@
 import { LightningElement, track } from 'lwc';
-import dekoratoren from '@salesforce/resourceUrl/dekoratoren';
-import { loadStyle, loadScript } from 'lightning/platformResourceLoader';
+// import dekoratoren from '@salesforce/resourceUrl/dekoratoren';
+// import { loadStyle, loadScript } from 'lightning/platformResourceLoader';
 
 export default class HeaderSearchButton extends LightningElement {
     @track searchPressed = false;
@@ -8,7 +8,7 @@ export default class HeaderSearchButton extends LightningElement {
     @track url;
 
     renderedCallback() {
-        loadStyle(this, dekoratoren);
+        // loadStyle(this, dekoratoren);
     }
 
     handleOnClickSearch(event) {

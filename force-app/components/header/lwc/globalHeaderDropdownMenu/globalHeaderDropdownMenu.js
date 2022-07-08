@@ -1,6 +1,6 @@
 import { LightningElement, track, api } from 'lwc';
-import { loadStyle } from 'lightning/platformResourceLoader';
-import dekoratoren from '@salesforce/resourceUrl/dekoratoren';
+// import { loadStyle } from 'lightning/platformResourceLoader';
+// import dekoratoren from '@salesforce/resourceUrl/dekoratoren';
 
 export default class GlobalHeaderDropdownMenu extends LightningElement {
     @track menuPressed = false;
@@ -11,7 +11,7 @@ export default class GlobalHeaderDropdownMenu extends LightningElement {
     @track isSamarbeidspartner;
 
     renderedCallback() {
-        loadStyle(this, dekoratoren);
+        // loadStyle(this, dekoratoren);
     }
 
     connectedCallback() {
