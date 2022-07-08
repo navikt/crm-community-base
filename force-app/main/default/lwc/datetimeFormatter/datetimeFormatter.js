@@ -1,4 +1,7 @@
 export function formatDatetime(initialDatetime) {
+    if (initialDatetime === undefined) {
+        return null;
+    }
     let datetime = new Date(initialDatetime);
     return (
         datetime.toLocaleDateString() + ', ' + datetime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
@@ -6,11 +9,17 @@ export function formatDatetime(initialDatetime) {
 }
 
 export function formatDate(initialDate) {
+    if (initialDate === undefined) {
+        return null;
+    }
     let date = new Date(initialDate);
     return date.toLocaleDateString();
 }
 
 export function formatDatetimeinterval(initialStart, initialEnd) {
+    if (initialStart === undefined || initialEnd === undefined) {
+        return null;
+    }
     let start = new Date(initialStart);
     let end = new Date(initialEnd);
     return (
