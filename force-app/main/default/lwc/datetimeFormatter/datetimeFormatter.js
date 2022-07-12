@@ -33,26 +33,19 @@ export function formatDatetimeinterval(initialStart, initialEnd) {
 
 export function formatRecords(records, fields) {
     for (let record of records) {
-        for (let field of fields) {
-            if (field.type == 'datetime') {
-                record[field.name] = formatDatetime(record[field.name]);
-            } else if (field.type == 'date') {
-                record[field.name] = formatDate(record[field.name]);
-            } else if (field.type == 'datetimeinterval') {
-                record[field.name] = formatDatetimeinterval(record[field.start], record[field.end]);
-            }
-        }
+        formatRecord(record, fields);
     }
     return records;
 }
 export function formatRecord(record, fields) {
     for (let field of fields) {
+        let fieldname = field.newName === undefined ? field.name : field.newName;
         if (field.type == 'datetime') {
-            record[field.name] = formatDatetime(record[field.name]);
+            record[fieldname] = formatDatetime(record[field.name]);
         } else if (field.type == 'date') {
-            record[field.name] = formatDate(record[field.name]);
+            record[fieldname] = formatDate(record[field.name]);
         } else if (field.type == 'datetimeinterval') {
-            record[field.name] = formatDatetimeinterval(record[field.start], record[field.end]);
+            record[fieldname] = formatDatetimeinterval(record[field.start], record[field.end]);
         }
     }
     return record;
