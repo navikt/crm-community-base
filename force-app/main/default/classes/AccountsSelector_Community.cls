@@ -8,7 +8,8 @@ public inherited sharing class AccountsSelector_Community extends ApplicationSel
             Account.FirstName,
             Account.MiddleName,
             Account.LastName,
-            Account.CRM_Person__c
+            Account.CRM_Person__c,
+            Account.INT_IsHasTombstone__c
         };
     }
 
@@ -22,6 +23,7 @@ public inherited sharing class AccountsSelector_Community extends ApplicationSel
                 .selectField('CRM_Person__r.INT_FirstName__c')
                 .selectField('CRM_Person__r.INT_MiddleName__c')
                 .selectField('CRM_Person__r.INT_LastName__c')
+                .selectField('CRM_Person__r.INT_IsHasTombstone__c')
                 .setCondition('INT_PersonIdent__c=:ident AND CRM_Person__r.INT_Confidential__c=\'UGRADERT\'')
                 .toSOQL()
         );
@@ -33,6 +35,7 @@ public inherited sharing class AccountsSelector_Community extends ApplicationSel
                 .selectField('CRM_Person__r.INT_FirstName__c')
                 .selectField('CRM_Person__r.INT_MiddleName__c')
                 .selectField('CRM_Person__r.INT_LastName__c')
+                .selectField('CRM_Person__r.INT_IsHasTombstone__c')
                 .setCondition('INT_PersonIdent__c=:ident')
                 .toSOQL()
         );

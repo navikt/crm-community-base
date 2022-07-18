@@ -1,21 +1,34 @@
 public with sharing class CommunityUsersService {
+
     public static User getOrCreatePersonAccountUser(String personIdent) {
-        //check if related Person__c is ugradert
-        List<Account> personAccounts = new AccountsSelector_Community().selectByIdent(personIdent);
-        if (personAccounts == null || personAccounts.size() == 0)
-            return null;
+        return getOrCreatePersonAccountUserCore(personIdent, false);
+    }
+
+    public static User getOrCreatePersonAccountUserWithConfidentialAddress(String personIdent) {
+        return getOrCreatePersonAccountUserCore(personIdent, true);
+    }
+
+    private static User getOrCreatePersonAccountUserCore(String personIdent, Boolean confidential){
+        // check if related Person__c is ugradert
+        // Boolean is used to select correct method
+        List<Account> personAccounts = confidential ? new AccountsSelector_Community().selectByIdentIgnoreConfidential(personIdent) : new AccountsSelector_Community().selectByIdent(personIdent);
+        if (personAccounts == null || personAccounts.isEmpty()) return null;
 
         List<User> existingUsers = new UsersSelector_Community().selectByAccountIdent(new Set<String>{ personIdent });
-        if (existingUsers.size() > 0)
-            return existingUsers[0];
+        if (existingUsers.size() > 0) return existingUsers[0];
 
         DefaultCommunityProfile__c defaultCommunityProfiles = DefaultCommunityProfile__c.getOrgDefaults();
         String profileName = defaultCommunityProfiles.DefaultProfile__c;
         Profile profile = [SELECT Id FROM Profile WHERE Name = :profileName];
 
-        if (personAccounts.size() > 0 && profile != null) {
-            PersonAccountWrapper contact = new PersonAccountWrapper(personAccounts[0]);
+        if (profile != null) {
+            //Filter accounts and raise warnings
+            List<Account> filteredAccounts = filterAccounts(personAccounts);
+
+            PersonAccountWrapper contact = !filteredAccounts.isEmpty() ? new PersonAccountWrapper(filteredAccounts[0]) : new PersonAccountWrapper(personAccounts[0]);
             User user = createCommunityUser(contact, profile.Id);
+            if(confidential) return user;
+
             String permissionSetName = defaultCommunityProfiles.DefaultPermissionSet__c;
             List<PermissionSet> permissionSets = [SELECT Id FROM permissionSet WHERE Name = :permissionSetName];
             if (permissionSets.size() > 0) {
@@ -25,29 +38,6 @@ public with sharing class CommunityUsersService {
                 );
                 insert permSetAssignment;
             }
-            return user;
-        }
-
-        return null;
-    }
-
-    public static User getOrCreatePersonAccountUserWithConfidentialAddress(String personIdent) {
-        //check if related Person__c is ugradert
-        List<Account> personAccounts = new AccountsSelector_Community().selectByIdentIgnoreConfidential(personIdent);
-        if (personAccounts == null || personAccounts.size() == 0)
-            return null;
-
-        List<User> existingUsers = new UsersSelector_Community().selectByAccountIdent(new Set<String>{ personIdent });
-        if (existingUsers.size() > 0)
-            return existingUsers[0];
-
-        DefaultCommunityProfile__c defaultCommunityProfiles = DefaultCommunityProfile__c.getOrgDefaults();
-        String profileName = defaultCommunityProfiles.DefaultProfile__c;
-        Profile profile = [SELECT Id FROM Profile WHERE Name = :profileName];
-
-        if (personAccounts.size() > 0 && profile != null) {
-            PersonAccountWrapper contact = new PersonAccountWrapper(personAccounts[0]);
-            User user = createCommunityUser(contact, profile.Id);
             return user;
         }
 
@@ -105,36 +95,38 @@ public with sharing class CommunityUsersService {
     }
 
     public static User getOrcreateCommunityPlusLoginUser(String personIdent) {
-          //check if related Person__c is ugradert
-          List<Account> personAccounts = new AccountsSelector_Community().selectByIdent(personIdent);
-          if (personAccounts == null || personAccounts.size() == 0)
-              return null;
+        //check if related Person__c is ugradert
+        List<Account> personAccounts = new AccountsSelector_Community().selectByIdent(personIdent);
+        if (personAccounts == null || personAccounts.isEmpty()) return null;
   
-              DefaultCommunityProfile__c defaultCommunityProfiles = DefaultCommunityProfile__c.getOrgDefaults();
-              String profileName = defaultCommunityProfiles.DefaultCommunityPlusLoginProfile__c;
-              Profile profile = [SELECT Id FROM Profile WHERE Name = :profileName];
+        DefaultCommunityProfile__c defaultCommunityProfiles = DefaultCommunityProfile__c.getOrgDefaults();
+        String profileName = defaultCommunityProfiles.DefaultCommunityPlusLoginProfile__c;
+        Profile profile = [SELECT Id FROM Profile WHERE Name = :profileName];
 
-              String permissionSetName = defaultCommunityProfiles.DefaultCommunityPlusLoginPermSet__c;
-              List<PermissionSet> permissionSets = [SELECT Id FROM permissionSet WHERE Name = :permissionSetName];
+        String permissionSetName = defaultCommunityProfiles.DefaultCommunityPlusLoginPermSet__c;
+        List<PermissionSet> permissionSets = [SELECT Id FROM permissionSet WHERE Name = :permissionSetName];
 
-          List<User> existingUsers = new UsersSelector_Community().selectByAccountIdent(new Set<String>{ personIdent });
-            if(existingUsers.size()>0)
-                return assignCommunityPlusLoginProfileAndPermSetToExistingUser(existingUsers[0], profile.Id, permissionSets[0].Id);
+        List<User> existingUsers = new UsersSelector_Community().selectByAccountIdent(new Set<String>{ personIdent });
+        if(existingUsers.size()>0)
+            return assignCommunityPlusLoginProfileAndPermSetToExistingUser(existingUsers[0], profile.Id, permissionSets[0].Id);
 
 
-          if (personAccounts.size() > 0 && profile != null) {
-              PersonAccountWrapper contact = new PersonAccountWrapper(personAccounts[0]);
-              User user = createCommunityUser(contact, profile.Id);
+        if (personAccounts.size() > 0 && profile != null) {            
+            //Filter accounts and raise warnings
+            List<Account> filteredAccounts = filterAccounts(personAccounts);
+
+            PersonAccountWrapper contact = new PersonAccountWrapper(filteredAccounts[0]);
+            User user = createCommunityUser(contact, profile.Id);
             
 
-              if (permissionSets.size() > 0) {
-                  PermissionSetAssignment permSetAssignment = new PermissionSetAssignment(
-                      AssigneeId = user.Id,
-                      PermissionSetId = permissionSets[0].Id
-                  );
-                  insert permSetAssignment;
-              }
-              return user;
+            if (permissionSets.size() > 0) {
+                PermissionSetAssignment permSetAssignment = new PermissionSetAssignment(
+                    AssigneeId = user.Id,
+                    PermissionSetId = permissionSets[0].Id
+                );
+                insert permSetAssignment;
+            }
+            return user;
           }
   
           return null;
@@ -182,6 +174,22 @@ public with sharing class CommunityUsersService {
            }
            
     }
+
+    // Filters Accounts for merged accounts without INT_IsHasTombstone__c. Raises appropriate warnings if necessary.
+    @TestVisible
+    private static List<Account> filterAccounts(List<Account> personAccounts){
+        LoggerUtility logger = new LoggerUtility();
+        List<Account> filteredAccounts = new List<Account>();
+        for(Account a : personAccounts){
+            if(!a.INT_IsHasTombstone__c) filteredAccounts.add(a);
+        }
+        if(filteredAccounts.size() == personAccounts.size())
+            logger.warning('User is pre-merge and has multiple accounts. Please ensure everything is correct.', null, CRM_ApplicationDomain.Domain.CRM);
+        if(filteredAccounts.size() > 1 && filteredAccounts.size() < personAccounts.size())
+            logger.warning('User had accounts merged but still has multiple unmerged Accounts.', null, CRM_ApplicationDomain.Domain.CRM);
+        if(filteredAccounts.isEmpty()){}
+            logger.critical('All accounts of the users are marked as merged. Please investigate.', null, CRM_ApplicationDomain.Domain.CRM);
+        if(logger.peek() != null) logger.publish();
+        return filteredAccounts.isEmpty() ? personAccounts : filteredAccounts;
+    }
 }
-        
-        
