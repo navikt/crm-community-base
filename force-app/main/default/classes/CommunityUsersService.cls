@@ -184,11 +184,11 @@ public with sharing class CommunityUsersService {
             if(!a.INT_IsHasTombstone__c) filteredAccounts.add(a);
         }
         if(filteredAccounts.size() == personAccounts.size())
-            logger.warning('User is pre-merge and has multiple accounts. Please ensure everything is correct.', null, CRM_ApplicationDomain.Domain.CRM);
+            logger.error('User is pre-merge and has multiple accounts. Please ensure everything is correct.', null, CRM_ApplicationDomain.Domain.CRM);
         if(filteredAccounts.size() > 1 && filteredAccounts.size() < personAccounts.size())
-            logger.warning('User had accounts merged but still has multiple unmerged Accounts.', null, CRM_ApplicationDomain.Domain.CRM);
+            logger.error('User had accounts merged but still has multiple unmerged Accounts.', null, CRM_ApplicationDomain.Domain.CRM);
         if(filteredAccounts.isEmpty()){}
-            logger.critical('All accounts of the users are marked as merged. Please investigate.', null, CRM_ApplicationDomain.Domain.CRM);
+            logger.critical('All accounts of the user are marked as merged. Please investigate.', null, CRM_ApplicationDomain.Domain.CRM);
         if(logger.peek() != null) logger.publish();
         return filteredAccounts.isEmpty() ? personAccounts : filteredAccounts;
     }
