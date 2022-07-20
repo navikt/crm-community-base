@@ -224,4 +224,42 @@ private class CommunityUsersServiceTest {
 
         System.assertEquals(1,[SELECT COUNT() FROM PermissionSetAssignment WHERE AssigneeId=:UserInfo.getUserId() AND PermissionSetId=:permissionSetId], 'Expect permission set to be assigned');
     }
+
+    @isTest
+    private static void createCommununityUserTombstone(){
+        
+        // Create different test cases
+        List<Account> filteredAccounts = TestDataFactory_Community.getPersonAccounts(5);
+
+        // Every account has to have the same PersonIdent
+        for (Account a : filteredAccounts) {
+            a.INT_PersonIdent__c = '1234';
+        }        
+
+        // Set up first test conditions
+        for (Account a : filteredAccounts) {
+            a.INT_IsHasTombstone__c = true;
+        }
+        filteredAccounts[0].INT_IsHasTombstone__c = false; 
+
+        Test.startTest();
+        List<Account> mergedAccounts = CommunityUsersService.filterAccounts(filteredAccounts);
+
+        // Second test condition
+        filteredAccounts[1].INT_IsHasTombstone__c = false;
+        List<Account> mergedAccountsBroken = CommunityUsersService.filterAccounts(filteredAccounts);
+
+        // Third test condition
+        for (Integer i = 2; i < 5; i++) {
+            filteredAccounts[i].INT_IsHasTombstone__c = false;
+        }
+        List<Account> unmergedAccounts = CommunityUsersService.filterAccounts(filteredAccounts);
+        
+        Test.stopTest();
+
+        System.assertEquals(1, mergedAccounts.size());
+        System.assertEquals(5, unmergedAccounts.size());
+        System.assertEquals(2, mergedAccountsBroken.size());
+
+    }
 }
