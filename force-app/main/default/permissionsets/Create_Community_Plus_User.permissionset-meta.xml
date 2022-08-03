@@ -6,7 +6,7 @@
     </classAccesses>
     <customPermissions>
         <enabled>true</enabled>
-        <name>HOT_DeactivateFreelanceInterpreter</name>
+        <name>DeactivateFreelanceInterpreter</name>
     </customPermissions>
     <hasActivationRequired>false</hasActivationRequired>
     <label>Create Community Plus User</label>
