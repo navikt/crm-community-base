@@ -3,7 +3,7 @@
         <thead style={mobileHeaderStyle}>
             <tr>
                 <th class="checkbox-column" if:true={checkbox}>
-                    <c-checkbox oncheckboxclick={handleAllCheckboxesClick}></c-checkbox>
+                    <c-checkbox oncheckboxclick={handleAllCheckboxesClick} title="Velg alle"></c-checkbox>
                 </th>
                 <template iterator:column={columns}>
                     <th tabindex="0" key={column.value.name} scope="col">{column.value.label}</th>

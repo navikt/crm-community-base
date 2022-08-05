@@ -13,6 +13,7 @@ export default class Checkbox extends LightningElement {
     @api ariaLabel;
     @api name = '';
     @api form = '';
+    @api title;
     @api desktopStyle;
     @api mobileStyle;
 
