@@ -14,6 +14,7 @@ export default class Table extends LightningElement {
     recordMap = {};
     get recordsToShow() {
         let records = [];
+        this.recordMap = {};
         if (this.records !== undefined && this.records !== null) {
             for (let record of this.records) {
                 let fields = [];
@@ -43,6 +44,11 @@ export default class Table extends LightningElement {
         this.dispatchEvent(eventToSend);
     }
 
+    sendAmountOfCheckedRows() {
+        const eventToSend = new CustomEvent('amountofcheckedrows', { detail:  this.checkedRows.length });
+        this.dispatchEvent(eventToSend);
+    }
+
     @api checkedRows = [];
     @api getCheckedRows() {
         return this.checkedRows;
@@ -52,6 +58,7 @@ export default class Table extends LightningElement {
         this.template.querySelectorAll('c-checkbox').forEach((element) => {
             element.clearCheckboxValue();
         });
+        this.checkedRows = [];
     }
 
     handleSingleCheckboxClick() {
@@ -66,6 +73,7 @@ export default class Table extends LightningElement {
                 this.checkedRows.push(element.id);
             }
         });
+        this.sendAmountOfCheckedRows();
     }
 
     handleAllCheckboxesClick(event) {
@@ -79,6 +87,7 @@ export default class Table extends LightningElement {
                 this.checkedRows.push(element.id);
             }
         });
+        this.sendAmountOfCheckedRows();
     }
 
     resetRecordIdArray() {
