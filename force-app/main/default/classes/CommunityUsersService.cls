@@ -47,9 +47,9 @@ public with sharing class CommunityUsersService {
     @TestVisible
     private static User createCommunityUser(PersonAccountWrapper contact, Id profileId) {
         User user = new User();
-        user.FirstName = contact.firstName;
-        user.MiddleName = contact.middleName;
-        user.LastName = contact.lastName;
+        user.FirstName = contact.firstName.left(40);
+        user.MiddleName = contact.middleName.left(40);
+        user.LastName = contact.lastName.left(80);
         user.Username = contact.recordId + '@portal.nav.no';
         user.Email = contact.recordId + '@portal.nav.no';
         String contactIdString = (String) contact.recordId;

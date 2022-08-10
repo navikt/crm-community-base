@@ -20,9 +20,9 @@ public without sharing class CommunityUserAsyncRequestHandler extends AsyncJob {
     List<User> usersToUpdate=new UsersSelector_Community().selectByAccountId(accountIdSet);
         for(User user:usersToUpdate){
             Person__c person=personsWithChangedName.get(user.AccountId);
-            user.FirstName=person.INT_FirstName__c;
-            user.LastName=person.INT_LastName__c;
-            user.MiddleName=person.INT_MiddleName__c;       
+            user.FirstName=person.INT_FirstName__c.left(40);
+            user.MiddleName=person.INT_MiddleName__c.left(40);  
+            user.LastName=person.INT_LastName__c.left(80);                 
         }
         update usersToUpdate;
     }
