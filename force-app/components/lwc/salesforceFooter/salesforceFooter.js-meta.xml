@@ -3,7 +3,7 @@
     <apiVersion>54.0</apiVersion>
     <isExposed>true</isExposed>
 	<description>Footer - Good</description>
-	<masterLabel>Footer</masterLabel>
+	<masterLabel>Footer - Good</masterLabel>
 	<targets>
 		<target>lightningCommunity__Page</target>
 		<target>lightningCommunity__Default</target>

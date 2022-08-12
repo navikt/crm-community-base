@@ -1,2 +1,0 @@
-<apex:page controller="CommunityPageRedirection" action="{!urlRedirectionError}">
-</apex:page>
