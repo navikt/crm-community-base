@@ -21,4 +21,9 @@ export default class DsButton extends LightningElement {
         const eventToSend = new CustomEvent('buttonclick', { detail: event.target.value });
         this.dispatchEvent(eventToSend);
     }
+
+    @api
+    focus() {
+        this.template.querySelector('.navds-button').focus();
+    }
 }
