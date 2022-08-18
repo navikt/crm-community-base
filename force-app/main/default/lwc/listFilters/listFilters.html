@@ -88,6 +88,13 @@
                                     ></c-input>
                                 </template>
                             </fieldset>
+                            <c-input
+                                if:true={it.value.isSearch}
+                                ongetvalueonchange={handleSearchTermChange}
+                                type="text"
+                                value={it.value.searchTerm}
+                                data-filterindex={it.index}
+                            ></c-input>
                         </div>
                     </template>
                 </ul>

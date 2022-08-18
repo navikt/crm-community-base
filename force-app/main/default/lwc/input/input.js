@@ -1,5 +1,5 @@
 import { LightningElement, api } from 'lwc';
-import { setDefaultValue, convertStringToBoolean} from 'c/componentHelperClass';
+import { setDefaultValue, convertStringToBoolean } from 'c/componentHelperClass';
 
 export default class Input extends LightningElement {
     @api type = 'text';
@@ -88,6 +88,14 @@ export default class Input extends LightningElement {
     }
 
     // Sends value on change
+    handleonchange() {
+        const selectedEvent = new CustomEvent('change', {
+            detail: this.template.querySelector('input').value
+        });
+        this.dispatchEvent(selectedEvent);
+    }
+
+    // Sends value on change
     sendValueOnChange() {
         let inputValue = this.template.querySelector('input').value;
         this.value = inputValue;
@@ -169,7 +177,7 @@ export default class Input extends LightningElement {
         if (number.length !== 8) {
             this.showError = true;
         }
-        if (number.substring(0,1) === '+') {
+        if (number.substring(0, 1) === '+') {
             this.showError = true;
         }
         if (isNaN(number)) {
