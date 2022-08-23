@@ -1,17 +1,14 @@
 public with sharing class CommunityUsersService {
 
-    public static User getOrCreatePersonAccountUser(String personIdent) {
-        return getOrCreatePersonAccountUserCore(personIdent, false);
-    }
-
-    public static User getOrCreatePersonAccountUserWithConfidentialAddress(String personIdent) {
-        return getOrCreatePersonAccountUserCore(personIdent, true);
-    }
-
-    private static User getOrCreatePersonAccountUserCore(String personIdent, Boolean confidential){
+    public static User getOrCreatePersonAccountUser(String personIdent){
         // check if related Person__c is ugradert
         // Boolean is used to select correct method
-        List<Account> personAccounts = confidential ? new AccountsSelector_Community().selectByIdentIgnoreConfidential(personIdent) : new AccountsSelector_Community().selectByIdent(personIdent);
+        Boolean confidential = false;
+        List<Account> personAccounts = new AccountsSelector_Community().selectByIdent(personIdent);        
+        if (personAccounts == null || personAccounts.isEmpty()){
+            personAccounts = new AccountsSelector_Community().selectByIdentIgnoreConfidential(personIdent);
+            confidential = true;
+        }
         if (personAccounts == null || personAccounts.isEmpty()) return null;
 
         List<User> existingUsers = new UsersSelector_Community().selectByAccountIdent(new Set<String>{ personIdent });
@@ -183,11 +180,11 @@ public with sharing class CommunityUsersService {
         for(Account a : personAccounts){
             if(!a.INT_IsHasTombstone__c) filteredAccounts.add(a);
         }
-        if(filteredAccounts.size() == personAccounts.size())
+        if(filteredAccounts.size() == personAccounts.size() && personAccounts.size() > 1)
             logger.error('User is pre-merge and has multiple accounts. Please ensure everything is correct.', null, CRM_ApplicationDomain.Domain.CRM);
         if(filteredAccounts.size() > 1 && filteredAccounts.size() < personAccounts.size())
             logger.error('User had accounts merged but still has multiple unmerged Accounts.', null, CRM_ApplicationDomain.Domain.CRM);
-        if(filteredAccounts.isEmpty()){}
+        if(filteredAccounts.isEmpty())
             logger.critical('All accounts of the user are marked as merged. Please investigate.', null, CRM_ApplicationDomain.Domain.CRM);
         if(logger.peek() != null) logger.publish();
         return filteredAccounts.isEmpty() ? personAccounts : filteredAccounts;
