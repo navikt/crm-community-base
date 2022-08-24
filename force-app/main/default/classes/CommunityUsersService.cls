@@ -8,8 +8,9 @@ public with sharing class CommunityUsersService {
         if (personAccounts == null || personAccounts.isEmpty()){
             personAccounts = new AccountsSelector_Community().selectByIdentIgnoreConfidential(personIdent);
             confidential = true;
+            if (personAccounts == null || personAccounts.isEmpty()) return null;
         }
-        if (personAccounts == null || personAccounts.isEmpty()) return null;
+        
 
         List<User> existingUsers = new UsersSelector_Community().selectByAccountIdent(new Set<String>{ personIdent });
         if (existingUsers.size() > 0) return existingUsers[0];
