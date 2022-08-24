@@ -4,7 +4,7 @@ export default class Checkbox extends LightningElement {
     @api label;
     @api errorText;
     @api id;
-    @api defaultValue;
+    @api defaultVal;
     @api disabled;
     @api labelSize;
     @api errorSize;
@@ -56,11 +56,9 @@ export default class Checkbox extends LightningElement {
         this.template.querySelector('[data-id="checkbox dataid"]').focus();
     }
 
-    defaultVal;
     renderedCallback() {
         if (this.defaultVal) {
             this.template.querySelector('input').checked = true;
-            this.defaultVal = false;
         }
 
         if (this.disabled) {
@@ -68,8 +66,14 @@ export default class Checkbox extends LightningElement {
         }
     }
 
-    connectedCallback() {
-        this.defaultVal = convertStringToBoolean(this.defaultValue);
+    @api set defaultValue(val) {
+        this.defaultVal = val;
+        if (this.template.querySelector('input')) {
+            this.setCheckboxValue(this.defaultVal);
+        }
+    }
+    get defaultValue() {
+        return this.defaultVal;
     }
 
     get labelFontSize() {
@@ -86,7 +90,11 @@ export default class Checkbox extends LightningElement {
 
     showErrorText = false;
     updateShowErrorTextValue() {
-        this.showErrorText = !this.template.querySelector('input').checked && this.errorText !== undefined && this.errorText !== '' && !this.disabled;
+        this.showErrorText =
+            !this.template.querySelector('input').checked &&
+            this.errorText !== undefined &&
+            this.errorText !== '' &&
+            !this.disabled;
         if (this.showErrorText) {
             this.template.querySelector('.navds-checkbox').classList.add('navds-checkbox--error');
             this.focusCheckbox();
