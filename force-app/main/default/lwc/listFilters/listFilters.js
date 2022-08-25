@@ -66,6 +66,11 @@ export default class ListFilters extends LightningElement {
         this.filterArray[filterindex].value[valueindex].value = event.detail;
         this.getFilteredRecordsLength();
     }
+    handleSearchTermChange(event) {
+        let filterindex = event.currentTarget.dataset.filterindex;
+        this.filterArray[filterindex].searchTerm = event.detail;
+        this.getFilteredRecordsLength();
+    }
 
     removeFilter(event) {
         event.stopPropagation();
