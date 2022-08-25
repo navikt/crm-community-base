@@ -6,6 +6,8 @@
 .sfdx/
 .sf/
 
+.sf/
+
 # Logs
 logs
 *.log
