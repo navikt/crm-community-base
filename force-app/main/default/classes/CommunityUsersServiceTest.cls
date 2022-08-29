@@ -115,7 +115,7 @@ private class CommunityUsersServiceTest {
             person.INT_Confidential__c='FORTROLIG';
             update person;
             Test.startTest();
-            User user = CommunityUsersService.getOrCreatePersonAccountUserWithConfidentialAddress('1');
+            User user = CommunityUsersService.getOrCreatePersonAccountUser('1');
             Test.stopTest();
             System.assert(user != null);
             System.assertEquals(personAccount.FirstName, user.FirstName);

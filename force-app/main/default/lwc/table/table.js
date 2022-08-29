@@ -44,8 +44,10 @@ export default class Table extends LightningElement {
         this.dispatchEvent(eventToSend);
     }
 
-    sendAmountOfCheckedRows() {
-        const eventToSend = new CustomEvent('amountofcheckedrows', { detail:  this.checkedRows.length });
+    sendCheckedRows() {
+        const eventToSend = new CustomEvent('checkedrows', {
+            detail: { checkedRows: this.checkedRows }
+        });
         this.dispatchEvent(eventToSend);
     }
 
@@ -73,7 +75,7 @@ export default class Table extends LightningElement {
                 this.checkedRows.push(element.id);
             }
         });
-        this.sendAmountOfCheckedRows();
+        this.sendCheckedRows();
     }
 
     handleAllCheckboxesClick(event) {
@@ -87,7 +89,7 @@ export default class Table extends LightningElement {
                 this.checkedRows.push(element.id);
             }
         });
-        this.sendAmountOfCheckedRows();
+        this.sendCheckedRows();
     }
 
     resetRecordIdArray() {
