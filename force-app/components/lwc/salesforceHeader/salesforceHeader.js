@@ -6,64 +6,52 @@ export default class SalesforceHeader extends LightningElement {
     // console.log("Heisann");
     // console.log(this);
     connectedCallback() {
-        fetch(
-            'http://localhost:8088/dekoratoren?context=privatperson&breadcrumbs=[{%22title%22:%22Privatperson%22,%22url%22:%22https://www.nav.no%22}]'
-        )
+        fetch('https://www.dev.nav.no/dekoratoren?context=privatperson&chatbot=true')
             .then((res) => {
-                console.log('Ponk');
                 return res.text();
             })
             .then((html) => {
-                console.log('Start');
-                console.log(html);
-                console.log(html.search('<script>'));
                 let parser = new DOMParser();
                 let doc = parser.parseFromString(html, 'text/html');
                 const header = doc.getElementById('header-withmenu')?.innerHTML;
                 const footer = doc.getElementById('footer-withmenu')?.innerHTML;
+                const style = doc.getElementById('styles')?.innerHTML;
                 const headerInjection = document.querySelector('#header-injection');
                 const footerInjection = document.querySelector('#footer-injection');
+                const styleInjection = document.querySelector('#style-injection');
                 headerInjection.innerHTML = header;
                 footerInjection.innerHTML = footer;
+                styleInjection.innerHTML = style;
 
-                console.log('Heisann');
-                console.log(doc);
+                const testScript = doc.getElementById('scripts');
 
                 const env = doc.querySelector('#decorator-env');
+
                 // console.log(scripts);
                 const scriptInjection = document.querySelector('#script-injection');
                 // const env = scripts.querySelector('#decorator-env');
                 scriptInjection.appendChild(env);
-
+                const testScript2 = testScript.getElementsByTagName('script');
                 // const scriptCopy = scripts.getElementsByTagName('script')[0];
                 const script = document.createElement('script');
                 script.setAttribute('type', 'text/javascript');
                 // script.setAttribute('async', scriptCopy.async);
                 // script.setAttribute('src', scriptCopy.src);
                 script.setAttribute('async', 'true');
-                script.setAttribute('src', 'http://localhost:8088/dekoratoren/client.asdf.js');
+                script.setAttribute('src', testScript2[0].src);
+                const testParamChanges = () => {
+                    console.log('Heisann det er meg');
+                    window.postMessage(
+                        {
+                            source: 'decoratorClient',
+                            event: 'params',
+                            payload: { chatbotVisible: true }
+                        },
+                        window.location.origin
+                    );
+                };
+                script.addEventListener('load', testParamChanges);
                 scriptInjection.appendChild(script);
-
-                const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-                const rect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
-                const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-                svg.appendChild(rect);
-                svg.appendChild(circle);
-
-                headerInjection.appendChild(svg);
-                console.log('Yippi');
-                console.log(svg);
-                svg.setAttribute('height', '200');
-                rect.setAttribute('height', '100%');
-                circle.setAttribute('cx', '150');
-                svg.setAttribute('width', '300');
-                rect.setAttribute('width', '100%');
-                rect.setAttribute('fill', 'black');
-                circle.setAttribute('cy', '100');
-                circle.setAttribute('r', '90');
-                circle.setAttribute('fill', 'blue');
-                svg.setAttribute('viewBox', '-250 -250 500 750');
-                console.log(svg);
             });
     }
 
