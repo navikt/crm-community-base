@@ -4,7 +4,7 @@ export default class SalesforceHeader extends LightningElement {
     static renderMode = 'light'; // the default is 'shadow'
 
     connectedCallback() {
-        fetchHeaderAndFooter();
+        this.fetchHeaderAndFooter();
     }
 
     //Available parameter key value pairs can be viewed at https://github.com/navikt/nav-dekoratoren#parametere
