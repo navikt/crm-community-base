@@ -1,10 +1,12 @@
 import { LightningElement, api } from 'lwc';
+import { NavigationMixin } from 'lightning/navigation';
 import { setDefaultValue, convertStringToBoolean } from 'c/componentHelperClass';
 
-export default class Linktile extends LightningElement {
+export default class Linktile extends NavigationMixin(LightningElement) {
     @api linkLabel;
     @api linkHeader;
     @api linkAddress;
+    @api navigationAddress;
     @api id = 'linkId';
     @api chevron;
     @api maximumWidth;
@@ -58,6 +60,10 @@ export default class Linktile extends LightningElement {
 
     imgMaxHeight() {
         return setDefaultValue(this.imageMaxHeight, '100%; ');
+    }
+
+    get isNavigation() {
+        return this.navigationAddress !== null && this.navigationAddress !== undefined;
     }
 
     get hasLinkLabel() {
@@ -150,5 +156,20 @@ export default class Linktile extends LightningElement {
     rowOrColumn = 'row';
     connectedCallback() {
         this.rowOrColumn = this.setFlex();
+        if (this.isNavigation) {
+            this.linkAddress = '';
+        }
+    }
+
+    navigateToPage() {
+        if (!this.isNavigation) {
+            return;
+        }
+        this[NavigationMixin.Navigate]({
+            type: 'comm__namedPage',
+            attributes: {
+                name: this.navigationAddress
+            }
+        });
     }
 }

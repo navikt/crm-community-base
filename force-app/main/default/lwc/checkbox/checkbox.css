@@ -1,8 +1,8 @@
 .navds-checkbox {
     position: relative;
     padding: 0.75rem 0;
-    flex-direction: row; 
-    display: flex; 
+    flex-direction: row;
+    display: flex;
     align-items: center;
 }
 
@@ -90,7 +90,7 @@
 }
 
 .navds-checkbox__input:disabled + .navds-checkbox__label::before {
-    background-color: #f1f1f1;
+    background-color: lightgray;
     border-color: #6a6a6a;
 }
 

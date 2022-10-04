@@ -1,6 +1,7 @@
 .breadcrumb {
     flex-direction: row;
-    display: flex;    
+    display: flex;
+    flex-wrap: wrap;
 }
 
 .listElement {

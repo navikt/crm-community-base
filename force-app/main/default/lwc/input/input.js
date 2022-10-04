@@ -1,5 +1,5 @@
 import { LightningElement, api } from 'lwc';
-import { setDefaultValue } from 'c/componentHelperClass';
+import { setDefaultValue, convertStringToBoolean } from 'c/componentHelperClass';
 
 export default class Input extends LightningElement {
     @api type = 'text';
@@ -13,7 +13,7 @@ export default class Input extends LightningElement {
     @api errorText;
     @api labelSize;
     @api errorSize;
-    @api autofocus = false;
+    @api autofocus;
     @api disabled = false;
     @api readonly = false;
     @api maxLength = '255';
@@ -42,6 +42,10 @@ export default class Input extends LightningElement {
 
     get isHelpText() {
         return this.helptextContent !== '' && this.helptextContent !== undefined ? true : false;
+    }
+
+    get setDefaultAutofocus() {
+        return convertStringToBoolean(this.autofocus);
     }
 
     // Call this when value is needed
@@ -84,6 +88,14 @@ export default class Input extends LightningElement {
     }
 
     // Sends value on change
+    handleonchange() {
+        const selectedEvent = new CustomEvent('change', {
+            detail: this.template.querySelector('input').value
+        });
+        this.dispatchEvent(selectedEvent);
+    }
+
+    // Sends value on change
     sendValueOnChange() {
         let inputValue = this.template.querySelector('input').value;
         this.value = inputValue;
@@ -106,7 +118,7 @@ export default class Input extends LightningElement {
         if (num.substring(0, 4) === '0047' && num.length === 12) {
             num = num.substring(4, num.length);
         }
-        if (num.length < 8) {
+        if (num.charAt(0) === '+') {
             this.showError = true;
         }
         if (num.substring(0, 3) === '+47') {
@@ -115,9 +127,14 @@ export default class Input extends LightningElement {
             }
             num = num.substring(3, num.length);
         }
-
-        if (num.length === 8 && num.charAt(0) !== '4' && num.charAt(0) !== '9') {
+        if (isNaN(num)) {
+            this.showError = true;
+        }
+        if (num.charAt(0) !== '4' && num.charAt(0) !== '9') {
             // Norwegian mobile number
+            this.showError = true;
+        }
+        if (num.length !== 8) {
             this.showError = true;
         }
         this.actualErrorText = errMsg;
@@ -157,10 +174,10 @@ export default class Input extends LightningElement {
     @api validatePhoneLength(errMsg) {
         errMsg = setDefaultValue(errMsg, this.errorText);
         let number = this.template.querySelector('input').value.replaceAll(' ', '');
-        if (number.length < 8) {
+        if (number.length !== 8) {
             this.showError = true;
         }
-        if (number.substring(0,1) === '+') {
+        if (number.substring(0, 1) === '+') {
             this.showError = true;
         }
         if (isNaN(number)) {

@@ -1,8 +1,7 @@
 @IsTest
 private class PersonAccountUserRegHandlerTest {
-
     @TestSetup
-    private static void makeData(){
+    private static void makeData() {
         Profile communityProfile = [
             SELECT Name
             FROM Profile
@@ -22,9 +21,9 @@ private class PersonAccountUserRegHandlerTest {
             DefaultPermissionSet__c = 'CRM_ManageAsyncRequests',
             DefaultCommunityPlusProfile__c = 'Trial Customer Portal User',
             DefaultCommunityPlusPermissionSetGroup__c = 'Test',
-            DefaultCommunityPlusLoginPermSet__c='TestCommunity',
-            DefaultCommunityPlusLoginProfile__c=communityPlusLoginProfile.Name,
-            DefaultCommunityPlusLoginCommunityId__c='123'
+            DefaultCommunityPlusLoginPermSet__c = 'TestCommunity',
+            DefaultCommunityPlusLoginProfile__c = communityPlusLoginProfile.Name,
+            DefaultCommunityPlusLoginCommunityId__c = '123'
         );
         insert defaultCommunityProfile;
     }
@@ -34,7 +33,11 @@ private class PersonAccountUserRegHandlerTest {
         User navEmployee = TestDataFactory_Community.getUsers(1, 'System Administrator', true, true)[0];
         System.runAs(navEmployee) {
             Account personAccount = TestDataFactory_Community.getPersonAccounts(1)[0];
-            TestDataFactory_Community.getEmployerCommunityUser(new Set<Id>{ personAccount.Id }, 'Personbruker Login', true);
+            TestDataFactory_Community.getEmployerCommunityUser(
+                new Set<Id>{ personAccount.Id },
+                'Personbruker Login',
+                true
+            );
 
             Map<String, String> attributeMap = new Map<String, String>();
             attributeMap.put('pid', '1');
@@ -46,8 +49,51 @@ private class PersonAccountUserRegHandlerTest {
             Test.stopTest();
             System.assert(user != null);
 
-            PermissionSet permSet=[SELECT Id FROM PermissionSet WHERE Name='TestCommunity' LIMIT 1];            
-            System.assertEquals(0, [SELECT COUNT() FROM PermissionSetAssignment WHERE PermissionSetId=:permSet.Id AND AssigneeId=:user.Id], 'Expect perm set not to be assigned to community user');
+            PermissionSet permSet = [SELECT Id FROM PermissionSet WHERE Name = 'TestCommunity' LIMIT 1];
+            System.assertEquals(
+                0,
+                [
+                    SELECT COUNT()
+                    FROM PermissionSetAssignment
+                    WHERE PermissionSetId = :permSet.Id AND AssigneeId = :user.Id
+                ],
+                'Expect perm set not to be assigned to community user'
+            );
+        }
+    }
+
+    @IsTest
+    private static void createConfidentialUser() {
+        User navEmployee = TestDataFactory_Community.getUsers(1, 'System Administrator', true, true)[0];
+        System.runAs(navEmployee) {
+            Account personAccount = TestDataFactory_Community.getPersonAccounts(1)[0];
+
+            Person__c person = [SELECT INT_Confidential__c FROM Person__c WHERE Id = :personAccount.CRM_Person__c];
+            person.INT_Confidential__c = 'FORTROLIG';
+            update person;
+
+            Map<String, String> attributeMap = new Map<String, String>();
+            attributeMap.put('pid', '1');
+            Auth.UserData userData = new Auth.UserData('', '', '', '', '', '', '', '', '', '', attributeMap);
+
+            Test.startTest();
+            PersonAccountUserRegHandler regHandler = new PersonAccountUserRegHandler();
+            User user = regHandler.createUser(null, userData);
+            Test.stopTest();
+            user = [SELECT isActive, UserRoleId FROM User WHERE Id = :user.Id];
+            System.assert(user != null);
+            System.assert(user.isActive == true);
+
+            PermissionSet permSet = [SELECT Id FROM PermissionSet WHERE Name = 'TestCommunity' LIMIT 1];
+            System.assertEquals(
+                0,
+                [
+                    SELECT COUNT()
+                    FROM PermissionSetAssignment
+                    WHERE PermissionSetId = :permSet.Id AND AssigneeId = :user.Id
+                ],
+                'Expect perm set not to be assigned to community user'
+            );
         }
     }
 
@@ -65,12 +111,14 @@ private class PersonAccountUserRegHandlerTest {
 
     @IsTest
     private static void createCommunityPlusLoginUser() {
-
-
         User navEmployee = TestDataFactory_Community.getUsers(1, 'System Administrator', true, true)[0];
         System.runAs(navEmployee) {
             Account personAccount = TestDataFactory_Community.getPersonAccounts(1)[0];
-            TestDataFactory_Community.getEmployerCommunityUser(new Set<Id>{ personAccount.Id }, 'Personbruker Login', true);
+            TestDataFactory_Community.getEmployerCommunityUser(
+                new Set<Id>{ personAccount.Id },
+                'Personbruker Login',
+                true
+            );
 
             Map<String, String> attributeMap = new Map<String, String>();
             attributeMap.put('pid', '1');
@@ -83,8 +131,16 @@ private class PersonAccountUserRegHandlerTest {
             Test.stopTest();
             System.assert(user != null);
 
-            PermissionSet permSet=[SELECT Id FROM PermissionSet WHERE Name='TestCommunity' LIMIT 1];            
-            System.assertEquals(1, [SELECT COUNT() FROM PermissionSetAssignment WHERE PermissionSetId=:permSet.Id AND AssigneeId=:user.Id], 'Expect perm set to be assigned to new user');
+            PermissionSet permSet = [SELECT Id FROM PermissionSet WHERE Name = 'TestCommunity' LIMIT 1];
+            System.assertEquals(
+                1,
+                [
+                    SELECT COUNT()
+                    FROM PermissionSetAssignment
+                    WHERE PermissionSetId = :permSet.Id AND AssigneeId = :user.Id
+                ],
+                'Expect perm set to be assigned to new user'
+            );
         }
     }
 }

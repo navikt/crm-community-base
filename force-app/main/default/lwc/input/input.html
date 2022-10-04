@@ -12,16 +12,17 @@
             name={name}
             alt={alt}
             placeholder={placeholder}
-            autofocus={autofocus}
+            autofocus={setDefaultAutofocus}
             disabled={disabled}
             readonly={readonly}
             oninput={sendValueOnChange}
+            onchange={handleonchange}
             form={form}
             value={value}
             maxlength={maxLength}
             minlength={minLength}
         />
-        <div if:true={showError} id="errorTextId" aria-relevant="additions removals" aria-live="polite" role="alert" >
+        <div if:true={showError} id="errorTextId" aria-relevant="additions removals" aria-live="polite" role="alert">
             <div class="navds-error-message navds-error-message--medium navds-label" style={errorFontSize}>
                 {actualErrorText}
             </div>

@@ -3,7 +3,7 @@
 <!-- sldsValidatorIgnore -->
 <template>
     <div if:true={isOpen} class="fullscreen-overlay" onclick={overlayClick}>
-        <div class="overlay-container" draggable="true" onclick={overlayContainerClick}>
+        <div class="overlay-container" onclick={overlayContainerClick}>
             <div class="overlay-content">
                 <div class="drag-rectangle"></div>
                 <h3 class="header">{header}</h3>
@@ -50,7 +50,20 @@
                             <c-icon class="expander-icon" if:false={it.value.isOpen} icon="Expand"></c-icon>
                             <c-icon class="expander-icon" if:true={it.value.isOpen} icon="Collapse"></c-icon>
                         </li>
-                        <div if:true={it.value.isOpen} key={it.value.name} class="expanded-filter" aria-expanded={it.value.isOpen}>
+                        <div
+                            if:true={it.value.isOpen}
+                            key={it.value.name}
+                            class="expanded-filter"
+                            aria-expanded={it.value.isOpen}
+                        >
+                            <c-checkbox
+                                if:true={it.value.showMarkAllCheckbox}
+                                oncheckboxclick={markAllCheckboxes}
+                                aria-label="Merk alle"
+                                title="Merk alle"
+                                default-value={it.value.allMarked}
+                                data-filterindex={it.index}
+                            ></c-checkbox>
                             <c-checkboxgroup
                                 if:true={it.value.isCheckboxgroup}
                                 checkboxes={it.value.value}
@@ -75,11 +88,23 @@
                                     ></c-input>
                                 </template>
                             </fieldset>
+                            <c-input
+                                if:true={it.value.isSearch}
+                                ongetvalueonchange={handleSearchTermChange}
+                                type="text"
+                                value={it.value.searchTerm}
+                                data-filterindex={it.index}
+                            ></c-input>
                         </div>
                     </template>
                 </ul>
-                <c-button button-label={buttonLabel} button-styling="primary" onbuttonclick={applyFilter} desktop-style="width: 8rem; justify-content: center"
-                mobile-style="width: 8rem; justify-content: center"></c-button>
+                <c-button
+                    button-label={buttonLabel}
+                    button-styling="primary"
+                    onbuttonclick={applyFilter}
+                    desktop-style="width: 8rem; justify-content: center"
+                    mobile-style="width: 8rem; justify-content: center"
+                ></c-button>
             </div>
         </div>
     </div>
