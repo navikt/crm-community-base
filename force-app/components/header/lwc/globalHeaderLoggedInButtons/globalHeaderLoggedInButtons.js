@@ -40,4 +40,8 @@ export default class GlobalHeaderLoggedInButtons extends LightningElement {
             return firstName + ' ' + lastName;
         }
     }
+
+    logOut() {
+        sessionStorage.clear();
+    }
 }
