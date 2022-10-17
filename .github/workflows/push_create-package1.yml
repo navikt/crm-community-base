@@ -20,14 +20,14 @@ jobs:
 
       # Install SFDX
       - name: Install SFDX
-        uses: sfdx-actions/setup-sfdx@v1
+        run: npm install --global sfdx-cli@7.170.0
 
       # Authenticate prod
       - name: Authenticate prod
         run: |
-          echo ${{ secrets.PROD_SFDX_URL}} > ./PROD_SFDX_URL.txt
-          sfdx auth:sfdxurl:store -f ./PROD_SFDX_URL.txt -a devhub -d
-          rm -f ./PROD_SFDX_URL.txt
+          echo ${{ secrets.CRM_PROD_SFDX_URL}} > ./CRM_PROD_SFDX_URL.txt
+          sfdx auth:sfdxurl:store -f ./CRM_PROD_SFDX_URL.txt -a devhub -d
+          rm -f ./CRM_PROD_SFDX_URL.txt
 
       # Delete unpackagable and scratch-org folder
       - name: Delete unpackagable
@@ -40,7 +40,7 @@ jobs:
       - name: Create package version
         id: package-version-create
         run: |
-          sfdx force:package:version:create -f config/project-scratch-def.json -p $(cat sfdx-project.json | jq '.packageDirectories | map(select(.package != null))[0].package' -r) -k ${{ secrets.PACKAGE_KEY }} -w 90 -c --json | tee output
+          sfdx force:package:version:create -f config/project-scratch-def.json -p $(cat sfdx-project.json | jq '.packageDirectories | map(select(.package != null))[0].package' -r) -k ${{ secrets.CRM_PACKAGE_KEY }} -w 90 -c --json | tee output
 
           # ! manually cancel the process if the package failed to be created
           if [ $(cat output |jq '.status') == "1" ]; then
@@ -79,22 +79,22 @@ jobs:
       # Authenticate prod
       - name: Authenticate prod
         run: |
-          echo ${{ secrets.PROD_SFDX_URL}} > ./PROD_SFDX_URL.txt
-          sfdx auth:sfdxurl:store -f ./PROD_SFDX_URL.txt -a devhub -d
-          rm -f ./PROD_SFDX_URL.txt
+          echo ${{ secrets.CRM_PROD_SFDX_URL}} > ./CRM_PROD_SFDX_URL.txt
+          sfdx auth:sfdxurl:store -f ./CRM_PROD_SFDX_URL.txt -a devhub -d
+          rm -f ./CRM_PROD_SFDX_URL.txt
 
       # Authenticate integration-sandbox
       - name: Authenticate integration-sandbox
         run: |
-          echo ${{ secrets.INTEGRATION_SANDBOX_SFDX_URL}} > ./INTEGRATION_SANDBOX_SFDX_URL.txt
-          sfdx auth:sfdxurl:store -f ./INTEGRATION_SANDBOX_SFDX_URL.txt -a integration-sandbox -s
-          rm -f ./INTEGRATION_SANDBOX_SFDX_URL.txt
+          echo ${{ secrets.CRM_SIT_SFDX_URL}} > ./CRM_SIT_SFDX_URL.txt
+          sfdx auth:sfdxurl:store -f ./CRM_SIT_SFDX_URL.txt -a integration-sandbox -s
+          rm -f ./CRM_SIT_SFDX_URL.txt
 
       # Install new package version into integration org
       - name: Install new package version into integration org
         id: integration-installation
         run: |
-          sfdx force:package:install --package ${{ needs.create-package.outputs.packageId }} -w 20 -b 20 -u integration-sandbox -r -k ${{ secrets.PACKAGE_KEY }} --json | tee output
+          sfdx force:package:install --package ${{ needs.create-package.outputs.packageId }} -w 20 -b 20 -u integration-sandbox -r -k ${{ secrets.CRM_PACKAGE_KEY }} --json | tee output
 
           echo "::set-output name=installOutput::$(cat output | jq '.message')"
           if [ $(cat output | jq '.status') == "0" ]; then
@@ -170,9 +170,9 @@ jobs:
       # Authenticate prod
       - name: Authenticate prod
         run: |
-          echo ${{ secrets.PROD_SFDX_URL}} > ./PROD_SFDX_URL.txt
-          sfdx auth:sfdxurl:store -f ./PROD_SFDX_URL.txt -a devhub -d
-          rm -f ./PROD_SFDX_URL.txt
+          echo ${{ secrets.CRM_PROD_SFDX_URL}} > ./CRM_PROD_SFDX_URL.txt
+          sfdx auth:sfdxurl:store -f ./CRM_PROD_SFDX_URL.txt -a devhub -d
+          rm -f ./CRM_PROD_SFDX_URL.txt
 
       # Authenticate dev sandbox
       - name: Authenticate dev sandbox
@@ -186,7 +186,7 @@ jobs:
       - name: Authenticate UAT sandbox
         if: ${{ needs.check-deployment-secrets.outputs.deployToUAT == 'true' }}
         run: |
-          echo ${{ secrets.UAT_SFDX_URL}} > ./UAT_SFDX_URL.txt
+          echo ${{ secrets.CRM_UAT_SFDX_URL}} > ./UAT_SFDX_URL.txt
           sfdx auth:sfdxurl:store -f ./UAT_SFDX_URL.txt -a uat -s
           rm -f ./UAT_SFDX_URL.txt
 
@@ -200,7 +200,7 @@ jobs:
         run: |
           keys=""
           for p in $(jq '.result | .[].Name' -r <<< "$(sfdx force:package:list --json)"); do
-              keys+=$p":${{ secrets.PACKAGE_KEY }} "
+              keys+=$p":${{ secrets.CRM_PACKAGE_KEY }} "
           done
           echo "::set-output name=keys::$(echo $keys)"
 
@@ -212,7 +212,7 @@ jobs:
       # Install package in dev sandbox org
       - name: Install package in dev sandbox org
         if: ${{ needs.check-deployment-secrets.outputs.deployToDev == 'true' }}
-        run: sfdx force:package:install --package ${{ needs.create-package.outputs.packageId }} -k ${{ secrets.PACKAGE_KEY }} -u dev -w 10 -b 10 -r
+        run: sfdx force:package:install --package ${{ needs.create-package.outputs.packageId }} -k ${{ secrets.CRM_PACKAGE_KEY }} -u dev -w 10 -b 10 -r
 
       # Deploy unpackagable content to dev sandbox org
       - name: Deploy unpackagable content to dev sandbox org
@@ -231,7 +231,7 @@ jobs:
       # Install package in UAT sandbox org
       - name: Install package in UAT sandbox org
         if: ${{ needs.check-deployment-secrets.outputs.deployToUAT == 'true' }}
-        run: sfdx force:package:install --package ${{ needs.create-package.outputs.packageId }} -k ${{ secrets.PACKAGE_KEY }} -u uat -w 10 -b 10 -r
+        run: sfdx force:package:install --package ${{ needs.create-package.outputs.packageId }} -k ${{ secrets.CRM_PACKAGE_KEY }} -u uat -w 10 -b 10 -r
 
       # Deploy unpackagable content to UAT sandbox org
       - name: Deploy unpackagable content to UAT sandbox org

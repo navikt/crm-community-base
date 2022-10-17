@@ -21,34 +21,28 @@ jobs:
       # Authenticate prod
       - name: Authenticate prod
         run: |
-          echo ${{ secrets.PROD_SFDX_URL}} > ./PROD_SFDX_URL.txt
-          sfdx auth:sfdxurl:store -f ./PROD_SFDX_URL.txt -a devhub -d
-          rm -f ./PROD_SFDX_URL.txt
-
+          echo ${{ secrets.CRM_PROD_SFDX_URL}} > ./CRM_PROD_SFDX_URL.txt
+          sfdx auth:sfdxurl:store -f ./CRM_PROD_SFDX_URL.txt -a devhub -d
+          rm -f ./CRM_PROD_SFDX_URL.txt
       # Delete unpackagable and scratch-org folder
       - name: Delete unpackagable
         run: |
           rm -rf ./force-app/unpackagable
           rm -rf ./force-app/unpackagable-with-auto-deploy
           rm -rf ./force-app/scratch-org
-
       # Create package version
       - name: Create package version
         id: package-version-create
         run: |
-          sfdx force:package:version:create -f config/project-scratch-def.json -p $(cat sfdx-project.json | jq '.packageDirectories | map(select(.package != null))[0].package' -r) -k ${{ secrets.PACKAGE_KEY }} -w 90  --skipvalidation --json | tee output
-
+          sfdx force:package:version:create -f config/project-scratch-def.json -p $(cat sfdx-project.json | jq '.packageDirectories | map(select(.package != null))[0].package' -r) -k ${{ secrets.CRM_PACKAGE_KEY }} -w 90  --skipvalidation --json | tee output
           if [ $(cat output |jq '.status') == "1" ]; then
             exit 125
           fi
-
           packageId=$(cat output | jq -r '.result.SubscriberPackageVersionId')
           echo "::set-output name=packageId::$(echo $packageId)"
           echo "::set-output name=alphaVersionNumber::$(cat sfdx-project.json | jq -r '.packageAliases | keys_unsorted[-1]' | sed 's/.*-//')"
-
           echo
           echo Package ID: $packageId
-
     outputs:
       packageId: ${{ steps.package-version-create.outputs.packageId }}
       alphaVersionNumber: ${{ steps.package-version-create.outputs.alphaVersionNumber }}
@@ -71,14 +65,11 @@ jobs:
         run: |
           versionNumber=$(cat sfdx-project.json | jq '.packageDirectories | map(select(.package != null))[0].versionNumber' -r | sed 's/.\{5\}$//')
           alphaVersionNumber=${{ needs.create-package.outputs.alphaVersionNumber }}
-
           echo "::set-output name=tagName::v$(echo $versionNumber)-alpha$(echo $alphaVersionNumber)"
           echo "::set-output name=releaseName::$(echo $versionNumber)-alpha$(echo $alphaVersionNumber)"
           echo "::set-output name=bodyVersion::$(echo $versionNumber).$(echo $alphaVersionNumber)"
           echo "::set-output name=bodyPackage::${{ needs.create-package.outputs.packageId }}"
-
           echo "::set-output name=packageCreation::✅ Package Creation"
-
       # Generate changelog from commits
       - name: Generate changelog
         id: changelog
@@ -98,13 +89,9 @@ jobs:
             **Version**: ${{ steps.release-fields.outputs.bodyVersion }}
             **Package ID**: ${{ steps.release-fields.outputs.bodyPackage }}
             **ALPHA**
-
             **Author**: ${{ github.actor }}
-
             ${{ steps.release-fields.outputs.packageCreation }}
-
             ## Changelog
-
             ${{ steps.changelog.outputs.changelog }}
           draft: false
           prerelease: true
