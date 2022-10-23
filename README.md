@@ -45,7 +45,7 @@ To build locally without using SSDX, do the following:
 ```bash
 sfdx force:org:create -f ./config/project-scratch-def.json --setalias scratch_org --durationdays 1 --setdefaultusername
 echo y | sfdx plugins:install sfpowerkit@2.0.1
-keys="" && for p in $(sfdx force:package:list --json | jq '.result | .[].Name' -r); do keys+=$p":navcrm "; done
+keys="" && for p in $(sfdx force:package:list --json | jq '.result | .[].Name' -r); do keys+=$p":PACKAGE_KEY "; done
 sfdx sfpowerkit:package:dependencies:install -u scratch_org -r -a -w 60 -k ${keys}
 sfdx force:source:push
 sfdx force:org:open
