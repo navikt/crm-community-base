@@ -1,0 +1,35 @@
+.section-header{
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    width: calc(100% + 0.5rem * 2);
+    cursor: pointer;
+    background-color: #FFFFFF;
+    border-color:1rem solid #262626 ; 
+    border-radius: 0.5rem;   
+}
+
+.section-header:hover {
+    background-color: #E6F0FF;
+}
+
+.section-header:focus{
+    background-color: #E6F0FF;
+}
+
+.section-illustration{
+    float: right;
+    padding-top: 1rem;
+    padding-right: 0.5rem;
+}
+
+.section-title{
+    padding: 0.5rem 0.5rem 0.5rem 0.5rem;
+    font-family: 'Source Sans Pro', Arial, sans-serif;
+    font-size: 1.25rem; /* 20px on heading */
+    color: #262626;
+    font-weight: bold;
+    width: calc(100% + 0.5rem * 2);
+    text-align: left;
+    margin: 0.5rem;
+}

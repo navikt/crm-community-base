@@ -1,0 +1,20 @@
+<template>
+    <div class="slds-section" data-id={id}>
+        <!--section header-->
+        <h3 >
+            <button type="button" class="section-header" aria-controls={id}  data-buttonid={id}
+                onclick={toggleSection}>
+                <span class="section-title" title={label}>{label}</span>
+                <span class="section-illustration">
+                    <lightning-icon icon-name="utility:switch" alternative-text="button icon" size="small" class="slds-section__title-action-icon">
+                        <label>refresh</label> <!--A trick for mobile warning-->
+                    </lightning-icon>
+                </span>
+            </button>       
+        </h3>
+        <!--section body-->
+        <div class="slds-section__content">
+            <slot></slot>
+        </div>
+    </div>
+</template>
