@@ -1,7 +1,7 @@
 import { LightningElement,api } from 'lwc';
 
 export default class CollapsableSection extends LightningElement {
-    @api id;
+    @api id = 1;
     @api label;
 
     toggleSection(event){
