@@ -7,8 +7,6 @@
 .sfdx/
 .sf/
 
-.sf/
-
 # Logs
 logs
 *.log
@@ -55,3 +53,4 @@ install.cmd
 .packageKey
 **/deployment_tmp*
 **/dummy-data/*.out/*
+**/dxmate_config/*
