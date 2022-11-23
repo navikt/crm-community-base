@@ -4,7 +4,7 @@ public with sharing class NavLoginServiceController {
     public PageReference redirect() {
         String retUrl=ApexPages.currentPage().getParameters().get('retURL');
         
-        String currentUrl='https://' + ApexPages.currentPage().getHeaders().get('Host') + '/apex/NavLoginService';
+        String currentUrl=getCommunityBaseUrl() + '/apex/NavLoginService';
         String redirectUrl=LOGINSERVICE_URL_PROD;
         if(!currentUrl.contains('nav.no')){
             redirectUrl=LOGINSERVICE_URL_PREPROD;
@@ -34,5 +34,14 @@ public with sharing class NavLoginServiceController {
         }
         pageReference pg = new pageReference(redirectUrl);
         return pg.setRedirect(true);
+    }
+
+    private static string getCommunityBaseUrl(){
+        String communityBaseUrl=Network.getLoginUrl(Network.getNetworkId());
+        if(Test.isRunningTest()){
+           communityBaseUrl='https://test-comunity.com/login';
+        }
+        communityBaseUrl=communityBaseUrl.replace('/login', '');
+        return communityBaseUrl;
     }
 }
