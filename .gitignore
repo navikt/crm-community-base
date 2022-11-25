@@ -53,3 +53,4 @@ install.cmd
 .packageKey
 **/deployment_tmp*
 **/dummy-data/*.out/*
+**/dxmate_config/*
