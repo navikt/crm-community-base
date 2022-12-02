@@ -1,7 +1,11 @@
-import { LightningElement } from 'lwc';
+import { LightningElement, api } from 'lwc';
+
+const envLinks = { Prod: 'https://www.nav.no/dekoratoren', Dev: 'https://www.dev.nav.no/dekoratoren' };
 
 export default class SalesforceHeader extends LightningElement {
     static renderMode = 'light'; // the default is 'shadow'
+    @api env;
+    @api context;
 
     connectedCallback() {
         this.fetchHeaderAndFooter();
@@ -20,32 +24,50 @@ export default class SalesforceHeader extends LightningElement {
     }
 
     fetchHeaderAndFooter() {
-        fetch('https://www.nav.no/dekoratoren?context=privatperson&chatbot=true')
+        const URL = envLinks[this.env] + '?context=' + this.context?.toLowerCase();
+        fetch(URL)
             .then((res) => {
                 return res.text();
             })
             .then((html) => {
                 let parser = new DOMParser();
                 let doc = parser.parseFromString(html, 'text/html');
-                const header = doc.getElementById('header-withmenu')?.innerHTML;
-                const footer = doc.getElementById('footer-withmenu')?.innerHTML;
-                const style = doc.getElementById('styles')?.innerHTML;
+                // Header
                 const headerInjection = document.querySelector('#header-injection');
+                if (headerInjection) {
+                    const header = doc.getElementById('header-withmenu')?.innerHTML;
+                    headerInjection.innerHTML = header;
+                }
+
+                // Footer
                 const footerInjection = document.querySelector('#footer-injection');
+                if (footerInjection) {
+                    const footer = doc.getElementById('footer-withmenu')?.innerHTML;
+                    footerInjection.innerHTML = footer;
+                }
+
+                // Style
                 const styleInjection = document.querySelector('#style-injection');
-                headerInjection.innerHTML = header;
-                footerInjection.innerHTML = footer;
-                styleInjection.innerHTML = style;
-                const testScript = doc.getElementById('scripts');
-                const env = doc.querySelector('#decorator-env');
+                if (styleInjection) {
+                    const style = doc.getElementById('styles')?.innerHTML;
+                    styleInjection.innerHTML = style;
+                }
+
+                // Script
                 const scriptInjection = document.querySelector('#script-injection');
-                scriptInjection.appendChild(env);
-                const testScript2 = testScript.getElementsByTagName('script');
-                const script = document.createElement('script');
-                script.setAttribute('type', 'text/javascript');
-                script.setAttribute('async', 'true');
-                script.setAttribute('src', testScript2[0].src);
-                scriptInjection.appendChild(script);
+                if (scriptInjection) {
+                    const scriptContainer = doc.getElementById('scripts');
+
+                    const envElement = doc.querySelector('#decorator-env');
+                    scriptInjection.appendChild(envElement);
+
+                    const scriptElement = scriptContainer.getElementsByTagName('script');
+                    const script = document.createElement('script');
+                    script.setAttribute('type', 'text/javascript');
+                    script.setAttribute('async', 'true');
+                    script.setAttribute('src', scriptElement[0].src);
+                    scriptInjection.appendChild(script);
+                }
             });
     }
 }
