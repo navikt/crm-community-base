@@ -16,7 +16,7 @@
                 name="env"
                 type="String"
                 label="Definer hvilken miljø headeren skal bruke"
-                datasource="Prod, Dev"
+                datasource="Dev, Prod"
             />
             <property
                 name="context"
