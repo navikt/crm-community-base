@@ -45,5 +45,9 @@
         "**/{aura|lwc}/**": [
             "eslint"
         ]
+    },
+    "dependencies": {
+        "node-fetch": "^3.3.0",
+        "xmlbuilder": "^15.1.1"
     }
 }
