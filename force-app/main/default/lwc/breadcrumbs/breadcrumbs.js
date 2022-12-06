@@ -14,15 +14,15 @@ export default class Breadcrumbs extends LightningElement {
             baseURLArray.pop();
         }
         let baseURL = baseURLArray.join('/');
-        this.urlListToShow = this.urlList.map(x => ({...x, href: baseURL + '/' + x.href}));
+        this.urlListToShow = this.urlList.map((x) => ({ ...x, href: baseURL + '/' + x.href }));
         this.removeElementsAfterIndex();
     }
 
     removeElementsAfterIndex() {
         let indexToSet = this.urlListToShow.length;
-        this.urlListToShow.forEach((element, index) => {           
+        this.urlListToShow.forEach((element, index) => {
             if (element.href === window.location.pathname) {
-                indexToSet = index+1;
+                indexToSet = index + 1;
             }
         });
         this.urlListToShow.length = indexToSet;

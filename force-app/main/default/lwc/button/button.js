@@ -1,5 +1,5 @@
 import { LightningElement, api } from 'lwc';
-import { setDefaultValue, convertStringToBoolean} from 'c/componentHelperClass';
+import { setDefaultValue, convertStringToBoolean } from 'c/componentHelperClass';
 
 // https://navikt.github.io/Designsystemet/?path=/story/ds-react-button--all
 export default class Button extends LightningElement {
