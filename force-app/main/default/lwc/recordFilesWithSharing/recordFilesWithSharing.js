@@ -12,6 +12,8 @@ export default class recordFilesWithSharing extends LightningElement {
     @api isGetAll = false;
     @api isDeleteOption = false;
     @api deleteFileOnButtonClick = false;
+    @api headerAlignment;
+    @api noDownloadLink = false;
     contentDocuments = [];
     myContentDocuments = [];
     isContentDocumentsEmpty = false;
@@ -29,12 +31,20 @@ export default class recordFilesWithSharing extends LightningElement {
         return convertStringToBoolean(this.isDeleteOption);
     }
 
+    get headerAlign() {
+        return 'align-items: ' + setDefaultValue(this.headerAlignment + ';', 'center;');
+    }
+
     renderedCallback() {
         this.hasFiles();
     }
 
     hasFiles() {
         this.isContentDocumentsEmpty = this.contentDocuments.length === 0 && this.files.length === 0 ? true : false;
+    }
+
+    @api checkIfEmpty() {
+        return this.isContentDocumentsEmpty;
     }
 
     fileButtonLabel;

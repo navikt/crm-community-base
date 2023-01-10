@@ -1,5 +1,12 @@
 <template>
-    <a class="navds-panel navds-link-panel navds-panel--border" href={linkAddress} id={id} style={setMiscStyles} onclick={navigateToPage} onkeypress={navigateToPage}>
+    <a
+        class="navds-panel navds-link-panel navds-panel--border"
+        href={linkAddress}
+        id={id}
+        style={setMiscStyles}
+        onclick={navigateToPage}
+        onkeypress={navigateToPage}
+    >
         <div style={setDefaultStyle}>
             <div if:true={image} style={setImageStyle}>
                 <img src={imageUrl} alt={altImageText} style={setImgStyle} />
