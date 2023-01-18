@@ -16,14 +16,13 @@ private class CommunityUsersServiceTest {
             LIMIT 1
         ];
 
-        
         DefaultCommunityProfile__c defaultCommunityProfile = new DefaultCommunityProfile__c(
             DefaultProfile__c = communityProfile.Name,
             DefaultPermissionSet__c = 'CRM_ManageAsyncRequests',
             DefaultCommunityPlusProfile__c = 'Trial Customer Portal User',
             DefaultCommunityPlusPermissionSetGroup__c = 'Test',
-            DefaultCommunityPlusLoginPermSet__c='TestCommunity',
-            DefaultCommunityPlusLoginProfile__c=communityPlusLoginProfile.Name
+            DefaultCommunityPlusLoginPermSet__c = 'TestCommunity',
+            DefaultCommunityPlusLoginProfile__c = communityPlusLoginProfile.Name
         );
         insert defaultCommunityProfile;
     }
@@ -34,7 +33,11 @@ private class CommunityUsersServiceTest {
         System.runAs(navEmployee) {
             Account personAccount = TestDataFactory_Community.getPersonAccounts(1)[0];
 
-            TestDataFactory_Community.getEmployerCommunityUser(new Set<Id>{ personAccount.Id }, 'Personbruker Login', true);
+            TestDataFactory_Community.getEmployerCommunityUser(
+                new Set<Id>{ personAccount.Id },
+                'Personbruker Login',
+                true
+            );
 
             Test.startTest();
             User user = CommunityUsersService.getOrCreatePersonAccountUser('1');
@@ -106,13 +109,13 @@ private class CommunityUsersServiceTest {
         System.assertEquals('User', user.LastName);
     }
 
-    @IsTest 
-    private static void getOrCreatePersonAccountUserWithConfidentialAddress(){
+    @IsTest
+    private static void getOrCreatePersonAccountUserWithConfidentialAddress() {
         User navEmployee = TestDataFactory_Community.getUsers(1, 'System Administrator', true, true)[0];
         System.runAs(navEmployee) {
             Account personAccount = TestDataFactory_Community.getPersonAccounts(1)[0];
-            Person__c person=[SELECT ID, INT_Confidential__c FROM Person__c WHERE CRM_Account__c=:personAccount.Id];
-            person.INT_Confidential__c='FORTROLIG';
+            Person__c person = [SELECT ID, INT_Confidential__c FROM Person__c WHERE CRM_Account__c = :personAccount.Id];
+            person.INT_Confidential__c = 'FORTROLIG';
             update person;
             Test.startTest();
             User user = CommunityUsersService.getOrCreatePersonAccountUser('1');
@@ -154,7 +157,7 @@ private class CommunityUsersServiceTest {
     }
 
     @IsTest
-    private static void getOrcreateCommunityPlusLoginUser_whenUserDoesNotExisit(){
+    private static void getOrcreateCommunityPlusLoginUser_whenUserDoesNotExisit() {
         User navEmployee = TestDataFactory_Community.getUsers(1, 'System Administrator', true, true)[0];
         System.runAs(navEmployee) {
             Account personAccount = TestDataFactory_Community.getPersonAccounts(1)[0];
@@ -165,23 +168,35 @@ private class CommunityUsersServiceTest {
             System.assertEquals(personAccount.FirstName, user.FirstName);
             System.assertEquals(personAccount.LastName, user.LastName);
 
-            PermissionSet permSet=[SELECT Id FROM PermissionSet WHERE Name='TestCommunity' LIMIT 1];
-            System.assertEquals(1, [SELECT COUNT() FROM PermissionSetAssignment WHERE PermissionSetId=:permSet.Id AND AssigneeId=:user.Id], 'Expect perm set to be assigned to new user');
+            PermissionSet permSet = [SELECT Id FROM PermissionSet WHERE Name = 'TestCommunity' LIMIT 1];
+            System.assertEquals(
+                1,
+                [
+                    SELECT COUNT()
+                    FROM PermissionSetAssignment
+                    WHERE PermissionSetId = :permSet.Id AND AssigneeId = :user.Id
+                ],
+                'Expect perm set to be assigned to new user'
+            );
         }
     }
 
     @IsTest
-    private static void getOrcreateCommunityPlusLoginUser_whenCommunityPlusLoginUserExisit(){
+    private static void getOrcreateCommunityPlusLoginUser_whenCommunityPlusLoginUserExisit() {
         User navEmployee = TestDataFactory_Community.getUsers(1, 'System Administrator', true, true)[0];
         System.runAs(navEmployee) {
             Account personAccount = TestDataFactory_Community.getPersonAccounts(1)[0];
-            User existingCommunityUser=TestDataFactory_Community.getEmployerCommunityUser(new Set<Id>{ personAccount.Id }, 'Samhandler Login', true)[0];
-            PermissionSet permSet=[SELECT Id FROM PermissionSet WHERE Name='TestCommunity' LIMIT 1];
+            User existingCommunityUser = TestDataFactory_Community.getEmployerCommunityUser(
+                new Set<Id>{ personAccount.Id },
+                'Samhandler Login',
+                true
+            )[0];
+            PermissionSet permSet = [SELECT Id FROM PermissionSet WHERE Name = 'TestCommunity' LIMIT 1];
             PermissionSetAssignment permSetAssignment = new PermissionSetAssignment(
-                      AssigneeId = existingCommunityUser.Id,
-                      PermissionSetId = permSet.Id
-                  );
-                  insert permSetAssignment;
+                AssigneeId = existingCommunityUser.Id,
+                PermissionSetId = permSet.Id
+            );
+            insert permSetAssignment;
 
             Test.startTest();
             User user = CommunityUsersService.getOrcreateCommunityPlusLoginUser('1');
@@ -190,18 +205,29 @@ private class CommunityUsersServiceTest {
             System.assertEquals(personAccount.FirstName, user.FirstName);
             System.assertEquals(personAccount.LastName, user.LastName);
 
-            
-            System.assertEquals(1, [SELECT COUNT() FROM PermissionSetAssignment WHERE PermissionSetId=:permSet.Id AND AssigneeId=:user.Id], 'Expect perm set to be assigned to new user');
+            System.assertEquals(
+                1,
+                [
+                    SELECT COUNT()
+                    FROM PermissionSetAssignment
+                    WHERE PermissionSetId = :permSet.Id AND AssigneeId = :user.Id
+                ],
+                'Expect perm set to be assigned to new user'
+            );
         }
     }
 
     @IsTest
-    private static void getOrcreateCommunityPlusLoginUser_whenCommunityUserWithoutPermSetExisit(){
+    private static void getOrcreateCommunityPlusLoginUser_whenCommunityUserWithoutPermSetExisit() {
         User navEmployee = TestDataFactory_Community.getUsers(1, 'System Administrator', true, true)[0];
         System.runAs(navEmployee) {
             Account personAccount = TestDataFactory_Community.getPersonAccounts(1)[0];
-            User existingCommunityUser=TestDataFactory_Community.getEmployerCommunityUser(new Set<Id>{ personAccount.Id }, 'Personbruker Login', true)[0];
-            
+            User existingCommunityUser = TestDataFactory_Community.getEmployerCommunityUser(
+                new Set<Id>{ personAccount.Id },
+                'Personbruker Login',
+                true
+            )[0];
+
             Test.startTest();
             User user = CommunityUsersService.getOrcreateCommunityPlusLoginUser('1');
             Test.stopTest();
@@ -209,38 +235,53 @@ private class CommunityUsersServiceTest {
             System.assertEquals(personAccount.FirstName, user.FirstName);
             System.assertEquals(personAccount.LastName, user.LastName);
 
-            PermissionSet permSet=[SELECT Id FROM PermissionSet WHERE Name='TestCommunity' LIMIT 1];            
-            System.assertEquals(1, [SELECT COUNT() FROM PermissionSetAssignment WHERE PermissionSetId=:permSet.Id AND AssigneeId=:user.Id], 'Expect perm set to be assigned to new user');
+            PermissionSet permSet = [SELECT Id FROM PermissionSet WHERE Name = 'TestCommunity' LIMIT 1];
+            System.assertEquals(
+                1,
+                [
+                    SELECT COUNT()
+                    FROM PermissionSetAssignment
+                    WHERE PermissionSetId = :permSet.Id AND AssigneeId = :user.Id
+                ],
+                'Expect perm set to be assigned to new user'
+            );
         }
     }
 
     @IsTest
-    private static void assignCommunitySpecificPermissionSet(){
-        Id permissionSetId = [SELECT Id FROM permissionSet WHERE Name='TestCommunity' LIMIT 1].Id;
-        
+    private static void assignCommunitySpecificPermissionSet() {
+        Id permissionSetId = [SELECT Id FROM permissionSet WHERE Name = 'TestCommunity' LIMIT 1].Id;
+
         Test.startTest();
-        CommunityUsersService.assignCommunitySpecificPermissionSet(UserInfo.getUserId(),'0DB1l0000008QNvGAX');
+        CommunityUsersService.assignCommunitySpecificPermissionSet(UserInfo.getUserId(), '0DB1l0000008QNvGAX');
         Test.stopTest();
 
-        System.assertEquals(1,[SELECT COUNT() FROM PermissionSetAssignment WHERE AssigneeId=:UserInfo.getUserId() AND PermissionSetId=:permissionSetId], 'Expect permission set to be assigned');
+        System.assertEquals(
+            1,
+            [
+                SELECT COUNT()
+                FROM PermissionSetAssignment
+                WHERE AssigneeId = :UserInfo.getUserId() AND PermissionSetId = :permissionSetId
+            ],
+            'Expect permission set to be assigned'
+        );
     }
 
     @isTest
-    private static void createCommununityUserTombstone(){
-        
+    private static void createCommununityUserTombstone() {
         // Create different test cases
         List<Account> filteredAccounts = TestDataFactory_Community.getPersonAccounts(5);
 
         // Every account has to have the same PersonIdent
         for (Account a : filteredAccounts) {
             a.INT_PersonIdent__c = '1234';
-        }        
+        }
 
         // Set up first test conditions
         for (Account a : filteredAccounts) {
             a.INT_IsHasTombstone__c = true;
         }
-        filteredAccounts[0].INT_IsHasTombstone__c = false; 
+        filteredAccounts[0].INT_IsHasTombstone__c = false;
 
         Test.startTest();
         List<Account> mergedAccounts = CommunityUsersService.filterAccounts(filteredAccounts);
@@ -254,12 +295,11 @@ private class CommunityUsersServiceTest {
             filteredAccounts[i].INT_IsHasTombstone__c = false;
         }
         List<Account> unmergedAccounts = CommunityUsersService.filterAccounts(filteredAccounts);
-        
+
         Test.stopTest();
 
         System.assertEquals(1, mergedAccounts.size());
         System.assertEquals(5, unmergedAccounts.size());
         System.assertEquals(2, mergedAccountsBroken.size());
-
     }
 }

@@ -157,7 +157,7 @@ export default class Linktile extends NavigationMixin(LightningElement) {
     connectedCallback() {
         this.rowOrColumn = this.setFlex();
         if (this.isNavigation) {
-            this.linkAddress = "";
+            this.linkAddress = '';
         }
     }
 
@@ -166,10 +166,10 @@ export default class Linktile extends NavigationMixin(LightningElement) {
             return;
         }
         this[NavigationMixin.Navigate]({
-          type: 'comm__namedPage',
-          attributes: {
-            name: this.navigationAddress
-          }
+            type: 'comm__namedPage',
+            attributes: {
+                name: this.navigationAddress
+            }
         });
     }
 }
