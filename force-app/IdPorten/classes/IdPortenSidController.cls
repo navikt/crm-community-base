@@ -76,6 +76,8 @@ public with sharing class IdPortenSidController {
     }
 
     private static PageReference finishLoginFlow(){
+        List<String> communitiesUsingNewDecorator=new List<String>{'0DB2o000000Ug6i'};
+        
         Cookie retUrlCookie = ApexPages.currentPage().getCookies().get('retUrl');
         if(retUrlCookie==null){
             LoggerUtility logger = new LoggerUtility();
@@ -84,6 +86,12 @@ public with sharing class IdPortenSidController {
             return Auth.SessionManagement.finishLoginFlow();
         }
         String retUrl=retUrlCookie.getValue(); 
+
+        if(retUrl!=null && communitiesUsingNewDecorator.contains(Network.getNetworkId())){
+            //redirect to loginservice to be able to use new decorator
+            return Auth.SessionManagement.finishLoginFlow('/apex/NavLoginService?retUrl=' + retUrl);
+        }
+
         if(retUrl!=null){
             return Auth.SessionManagement.finishLoginFlow(retUrl);
         }
