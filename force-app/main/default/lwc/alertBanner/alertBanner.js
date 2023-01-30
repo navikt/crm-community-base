@@ -25,24 +25,10 @@ export default class AlertBanner extends LightningElement {
         switch(this.size){
             case 'L':
                 return 'textLarge';
-            case 'S':
-                return 'textSmall';
             default :
                 return 'textMedium';
 
         }
-    }
-
-    get widthClass(){
-        switch(this.size){
-            case 'L':
-                return 'widthLarge';
-            case 'S':
-                return 'widthSmall';
-            default :
-                return 'widthMedium';
-
-        } 
     }
 
     get setColorClass() {
