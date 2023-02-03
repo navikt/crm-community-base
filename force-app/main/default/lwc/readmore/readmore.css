@@ -1,19 +1,19 @@
 .section-header{
-    /*justify-content: space-between;
-    */
     width: calc(100% - 1.5rem * 2);
-    display: flex;
+    background-color: var(--main-bg-color);
+    display: flex; 
     margin: 0 auto;
     cursor: pointer;
-    border: 1px solid transparent ;
-    background-color: #FFFFFF; 
+    border: 0.063rem solid transparent ;
     border-radius: 0.125rem;     
 }
 .section-header:hover {
-    background-color: rgba(241, 241, 241, 1);
+    background-color: var(--hover-bg-color);
+    z-index: 10;
 }
 .section-header:focus{
-    background-color: #FFFFFF;
+    background-color: var(--focus-bg-color);
+    z-index: 10;
 }
 .section-illustration{
     float: left;
@@ -21,13 +21,10 @@
     padding-right: 0.5rem;
 }
 .section-title{
-    /*width: calc(100% + 0.5rem * 2);
-    */
     font-family: 'Source Sans Pro', Arial, sans-serif;
-    font-size: 1.125rem; /* 18px on heading - default size NAV */
+    font-size: var(--main-font-size);
     color: rgba(0, 103, 197, 1);
-    font-weight: normal;
-    
+    font-weight: var(--title-font-weight);
     text-align: left;
     margin: 0.5rem;
 }
