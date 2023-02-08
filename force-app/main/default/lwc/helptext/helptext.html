@@ -1,7 +1,7 @@
 <template>
-    <div class="navds-help-text">
+    <div class="helptext">
         <button
-            class="navds-help-text__button"
+            class="helptextButton"
             type="button"
             aria-expanded={ariaExpanded}
             title={defaultHoverText}
@@ -16,7 +16,7 @@
                 xmlns="http://www.w3.org/2000/svg"
                 focusable="false"
                 role="img"
-                class="navds-help-text__icon"
+                class="helptextIcon"
             >
                 <path
                     fill-rule="evenodd"
@@ -29,7 +29,7 @@
         </button>
 
         <div
-            class="navds-popover navds-help-text__popover navds-popover--hidden"
+            class="helptextPopup navds-help-text__popover helptextPopup--hidden"
             tabindex="-1"
             role="tooltip"
             data-popper-reference-hidden="false"
@@ -37,8 +37,8 @@
             data-popper-placement="top"
             style={defaultStyle}
         >
-            <div class="navds-popover__content" role="alert" aria-live="polite">{textToShow}</div>
-            <div data-popper-arrow="true" class="navds-popover__arrow" style={arrowStyle}></div>
+            <div class="helptextPopupContent" role="alert" aria-live="polite">{textToShow}</div>
+            <div data-popper-arrow="true" class="helptextArrow" style={arrowStyle}></div>
         </div>
     </div>
 </template>

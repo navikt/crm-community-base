@@ -1,10 +1,10 @@
-.navds-help-text {
+.helptext {
     position: relative;
     display: inline-block;
     padding-left: 5px;
 }
 
-.navds-help-text__button {
+.helptextButton {
     margin: 0;
     padding: 0;
     border: 0;
@@ -16,13 +16,13 @@
     align-items: center;
 }
 
-.navds-help-text__icon {
+.helptextIcon {
     border-radius: 50%;
     font-size: 1.5rem;
     color: #0067c5;
 }
 
-.navds-popover {
+.helptextPopup {
     z-index: 1000;
     background-color: #d8f9ff;
     box-shadow: 0 2px 4px 0 #c9c9c9;
@@ -40,7 +40,7 @@
     padding-left: 5px;
 }
 
-.navds-popover__content {
+.helptextPopupContent {
     padding: 1rem;
     font-size: 1.125rem;
     font-weight: 400;
@@ -49,20 +49,14 @@
     margin: 0;
 }
 
-.navds-help-text__button:hover > .navds-help-text__icon {
-    color: #ffffff;
-    background: #0067c5;
-    box-shadow: 0 0 0 2px #0067c5;
-}
-
-.navds-help-text__button:focus > .navds-help-text__icon {
+.helptextButton:focus > .helptextIcon {
     outline: none;
     color: #ffffff;
     background: #0067c5;
     box-shadow: 0 0 0 3px #00347d;
 }
 
-.navds-help-text__button:focus + .navds-popover {
+.helptextButton:focus + .helptextPopup {
     z-index: 1001;
     opacity: 1;
     visibility: visible;
@@ -71,16 +65,16 @@
     box-shadow: 0 0 0 3px #00347d;
 }
 
-.navds-popover[data-popper-placement^='top'] > .navds-popover__arrow::before {
+.helptextPopup[data-popper-placement^='top'] > .helptextArrow::before {
     border-left-color: transparent;
     border-top-color: transparent;
 }
 
-.navds-help-text__popover > .navds-popover__arrow::before {
+.navds-help-text__popover > .helptextArrow::before {
     background-color: #d8f9ff;
 }
 
-.navds-popover__arrow::before {
+.helptextArrow::before {
     display: block;
     content: '';
     transform: rotate(45deg);
@@ -91,7 +85,7 @@
     height: 1rem;
 }
 
-.navds-popover__arrow {
+.helptextArrow {
     position: absolute;
     left: calc(50% - 7px);
     bottom: calc(1rem / -2);
@@ -102,7 +96,7 @@
 }
 
 @media (max-width: 576px) {
-    .navds-popover {
+    .helptextPopup {
         position: absolute;
         top: auto;
         bottom: 50px;
@@ -111,7 +105,8 @@
     }
 }
 
-.sr-only, .navds-sr-only {
+.sr-only,
+.navds-sr-only {
     border: 0;
     clip: rect(0, 0, 0, 0);
     height: 1px;
@@ -123,6 +118,6 @@
     width: 1px;
 }
 
-.navds-popover--hidden {
+.helptextPopup--hidden {
     display: none;
 }
