@@ -80,6 +80,7 @@ public with sharing class IdPortenAuthUtil {
                 return 'https://callback';
             }
             String redirectUrl=Network.getLoginUrl(Network.getNetworkId());
+            redirectUrl=redirectUrl.replace('/ArbeidsgiverDialog/..', '');
             redirectUrl=redirectUrl.replace('/login', '/IdPortenSid');
             return redirectUrl;
         }
