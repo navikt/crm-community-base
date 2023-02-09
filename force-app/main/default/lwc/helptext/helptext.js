@@ -18,11 +18,11 @@ export default class Helptext extends LightningElement {
     textToShow = '';
     ariaExpanded = false;
     helptextFocus() {
-        const hidden = this.template.querySelector('.navds-popover--hidden');
+        const hidden = this.template.querySelector('.helptextPopup--hidden');
         if (hidden === null) {
             this.helptextBlur();
         } else {
-            this.template.querySelector('.navds-popover').classList.remove('navds-popover--hidden');
+            this.template.querySelector('.helptextPopup').classList.remove('helptextPopup--hidden');
             this.ariaExpanded = true;
             this.textToShow = this.text;
             this.setHelptextPostition();
@@ -30,7 +30,7 @@ export default class Helptext extends LightningElement {
     }
 
     helptextBlur() {
-        this.template.querySelector('.navds-popover').classList.add('navds-popover--hidden');
+        this.template.querySelector('.helptextPopup').classList.add('helptextPopup--hidden');
         this.ariaExpanded = false;
         this.textToShow = '';
     }
@@ -41,7 +41,7 @@ export default class Helptext extends LightningElement {
 
     setHelptextPostition() {
         if (window.screen.width < 576) {
-            let element = this.template.querySelector('.navds-help-text__button');
+            let element = this.template.querySelector('.helptext__button');
             let rect = element.getBoundingClientRect();
             let left = 3 - rect.left;
             let right = 3 + rect.right - window.screen.width;
