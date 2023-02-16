@@ -103,12 +103,24 @@ public with sharing class IdPortenSidController {
         if(Test.isRunningTest()){
            communityBaseUrl='https://test-comunity.com/login';
         }
+
+        Boolean isVForceSiteUrl=false;
+        if( communityBaseUrl.contains('vforcesite')){
+            isVForceSiteUrl=true;
+        }
+        
+        communityBaseUrl=communityBaseUrl.replace('../ArbeidsgiverDialogvforcesite', '');
         communityBaseUrl=communityBaseUrl.replace('/login', '');
         //remove base url from retUrl
         if(retUrl!=null){
            retUrl=retUrl.replace(communityBaseUrl,'');
            //remove spaces
            retUrl=retUrl.replaceAll(' ','%20');
+        }
+
+        //add /.. if vforcesite url
+        if(isVForceSiteUrl){
+            retUrl='/..' + retUrl;       
         }
         return retUrl;
     }
