@@ -23,7 +23,7 @@
 .section-title{
     font-family: 'Source Sans Pro', Arial, sans-serif;
     font-size: var(--main-font-size);
-    color: rgba(0, 103, 197, 1);
+    color: var(--main-font-color);
     font-weight: var(--title-font-weight);
     text-align: left;
     margin: 0.5rem;
@@ -36,5 +36,5 @@
 }
 
 .my-icon {
-    --sds-c-icon-color-foreground-default:rgba(0, 103, 197, 1);
+    --sds-c-icon-color-foreground-default:var(--main-font-color);
 }
