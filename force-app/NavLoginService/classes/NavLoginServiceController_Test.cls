@@ -13,7 +13,7 @@ public with sharing class NavLoginServiceController_Test {
         Test.stopTest();
        
         System.assertEquals(
-            'https://loginservice.dev.nav.no/login?redirect=https%3A%2F%2Ftest-comunity.com%2Fapex%2FNavLoginService',
+            'https://loginservice.intern.dev.nav.no/login?redirect=https%3A%2F%2Ftest-comunity.com%2Fapex%2FNavLoginService',
             nextPage,
             'Expect redirect to loginservice'
         );
