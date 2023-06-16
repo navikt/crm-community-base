@@ -1,5 +1,5 @@
 global class PersonAccountUserRegHandler implements Auth.RegistrationHandler {
-    private List<Id> samhandlerNetworkIds=new List<Id>{'0DB7U000000TN3u','0DB5t00000001tH'};
+    private List<String> samhandlerNetworkIds=new List<String>{'0DB7U000000TN3u','0DB5t00000001tH'};
     global User createUser(Id portalId, Auth.UserData data) {
         String personIdent = data.attributeMap.get('pid');
         String communityId = data.attributeMap.get('sfdc_networkid');

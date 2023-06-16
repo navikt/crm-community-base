@@ -147,6 +147,7 @@ public with sharing class CommunityUsersService {
         //check if user don't have community plus
         if (user.ProfileId == communityProfile.Id) {
             user.ProfileId = plusLoginProfileId;
+            update user;
         }
 
         //check if user has community plus login perm set
