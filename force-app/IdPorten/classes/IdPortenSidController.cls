@@ -1,3 +1,17 @@
+/**
+ * @description Get sid from id token using vf-page controller
+ *
+ * @author Frode Hoen <frode.hoen@nav.no>
+ * @author Piotr Szostak <piotr.szostak@nav.no>
+ * @since 2022-05-25 Created.
+ * @since 2023-02-27 Add networkId for preprod dialog site.
+ * @since 2022-05-10 Added nertworkId to Prod Arbeidsgiverdialog site.
+ *
+ * @see [License](https://github.com/navikt/crm-community-base/blob/master/LICENSE)
+ * @see [Github](https://github.com/navikt/crm-community-base)
+ *
+ * @group ID-Porten
+ */
 public with sharing class IdPortenSidController {
     public PageReference redirect() {
         Cookie stateCookie;
@@ -77,7 +91,12 @@ public with sharing class IdPortenSidController {
     }
 
     private static PageReference finishLoginFlow() {
-        List<String> communitiesUsingNewDecorator = new List<String>{ '0DB2o000000Ug9I', '0DB2o000000Ug9D', '0DB0E0000005HX9', '0DB7U000000TN3uWAG' };
+        List<String> communitiesUsingNewDecorator = new List<String>{
+            '0DB2o000000Ug9I',
+            '0DB2o000000Ug9D',
+            '0DB0E0000005HX9',
+            '0DB7U000000TN3uWAG'
+        };
 
         Cookie retUrlCookie = ApexPages.currentPage().getCookies().get('retUrl');
         if (retUrlCookie == null) {

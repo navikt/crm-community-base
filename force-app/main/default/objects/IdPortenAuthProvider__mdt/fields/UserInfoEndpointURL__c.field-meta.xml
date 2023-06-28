@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>UserInfoEndpointURL__c</fullName>
+    <description>The URL that the application uses to get user information from the authorization server (ID-Porten).</description>
+    <externalId>false</externalId>
+    <fieldManageability>DeveloperControlled</fieldManageability>
+    <inlineHelpText>The URL that the application uses to get user information from the authorization server (ID-Porten).</inlineHelpText>
+    <label>User Info Endpoint URL</label>
+    <required>false</required>
+    <type>Url</type>
+</CustomField>

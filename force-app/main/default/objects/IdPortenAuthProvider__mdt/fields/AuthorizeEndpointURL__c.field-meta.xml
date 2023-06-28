@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>AuthorizeEndpointURL__c</fullName>
+    <description>The URL that the application redirect to for authentication and authorization.</description>
+    <externalId>false</externalId>
+    <fieldManageability>DeveloperControlled</fieldManageability>
+    <inlineHelpText>The URL that the application redirect to for authentication and authorization.</inlineHelpText>
+    <label>Authorize Endpoint URL</label>
+    <required>false</required>
+    <type>Url</type>
+</CustomField>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>TokenEndpointURL__c</fullName>
+    <description>he URL that the application uses to get an access token from the authorization server (ID-Porten) using GET (verb) request.</description>
+    <externalId>false</externalId>
+    <fieldManageability>DeveloperControlled</fieldManageability>
+    <inlineHelpText>he URL that the application uses to get an access token from the authorization server (ID-Porten) using GET (verb) request.</inlineHelpText>
+    <label>Token Endpoint URL</label>
+    <required>false</required>
+    <type>Url</type>
+</CustomField>
