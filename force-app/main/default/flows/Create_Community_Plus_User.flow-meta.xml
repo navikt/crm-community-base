@@ -1,28 +1,32 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <actionCalls>
         <name>Create_Community_Plus_User</name>
         <label>Create Community Plus User</label>
-        <locationX>1526</locationX>
-        <locationY>81</locationY>
+        <locationX>50</locationX>
+        <locationY>890</locationY>
         <actionName>CommunityUsersService</actionName>
         <actionType>apex</actionType>
         <connector>
             <targetReference>End_Screen</targetReference>
         </connector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>personIdents</name>
             <value>
                 <elementReference>PersonIdent</elementReference>
             </value>
         </inputParameters>
+        <nameSegment>CommunityUsersService</nameSegment>
         <storeOutputAutomatically>true</storeOutputAutomatically>
+        <versionSegment>1</versionSegment>
     </actionCalls>
+    <apiVersion>58.0</apiVersion>
     <decisions>
         <name>Access</name>
         <label>Access?</label>
-        <locationX>790</locationX>
-        <locationY>309</locationY>
+        <locationX>380</locationX>
+        <locationY>350</locationY>
         <defaultConnector>
             <targetReference>No_Access_Screen</targetReference>
         </defaultConnector>
@@ -46,8 +50,8 @@
     <decisions>
         <name>Existing_User</name>
         <label>Existing User</label>
-        <locationX>1211</locationX>
-        <locationY>308</locationY>
+        <locationX>182</locationX>
+        <locationY>674</locationY>
         <defaultConnector>
             <targetReference>Already_added_as_user_screen</targetReference>
         </defaultConnector>
@@ -68,6 +72,7 @@
             <label>No</label>
         </rules>
     </decisions>
+    <environments>Default</environments>
     <formulas>
         <name>curretUserId</name>
         <dataType>String</dataType>
@@ -82,6 +87,12 @@
         </value>
     </processMetadataValues>
     <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
         <name>OriginBuilderType</name>
         <value>
             <stringValue>LightningFlowBuilder</stringValue>
@@ -91,12 +102,13 @@
     <recordLookups>
         <name>Community_Plus_Profile</name>
         <label>Community Plus Profile</label>
-        <locationX>962</locationX>
-        <locationY>307</locationY>
+        <locationX>182</locationX>
+        <locationY>458</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Get_User</targetReference>
         </connector>
+        <filterLogic>and</filterLogic>
         <filters>
             <field>Name</field>
             <operator>EqualTo</operator>
@@ -111,12 +123,13 @@
     <recordLookups>
         <name>Get_Current_User_Permission_Set_Assignment</name>
         <label>Get Current User Permission Set Assignment</label>
-        <locationX>652</locationX>
-        <locationY>307</locationY>
+        <locationX>380</locationX>
+        <locationY>242</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Access</targetReference>
         </connector>
+        <filterLogic>and</filterLogic>
         <filters>
             <field>AssigneeId</field>
             <operator>EqualTo</operator>
@@ -142,12 +155,13 @@
     <recordLookups>
         <name>Get_Permission_Set</name>
         <label>Get Permission Set</label>
-        <locationX>458</locationX>
-        <locationY>307</locationY>
+        <locationX>380</locationX>
+        <locationY>134</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Get_Current_User_Permission_Set_Assignment</targetReference>
         </connector>
+        <filterLogic>and</filterLogic>
         <filters>
             <field>Name</field>
             <operator>EqualTo</operator>
@@ -164,12 +178,13 @@
     <recordLookups>
         <name>Get_Person_Account</name>
         <label>Get Person Account</label>
-        <locationX>1314</locationX>
-        <locationY>81</locationY>
+        <locationX>50</locationX>
+        <locationY>782</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Create_Community_Plus_User</targetReference>
         </connector>
+        <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
             <operator>EqualTo</operator>
@@ -188,12 +203,13 @@
     <recordLookups>
         <name>Get_User</name>
         <label>Get User</label>
-        <locationX>1098</locationX>
-        <locationY>307</locationY>
+        <locationX>182</locationX>
+        <locationY>566</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Existing_User</targetReference>
         </connector>
+        <filterLogic>and</filterLogic>
         <filters>
             <field>AccountId</field>
             <operator>EqualTo</operator>
@@ -216,11 +232,12 @@
         <sortField>Id</sortField>
         <sortOrder>Asc</sortOrder>
     </recordLookups>
+    <runInMode>SystemModeWithoutSharing</runInMode>
     <screens>
         <name>Already_added_as_user_screen</name>
         <label>Already added as user</label>
-        <locationX>1378</locationX>
-        <locationY>306</locationY>
+        <locationX>314</locationX>
+        <locationY>782</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -235,15 +252,14 @@
     <screens>
         <name>End_Screen</name>
         <label>End Screen</label>
-        <locationX>1725</locationX>
-        <locationY>81</locationY>
+        <locationX>50</locationX>
+        <locationY>998</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <fields>
             <name>Success_Message</name>
-            <fieldText
-            >&lt;p&gt;Bruker er nå lagt til som frilanstolk. Neste steg er å sette opp en tjenesteressurs for brukeren.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Bruker er nå lagt til som frilanstolk. Neste steg er å sette opp en tjenesteressurs for brukeren.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <showFooter>true</showFooter>
@@ -252,8 +268,8 @@
     <screens>
         <name>No_Access_Screen</name>
         <label>No Access</label>
-        <locationX>797</locationX>
-        <locationY>478</locationY>
+        <locationX>578</locationX>
+        <locationY>458</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -266,8 +282,8 @@
         <showHeader>true</showHeader>
     </screens>
     <start>
-        <locationX>50</locationX>
-        <locationY>50</locationY>
+        <locationX>254</locationX>
+        <locationY>0</locationY>
         <connector>
             <targetReference>Get_Permission_Set</targetReference>
         </connector>
