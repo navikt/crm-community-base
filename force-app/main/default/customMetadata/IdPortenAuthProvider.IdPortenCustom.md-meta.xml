@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>IdPortenCustom</label>
+    <protected>false</protected>
+    <values>
+        <field>AuthorizeEndpointURL__c</field>
+        <value xsi:type="xsd:string">https://oidc-ver2.difi.no/idporten-oidc-provider/authorize</value>
+    </values>
+    <values>
+        <field>CallbackURL__c</field>
+        <value xsi:type="xsd:string">https://business-flow-6054.scratch.my.salesforce.com/services/authcallback/IdPortenCustom</value>
+    </values>
+    <values>
+        <field>ConsumerKey__c</field>
+        <value xsi:type="xsd:string">a0696612-efc4-46e9-a7c9-bff656e554c2</value>
+    </values>
+    <values>
+        <field>ConsumerSecret__c</field>
+        <value xsi:type="xsd:string">22f9f825-d2ea-4826-996f-92ef502c3532</value>
+    </values>
+    <values>
+        <field>Scope__c</field>
+        <value xsi:type="xsd:string">openid</value>
+    </values>
+    <values>
+        <field>TokenEndpointURL__c</field>
+        <value xsi:type="xsd:string">https://oidc-ver2.difi.no/idporten-oidc-provider/token</value>
+    </values>
+    <values>
+        <field>UserInfoEndpointURL__c</field>
+        <value xsi:type="xsd:string">https://oidc-ver2.difi.no/idporten-oidc-provider/userinfo</value>
+    </values>
+</CustomMetadata>

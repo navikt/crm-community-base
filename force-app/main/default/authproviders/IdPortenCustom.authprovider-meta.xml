@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AuthProvider xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customMetadataTypeRecord>IdPortenAuthProvider__mdt.IdPortenCustom</customMetadataTypeRecord>
+    <executionUser>test-tqowajbqmk8i@example.com</executionUser>
+    <friendlyName>IdPortenCustom</friendlyName>
+    <includeOrgIdInIdentifier>false</includeOrgIdInIdentifier>
+    <logoutUrl>https://loginservice.nav.no/slo</logoutUrl>
+    <plugin>IdPortenAuthProvider</plugin>
+    <providerType>Custom</providerType>
+    <registrationHandler>PersonAccountUserRegHandler</registrationHandler>
+    <requireMfa>false</requireMfa>
+    <sendAccessTokenInHeader>false</sendAccessTokenInHeader>
+    <sendClientCredentialsInHeader>false</sendClientCredentialsInHeader>
+    <sendSecretInApis>false</sendSecretInApis>
+</AuthProvider>

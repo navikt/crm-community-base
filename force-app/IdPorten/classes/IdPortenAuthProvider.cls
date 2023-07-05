@@ -1,5 +1,7 @@
 /**
- * @description Custom Salesforce Auth Provider for ID-Porten
+ * @description Custom Salesforce Auth Provider for ID-Porten.
+ * It implements the use of code challange - PKCE (Proof Key for Code Exchange)
+ * for enhanced security.
  *
  * @author Kenneth Soerensen <kenneth.sorensen@nav.no>
  * @since 2023-06-27 Created.
@@ -8,10 +10,20 @@
  * @see [Github](https://github.com/navikt/crm-community-base)
  *
  * @group ID-Porten
+ *
+ * @see [ID-Porten](https://docs.digdir.no/docs/idporten/idporten/idporten_overordnet)
+ * @see [Create a Custom Authentication Provider Plug-in](https://developer.salesforce.com/docs/atlas.en-us.apexcode.meta/apexcode/authproviderplugin.htm)
+ * @see [Auth.AuthProviderPluginClass Class](https://developer.salesforce.com/docs/atlas.en-us.apexref.meta/apexref/apex_class_Auth_AuthProviderPluginClass.htm#apex_Auth_AuthProviderPluginClass_refresh)
  */
 @SuppressWarnings('PMD.AvoidGlobalModifier')
 global class IdPortenAuthProvider extends Auth.AuthProviderPluginClass {
+    /**
+     * @description Provider Name = class name.
+     */
     public static final String PROVIDER_NAME = 'IdPortenAuthProvider';
+    /**
+     * @description Custom Metadata Type name assosiated with this custom auth provider class.
+     */
     public static final String CUSTOM_METADATA_TYPE_API_NAME = 'IdPortenAuthProvider__mdt';
 
     /**
@@ -23,7 +35,13 @@ global class IdPortenAuthProvider extends Auth.AuthProviderPluginClass {
      * @description The API name of the custom metadata type that contains the configuration for this auth provider.
      */
     private String customMetadataTypeApiName = CUSTOM_METADATA_TYPE_API_NAME;
+    /**
+     * @description The consumer key.
+     */
     private String consumerKey;
+    /**
+     * @description The consumer secret.
+     */
     private String consumerSecret;
     /**
      * @description The URL that the application redirect to for authentication and authorization.
@@ -48,10 +66,13 @@ global class IdPortenAuthProvider extends Auth.AuthProviderPluginClass {
      * @author Kenneth Soerensen <kenneth.sorensen@nav.no>
      * @since 2023-06-27
      *
-     * @param customMetadataTypeApiName The API name of the custom metadata type that contains the configuration for this auth provider.
+     * @return The API name of the custom metadata type that contains the configuration for this auth provider.
+     *
+     * @see [Auth.AuthProviderPluginClass.getCustomMetadataType method](https://developer.salesforce.com/docs/atlas.en-us.apexref.meta/apexref/apex_class_Auth_AuthProviderPluginClass.htm#apex_Auth_AuthProviderPluginClass_getCustomMetadataType)
+     * @see [Custom Metadata Types](https://help.salesforce.com/s/articleView?id=sf.custommetadatatypes_overview.htm&type=5)
      */
     global String getCustomMetadataType() {
-        return customMetadataTypeApiName;
+        return this.customMetadataTypeApiName;
     }
 
     /**
@@ -62,15 +83,31 @@ global class IdPortenAuthProvider extends Auth.AuthProviderPluginClass {
      *
      * @param authProviderConfiguration The configuration for this auth provider.
      * @param stateToPropagate The state to propagate to the callback URL.
+     * @return `System.PageReference` The URL where the user is redirected for authentication.
+     *
+     * @see [Auth.AuthProviderPluginClass.initiate method](https://developer.salesforce.com/docs/atlas.en-us.apexref.meta/apexref/apex_class_Auth_AuthProviderPluginClass.htm#apex_Auth_AuthProviderPluginClass_initiate)
+     * @see [System.PageReference class](https://developer.salesforce.com/docs/atlas.en-us.apexref.meta/apexref/apex_system_pagereference.htm#apex_system_pagereference)
      */
     @SuppressWarnings('PMD.ApexOpenRedirect')
-    global PageReference initiate(Map<string, string> authProviderConfiguration, String stateToPropagate) {
-        authorizeEndpointUrl = authProviderConfiguration.get('AuthorizeEndpointUrl__c');
-        redirectUrl = authProviderConfiguration.get('RedirectUrl__c');
-        consumerKey = authProviderConfiguration.get('ConsumerKey__c');
-        scope = authProviderConfiguration.get('Scope__c');
+    global System.PageReference initiate(Map<string, string> authProviderConfiguration, String stateToPropagate) {
+        this.authorizeEndpointUrl = authProviderConfiguration.get('AuthorizeEndpointURL__c');
+        this.redirectUrl = authProviderConfiguration.get('CallbackURL__c');
+        this.consumerKey = authProviderConfiguration.get('ConsumerKey__c');
+        this.scope = authProviderConfiguration.get('Scope__c');
 
-        // https://oidc-ver2.difi.no/idporten-oidc-provider/authorize?client_id={consumerKey}&response_type=code&scope={scope}&redirect_uri={redirectUrl}
+        String codeVerifier = PKCEOAuthHelper.generateCodeVerifier();
+        String codeChallenge = PKCEOAuthHelper.getCodeChallenge(codeVerifier);
+        String nonce = PKCEOAuthHelper.generateNonce();
+
+        CustomAuthProviderState__c customAuthProviderState = new CustomAuthProviderState__c(
+            State__c = stateToPropagate,
+            CodeVerifier__c = codeVerifier,
+            Nonce__c = nonce
+        );
+
+        insert customAuthProviderState;
+
+        // https://{endpoint base url}//authorize?client_id={consumerKey}&response_type=code&scope={scope}&redirect_uri={redirectUrl}&state={stateToPropagate}&nonce={nonce}&code_challenge={codeChallenge}&code_challenge_method=S256
         String url =
             authorizeEndpointUrl +
             '?client_id=' +
@@ -78,8 +115,16 @@ global class IdPortenAuthProvider extends Auth.AuthProviderPluginClass {
             '&response_type=code&scope=' +
             scope +
             '&redirect_uri=' +
-            redirectUrl;
-        return new PageReference(url);
+            redirectUrl +
+            '&state=' +
+            stateToPropagate +
+            '&nonce=' +
+            nonce +
+            '&code_challenge=' +
+            codeChallenge +
+            '&code_challenge_method=S256';
+
+        return new System.PageReference(url);
     }
 
     /**
@@ -92,35 +137,48 @@ global class IdPortenAuthProvider extends Auth.AuthProviderPluginClass {
      *
      * @param authProviderConfiguration The configuration for this auth provider.
      * @param state The state parameter from the callback request.
-     * @return  `Auth.AuthProviderTokenResponse` The token response.
+     * @return `Auth.AuthProviderTokenResponse` The token response.
+     *
+     * @see [Auth.AuthProviderPluginClass.handleCallback method](https://developer.salesforce.com/docs/atlas.en-us.apexref.meta/apexref/apex_class_Auth_AuthProviderPluginClass.htm#apex_Auth_AuthProviderPluginClass_handleCallback)
+     * @see [AuthProviderCallbackState Class](https://developer.salesforce.com/docs/atlas.en-us.apexref.meta/apexref/apex_class_Auth_AuthProviderCallbackState.htm#apex_class_Auth_AuthProviderCallbackState)
+     * @see [Auth.AuthProviderTokenResponse class](https://developer.salesforce.com/docs/atlas.en-us.apexref.meta/apexref/apex_class_Auth_AuthProviderTokenResponse.htm#apex_class_Auth_AuthProviderTokenResponse)
      */
     global Auth.AuthProviderTokenResponse handleCallback(
         Map<string, string> authProviderConfiguration,
         Auth.AuthProviderCallbackState state
     ) {
-        tokenEndpointUrl = authProviderConfiguration.get('TokenEndpointUrl__c');
-        redirectUrl = authProviderConfiguration.get('RedirectUrl__c');
-        consumerKey = authProviderConfiguration.get('ConsumerKey__c');
-        consumerSecret = authProviderConfiguration.get('ConsumerSecret__c');
+        this.tokenEndpointUrl = authProviderConfiguration.get('TokenEndpointURL__c');
+        this.redirectUrl = authProviderConfiguration.get('CallbackURL__c');
+        this.consumerKey = authProviderConfiguration.get('ConsumerKey__c');
+        this.consumerSecret = authProviderConfiguration.get('ConsumerSecret__c');
 
         Map<String, String> queryParams = state.queryParameters;
         String code = queryParams.get('code');
-        String sfdcState = queryParams.get('state');
+        String stateToPropagate = queryParams.get('state');
+
+        CustomAuthProviderState__c customAuthProviderState = [
+            SELECT Id, State__c, CodeVerifier__c, Nonce__c
+            FROM CustomAuthProviderState__c
+            WHERE State__c = :stateToPropagate
+            LIMIT 1
+        ];
 
         HttpRequest request = new HttpRequest();
-        // https://oidc-ver2.difi.no/idporten-oidc-provider/token?code={code}&state={sfdcState}&grant_type=authorization_code&client_id={consumerKey}&client_secret={consumerSecret}&redirect_uri={redirectUrl}
+        // https://{endpoint base url}/token?code={code}&state={sfdcState}&grant_type=authorization_code&client_id={consumerKey}&client_secret={consumerSecret}&redirect_uri={redirectUrl}&code_challenge{customAuthProviderState.CodeVerifier__c}
         String url =
-            tokenEndpointUrl +
+            this.tokenEndpointUrl +
             '?code=' +
             code +
             '&state=' +
-            sfdcState +
+            stateToPropagate +
             '&grant_type=authorization_code&client_id=' +
-            consumerKey +
+            this.consumerKey +
             '&client_secret=' +
-            consumerSecret +
+            this.consumerSecret +
             'redirect_uri=' +
-            redirectUrl;
+            this.redirectUrl +
+            '&code_challenge=' +
+            customAuthProviderState.CodeVerifier__c;
         request.setEndpoint(url);
         request.setHeader('Accept', 'application/json');
         request.setMethod('POST');
@@ -134,7 +192,22 @@ global class IdPortenAuthProvider extends Auth.AuthProviderPluginClass {
             TokenResponseWrapper.class
         );
 
-        return new Auth.AuthProviderTokenResponse(PROVIDER_NAME, tokenResponse.access_token, 'refreshToken', sfdcState);
+        // Can't get this to work, and can't check what the tokenResponse.id_token is giving us.
+        // It should have given us the nonce back as part of the id token value.
+        // would be nice to verify that it is the same nonce as we sendt with the initial request.
+        //JWTClaims claims = decodeIdToken(tokenResponse.id_token);
+        //String nonce = customAuthProviderState.Nonce__c;
+
+        /*if (claims.nonce != nonce) {
+            throw new IdPortenAuthProviderException('Nonce validation failed!');
+        }*/
+
+        return new Auth.AuthProviderTokenResponse(
+            PROVIDER_NAME,
+            tokenResponse.access_token,
+            'refreshToken',
+            stateToPropagate
+        );
     }
 
     /**
@@ -146,16 +219,21 @@ global class IdPortenAuthProvider extends Auth.AuthProviderPluginClass {
      * @param authProviderConfiguration The configuration for this auth provider.
      * @param tokenResponse The token response.
      * @return  `Auth.UserData` The user data.
+     *
+     * @see [Auth.AuthProviderPluginClass.getUserInfo method](https://developer.salesforce.com/docs/atlas.en-us.apexref.meta/apexref/apex_class_Auth_AuthProviderPluginClass.htm#apex_Auth_AuthProviderPluginClass_getUserInfo)
+     * @see [Auth.AuthProviderTokenResponse class](https://developer.salesforce.com/docs/atlas.en-us.apexref.meta/apexref/apex_class_Auth_AuthProviderTokenResponse.htm#apex_class_Auth_AuthProviderTokenResponse)
+     * @see [Auth.UserData class](https://developer.salesforce.com/docs/atlas.en-us.apexref.meta/apexref/apex_class_Auth_UserData.htm)
      */
     @SuppressWarnings('PMD.ApexSuggestUsingNamedCred')
     global Auth.UserData getUserInfo(
         Map<string, string> authProviderConfiguration,
         Auth.AuthProviderTokenResponse tokenResponse
     ) {
-        userInfoEndpointUrl = authProviderConfiguration.get('UserInfoEndpointUrl__c');
+        this.userInfoEndpointUrl = authProviderConfiguration.get('UserInfoEndpointURL__c');
 
+        // https://{endpoint base url}/userinfo
         HttpRequest request = new HttpRequest();
-        request.setEndpoint(userInfoEndpointUrl);
+        request.setEndpoint(this.userInfoEndpointUrl);
         request.setHeader('Accept', 'application/json');
         request.setHeader('Authorization', 'Bearer ' + tokenResponse.oauthToken);
         request.setMethod('GET');
@@ -169,6 +247,8 @@ global class IdPortenAuthProvider extends Auth.AuthProviderPluginClass {
             UserInfoResponseWrapper.class
         );
 
+        // We will not use all the fields from the Auth.UserData, since we only recives sid, pid
+        // and local in the response from ID-Porte.
         // public UserData(
         //    String identifier,
         //    String firstName,
@@ -183,7 +263,7 @@ global class IdPortenAuthProvider extends Auth.AuthProviderPluginClass {
         //    Map<String,String> attributeMap
         // )
         Auth.UserData userData = new Auth.UserData(
-            userInfoResponse.sub,
+            userInfoResponse.pid,
             null,
             null,
             null,
@@ -200,11 +280,23 @@ global class IdPortenAuthProvider extends Auth.AuthProviderPluginClass {
     }
 
     /**
-     * @description
+     * @description The Id Porten Auth Provider Exeption `IdPortenAuthProviderException` class.
+     * Used for throwing an exception inside the `IdPortenAuthProvider`class.
+     *
+     * @author Kenneth Soerensen <kenneth.sorensen@nav.no>
+     * @since 2023-06-28
+     */
+    public class IdPortenAuthProviderException extends Exception {
+    }
+
+    /**
+     * @description The Token Response Wrapper used when retrieving the token information from
+     * the token endpoint.
      *
      * @author Kenneth Soerensen <kenneth.sorensen@nav.no>
      * @since 2023-06-28
      *
+     * @see [ID-Porten Token Response](https://docs.digdir.no/docs/idporten/oidc/oidc_protocol_token.html#response)
      */
     @SuppressWarnings('PMD.VariableNamingConventions')
     public class TokenResponseWrapper {
@@ -216,15 +308,71 @@ global class IdPortenAuthProvider extends Auth.AuthProviderPluginClass {
     }
 
     /**
-     * @description
+     * @description The User Info Response Wrapper used when retrieving the user info from the
+     * user info endpoint.
      *
      * @author Kenneth Soerensen <kenneth.sorensen@nav.no>
      * @since 2023-06-28
      *
+     * @see [ID-Porten User Info Response](https://docs.digdir.no/docs/idporten/oidc/oidc_protocol_userinfo.html#response)
      */
     public class UserInfoResponseWrapper {
+        public String locale;
         public String sub;
         public String pid;
-        public String locale;
     }
+
+    /**
+     * @description Decodes the id token and returns the claims.
+     * It is copy of the implementation in `IdPortenAuthUtil` class.
+     * We may delete it if we can't get the nonce in the id token to work.
+     * And/or utilze the original implementation in `IdPortenAuthUtil` class instad.
+     *
+     * @author Kenneth Soerensen <kenneth.sorensen@nav.no>
+     * @since 2023-06-30
+     *
+     * @param encodedJWT The encoded Id Token.
+     * @return `JWTClaims` containing the decoded claims.
+     *
+     * @see IdPortenAuthUtil.JWTClaims
+     */
+    /* Disabled for now because it is not working as intended.
+    private static JWTClaims decodeIdToken(String encodedJWT) {
+        try {
+            Integer headerLength = encodedJWT.indexOf('.');
+            Integer claimsLength = encodedJWT.lastIndexOf('.');
+            String jwtClaims = encodedJWT.mid(headerLength + 1, claimsLength - headerLength - 1);
+
+            JWTClaims claimsDeserialized = (JWTClaims) Json.deserialize(
+                EncodingUtil.base64Decode(jwtClaims).toString(),
+                JWTClaims.class
+            );
+            return claimsDeserialized;
+        } catch (Exception e) {
+            System.debug(LoggingLevel.ERROR, 'Error decoding JWT: ' + e.getMessage());
+        }
+        return new JWTClaims();
+    }*/
+
+    /**
+     * @description The claims in the JWT token.
+     *
+     * @author Kenneth Soerensen <kenneth.sorensen@nav.no>
+     * @since 2023-06-30
+     */
+    /* Disabled for now because it is not working as intended.
+    private class JWTClaims {
+        String sub;
+        String aud;
+        String acr;
+        Integer auth_time;
+        String amr;
+        String iss;
+        String pid;
+        Integer exp;
+        String locale;
+        Integer iat;
+        String nonce;
+        String jti;
+    }*/
 }
