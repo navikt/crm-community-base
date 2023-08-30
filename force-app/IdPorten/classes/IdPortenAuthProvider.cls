@@ -175,12 +175,12 @@ global class IdPortenAuthProvider extends Auth.AuthProviderPluginClass {
             this.consumerKey +
             '&client_secret=' +
             this.consumerSecret +
-            'redirect_uri=' +
+            '&redirect_uri=' +
             this.redirectUrl +
-            '&code_challenge=' +
+            '&code_verifier=' +
             customAuthProviderState.CodeVerifier__c;
         request.setEndpoint(url);
-        request.setHeader('Accept', 'application/json');
+        request.setHeader('Content-Type','application/x-www-form-urlencoded');
         request.setMethod('POST');
 
         Http http = new Http();
