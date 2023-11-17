@@ -97,11 +97,13 @@
 
 @media (max-width: 576px) {
     .helptextPopup {
-        position: absolute;
+        position: fixed;
         top: auto;
         bottom: 50px;
+        left: 50%;
+        transform: translateX(-50%);
+        max-width: 80vw;
         width: 80vw;
-        transform: translateX(0);
     }
 }
 
