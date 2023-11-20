@@ -77,7 +77,7 @@ public with sharing class IdPortenSidController {
     }
 
     private static PageReference finishLoginFlow() {
-        List<String> communitiesUsingNewDecorator = new List<String>{ '0DB2o000000Ug9I', '0DB2o000000Ug9D', '0DB0E0000005HX9', '0DB7U000000TN3uWAG' };
+        List<String> communitiesUsingNewDecorator = new List<String>{ '0DB2o000000Ug9I', '0DB2o000000Ug9D', '0DB0E0000005HX9', '0DB7U000000TN3uWAG', '0DB2o000000PCSHGA4','0DB1j000000D96BGAS' };
 
         Cookie retUrlCookie = ApexPages.currentPage().getCookies().get('retUrl');
         if (retUrlCookie == null) {
