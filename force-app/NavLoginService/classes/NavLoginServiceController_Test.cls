@@ -2,7 +2,6 @@
 public with sharing class NavLoginServiceController_Test {
     @IsTest
     private static void redirect_whenRetUrlAsParameter() {
-
         Pagereference pageRef = Page.NavLoginService;
         Test.startTest();
         test.setCurrentPage(pageRef);
@@ -11,9 +10,9 @@ public with sharing class NavLoginServiceController_Test {
         NavLoginServiceController controller = new NavLoginServiceController();
         String nextPage = controller.redirect().getUrl();
         Test.stopTest();
-       
+
         System.assertEquals(
-            'https://loginservice.intern.dev.nav.no/login?redirect=https%3A%2F%2Ftest-comunity.com%2Fapex%2FNavLoginService',
+            'https://login.ekstern.dev.nav.no/oauth2/login?redirect=https%3A%2F%2Ftest-comunity.com%2Fapex%2FNavLoginService',
             nextPage,
             'Expect redirect to loginservice'
         );
@@ -21,9 +20,9 @@ public with sharing class NavLoginServiceController_Test {
 
     @IsTest
     private static void redirect_whenNoParameter() {
-         Cookie retUrlCookie = new Cookie('retUrl','/',null,-1,true);
-         Pagereference pageRef = Page.NavLoginService;
-         pageRef.setCookies(new Cookie[]{retUrlCookie });
+        Cookie retUrlCookie = new Cookie('retUrl', '/', null, -1, true);
+        Pagereference pageRef = Page.NavLoginService;
+        pageRef.setCookies(new List<Cookie>{ retUrlCookie });
 
         Test.startTest();
         test.setCurrentPage(pageRef);
@@ -31,12 +30,6 @@ public with sharing class NavLoginServiceController_Test {
         String nextPage = controller.redirect().getUrl();
         Test.stopTest();
 
-       
-        System.assertEquals(
-            '/',
-            nextPage,
-            'Expect redirect to ret url'
-        );
+        System.assertEquals('/', nextPage, 'Expect redirect to ret url');
     }
-
 }
