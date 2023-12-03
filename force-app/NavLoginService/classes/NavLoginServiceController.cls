@@ -1,6 +1,6 @@
 public with sharing class NavLoginServiceController {
-    private final String LOGINSERVICE_URL_PROD=' https://loginservice.nav.no';
-    private final String LOGINSERVICE_URL_PREPROD='https://loginservice.intern.dev.nav.no';
+    private final String LOGINSERVICE_URL_PROD='https://login.nav.no/oauth2';
+    private final String LOGINSERVICE_URL_PREPROD='https://login.ekstern.dev.nav.no/oauth2';
     public PageReference redirect() {
         String retUrl=ApexPages.currentPage().getParameters().get('retURL');
         
