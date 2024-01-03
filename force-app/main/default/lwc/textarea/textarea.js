@@ -16,7 +16,7 @@ export default class Textarea extends LightningElement {
     @api readonly = false;
     @api placeholder = '';
     @api maxLength;
-    @api id = "textareaid";
+    @api id = 'textareaid';
     @api rows;
     @api cols;
     @api mobileStyle;
@@ -36,10 +36,10 @@ export default class Textarea extends LightningElement {
     get miscStyle() {
         let toReturn;
         if (this.cols === undefined) {
-            toReturn = "width: 100%; ";
+            toReturn = 'width: 100%; ';
         }
         if (this.rows === undefined) {
-            toReturn += "height: 114px; "
+            toReturn += 'height: 114px; ';
         }
         return toReturn;
     }
@@ -63,6 +63,11 @@ export default class Textarea extends LightningElement {
     // Call this when value is needed
     @api getValue() {
         return this.template.querySelector('textarea').value;
+    }
+
+    @api setValue(val) {
+        this.template.querySelector('textarea').value = val;
+        this.sendValueOnChange();
     }
 
     showError = false;
