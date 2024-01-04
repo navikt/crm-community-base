@@ -65,7 +65,7 @@ export default class Textarea extends LightningElement {
         return this.template.querySelector('textarea').value;
     }
 
-    @api setValue(val) {
+    @api setTextValue(val) {
         this.template.querySelector('textarea').value = val;
         this.sendValueOnChange();
     }
