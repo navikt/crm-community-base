@@ -73,12 +73,15 @@ export default class Textarea extends LightningElement {
     showError = false;
     updateShowErrorTextValue() {
         this.showError =
-            this.errorText !== undefined &&
-            this.errorText !== '' &&
-            !this.disabled &&
-            (this.template.querySelector('textarea').value === undefined ||
-                this.template.querySelector('textarea').value === '' ||
-                this.template.querySelector('textarea').value === null);
+            (this.errorText !== undefined &&
+                this.errorText !== '' &&
+                !this.disabled &&
+                (this.template.querySelector('textarea').value === undefined ||
+                    this.template.querySelector('textarea').value === '' ||
+                    this.template.querySelector('textarea').value === null)) ||
+            (this.maxLength !== '' &&
+                this.maxLength !== undefined &&
+                this.template.querySelector('textarea').value.length() >= this.maxLength);
         if (this.showError) {
             this.template.querySelector('.navds-form-field').classList.add('navds-textarea--error');
             this.template.querySelector('textarea').focus();
