@@ -14,12 +14,23 @@ export default class Picklist extends LightningElement {
     @api helptextHovertext;
     @api desktopStyle;
     @api mobileStyle;
+    @api setDefaultValue;
     choiceValue;
 
     connectedCallback() {
         for (let choice of this.choices) {
             if (choice.selected) {
                 this.choiceValue = choice;
+            }
+        }
+        if (this.setDefaultValue != '' || this.setDefaultValue != undefined) {
+            const selectedChoice = this.choices.find((choice) => choice.name === this.setDefaultValue);
+            if (selectedChoice) {
+                this.choices = this.choices.map((choice) => ({
+                    ...choice,
+                    selected: choice.name === selectedChoice.name
+                }));
+                this.choiceValue = selectedChoice;
             }
         }
     }
@@ -30,9 +41,7 @@ export default class Picklist extends LightningElement {
         this.selectedValues = this.choices.map((obj) => ({ ...obj, selected: false }));
         if (this.multiple) {
             for (let i = 0; i < this.selectedValues.length; i++) {
-                if (this.template.querySelector(
-                    '[data-id="' + this.selectedValues[i].name + '"]'
-                ).selected) {
+                if (this.template.querySelector('[data-id="' + this.selectedValues[i].name + '"]').selected) {
                     this.selectedValues[i].selected = true;
                     selectedValuesOnly.push(this.selectedValues[i]);
                 }
@@ -47,7 +56,7 @@ export default class Picklist extends LightningElement {
                     this.choiceValue = choice;
                 }
             }
-            eventToSend = new CustomEvent('picklistvaluechange', { detail: this.choiceValue  });
+            eventToSend = new CustomEvent('picklistvaluechange', { detail: this.choiceValue });
         }
         if (this.showErrorText) {
             this.updateShowErrorTextValue();
