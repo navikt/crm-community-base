@@ -15,6 +15,7 @@ export default class radiobuttons extends LightningElement {
     @api desktopStyle;
     @api mobileStyle;
     @api setDefaultValue;
+    @api isEdit;
 
     checkedValues = [];
     handleRadiobuttonsClick() {
