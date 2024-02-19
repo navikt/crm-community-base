@@ -15,7 +15,6 @@ export default class radiobuttons extends LightningElement {
     @api desktopStyle;
     @api mobileStyle;
     @api setDefaultValue;
-    @api isEdit;
 
     checkedValues = [];
     handleRadiobuttonsClick() {
@@ -67,12 +66,11 @@ export default class radiobuttons extends LightningElement {
                     this.checkedValues[i].checked;
             }
         }
-        if (this.isEdit == true && (this.setDefaultValue != '' || this.setDefaultValue != undefined)) {
+        if (this.setDefaultValue !== null && (this.setDefaultValue != '' || this.setDefaultValue != undefined)) {
             const defaultValue = this.setDefaultValue.toString().toLowerCase();
             this.radiobuttons.forEach((radioButton) => {
                 const radioValue = radioButton.value.toString().toLowerCase();
                 const radioInput = this.template.querySelector('[data-id="' + radioButton.label + '"]');
-
                 if (radioInput) {
                     if (radioValue === defaultValue) {
                         radioInput.checked = true;
