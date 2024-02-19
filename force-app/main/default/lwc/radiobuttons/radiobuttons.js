@@ -69,15 +69,15 @@ export default class radiobuttons extends LightningElement {
             }
         }
         if (
-            (this.isEdit == true || this.isClone == true) &&
-            this.setDefaultValue !== null &&
-            (this.setDefaultValue != '' || this.setDefaultValue != undefined)
+            (this.isEdit == true &&
+                this.setDefaultValue !== null &&
+                (this.setDefaultValue != '' || this.setDefaultValue != undefined)) ||
+            (this.setDefaultValue !== null && (this.setDefaultValue != '' || this.setDefaultValue != undefined))
         ) {
             const defaultValue = this.setDefaultValue.toString().toLowerCase();
             this.radiobuttons.forEach((radioButton) => {
                 const radioValue = radioButton.value.toString().toLowerCase();
                 const radioInput = this.template.querySelector('[data-id="' + radioButton.label + '"]');
-
                 if (radioInput) {
                     if (radioValue === defaultValue) {
                         radioInput.checked = true;
