@@ -9,6 +9,14 @@ export default class DsTextField extends LightningElement {
     @api error;
     @api autoComplete = 'off';
     @api description;
+    @api required = false;
+    @api maxLength;
+    @api minLength;
+
+    @api
+    getValue() {
+        return this.template.querySelector('.navds-text-field__input').value;
+    }
 
     get hasErrorMsg() {
         return this.error != null;

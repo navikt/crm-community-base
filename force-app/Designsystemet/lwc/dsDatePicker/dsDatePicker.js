@@ -17,12 +17,17 @@ export default class DsDatePicker extends LightningElement {
         this.firstOfViewedMonth = new Date(today.getFullYear(), today.getMonth(), 1);
     }
 
+    @api
+    getValue() {
+        return this.selectedDate;
+    }
+
     flipOpen() {
         this.open = !this.open;
         const modal = this.template.querySelector('.navds-modal');
         if (this.open) {
             modal.setAttribute('open', '');
-            this.generateShit();
+            this.generateCalender();
         } else {
             modal.removeAttribute('open');
         }
@@ -32,7 +37,7 @@ export default class DsDatePicker extends LightningElement {
         return this.error != null;
     }
 
-    generateShit() {
+    generateCalender() {
         this.updateDisplayText();
 
         const monday = new Date(this.firstOfViewedMonth);
@@ -102,7 +107,7 @@ export default class DsDatePicker extends LightningElement {
 
     updateMonth(amount) {
         this.firstOfViewedMonth.setMonth(this.firstOfViewedMonth.getMonth() + amount);
-        this.generateShit();
+        this.generateCalender();
     }
 
     updateDisplayText() {
@@ -134,7 +139,7 @@ export default class DsDatePicker extends LightningElement {
         this.selectedDate = new Date(wantedDate);
         this.lastFocusedDate = String(this.selectedDate.getDate());
         this.firstOfViewedMonth = new Date(wantedDate.setDate(1));
-        if (this.open) this.generateShit();
+        if (this.open) this.generateCalender();
     }
 
     nice(event) {
