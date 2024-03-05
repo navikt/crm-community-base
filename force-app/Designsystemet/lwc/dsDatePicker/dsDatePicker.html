@@ -1,0 +1,132 @@
+<template>
+    <div class="navds-date__wrapper">
+        <div class="navds-form-field navds-form-field--medium navds-date__field">
+            <label for="datepicker-input" class="navds-form-field__label navds-label">{label}</label>
+            <div class="navds-date__field-wrapper">
+                <input
+                    id="datepicker-input"
+                    autocomplete="off"
+                    class="navds-date__field-input navds-text-field__input navds-body-short navds-body-short--medium"
+                    size="11"
+                    maxlength="11"
+                    onchange={testKnight}
+                    value={formattedDate}
+                /><button tabindex="0" type="button" class="navds-date__field-button" onclick={flipOpen}>
+                    <svg
+                        width="1em"
+                        height="1em"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                        focusable="false"
+                        role="img"
+                        aria-labelledby="title-R9rd6"
+                        pointer-events="none"
+                    >
+                        <title id="title-R9rd6">Åpne datovelger</title>
+                        <path
+                            fill-rule="evenodd"
+                            clip-rule="evenodd"
+                            d="M9 2.25a.75.75 0 0 1 .75.75v1.25h4.5V3a.75.75 0 0 1 1.5 0v1.25h3.75c.69 0 1.25.56 1.25 1.25v13c0 .69-.56 1.25-1.25 1.25h-15c-.69 0-1.25-.56-1.25-1.25v-13c0-.69.56-1.25 1.25-1.25h3.75V3A.75.75 0 0 1 9 2.25ZM15.75 7a.75.75 0 0 1-1.5 0V5.75h-4.5V7a.75.75 0 0 1-1.5 0V5.75h-3.5v3.5h14.5v-3.5h-3.5V7Zm-11 11.25v-7.5h14.5v7.5H4.75Zm2-5.25a.75.75 0 0 1 .75-.75h1a.75.75 0 0 1 0 1.5h-1a.75.75 0 0 1-.75-.75Zm4 0a.75.75 0 0 1 .75-.75h1a.75.75 0 0 1 0 1.5h-1a.75.75 0 0 1-.75-.75Zm4.75-.75a.75.75 0 0 0 0 1.5h1a.75.75 0 0 0 0-1.5h-1ZM10.75 16a.75.75 0 0 1 .75-.75h1a.75.75 0 0 1 0 1.5h-1a.75.75 0 0 1-.75-.75Zm4.75-.75a.75.75 0 0 0 0 1.5h1a.75.75 0 0 0 0-1.5h-1ZM6.75 16a.75.75 0 0 1 .75-.75h1a.75.75 0 0 1 0 1.5h-1a.75.75 0 0 1-.75-.75Z"
+                            fill="currentColor"
+                        ></path>
+                    </svg>
+                </button>
+            </div>
+            <div
+                class="navds-form-field__error"
+                id="datepicker-input-error-R3d6"
+                aria-relevant="additions removals"
+                aria-live="polite"
+            >
+                <template lwc:if={hasErrors}>
+                    <p>{error}</p>
+                </template>
+            </div>
+        </div>
+        <dialog aria-label="Velg dato" class="navds-modal navds-date__modal navds-modal--autowidth" autofocus="">
+            <div class="navds-date__modal-body">
+                <div class="rdp navds-date">
+                    <div class="rdp-months">
+                        <div class="rdp-month rdp-caption_start rdp-caption_end">
+                            <div class="navds-date__caption">
+                                <button
+                                    onclick={prevMonth}
+                                    type="button"
+                                    class="navds-date__caption-button navds-button navds-button--tertiary navds-button--medium navds-button--icon-only"
+                                >
+                                    <span class="navds-button__icon"
+                                        ><svg
+                                            width="1em"
+                                            height="1em"
+                                            viewBox="0 0 24 24"
+                                            fill="none"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            focusable="false"
+                                            role="img"
+                                            aria-labelledby="title-r2"
+                                        >
+                                            <title id="title-r2">Gå til forrige måned</title>
+                                            <path
+                                                d="M4.47 11.47a.75.75 0 0 0 0 1.06l4.5 4.5a.75.75 0 0 0 1.06-1.06l-3.22-3.22H19a.75.75 0 0 0 0-1.5H6.81l3.22-3.22a.75.75 0 1 0-1.06-1.06l-4.5 4.5Z"
+                                                fill="currentColor"
+                                            ></path></svg
+                                    ></span></button
+                                ><span
+                                    aria-live="polite"
+                                    aria-atomic="true"
+                                    id="react-day-picker-5"
+                                    class="navds-date__caption-label navds-label"
+                                    >{displayMonthString}</span
+                                ><button
+                                    onclick={nextMonth}
+                                    type="button"
+                                    class="navds-date__caption-button navds-button navds-button--tertiary navds-button--medium navds-button--icon-only"
+                                >
+                                    <span class="navds-button__icon"
+                                        ><svg
+                                            width="1em"
+                                            height="1em"
+                                            viewBox="0 0 24 24"
+                                            fill="none"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            focusable="false"
+                                            role="img"
+                                            aria-labelledby="title-r3"
+                                        >
+                                            <title id="title-r3">Gå til neste måned</title>
+                                            <path
+                                                d="M14.087 6.874a.752.752 0 0 0-.117 1.156l3.22 3.22H5a.75.75 0 0 0 0 1.5h12.19l-3.22 3.22a.75.75 0 0 0 1.06 1.06l4.5-4.5a.75.75 0 0 0 0-1.06l-4.5-4.5a.75.75 0 0 0-.943-.096Z"
+                                                fill="currentColor"
+                                            ></path></svg
+                                    ></span>
+                                </button>
+                            </div>
+                            <table class="rdp-table" role="grid" aria-labelledby="react-day-picker-5">
+                                <thead class="rdp-head" aria-hidden="true">
+                                    <tr class="rdp-head_row">
+                                        <th scope="col" class="rdp-head_cell" aria-label="mandag">ma</th>
+                                        <th scope="col" class="rdp-head_cell" aria-label="tirsdag">ti</th>
+                                        <th scope="col" class="rdp-head_cell" aria-label="onsdag">on</th>
+                                        <th scope="col" class="rdp-head_cell" aria-label="torsdag">to</th>
+                                        <th scope="col" class="rdp-head_cell" aria-label="fredag">fr</th>
+                                        <th scope="col" class="rdp-head_cell" aria-label="lørdag">lø</th>
+                                        <th scope="col" class="rdp-head_cell" aria-label="søndag">sø</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="rdp-tbody" onkeydown={nice}></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <button
+                    type="button"
+                    class="navds-button navds-button--tertiary navds-button--small"
+                    onclick={flipOpen}
+                >
+                    <span class="navds-label navds-label--small">Lukk</span>
+                </button>
+            </div>
+        </dialog>
+    </div>
+</template>
