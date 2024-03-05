@@ -5,3 +5,30 @@ dialog {
 dialog[open] {
     display: flex;
 }
+
+.navds-date__field-button {
+    align-items: center;
+    background: none;
+    border: none;
+    border-radius: calc(var(--a-border-radius-medium) - 1px);
+    border-end-start-radius: 0;
+    border-start-start-radius: 0;
+    color: var(--ac-date-input-button-text, var(--a-text-default));
+    cursor: pointer;
+    display: inline-flex;
+    font-size: 1.5rem;
+    height: calc(100% - 0.125rem);
+    justify-content: center;
+    margin: 0;
+    padding: var(--a-spacing-3);
+    position: absolute;
+    right: 0.0625rem;
+    text-decoration: none;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.navds-date__field-button:hover:where(:not([disabled])) {
+    background-color: var(--ac-date-input-button-hover-bg, var(--a-surface-action-subtle-hover));
+    color: var(--ac-date-input-button-hover-text, var(--a-text-action-on-action-subtle));
+}
