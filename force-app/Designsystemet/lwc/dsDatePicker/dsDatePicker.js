@@ -164,7 +164,7 @@ export default class DsDatePicker extends LightningElement {
 
     generateYearFromTwoDigits(year) {
         const currentYear = new Date().getFullYear();
-        if (year <= String(currentYear + 5).slice(2, 4)) return currentYear.slice(0, 2) + year;
+        if (year <= String(currentYear + 5).slice(2, 4)) return String(currentYear).slice(0, 2) + year;
         return String(currentYear - 100).slice(0, 2) + year;
     }
 
