@@ -1,6 +1,6 @@
 import { LightningElement, api } from 'lwc';
 
-const envLinks = { Prod: 'https://www.nav.no/dekoratoren', Dev: 'https://www.dev.nav.no/dekoratoren' };
+const envLinks = { Prod: 'https://www.nav.no/dekoratoren', Dev: 'https://dekoratoren.ekstern.dev.nav.no/' };
 
 export default class DecoratorHeader extends LightningElement {
     static renderMode = 'light'; // the default is 'shadow'

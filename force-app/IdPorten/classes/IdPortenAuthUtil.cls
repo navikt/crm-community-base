@@ -51,7 +51,7 @@ public with sharing class IdPortenAuthUtil {
             req.setEndpoint(tokenEndpointUrl);
             req.setHeader('Content-Type','application/x-www-form-urlencoded');
             req.setMethod('POST');
-            req.setBody('grant_type=authorization_code&redirect_url=' + encodedRedirectUrl + '&code=' + code + '&client_id='+ consumerKey + '&client_secret=' + consumerSecret + '&code_verifier=' + codeVerifier);
+            req.setBody('grant_type=authorization_code&redirect_uri=' + encodedRedirectUrl + '&code=' + code + '&client_id='+ consumerKey + '&client_secret=' + consumerSecret + '&code_verifier=' + codeVerifier);
                    
             Http http = new Http();
             HTTPResponse res = http.send(req);
