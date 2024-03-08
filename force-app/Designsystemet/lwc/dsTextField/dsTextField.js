@@ -18,6 +18,11 @@ export default class DsTextField extends LightningElement {
         return this.template.querySelector('.navds-text-field__input').value;
     }
 
+    @api
+    focus() {
+        this.template.querySelector('.navds-text-field__input')?.focus();
+    }
+
     get hasErrorMsg() {
         return this.error != null;
     }

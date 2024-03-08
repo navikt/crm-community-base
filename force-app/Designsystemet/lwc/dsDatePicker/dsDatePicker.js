@@ -23,6 +23,11 @@ export default class DsDatePicker extends LightningElement {
         return this.selectedDate;
     }
 
+    @api
+    focus() {
+        this.template.querySelector('.navds-date__field-input')?.focus();
+    }
+
     flipOpen() {
         this.open = !this.open;
         const modal = this.template.querySelector('.navds-modal');
@@ -138,19 +143,24 @@ export default class DsDatePicker extends LightningElement {
         // Breaks up the user input into 5 sections, 1 and 2 are used for days, 3 and 4 for months and 5 for year
         // 1,3 and 5 are default, 2 and 4 are for single digit days and/or months, which we pad with 0 later.
         let pattern =
-            /^(?:([\d]{2})[/.,-/]*|([1-9])[/.,-/]+)(?:(0[1-9]|1[1-2])[/.,-/]*|([1-9])[/.,-/]+)([\d]{4}|[\d]{2})$/;
+            /^(?:([\d]{2})[/.,-/]*|([1-9])[/.,-/]+)(?:(0[1-9]|1[0-2])[/.,-/]*|([1-9])[/.,-/]+)([\d]{4}|[\d]{2})$/;
         const inputMatches = pattern.exec(dateString);
         if (!inputMatches) {
+            console.log('No match');
+            console.log(inputMatches);
             this.userInput = dateString;
             this.selectedDate = null;
             return;
         }
+        console.log(inputMatches);
         const day = inputMatches[1] != null ? inputMatches[1] : inputMatches[2].padStart(2, '0'),
             month = inputMatches[3] != null ? inputMatches[3] : inputMatches[4].padStart(2, '0'),
             year = inputMatches[5].length < 4 ? this.generateYearFromTwoDigits(inputMatches[5]) : inputMatches[5];
         // const strength = dateString.split('.');
         const wantedDate = new Date(year, month - 1, day);
-        if (String(wantedDate.getDate()) !== day) {
+        if (String(wantedDate.getDate()).padStart(2, '0') !== day) {
+            console.log('Got shafted');
+            console.log(wantedDate);
             this.userInput = dateString;
             this.selectedDate = null;
             return;
