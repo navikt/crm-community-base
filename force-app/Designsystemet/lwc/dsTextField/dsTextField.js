@@ -6,25 +6,26 @@ export default class DsTextField extends LightningElement {
     @api readOnly;
     @api label;
     @api type = 'text'; //"email" | "number" | "password" | "tel" | "text" | "url" | "time";
-    @api error;
     @api autoComplete = 'off';
     @api description;
     @api required = false;
     @api maxLength;
     @api minLength;
 
+    error;
+
+    get inputElement() {
+        return this.template.querySelector('.navds-text-field__input');
+    }
+
     @api
     getValue() {
-        return this.template.querySelector('.navds-text-field__input').value;
+        return this.inputElement?.value;
     }
 
     @api
     focus() {
-        this.template.querySelector('.navds-text-field__input')?.focus();
-    }
-
-    get hasErrorMsg() {
-        return this.error != null;
+        this.inputElement?.focus();
     }
 
     get classes() {
@@ -54,5 +55,9 @@ export default class DsTextField extends LightningElement {
         return (
             'navds-text-field__input navds-body-short navds-body-short--' + (this.size !== null ? this.size : 'medium')
         );
+    }
+
+    checkForError() {
+        this.error = this.required && this.getValue() === '';
     }
 }

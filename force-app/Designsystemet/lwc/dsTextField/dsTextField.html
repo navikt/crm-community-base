@@ -13,6 +13,8 @@
         </template>
 
         <input
+            onfocusout={checkForError}
+            oninput={checkForError}
             id="textField"
             type={type}
             class={inputClasses}
@@ -24,8 +26,8 @@
         />
 
         <div class="navds-form-field__error" aria-relevant="additions removals" aria-live="polite">
-            <template lwc:if={showErrorMsg}>
-                <p class="navds-error-message navds-label">{error}</p>
+            <template lwc:if={error}>
+                <p class="navds-error-message navds-label">Tekstboksen kan ikke være tom</p>
             </template>
         </div>
     </div>

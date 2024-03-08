@@ -1,5 +1,5 @@
 <template>
-    <div class="navds-date__wrapper">
+    <div class="navds-date__wrapper" onfocusout={checkForError}>
         <div class="navds-form-field navds-form-field--medium navds-date__field">
             <label for="datepicker-input" class="navds-form-field__label navds-label">{label}</label>
             <div class="navds-date__field-wrapper">
@@ -20,10 +20,10 @@
                         xmlns="http://www.w3.org/2000/svg"
                         focusable="false"
                         role="img"
-                        aria-labelledby="title-R9rd6"
+                        aria-labelledby="title"
                         pointer-events="none"
                     >
-                        <title id="title-R9rd6">Åpne datovelger</title>
+                        <title id="title">Åpne datovelger</title>
                         <path
                             fill-rule="evenodd"
                             clip-rule="evenodd"
@@ -33,14 +33,9 @@
                     </svg>
                 </button>
             </div>
-            <div
-                class="navds-form-field__error"
-                id="datepicker-input-error-R3d6"
-                aria-relevant="additions removals"
-                aria-live="polite"
-            >
-                <template lwc:if={hasErrors}>
-                    <p>{error}</p>
+            <div class="navds-form-field__error" aria-relevant="additions removals" aria-live="polite">
+                <template lwc:if={error}>
+                    <p class="navds-error-message navds-label">Ugyldig dato</p>
                 </template>
             </div>
         </div>
@@ -75,7 +70,7 @@
                                 ><span
                                     aria-live="polite"
                                     aria-atomic="true"
-                                    id="react-day-picker-5"
+                                    id="dayPicker"
                                     class="navds-date__caption-label navds-label"
                                     >{displayMonthString}</span
                                 ><button
@@ -102,7 +97,7 @@
                                     ></span>
                                 </button>
                             </div>
-                            <table class="rdp-table" role="grid" aria-labelledby="react-day-picker-5">
+                            <table class="rdp-table" role="grid" aria-labelledby="dayPicker">
                                 <thead class="rdp-head" aria-hidden="true">
                                     <tr class="rdp-head_row">
                                         <th scope="col" class="rdp-head_cell" aria-label="mandag">ma</th>

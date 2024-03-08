@@ -1,10 +1,10 @@
 import { LightningElement, api } from 'lwc';
 
 export default class DsDatePicker extends LightningElement {
-    @api error;
     @api label;
 
     open = false;
+    error;
 
     firstOfViewedMonth;
     displayMonthString;
@@ -241,5 +241,9 @@ export default class DsDatePicker extends LightningElement {
             a.tabIndex = 0;
             a.focus();
         }
+    }
+
+    checkForError() {
+        this.error = this.selectedDate == null;
     }
 }
