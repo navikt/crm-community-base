@@ -134,7 +134,7 @@ export default class DsDatePicker extends LightningElement {
         );
     }
 
-    testKnight() {
+    inputChange() {
         const a = this.template.querySelector('.navds-date__field-input');
         this.setSelectedDateFromValue(a.value);
     }
@@ -146,21 +146,16 @@ export default class DsDatePicker extends LightningElement {
             /^(?:([\d]{2})[/.,-/]*|([1-9])[/.,-/]+)(?:(0[1-9]|1[0-2])[/.,-/]*|([1-9])[/.,-/]+)([\d]{4}|[\d]{2})$/;
         const inputMatches = pattern.exec(dateString);
         if (!inputMatches) {
-            console.log('No match');
-            console.log(inputMatches);
             this.userInput = dateString;
             this.selectedDate = null;
             return;
         }
-        console.log(inputMatches);
         const day = inputMatches[1] != null ? inputMatches[1] : inputMatches[2].padStart(2, '0'),
             month = inputMatches[3] != null ? inputMatches[3] : inputMatches[4].padStart(2, '0'),
             year = inputMatches[5].length < 4 ? this.generateYearFromTwoDigits(inputMatches[5]) : inputMatches[5];
         // const strength = dateString.split('.');
         const wantedDate = new Date(year, month - 1, day);
         if (String(wantedDate.getDate()).padStart(2, '0') !== day) {
-            console.log('Got shafted');
-            console.log(wantedDate);
             this.userInput = dateString;
             this.selectedDate = null;
             return;
