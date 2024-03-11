@@ -34,6 +34,7 @@ export default class DsDatePicker extends LightningElement {
         if (this.open) {
             modal.setAttribute('open', '');
             this.generateCalender();
+            modal.focus();
         } else {
             modal.removeAttribute('open');
         }
@@ -243,7 +244,11 @@ export default class DsDatePicker extends LightningElement {
         }
     }
 
-    checkForError() {
-        this.error = this.selectedDate == null;
+    checkForError(event) {
+        const div = this.template.querySelector('.navds-date__wrapper');
+        this.error =
+            this.selectedDate == null &&
+            (event.relatedTarget === null ||
+                !(div.contains(event.relatedTarget) || event.relatedTarget.classList.contains('rdp-button')));
     }
 }

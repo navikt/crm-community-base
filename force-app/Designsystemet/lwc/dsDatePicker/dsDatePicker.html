@@ -11,7 +11,8 @@
                     maxlength="11"
                     onchange={inputChange}
                     value={formattedDate}
-                /><button tabindex="0" type="button" class="navds-date__field-button" onclick={flipOpen}>
+                />
+                <button tabindex="0" type="button" class="navds-date__field-button" onclick={flipOpen}>
                     <svg
                         width="1em"
                         height="1em"
@@ -39,7 +40,7 @@
                 </template>
             </div>
         </div>
-        <dialog aria-label="Velg dato" class="navds-modal navds-date__modal navds-modal--autowidth" autofocus="">
+        <dialog aria-label="Velg dato" class="navds-modal navds-date__modal navds-modal--autowidth" autofocus="true">
             <div class="navds-date__modal-body">
                 <div class="rdp navds-date">
                     <div class="rdp-months">
