@@ -2,6 +2,7 @@ import { LightningElement, api } from 'lwc';
 
 export default class DsDatePicker extends LightningElement {
     @api label;
+    @api required = false;
 
     open = false;
     error;
