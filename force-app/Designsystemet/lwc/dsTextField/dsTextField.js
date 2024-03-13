@@ -33,7 +33,7 @@ export default class DsTextField extends LightningElement {
         classy += ` navds-form-field--${this.size}`;
 
         if (this.hasError) {
-            classy += ' navds-text-field--error';
+            classy += ' navds-text-field--error navds-date__field--error';
         }
         if (this.disabled) {
             classy += ' navds-text-field--disabled navds-form-field--disabled';
