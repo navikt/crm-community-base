@@ -32,3 +32,9 @@ dialog[open] {
     background-color: var(--ac-date-input-button-hover-bg, var(--a-surface-action-subtle-hover));
     color: var(--ac-date-input-button-hover-text, var(--a-text-action-on-action-subtle));
 }
+
+@media screen and (min-height: 480px) {
+    .slimMobile {
+        padding-left: 0px;
+    }
+}
