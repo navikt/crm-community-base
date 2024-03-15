@@ -155,8 +155,9 @@ export default class DsDatePicker extends LightningElement {
         const day = inputMatches[1] != null ? inputMatches[1] : inputMatches[2].padStart(2, '0'),
             month = inputMatches[3] != null ? inputMatches[3] : inputMatches[4].padStart(2, '0'),
             year = inputMatches[5].length < 4 ? this.generateYearFromTwoDigits(inputMatches[5]) : inputMatches[5];
-        // const strength = dateString.split('.');
         const wantedDate = new Date(year, month - 1, day);
+        // Javascript allows dates with illegal days and months, and will do subtraction and additions with them
+        // So new Date(2000, 03, 56) will make a legal date, but it will be the the 26th of May 2000.
         if (String(wantedDate.getDate()).padStart(2, '0') !== day) {
             this.userInput = dateString;
             this.selectedDate = null;
