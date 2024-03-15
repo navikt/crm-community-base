@@ -170,6 +170,9 @@ export default class DsDatePicker extends LightningElement {
     }
 
     generateYearFromTwoDigits(year) {
+        // If the user only provided two digits for the year, we have to guess which century they meant
+        // We make an assumption that all years between 00 and 5 years into the future are the current
+        // century, and numbers higher are for the previous. So 05 -> 2005, 65 -> 1965 and 29 -> 2029
         const currentYear = new Date().getFullYear();
         if (year <= String(currentYear + 5).slice(2, 4)) return String(currentYear).slice(0, 2) + year;
         return String(currentYear - 100).slice(0, 2) + year;
@@ -177,10 +180,10 @@ export default class DsDatePicker extends LightningElement {
 
     moveCalender(event) {
         if (
-            (event.key === 'ArrowLeft') |
-            (event.key === 'ArrowRight') |
-            (event.key === 'ArrowUp') |
-            (event.key === 'ArrowDown')
+            event.key === 'ArrowLeft' ||
+            event.key === 'ArrowRight' ||
+            event.key === 'ArrowUp' ||
+            event.key === 'ArrowDown'
         ) {
             event.preventDefault();
             const date = parseInt(document.activeElement.innerText, 10);
@@ -191,7 +194,7 @@ export default class DsDatePicker extends LightningElement {
 
     navigateDateKey(date, eventKey) {
         const dayArray = this.template.querySelectorAll('.rdp-day:not(.rdp-day_outside)');
-        let a;
+        let newFocusedDate;
         switch (eventKey) {
             case 'ArrowLeft':
                 if (date <= 1) {
@@ -199,7 +202,7 @@ export default class DsDatePicker extends LightningElement {
                     this.updateMonth(-1);
                     this.navigateDateKey(-1, 'PrevMonth');
                 } else {
-                    a = dayArray[date - 2];
+                    newFocusedDate = dayArray[date - 2];
                 }
                 break;
             case 'ArrowRight':
@@ -208,7 +211,7 @@ export default class DsDatePicker extends LightningElement {
                     this.updateMonth(1);
                     this.navigateDateKey(1, 'NextMonth');
                 } else {
-                    a = dayArray[date];
+                    newFocusedDate = dayArray[date];
                 }
                 break;
             case 'ArrowUp':
@@ -217,7 +220,7 @@ export default class DsDatePicker extends LightningElement {
                     this.updateMonth(-1);
                     this.navigateDateKey(date - 8, 'PrevMonth');
                 } else {
-                    a = dayArray[date - 8];
+                    newFocusedDatea = dayArray[date - 8];
                 }
                 break;
             case 'ArrowDown':
@@ -226,22 +229,22 @@ export default class DsDatePicker extends LightningElement {
                     this.updateMonth(1);
                     this.navigateDateKey(date - dayArray.length + 7, 'NextMonth');
                 } else {
-                    a = dayArray[date + 6];
+                    newFocusedDate = dayArray[date + 6];
                 }
                 break;
             case 'NextMonth':
-                a = dayArray[date - 1];
+                newFocusedDate = dayArray[date - 1];
                 break;
             case 'PrevMonth':
-                a = dayArray[dayArray.length + date];
+                newFocusedDate = dayArray[dayArray.length + date];
                 break;
             default:
                 break;
         }
-        if (a) {
-            this.lastFocusedDate = a.innerText;
-            a.tabIndex = 0;
-            a.focus();
+        if (newFocusedDate) {
+            this.lastFocusedDate = newFocusedDate.innerText;
+            newFocusedDate.tabIndex = 0;
+            newFocusedDate.focus();
         }
     }
 
