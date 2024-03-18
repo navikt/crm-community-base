@@ -1,5 +1,24 @@
 <template>
     <button class={buttonClass} onclick={handleClick} disabled={disabled}>
-        <span aria-live="polite" class={textClass}>{text}</span>
+        <template lwc:if={icon}>
+            <span class="navds-button__icon">
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="1em"
+                    height="1em"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    focusable="false"
+                    role="img"
+                    aria-hidden
+                >
+                    <use href={icon}></use>
+                </svg>
+            </span>
+            <span class="navds-label">{text}</span>
+        </template>
+        <template lwc:else>
+            <span class={textClass}>{text}</span>
+        </template>
     </button>
 </template>

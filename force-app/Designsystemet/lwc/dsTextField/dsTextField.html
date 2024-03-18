@@ -1,0 +1,34 @@
+<template>
+    <div class={classes}>
+        <label for="textField" class={labelClasses}>{label}</label>
+
+        <template lwc:if={description}>
+            <div
+                id="textFieldDescribe"
+                style="color: var(--a-grayalpha-700)"
+                class="navds-form-field__description navds-body-short navds-body-short--medium"
+            >
+                {description}
+            </div>
+        </template>
+
+        <input
+            onfocusout={checkForError}
+            oninput={checkForError}
+            id="textField"
+            type={type}
+            class={inputClasses}
+            autocomplete={autoComplete}
+            aria-describedby="textFieldDescribe"
+            required={required}
+            maxlength={maxLength}
+            minlength={minLength}
+        />
+
+        <div class="navds-form-field__error" aria-relevant="additions removals" aria-live="polite">
+            <template lwc:if={error}>
+                <p class="navds-error-message navds-label">Tekstboksen kan ikke være tom</p>
+            </template>
+        </div>
+    </div>
+</template>

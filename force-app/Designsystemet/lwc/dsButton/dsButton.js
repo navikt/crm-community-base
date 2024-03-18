@@ -7,11 +7,10 @@ export default class DsButton extends LightningElement {
     @api disabled = false;
     @api loading = false; // not implemented
     @api text;
+    @api icon;
 
     get buttonClass() {
-        return (
-            'navds-button ' + 'navds-button--' + this.variant + (this.size === 'small' ? ' navds-button--small' : '')
-        );
+        return 'navds-button navds-button--' + this.variant + (this.size === 'small' ? ' navds-button--small' : '');
     }
     get textClass() {
         return 'navds-button__inner navds-body-short' + (this.size === 'small' ? ' navds-body-short-small' : '');
