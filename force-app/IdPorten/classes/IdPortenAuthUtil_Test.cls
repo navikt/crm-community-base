@@ -117,6 +117,75 @@ private with sharing class IdPortenAuthUtil_Test {
         System.assertEquals('Nonce samsvarer ikke', errorLogs[0].Log_Message__c);
     }
 
+    @IsTest
+    private static void testGetTokenInfo_success() {
+        Test.setMock(HttpCalloutMock.class, new TokenInfoEndpointMock());
+
+        IdPortenAuthUtil.TokenInfo response;
+        String accessToken = 'asdakjlsfjsdf';
+
+        Test.startTest();
+        response = new IdPortenAuthUtil().getTokenInfo(accessToken);
+        Test.stopTest();
+        Assert.isTrue(response.active, 'Expected active tokenResponse');
+    }
+
+    @IsTest
+    private static void testGetTokenInfo_failure() {
+        Test.setMock(HttpCalloutMock.class, new TokenInfoEndpointMockFailure());
+
+        IdPortenAuthUtil.TokenInfo response;
+        String accessToken = 'asdakjlsfjsdf';
+
+        Test.startTest();
+        response = new IdPortenAuthUtil().getTokenInfo(accessToken);
+        Test.stopTest();
+        Assert.isNull(response, 'Expected to get null in response when status code not 200');
+    }
+
+    @IsTest
+    private static void testGetTokenInfo_exception() {
+        Test.setMock(HttpCalloutMock.class, new TokenInfoEndpointMockError());
+
+        IdPortenAuthUtil.TokenInfo response;
+        String accessToken = 'asdakjlsfjsdf';
+
+        Test.startTest();
+        response = new IdPortenAuthUtil().getTokenInfo(accessToken);
+        Test.stopTest();
+        Assert.isNull(response, 'Expected to get null in response when status code not 200');
+
+        List<Application_Log__c> logs = [SELECT Id FROM Application_Log__c WHERE Source_Class__c = 'IdPortenAuthUtil'];
+        Assert.areEqual(1, logs.size(), 'Expected one application log when getting an exception');
+    }
+
+    public class TokenInfoEndpointMock implements HttpCalloutMock {
+        public HTTPResponse respond(HTTPRequest request) {
+            HttpResponse res = new HttpResponse();
+            res.setHeader('Content-Type', 'application/json');
+            res.setBody(
+                '{ "active": true, "token_type": "Bearer", "expires_in": 556, "exp": 1477990301, "iat": 1477989701, "scope": "global/kontaktinformasjon.read", "client_id": "test_rp", "client_orgno": "991825827" }'
+            );
+            res.setStatusCode(200);
+            return res;
+        }
+    }
+
+    public class TokenInfoEndpointMockFailure implements HttpCalloutMock {
+        public HTTPResponse respond(HTTPRequest request) {
+            HttpResponse res = new HttpResponse();
+            res.setHeader('Content-Type', 'application/json');
+            res.setStatusCode(404);
+            return res;
+        }
+    }
+
+    public class TokenInfoEndpointMockError implements HttpCalloutMock {
+        public HTTPResponse respond(HTTPRequest request) {
+            return new Http().send(null);
+        }
+    }
+
     public class TokenEndpointMock implements HttpCalloutMock {
         public HTTPResponse respond(HTTPRequest request) {
             HttpResponse res = new HttpResponse();

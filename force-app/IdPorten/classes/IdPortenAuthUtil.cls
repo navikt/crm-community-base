@@ -105,23 +105,32 @@ public with sharing class IdPortenAuthUtil {
         return resp;
     }
 
-    public TokenInfo getTokenInfo(String accessToken) {
-        String tokenInfoEndpointUrl = authProviderConfiguration.get('TokenInfoEndpointUrl');
-        String consumerKey = authProviderConfiguration.get('ConsumerKey');
-        String consumerSecret = authProviderConfiguration.get('ConsumerSecret');
+    public TokenInfo getTokenInfo(String token) {
+        try {
+            String tokenInfoEndpointUrl = authProviderConfiguration.get('TokenInfoEndpointUrl');
+            String consumerKey = authProviderConfiguration.get('ConsumerKey');
+            String consumerSecret = authProviderConfiguration.get('ConsumerSecret');
 
-        String auth = EncodingUtil.base64Encode(Blob.valueOf(consumerKey + ':' + consumerSecret));
+            String auth = EncodingUtil.base64Encode(Blob.valueOf(consumerKey + ':' + consumerSecret));
 
-        HttpRequest req = new HttpRequest();
-        req.setEndpoint(tokenInfoEndpointUrl);
-        req.setHeader('Content-Type', 'application/x-www-form-urlencoded');
-        req.setHeader('Authorization', 'Basic ' + auth);
-        req.setMethod('POST');
-        req.setBody('token=' + accessToken);
+            HttpRequest req = new HttpRequest();
+            req.setEndpoint(tokenInfoEndpointUrl);
+            req.setHeader('Content-Type', 'application/x-www-form-urlencoded');
+            req.setHeader('Authorization', 'Basic ' + auth);
+            req.setMethod('POST');
+            req.setBody('token=' + token);
 
-        HTTPResponse res = new Http().send(req);
+            HTTPResponse res = new Http().send(req);
 
-        return (TokenInfo) JSON.deserialize(res.getBody(), TokenInfo.class);
+            if (res.getStatusCode() == 200) {
+                return (TokenInfo) JSON.deserialize(res.getBody(), TokenInfo.class);
+            }
+        } catch (Exception e) {
+            LoggerUtility logger = new LoggerUtility();
+            logger.exception(e, CRM_ApplicationDomain.Domain.CRM);
+            logger.publishSynch();
+        }
+        return null;
     }
 
     public String getRedirectUrl() {
@@ -223,13 +232,13 @@ public with sharing class IdPortenAuthUtil {
     }
 
     public class TokenInfo {
-        Boolean active;
-        String token_type;
-        Integer expires_in;
-        Integer exp;
-        Integer iat;
-        String scope;
-        String client_id;
-        String client_orgno;
+        public Boolean active { get; private set; }
+        public String token_type { get; private set; }
+        public Integer expires_in { get; private set; }
+        public Integer exp { get; private set; }
+        public Integer iat { get; private set; }
+        public String scope { get; private set; }
+        public String client_id { get; private set; }
+        public String client_orgno { get; private set; }
     }
 }
