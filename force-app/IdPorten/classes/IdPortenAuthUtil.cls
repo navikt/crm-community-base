@@ -105,6 +105,25 @@ public with sharing class IdPortenAuthUtil {
         return resp;
     }
 
+    public TokenInfo getTokenInfo(String accessToken) {
+        String tokenInfoEndpointUrl = authProviderConfiguration.get('TokenInfoEndpointUrl');
+        String consumerKey = authProviderConfiguration.get('ConsumerKey');
+        String consumerSecret = authProviderConfiguration.get('ConsumerSecret');
+
+        String auth = EncodingUtil.base64Encode(Blob.valueOf(consumerKey + ':' + consumerSecret));
+
+        HttpRequest req = new HttpRequest();
+        req.setEndpoint(tokenInfoEndpointUrl);
+        req.setHeader('Content-Type', 'application/x-www-form-urlencoded');
+        req.setHeader('Authorization', 'Basic ' + auth);
+        req.setMethod('POST');
+        req.setBody('token=' + accessToken);
+
+        HTTPResponse res = new Http().send(req);
+
+        return (TokenInfo) JSON.deserialize(res.getBody(), TokenInfo.class);
+    }
+
     public String getRedirectUrl() {
         if (Test.isRunningTest()) {
             return 'https://callback';
@@ -123,11 +142,18 @@ public with sharing class IdPortenAuthUtil {
             authProviderConfiguration.put('ConsumerKey', 'key');
             authProviderConfiguration.put('ConsumerSecret', 'secret');
             authProviderConfiguration.put('TokenEndpointUrl', 'https://token');
+            authProviderConfiguration.put('TokenInfoEndpointUrl', 'https://tokenInfo');
             return authProviderConfiguration;
         }
 
         ID_porten__mdt mdt = [
-            SELECT AcrValues__c, AuthorizeEndpointUrl__c, ConsumerKey__c, ConsumerSecret__c, TokenEndpointUrl__c
+            SELECT
+                AcrValues__c,
+                AuthorizeEndpointUrl__c,
+                ConsumerKey__c,
+                ConsumerSecret__c,
+                TokenEndpointUrl__c,
+                TokenInfoEndpointUrl__c
             FROM ID_porten__mdt
             WHERE DeveloperName = 'IdPorten'
         ];
@@ -136,6 +162,7 @@ public with sharing class IdPortenAuthUtil {
         authProviderConfiguration.put('ConsumerKey', mdt.ConsumerKey__c);
         authProviderConfiguration.put('ConsumerSecret', mdt.ConsumerSecret__c);
         authProviderConfiguration.put('TokenEndpointUrl', mdt.TokenEndpointUrl__c);
+        authProviderConfiguration.put('TokenInfoEndpointUrl', mdt.TokenInfoEndpointUrl__c);
         return authProviderConfiguration;
     }
 
@@ -193,5 +220,16 @@ public with sharing class IdPortenAuthUtil {
     public class TokenResponse {
         public String sid { get; set; }
         public String accessToken { get; set; }
+    }
+
+    public class TokenInfo {
+        Boolean active;
+        String token_type;
+        Integer expires_in;
+        Integer exp;
+        Integer iat;
+        String scope;
+        String client_id;
+        String client_orgno;
     }
 }
