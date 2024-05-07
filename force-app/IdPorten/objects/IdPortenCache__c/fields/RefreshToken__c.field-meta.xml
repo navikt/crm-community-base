@@ -3,7 +3,7 @@
     <fullName>RefreshToken__c</fullName>
     <externalId>false</externalId>
     <label>Refresh Token</label>
-    <length>1050</length>
+    <length>2050</length>
     <trackTrending>false</trackTrending>
     <type>LongTextArea</type>
     <visibleLines>4</visibleLines>
