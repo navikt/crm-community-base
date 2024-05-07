@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>TokenEndpointUrl__c</fullName>
+    <fullName>TokenInfoEndpointUrl__c</fullName>
     <externalId>false</externalId>
     <fieldManageability>DeveloperControlled</fieldManageability>
-    <label>Token Endpoint URL</label>
+    <label>Token Info Endpoint URL</label>
     <length>100</length>
     <required>false</required>
     <type>Text</type>
