@@ -70,14 +70,26 @@ public with sharing class IdPortenSidController {
         }
 
         IdPortenAuthUtil authUtil = new IdPortenAuthUtil();
-        String sid = authUtil.getSidFromIdToken(code, codeVerifierFromCookie, nonceFromCookie);
+        IdPortenAuthUtil.TokenResponse tokenResponse = authUtil.getSidFromIdToken(
+            code,
+            codeVerifierFromCookie,
+            nonceFromCookie
+        );
+        String sid = tokenResponse?.sid;
+        String refreshToken = tokenResponse?.refreshToken;
         Id userId = UserInfo.getUserId();
-        authUtil.storeSid(sid, userId);
+        authUtil.storeSid(sid, userId, refreshToken);
         return finishLoginFlow();
     }
 
     private static PageReference finishLoginFlow() {
-        List<String> communitiesUsingNewDecorator = new List<String>{ '0DB2o000000Ug9I', '0DB2o000000Ug9D', '0DB0E0000005HX9', '0DB7U000000TN3uWAG', '0DB7U0000004C9wWAE' };
+        List<String> communitiesUsingNewDecorator = new List<String>{
+            '0DB2o000000Ug9I',
+            '0DB2o000000Ug9D',
+            '0DB0E0000005HX9',
+            '0DB7U000000TN3uWAG',
+            '0DB7U0000004C9wWAE'
+        };
 
         Cookie retUrlCookie = ApexPages.currentPage().getCookies().get('retUrl');
         if (retUrlCookie == null) {
