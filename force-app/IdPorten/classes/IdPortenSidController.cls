@@ -76,9 +76,9 @@ public with sharing class IdPortenSidController {
             nonceFromCookie
         );
         String sid = tokenResponse?.sid;
-        String accessToken = tokenResponse?.accessToken;
+        String refreshToken = tokenResponse?.refreshToken;
         Id userId = UserInfo.getUserId();
-        authUtil.storeSid(sid, userId, accessToken);
+        authUtil.storeSid(sid, userId, refreshToken);
         return finishLoginFlow();
     }
 

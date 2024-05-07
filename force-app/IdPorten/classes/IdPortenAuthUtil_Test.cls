@@ -40,9 +40,9 @@ private with sharing class IdPortenAuthUtil_Test {
     private static void testStoreSid() {
         Id userId = '0052o000009GmW3AAK';
         String sid = 'test-sid';
-        String access = 'test-access';
+        String refresh = 'test-refresh';
 
-        new IdPortenAuthUtil().storeSid(sid, userId, access);
+        new IdPortenAuthUtil().storeSid(sid, userId, refresh);
 
         System.assertEquals(
             1,
@@ -55,9 +55,9 @@ private with sharing class IdPortenAuthUtil_Test {
     private static void testStoreSid_whenInvalidData() {
         Id userId = '0052o000009GmW3AAK';
         String sid = '12345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890';
-        String access = 'test-access';
+        String refresh = 'test-refresh';
 
-        new IdPortenAuthUtil().storeSid(sid, userId, access);
+        new IdPortenAuthUtil().storeSid(sid, userId, refresh);
 
         System.assertEquals(
             1,
@@ -70,9 +70,9 @@ private with sharing class IdPortenAuthUtil_Test {
     private static void testStoreSid_whenSidIsEmpty() {
         Id userId = '0052o000009GmW3AAK';
         String sid = null;
-        String access = 'test-access';
+        String refresh = 'test-refresh';
 
-        new IdPortenAuthUtil().storeSid(sid, userId, access);
+        new IdPortenAuthUtil().storeSid(sid, userId, refresh);
         List<Application_Log__c> errorLogs = [
             SELECT Log_Message__c
             FROM Application_Log__c

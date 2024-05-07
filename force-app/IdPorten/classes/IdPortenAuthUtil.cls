@@ -36,12 +36,12 @@ public with sharing class IdPortenAuthUtil {
         return response;
     }
 
-    public void storeSid(String sid, Id userId, String accessToken) {
+    public void storeSid(String sid, Id userId, String refreshToken) {
         if (sid != null) {
             IdPortenCache__c cache = new IdPortenCache__c();
             cache.Name = sid;
             cache.UserId__c = userId;
-            cache.AccessToken__c = accessToken;
+            cache.RefreshToken__c = refreshToken;
             try {
                 insert cache;
             } catch (Exception e) {
@@ -90,7 +90,7 @@ public with sharing class IdPortenAuthUtil {
         }
 
         String idToken = getTokenValueFromResponse(res.getBody(), 'id_token');
-        String accessToken = getTokenValueFromResponse(res.getBody(), 'access_token');
+        String refreshToken = getTokenValueFromResponse(res.getBody(), 'refresh_token');
         JWTClaims decodedIdToken = decodeIdToken(idToken);
 
         if (decodedIdToken.nonce == null || decodedIdToken.nonce != nonce) {
@@ -100,7 +100,7 @@ public with sharing class IdPortenAuthUtil {
             return null;
         }
         TokenResponse resp = new TokenResponse();
-        resp.accessToken = accessToken;
+        resp.refreshToken = refreshToken;
         resp.sid = decodedIdToken.sid;
         return resp;
     }
@@ -156,22 +156,17 @@ public with sharing class IdPortenAuthUtil {
         }
 
         ID_porten__mdt mdt = [
-            SELECT
-                AcrValues__c,
-                AuthorizeEndpointUrl__c,
-                ConsumerKey__c,
-                ConsumerSecret__c,
-                TokenEndpointUrl__c,
-                TokenInfoEndpointUrl__c
+            SELECT AcrValues__c, AuthorizeEndpointUrl__c, ConsumerKey__c, ConsumerSecret__c, TokenEndpointUrl__c
             FROM ID_porten__mdt
             WHERE DeveloperName = 'IdPorten'
         ];
+        // TokenInfoEndpointUrl__c
         authProviderConfiguration.put('AcrValues', mdt.AcrValues__c);
         authProviderConfiguration.put('AuthorizeEndpointUrl', mdt.AuthorizeEndpointUrl__c);
         authProviderConfiguration.put('ConsumerKey', mdt.ConsumerKey__c);
         authProviderConfiguration.put('ConsumerSecret', mdt.ConsumerSecret__c);
         authProviderConfiguration.put('TokenEndpointUrl', mdt.TokenEndpointUrl__c);
-        authProviderConfiguration.put('TokenInfoEndpointUrl', mdt.TokenInfoEndpointUrl__c);
+        // authProviderConfiguration.put('TokenInfoEndpointUrl', mdt.TokenInfoEndpointUrl__c);
         return authProviderConfiguration;
     }
 
@@ -228,7 +223,7 @@ public with sharing class IdPortenAuthUtil {
 
     public class TokenResponse {
         public String sid { get; set; }
-        public String accessToken { get; set; }
+        public String refreshToken { get; set; }
     }
 
     public class TokenInfo {
