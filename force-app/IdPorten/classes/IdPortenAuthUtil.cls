@@ -36,12 +36,11 @@ public with sharing class IdPortenAuthUtil {
         return response;
     }
 
-    public void storeSid(String sid, Id userId, String refreshToken) {
+    public void storeSid(String sid, Id userId) {
         if (sid != null) {
             IdPortenCache__c cache = new IdPortenCache__c();
             cache.Name = sid;
             cache.UserId__c = userId;
-            cache.RefreshToken__c = refreshToken;
             try {
                 insert cache;
             } catch (Exception e) {
