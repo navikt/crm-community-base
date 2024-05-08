@@ -8,24 +8,67 @@ global class IdPortenCacheDeleteHandler extends MyTriggers {
         }
 
         if (userIds.size() > 0) {
-            try {
-                delete [
-                    SELECT Id
-                    FROM AuthSession
-                    WHERE UsersId = :userIds AND LoginType = 'Chatter Communities External User Third Party SSO'
-                ];
-            } catch (Exception e) {
-                LoggerUtility logger = new LoggerUtility('Logout');
+            IdPortenCacheDeleteHandler.performDelete(userIds);
+        }
+    }
+
+    @future
+    public static void performDelete(Set<Id> userIds) {
+        LoggerUtility logger = new LoggerUtility('Logout');
+        Integer successCount = 0;
+        Integer failedCount = 0;
+
+        try {
+            List<AuthSession> authSessionsToDelete = [
+                SELECT Id
+                FROM AuthSession
+                WHERE UsersId = :userIds AND LoginType = 'Chatter Communities External User Third Party SSO'
+            ];
+
+            if (authSessionsToDelete.isEmpty()) {
+                logger.info('No auth sessions to delete found', null, CRM_ApplicationDomain.Domain.CRM);
+                logger.publish();
+                return;
+            }
+
+            List<Database.DeleteResult> deleteResults = Database.delete(authSessionsToDelete, false);
+
+            for (Database.DeleteResult result : deleteResults) {
+                if (result.isSuccess()) {
+                    successCount += 1;
+                } else {
+                    failedCount += 1;
+                }
+            }
+
+            if (successCount > 0) {
+                logger.info('Deleted ' + successCount + ' AuthSession.', null, CRM_ApplicationDomain.Domain.CRM);
+            }
+            if (failedCount > 0) {
                 logger.critical(
-                    'Could not delete AuthSession while deleting Id Porten cache. + \n' +
-                    userIds +
-                    '\n' +
-                    e.getMessage(),
+                    'Failed to delete ' +
+                    failedCount +
+                    ' AuthSession:',
                     null,
                     CRM_ApplicationDomain.Domain.CRM
                 );
-                logger.publish();
             }
+
+            delete [
+                SELECT Id
+                FROM AuthSession
+                WHERE UsersId = :userIds AND LoginType = 'Chatter Communities External User Third Party SSO'
+            ];
+        } catch (Exception e) {
+            logger.critical(
+                'Could not delete AuthSession while deleting Id Porten cache. + \n' +
+                userIds +
+                '\n' +
+                e.getMessage(),
+                null,
+                CRM_ApplicationDomain.Domain.CRM
+            );
         }
+        logger.publish();
     }
 }
