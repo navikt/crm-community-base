@@ -1,6 +1,6 @@
 public with sharing class DeleteIdPortenCacheScheduler implements Schedulable {
     private static final String JOB_NAME = 'Delete Id Porten Cache Records';
-    private static final Integer FIVE_MINUTES = 1;
+    private static final Integer FIVE_MINUTES = 5;
     private static final Set<String> CRON_TRIGGER_IS_SCHEDULED_STATES = new Set<String>{
         'WAITING',
         'ACQUIRED',
@@ -56,8 +56,18 @@ public with sharing class DeleteIdPortenCacheScheduler implements Schedulable {
         DateTime cronJobTime = System.now().addMinutes(FIVE_MINUTES);
 
         String cronExpression = DeleteIdPortenCacheScheduler.getCronExpression(cronJobTime);
+        String jobName = DeleteIdPortenCacheScheduler.getJobName(cronJobTime);
+        System.schedule(jobName, cronExpression, new DeleteIdPortenCacheScheduler());
+    }
 
-        System.schedule(JOB_NAME + ' - ' + cronJobTime.format(), cronExpression, new DeleteIdPortenCacheScheduler());
+    private static String getJobName(DateTime cronJobTime) {
+        String jobName = JOB_NAME + ' - ' + cronJobTime.format();
+
+        if (Test.isRunningTest()) {
+            jobName += '- ' + (Integer) Math.floor(Math.random() * 10000);
+        }
+
+        return jobName;
     }
 
     public static void stopSchedule() {
