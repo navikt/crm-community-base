@@ -119,20 +119,20 @@ private with sharing class IdPortenAuthUtil_Test {
     private static void testGetTokensFromRefreshToken_success() {
         Test.setMock(HttpCalloutMock.class, new TokenInfoEndpointMock());
 
-        IdPortenAuthUtil.TokenInfo response;
+        IdPortenAuthUtil.TokenResponse response;
         String refreshToken = 'asdakjlsfjsdf';
 
         Test.startTest();
         response = new IdPortenAuthUtil().getTokensFromRefreshToken(refreshToken);
         Test.stopTest();
-        Assert.isTrue(response.active, 'Expected active tokenResponse');
+        Assert.isNotNull(response.refreshToken, 'Expected to get refresh token');
     }
 
     @IsTest
     private static void testGetTokensFromRefreshToken_failure() {
         Test.setMock(HttpCalloutMock.class, new TokenInfoEndpointMockFailure());
 
-        IdPortenAuthUtil.TokenInfo response;
+        IdPortenAuthUtil.TokenResponse response;
         String refreshToken = 'asdakjlsfjsdf';
 
         Test.startTest();
@@ -145,7 +145,7 @@ private with sharing class IdPortenAuthUtil_Test {
     private static void testGetTokensFromRefreshToken_exception() {
         Test.setMock(HttpCalloutMock.class, new TokenInfoEndpointMockError());
 
-        IdPortenAuthUtil.TokenInfo response;
+        IdPortenAuthUtil.TokenResponse response;
         String refreshToken = 'asdakjlsfjsdf';
 
         Test.startTest();
