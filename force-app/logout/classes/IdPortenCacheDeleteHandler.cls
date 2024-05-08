@@ -5,6 +5,11 @@ global class IdPortenCacheDeleteHandler extends MyTriggers {
             userIds.add(cache.UserId__c);
         }
 
+        IdPortenCacheDeleteHandler.performDelete(userIds);
+    }
+
+    @future
+    public static void performDelete(Set<Id> userIds) {
         try {
             delete [
                 SELECT Id
