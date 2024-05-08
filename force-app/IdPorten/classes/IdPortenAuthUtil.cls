@@ -36,12 +36,11 @@ public with sharing class IdPortenAuthUtil {
         return response;
     }
 
-    public void storeSid(String sid, Id userId, String refreshToken) {
+    public void storeSid(String sid, Id userId) {
         if (sid != null) {
             IdPortenCache__c cache = new IdPortenCache__c();
             cache.Name = sid;
             cache.UserId__c = userId;
-            cache.RefreshToken__c = refreshToken;
             try {
                 insert cache;
             } catch (Exception e) {
@@ -56,7 +55,7 @@ public with sharing class IdPortenAuthUtil {
         }
     }
 
-    public TokenResponse getSidFromIdToken(String code, String codeVerifier, String nonce) {
+    public String getSidFromIdToken(String code, String codeVerifier, String nonce) {
         String consumerKey = authProviderConfiguration.get('ConsumerKey');
         String consumerSecret = authProviderConfiguration.get('ConsumerSecret');
         String tokenEndpointUrl = authProviderConfiguration.get('TokenEndpointUrl');
@@ -67,7 +66,7 @@ public with sharing class IdPortenAuthUtil {
         req.setHeader('Content-Type', 'application/x-www-form-urlencoded');
         req.setMethod('POST');
         req.setBody(
-            'grant_type=authorization_code&redirect_uri=' +
+            'grant_type=authorization_code&redirect_url=' +
             encodedRedirectUrl +
             '&code=' +
             code +
@@ -90,7 +89,6 @@ public with sharing class IdPortenAuthUtil {
         }
 
         String idToken = getTokenValueFromResponse(res.getBody(), 'id_token');
-        String refreshToken = getTokenValueFromResponse(res.getBody(), 'refresh_token');
         JWTClaims decodedIdToken = decodeIdToken(idToken);
 
         if (decodedIdToken.nonce == null || decodedIdToken.nonce != nonce) {
@@ -99,38 +97,7 @@ public with sharing class IdPortenAuthUtil {
             logger.publishSynch();
             return null;
         }
-        TokenResponse resp = new TokenResponse();
-        resp.refreshToken = refreshToken;
-        resp.sid = decodedIdToken.sid;
-        return resp;
-    }
-
-    public TokenInfo getTokenInfo(String token) {
-        try {
-            String tokenInfoEndpointUrl = authProviderConfiguration.get('TokenInfoEndpointUrl');
-            String consumerKey = authProviderConfiguration.get('ConsumerKey');
-            String consumerSecret = authProviderConfiguration.get('ConsumerSecret');
-
-            String auth = EncodingUtil.base64Encode(Blob.valueOf(consumerKey + ':' + consumerSecret));
-
-            HttpRequest req = new HttpRequest();
-            req.setEndpoint(tokenInfoEndpointUrl);
-            req.setHeader('Content-Type', 'application/x-www-form-urlencoded');
-            req.setHeader('Authorization', 'Basic ' + auth);
-            req.setMethod('POST');
-            req.setBody('token=' + token);
-
-            HTTPResponse res = new Http().send(req);
-
-            if (res.getStatusCode() == 200) {
-                return (TokenInfo) JSON.deserialize(res.getBody(), TokenInfo.class);
-            }
-        } catch (Exception e) {
-            LoggerUtility logger = new LoggerUtility();
-            logger.exception(e, CRM_ApplicationDomain.Domain.CRM);
-            logger.publishSynch();
-        }
-        return null;
+        return decodedIdToken.sid;
     }
 
     public String getRedirectUrl() {
@@ -151,7 +118,6 @@ public with sharing class IdPortenAuthUtil {
             authProviderConfiguration.put('ConsumerKey', 'key');
             authProviderConfiguration.put('ConsumerSecret', 'secret');
             authProviderConfiguration.put('TokenEndpointUrl', 'https://token');
-            authProviderConfiguration.put('TokenInfoEndpointUrl', 'https://tokenInfo');
             return authProviderConfiguration;
         }
 
@@ -160,13 +126,11 @@ public with sharing class IdPortenAuthUtil {
             FROM ID_porten__mdt
             WHERE DeveloperName = 'IdPorten'
         ];
-        // TokenInfoEndpointUrl__c
         authProviderConfiguration.put('AcrValues', mdt.AcrValues__c);
         authProviderConfiguration.put('AuthorizeEndpointUrl', mdt.AuthorizeEndpointUrl__c);
         authProviderConfiguration.put('ConsumerKey', mdt.ConsumerKey__c);
         authProviderConfiguration.put('ConsumerSecret', mdt.ConsumerSecret__c);
         authProviderConfiguration.put('TokenEndpointUrl', mdt.TokenEndpointUrl__c);
-        // authProviderConfiguration.put('TokenInfoEndpointUrl', mdt.TokenInfoEndpointUrl__c);
         return authProviderConfiguration;
     }
 
@@ -219,21 +183,5 @@ public with sharing class IdPortenAuthUtil {
     private class JWTClaims {
         String sid;
         String nonce;
-    }
-
-    public class TokenResponse {
-        public String sid { get; set; }
-        public String refreshToken { get; set; }
-    }
-
-    public class TokenInfo {
-        public Boolean active { get; private set; }
-        public String token_type { get; private set; }
-        public Integer expires_in { get; private set; }
-        public Integer exp { get; private set; }
-        public Integer iat { get; private set; }
-        public String scope { get; private set; }
-        public String client_id { get; private set; }
-        public String client_orgno { get; private set; }
     }
 }
