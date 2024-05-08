@@ -16,27 +16,34 @@ public with sharing class DeleteIdPortenCacheRecords {
 
     @TestVisible
     private void runDelete(List<IdPortenCache__c> recordsToDelete) {
+        LoggerUtility logger = new LoggerUtility('Logout');
+        Integer successCount = 0;
+        Integer failedCount = 0;
+        List<Id> recordIdsToDelete = new List<Id>();
+        List<Id> recordsToEmptyFromRecycleBin = new List<Id>();
+
         if (recordsToDelete.isEmpty()) {
             return;
         }
 
-        List<Id> recordIdsToDelete = new List<Id>();
         for (IdPortenCache__c recordToDelete : recordsToDelete) {
             recordIdsToDelete.add(recordToDelete.Id);
         }
 
-        List<Database.DeleteResult> deleteResults = Database.delete(recordIdsToDelete);
-        Database.emptyRecycleBin(recordIdsToDelete);
-        LoggerUtility logger = new LoggerUtility('Logout');
-        Integer successCount = 0;
-        Integer failedCount = 0;
+        List<Database.DeleteResult> deleteResults = Database.delete(recordIdsToDelete, false);
         for (Database.DeleteResult result : deleteResults) {
             if (result.isSuccess()) {
                 successCount += 1;
+                recordsToEmptyFromRecycleBin.add(result.getId());
             } else {
                 failedCount += 1;
             }
         }
+
+        if (recordsToEmptyFromRecycleBin.size() > 0) {
+            Database.emptyRecycleBin(recordsToEmptyFromRecycleBin);
+        }
+
         if (successCount > 0) {
             logger.info('Deleted ' + successCount + ' Id Porten Caches.', null, CRM_ApplicationDomain.Domain.CRM);
         }
