@@ -89,6 +89,7 @@ public with sharing class IdPortenAuthUtil {
         }
 
         String idToken = getTokenValueFromResponse(res.getBody(), 'id_token');
+        String refreshToken = getTokenValueFromResponse(res.getBody(), 'refresh_token');
         JWTClaims decodedIdToken = decodeIdToken(idToken);
 
         if (decodedIdToken.nonce == null || decodedIdToken.nonce != nonce) {
@@ -98,6 +99,7 @@ public with sharing class IdPortenAuthUtil {
             return null;
         }
         TokenResponse resp = new TokenResponse();
+        resp.refreshToken = refreshToken;
         resp.sid = decodedIdToken.sid;
         return resp;
     }
@@ -220,6 +222,7 @@ public with sharing class IdPortenAuthUtil {
 
     public class TokenResponse {
         public String sid { get; set; }
+        public String refreshToken { get; set; }
     }
 
     public class TokenInfo {

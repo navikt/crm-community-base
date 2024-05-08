@@ -54,6 +54,7 @@ private with sharing class IdPortenAuthUtil_Test {
     private static void testStoreSid_whenInvalidData() {
         Id userId = '0052o000009GmW3AAK';
         String sid = '12345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890';
+        String refresh = 'test-refresh';
 
         new IdPortenAuthUtil().storeSid(sid, userId);
 
