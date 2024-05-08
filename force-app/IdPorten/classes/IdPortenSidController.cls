@@ -1,12 +1,10 @@
 public with sharing class IdPortenSidController {
-    public PageReference redirect() {
-        Cookie stateCookie;
-        Cookie nonceCookie;
-        Cookie codeVerifierCookie;
-        Cookie retUrlCookie;
-        Cookie redirectUrlCookie;
-        Cookie refreshTokenCookie;
+    private Cookie stateCookie;
+    private Cookie nonceCookie;
+    private Cookie codeVerifierCookie;
+    private Cookie retUrlCookie;
 
+    public PageReference redirect() {
         String code = apexpages.currentPage().getParameters().get('code');
         String retUrl = ApexPages.currentPage().getParameters().get('retURL');
         String redirectUrl = ApexPages.currentPage().getParameters().get('redirectUrl');
@@ -17,23 +15,9 @@ public with sharing class IdPortenSidController {
             return Auth.SessionManagement.finishLoginFlow(retUrl);
         }
 
-        //get new ID porten token
+        //get new ID porten token from refresh token
         if (redirectUrl != null) {
-            refreshTokenCookie = ApexPages.currentPage().getCookies().get('refreshToken');
-            String newRefreshToken;
-            if (refreshTokenCookie != null) {
-                IdPortenAuthUtil.TokenResponse tokenResponse = new IdPortenAuthUtil()
-                    .getTokensFromRefreshToken(refreshTokenCookie.getValue());
-                newRefreshToken = tokenResponse?.refreshToken;
-            } else {
-                LoggerUtility logger = new LoggerUtility();
-                logger.error('Refresh token cookie not found', null, CRM_ApplicationDomain.Domain.CRM);
-                logger.publishSynch();
-            }
-
-            refreshTokenCookie = new Cookie('refreshToken', newRefreshToken, null, 1800, true);
-            redirectUrlCookie = new Cookie('redirectUrl', redirectUrl, null, 1800, true);
-            ApexPages.currentPage().setCookies(new List<Cookie>{ refreshTokenCookie, redirectUrlCookie });
+            getNewRefreshToken(redirectUrl);
             pageReference pg = new pageReference(redirectUrl);
             return pg.setRedirect(true);
         }
@@ -103,6 +87,9 @@ public with sharing class IdPortenSidController {
         );
         String sid = tokenResponse?.sid;
         String refreshToken = tokenResponse?.refreshToken;
+        Cookie refreshTokenCookie = new Cookie('refreshToken', refreshToken, null, 1800, true);
+        ApexPages.currentPage().setCookies(new List<Cookie>{ refreshTokenCookie });
+
         Id userId = UserInfo.getUserId();
         authUtil.storeSid(sid, userId);
         return finishLoginFlow();
@@ -135,6 +122,24 @@ public with sharing class IdPortenSidController {
             return Auth.SessionManagement.finishLoginFlow(retUrl);
         }
         return Auth.SessionManagement.finishLoginFlow();
+    }
+
+    private static void getNewRefreshToken(String redirectUrl) {
+        Cookie refreshTokenCookie = ApexPages.currentPage().getCookies().get('refreshToken');
+        String newRefreshToken;
+        if (refreshTokenCookie != null) {
+            IdPortenAuthUtil.TokenResponse tokenResponse = new IdPortenAuthUtil()
+                .getTokensFromRefreshToken(refreshTokenCookie.getValue());
+            newRefreshToken = tokenResponse?.refreshToken;
+        } else {
+            LoggerUtility logger = new LoggerUtility();
+            logger.error('Refresh token cookie not found', null, CRM_ApplicationDomain.Domain.CRM);
+            logger.publishSynch();
+        }
+
+        refreshTokenCookie = new Cookie('refreshToken', newRefreshToken, null, 1800, true);
+        Cookie redirectUrlCookie = new Cookie('redirectUrl', redirectUrl, null, 1800, true);
+        ApexPages.currentPage().setCookies(new List<Cookie>{ refreshTokenCookie, redirectUrlCookie });
     }
 
     private static String getRelativeRetUrl(String retUrl) {

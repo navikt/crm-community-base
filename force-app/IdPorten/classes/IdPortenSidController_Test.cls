@@ -152,6 +152,56 @@ private class IdPortenSidController_Test {
         System.assertEquals('Code verifier er blank', errorLogs[0].Log_Message__c);
     }
 
+    @IsTest
+    private static void testGetNewRefreshToken() {
+        Test.setMock(HttpCalloutMock.class, new TokenEndpointMock());
+
+        //set cookies
+        Cookie refreshTokenCookie = new Cookie('refreshToken', 'refresh', null, -1, true);
+        Pagereference pageRef = Page.IdPortenSid;
+        pageRef.setCookies(new List<Cookie>{ refreshTokenCookie });
+
+        Test.startTest();
+
+        test.setCurrentPage(pageRef);
+        pageRef.getParameters().put('redirectUrl', 'https://www.test.com');
+        IdPortenSidController controller = new IdPortenSidController();
+        String nextPage = controller.redirect().getUrl();
+        Test.stopTest();
+
+        List<Application_Log__c> errorLogs = [
+            SELECT Log_Message__c
+            FROM Application_Log__c
+            WHERE Source_Class__c = 'IdPortenSidController'
+        ];
+        System.assertEquals(0, errorLogs.size(), 'Expect no errors');
+
+        System.assertEquals('https://www.test.com', nextPage, 'Expected to redirect to redirect url');
+    }
+
+    @IsTest
+    private static void testGetNewRefreshToken_refreshTokenCookieNotFound() {
+        Test.setMock(HttpCalloutMock.class, new TokenEndpointMock());
+
+        Pagereference pageRef = Page.IdPortenSid;
+
+        Test.startTest();
+
+        test.setCurrentPage(pageRef);
+        pageRef.getParameters().put('redirectUrl', 'https://www.test.com');
+        IdPortenSidController controller = new IdPortenSidController();
+        String nextPage = controller.redirect().getUrl();
+        Test.stopTest();
+
+        List<Application_Log__c> errorLogs = [
+            SELECT Log_Message__c
+            FROM Application_Log__c
+            WHERE Source_Class__c = 'IdPortenSidController'
+        ];
+        System.assertEquals(1, errorLogs.size(), 'Throw 1 error');
+        System.assertEquals('https://www.test.com', nextPage, 'Expected to redirect to redirect url');
+    }
+
     public class TokenEndpointMock implements HttpCalloutMock {
         public HTTPResponse respond(HTTPRequest request) {
             HttpResponse res = new HttpResponse();
