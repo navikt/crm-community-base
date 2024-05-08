@@ -25,7 +25,30 @@ public with sharing class DeleteIdPortenCacheRecords {
             recordIdsToDelete.add(recordToDelete.Id);
         }
 
-        Database.delete(recordIdsToDelete);
+        List<Database.DeleteResult> deleteResults = Database.delete(recordIdsToDelete);
         Database.emptyRecycleBin(recordIdsToDelete);
+        LoggerUtility logger = new LoggerUtility('Logout');
+        Integer successCount = 0;
+        Integer failedCount = 0;
+        for (Database.DeleteResult result : deleteResults) {
+            if (result.isSuccess()) {
+                successCount += 1;
+            } else {
+                failedCount += 1;
+            }
+        }
+        if (successCount > 0) {
+            logger.info('Deleted ' + successCount + ' Id Porten Caches.', null, CRM_ApplicationDomain.Domain.CRM);
+        }
+        if (failedCount > 0) {
+            logger.critical(
+                'Failed to delete ' +
+                failedCount +
+                ' Id Porten Caches:',
+                null,
+                CRM_ApplicationDomain.Domain.CRM
+            );
+        }
+        logger.publish();
     }
 }
