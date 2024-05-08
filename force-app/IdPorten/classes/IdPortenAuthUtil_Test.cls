@@ -116,40 +116,40 @@ private with sharing class IdPortenAuthUtil_Test {
     }
 
     @IsTest
-    private static void testGetTokenInfo_success() {
+    private static void testGetTokensFromRefreshToken_success() {
         Test.setMock(HttpCalloutMock.class, new TokenInfoEndpointMock());
 
         IdPortenAuthUtil.TokenInfo response;
-        String accessToken = 'asdakjlsfjsdf';
+        String refreshToken = 'asdakjlsfjsdf';
 
         Test.startTest();
-        response = new IdPortenAuthUtil().getTokenInfo(accessToken);
+        response = new IdPortenAuthUtil().getTokensFromRefreshToken(refreshToken);
         Test.stopTest();
         Assert.isTrue(response.active, 'Expected active tokenResponse');
     }
 
     @IsTest
-    private static void testGetTokenInfo_failure() {
+    private static void testGetTokensFromRefreshToken_failure() {
         Test.setMock(HttpCalloutMock.class, new TokenInfoEndpointMockFailure());
 
         IdPortenAuthUtil.TokenInfo response;
-        String accessToken = 'asdakjlsfjsdf';
+        String refreshToken = 'asdakjlsfjsdf';
 
         Test.startTest();
-        response = new IdPortenAuthUtil().getTokenInfo(accessToken);
+        response = new IdPortenAuthUtil().getTokensFromRefreshToken(refreshToken);
         Test.stopTest();
         Assert.isNull(response, 'Expected to get null in response when status code not 200');
     }
 
     @IsTest
-    private static void testGetTokenInfo_exception() {
+    private static void testGetTokensFromRefreshToken_exception() {
         Test.setMock(HttpCalloutMock.class, new TokenInfoEndpointMockError());
 
         IdPortenAuthUtil.TokenInfo response;
-        String accessToken = 'asdakjlsfjsdf';
+        String refreshToken = 'asdakjlsfjsdf';
 
         Test.startTest();
-        response = new IdPortenAuthUtil().getTokenInfo(accessToken);
+        response = new IdPortenAuthUtil().getTokensFromRefreshToken(refreshToken);
         Test.stopTest();
         Assert.isNull(response, 'Expected to get null in response when status code not 200');
 

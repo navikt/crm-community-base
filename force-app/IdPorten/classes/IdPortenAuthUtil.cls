@@ -104,9 +104,9 @@ public with sharing class IdPortenAuthUtil {
         return resp;
     }
 
-    public TokenInfo getTokenInfo(String token) {
+    public TokenInfo getTokensFromRefreshToken(String refreshToken) {
         try {
-            String tokenInfoEndpointUrl = authProviderConfiguration.get('TokenInfoEndpointUrl');
+            String tokenInfoEndpointUrl = 'https://test.idporten.no/token';
             String consumerKey = authProviderConfiguration.get('ConsumerKey');
             String consumerSecret = authProviderConfiguration.get('ConsumerSecret');
 
@@ -115,12 +115,18 @@ public with sharing class IdPortenAuthUtil {
             HttpRequest req = new HttpRequest();
             req.setEndpoint(tokenInfoEndpointUrl);
             req.setHeader('Content-Type', 'application/x-www-form-urlencoded');
-            req.setHeader('Authorization', 'Basic ' + auth);
             req.setMethod('POST');
-            req.setBody('token=' + token);
+            req.setBody(
+                'grant_type=refresh_token' +
+                '&refresh_token=' +
+                refreshToken +
+                '&client_id=' +
+                consumerKey +
+                '&client_secret=' +
+                consumerSecret
+            );
 
             HTTPResponse res = new Http().send(req);
-
             if (res.getStatusCode() == 200) {
                 return (TokenInfo) JSON.deserialize(res.getBody(), TokenInfo.class);
             }
