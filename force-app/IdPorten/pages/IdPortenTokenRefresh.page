@@ -1,0 +1,3 @@
+<apex:page controller="IdPortenTokenRefreshController" action="{!redirect}">
+    <h1>En feil oppsto</h1>
+</apex:page>
