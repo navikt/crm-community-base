@@ -54,3 +54,4 @@ install.cmd
 **/deployment_tmp*
 **/dummy-data/*.out/*
 **/dxmate_config/*
+force-app/main/default/customMetadata/ID_porten.IdPorten.md-meta.xml

@@ -1,5 +1,14 @@
 @IsTest
 private class IdPortenTokenRefreshController_Test {
+    @TestSetup
+    static void makeData() {
+        IdPortenCache__c cache = new IdPortenCache__c();
+        cache.Name = 'sid';
+        cache.UserId__c = UserInfo.getUserId();
+        cache.ExpirationTime__c = DateTime.Now().addMinutes(5);
+        insert cache;
+    }
+
     @IsTest
     private static void testGetNewRefreshToken() {
         Test.setMock(HttpCalloutMock.class, new TokenEndpointMock());
@@ -24,6 +33,16 @@ private class IdPortenTokenRefreshController_Test {
         ];
         System.assertEquals(0, errorLogs.size(), 'Expect no errors');
 
+        System.assertEquals(
+            1,
+            [
+                SELECT COUNT()
+                FROM IdPortenCache__c
+                WHERE ExpirationTime__c > :DateTime.Now().addMinutes(20) AND UserId__c = :UserInfo.getUserId()
+            ],
+            'Expect Id Porten cache expiration time to be extended'
+        );
+
         System.assertEquals('https://www.test.com', nextPage, 'Expected to redirect to redirect url');
     }
 
@@ -47,6 +66,17 @@ private class IdPortenTokenRefreshController_Test {
             WHERE Source_Class__c = 'IdPortenTokenRefreshController'
         ];
         System.assertEquals(1, errorLogs.size(), 'Throw 1 error');
+
+        System.assertEquals(
+            1,
+            [
+                SELECT COUNT()
+                FROM IdPortenCache__c
+                WHERE ExpirationTime__c < :DateTime.Now().addMinutes(20) AND UserId__c = :UserInfo.getUserId()
+            ],
+            'Expect Id Porten cache expiration time not extended'
+        );
+
         System.assertEquals('https://www.test.com', nextPage, 'Expected to redirect to redirect url');
     }
 

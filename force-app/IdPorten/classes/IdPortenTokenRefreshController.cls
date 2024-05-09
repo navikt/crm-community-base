@@ -14,16 +14,20 @@ public with sharing class IdPortenTokenRefreshController {
     private static void getNewRefreshToken(String redirectUrl) {
         Cookie refreshTokenCookie = ApexPages.currentPage().getCookies().get('refreshToken');
         String newRefreshToken;
+        IdPortenAuthUtil util = new IdPortenAuthUtil();
         if (refreshTokenCookie != null) {
-            IdPortenAuthUtil.TokenResponse tokenResponse = new IdPortenAuthUtil()
-                .getTokensFromRefreshToken(refreshTokenCookie.getValue());
+            IdPortenAuthUtil.TokenResponse tokenResponse = util.getTokensFromRefreshToken(
+                refreshTokenCookie.getValue()
+            );
             newRefreshToken = tokenResponse?.refreshToken;
         } else {
             LoggerUtility logger = new LoggerUtility();
             logger.error('Refresh token cookie not found', null, CRM_ApplicationDomain.Domain.CRM);
             logger.publishSynch();
         }
-
+        if (!String.isBlank(newRefreshToken)) {
+            util.extendSession();
+        }
         refreshTokenCookie = new Cookie('refreshToken', newRefreshToken, null, 1800, true);
         Cookie redirectUrlCookie = new Cookie('redirectUrl', redirectUrl, null, 1800, true);
         ApexPages.currentPage().setCookies(new List<Cookie>{ refreshTokenCookie, redirectUrlCookie });
