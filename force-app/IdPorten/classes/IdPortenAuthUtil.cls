@@ -1,4 +1,5 @@
 public with sharing class IdPortenAuthUtil {
+    private static final Integer SESSION_DURATION_IN_MINUTES = 24;
     private Map<String, String> authProviderConfiguration;
 
     public IdPortenAuthUtil() {
@@ -41,6 +42,7 @@ public with sharing class IdPortenAuthUtil {
             IdPortenCache__c cache = new IdPortenCache__c();
             cache.Name = sid;
             cache.UserId__c = userId;
+            cache.ExpirationTime__c = DateTime.Now().addMinutes(SESSION_DURATION_IN_MINUTES);
             try {
                 insert cache;
             } catch (Exception e) {
@@ -175,6 +177,25 @@ public with sharing class IdPortenAuthUtil {
         authProviderConfiguration.put('TokenEndpointUrl', mdt.TokenEndpointUrl__c);
         // authProviderConfiguration.put('TokenInfoEndpointUrl', mdt.TokenInfoEndpointUrl__c);
         return authProviderConfiguration;
+    }
+
+    public void extendSession() {
+        List<IdPortenCache__c> listOfCache = [
+            SELECT Id
+            FROM IdPortenCache__c
+            WHERE UserId__c = :UserInfo.getUserId() AND CreatedDate > :DateTime.Now().AddHours(-12)
+        ];
+        for (IdPortenCache__c cache : listOfCache) {
+            cache.ExpirationTime__c = DateTime.Now().addMinutes(SESSION_DURATION_IN_MINUTES);
+        }
+
+        try {
+            update listOfCache;
+        } catch (Exception e) {
+            LoggerUtility logger = new LoggerUtility();
+            logger.exception(e, CRM_ApplicationDomain.Domain.CRM);
+            logger.publishSynch();
+        }
     }
 
     private static String getTokenValueFromResponse(String response, String token) {

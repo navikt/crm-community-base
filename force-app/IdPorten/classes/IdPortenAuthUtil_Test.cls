@@ -157,6 +157,29 @@ private with sharing class IdPortenAuthUtil_Test {
         Assert.areEqual(1, logs.size(), 'Expected one application log when getting an exception');
     }
 
+    @IsTest
+    static void testExtendSession() {
+        IdPortenCache__c cache = new IdPortenCache__c();
+        cache.Name = 'sid';
+        cache.UserId__c = UserInfo.getUserId();
+        cache.ExpirationTime__c = DateTime.Now().addMinutes(5);
+        insert cache;
+
+        Test.startTest();
+        new IdPortenAuthUtil().extendSession();
+        Test.stopTest();
+
+        System.assertEquals(
+            1,
+            [
+                SELECT COUNT()
+                FROM IdPortenCache__c
+                WHERE ExpirationTime__c > :DateTime.Now().addMinutes(20) AND UserId__c = :UserInfo.getUserId()
+            ],
+            'Expect expiration time to be moved more than 20 minute'
+        );
+    }
+
     public class TokenInfoEndpointMock implements HttpCalloutMock {
         public HTTPResponse respond(HTTPRequest request) {
             HttpResponse res = new HttpResponse();
