@@ -1,4 +1,6 @@
 public with sharing class IdPortenSidController {
+    private static final Integer SESSION_DURATION_IN_MINUTES = 24;
+
     public PageReference redirect() {
         Cookie stateCookie;
         Cookie nonceCookie;
