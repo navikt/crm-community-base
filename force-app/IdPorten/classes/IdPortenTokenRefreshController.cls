@@ -19,8 +19,7 @@ public with sharing class IdPortenTokenRefreshController {
 
         //initiate
         if (code == null) {
-            Cookie refreshTokenCookie = new Cookie('redirectUrl', redirectUrl, null, 1800, true);
-            redirectUrlCookie = new Cookie('redirectUrl', 'temp', null, 900, true);
+            redirectUrlCookie = new Cookie('redirectUrl', redirectUrl, null, 900, true);
 
             IdPortenAuthUtil authUtil = new IdPortenAuthUtil();
             IdPortenAuthUtil.AuthResponse authResponse = authUtil.initiate('IdPortenTokenRefresh');
@@ -29,15 +28,7 @@ public with sharing class IdPortenTokenRefreshController {
             nonceCookie = new Cookie('nonce', authResponse.nonce, null, 1800, true);
 
             ApexPages.currentPage()
-                .setCookies(
-                    new List<Cookie>{
-                        codeVerifierCookie,
-                        stateCookie,
-                        nonceCookie,
-                        redirectUrlCookie,
-                        refreshTokenCookie
-                    }
-                );
+                .setCookies(new List<Cookie>{ codeVerifierCookie, stateCookie, nonceCookie, redirectUrlCookie });
             pageReference pg = new pageReference(authResponse.initiateUrl);
             return pg.setRedirect(true);
         }
