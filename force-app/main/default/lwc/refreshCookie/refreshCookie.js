@@ -21,19 +21,29 @@ const findCookie = (cname) => {
 
 const navigateToRefreshPage = () => {
     const currentSite = window.location.href;
-    console.log(currentSite);
 
     const splitSite = currentSite.split('/s/');
     window.location.href =
         splitSite[0] + '/apex/' + visualForcePage + '?redirectUrl=' + encodeURIComponent(currentSite);
 };
 
+const isInSitePreview = () => {
+    return ['sitepreview', 'livepreview', 'live-preview', 'live.', '.builder.'].some((substring) =>
+        document.URL.includes(substring)
+    );
+};
+let hasRun = false;
+
 export default class RefreshCookie extends LightningElement {
     // eslint-disable-next-line constructor-super
     constructor() {
         console.log('Running');
+        if (hasRun) {
+            return;
+        }
         const cookie = findCookie('apex__redirectUrl');
-        if (cookie === '' || cookie !== window.location.href) {
+        if ((cookie === '' || cookie !== window.location.href) && !isInSitePreview()) {
+            hasRun = true;
             navigateToRefreshPage();
         } else {
             super();
