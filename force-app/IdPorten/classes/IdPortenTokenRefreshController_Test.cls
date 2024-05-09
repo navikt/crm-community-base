@@ -13,14 +13,14 @@ private class IdPortenTokenRefreshController_Test {
 
         test.setCurrentPage(pageRef);
         pageRef.getParameters().put('redirectUrl', 'https://www.test.com');
-        IdPortenSidController controller = new IdPortenSidController();
+        IdPortenTokenRefreshController controller = new IdPortenTokenRefreshController();
         String nextPage = controller.redirect().getUrl();
         Test.stopTest();
 
         List<Application_Log__c> errorLogs = [
             SELECT Log_Message__c
             FROM Application_Log__c
-            WHERE Source_Class__c = 'IdPortenSidController'
+            WHERE Source_Class__c = 'IdPortenTokenRefreshController'
         ];
         System.assertEquals(0, errorLogs.size(), 'Expect no errors');
 
@@ -37,14 +37,14 @@ private class IdPortenTokenRefreshController_Test {
 
         test.setCurrentPage(pageRef);
         pageRef.getParameters().put('redirectUrl', 'https://www.test.com');
-        IdPortenSidController controller = new IdPortenSidController();
+        IdPortenTokenRefreshController controller = new IdPortenTokenRefreshController();
         String nextPage = controller.redirect().getUrl();
         Test.stopTest();
 
         List<Application_Log__c> errorLogs = [
             SELECT Log_Message__c
             FROM Application_Log__c
-            WHERE Source_Class__c = 'IdPortenSidController'
+            WHERE Source_Class__c = 'IdPortenTokenRefreshController'
         ];
         System.assertEquals(1, errorLogs.size(), 'Throw 1 error');
         System.assertEquals('https://www.test.com', nextPage, 'Expected to redirect to redirect url');
