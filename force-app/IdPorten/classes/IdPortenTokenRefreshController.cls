@@ -62,20 +62,6 @@ public with sharing class IdPortenTokenRefreshController {
                 return pg.setRedirect(true);
             }
 
-            if (nonceFromCookie == null) {
-                LoggerUtility logger = new LoggerUtility();
-                logger.error('Nonce er blank', null, CRM_ApplicationDomain.Domain.NKS);
-                logger.publishSynch();
-                return pg.setRedirect(true);
-            }
-
-            if (codeVerifierFromCookie == null) {
-                LoggerUtility logger = new LoggerUtility();
-                logger.error('Code verifier er blank', null, CRM_ApplicationDomain.Domain.NKS);
-                logger.publishSynch();
-                return pg.setRedirect(true);
-            }
-
             IdPortenAuthUtil authUtil = new IdPortenAuthUtil();
             IdPortenAuthUtil.TokenResponse tokenResponse = authUtil.getSidFromIdToken(
                 code,
