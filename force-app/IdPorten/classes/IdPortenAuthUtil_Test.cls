@@ -180,6 +180,42 @@ private with sharing class IdPortenAuthUtil_Test {
         );
     }
 
+    @IsTest
+    private static void testGetUserInfo_success() {
+        Test.setMock(HttpCalloutMock.class, new UserInfoEndpointMock());
+
+        String accessToken = 'asdakjlsfjsdf';
+
+        Test.startTest();
+        Integer responseCode = new IdPortenAuthUtil().getUserInfo(accessToken);
+        Test.stopTest();
+        Assert.areEqual(200, responseCode);
+    }
+
+    @IsTest
+    private static void testGetUserInfo_failure() {
+        Test.setMock(HttpCalloutMock.class, new UserInfoEndpointMockFailure());
+
+        String accessToken = 'asdakjlsfjsdf';
+
+        Test.startTest();
+        Integer responseCode = new IdPortenAuthUtil().getUserInfo(accessToken);
+        Test.stopTest();
+        Assert.areEqual(404, responseCode);
+    }
+
+    @IsTest
+    private static void testGetUserInfo_exception() {
+        Test.setMock(HttpCalloutMock.class, new TokenInfoEndpointMockError());
+
+        String accessToken = 'asdakjlsfjsdf';
+
+        Test.startTest();
+        Integer responseCode = new IdPortenAuthUtil().getUserInfo(accessToken);
+        Test.stopTest();
+        Assert.areEqual(500, responseCode);
+    }
+
     public class TokenInfoEndpointMock implements HttpCalloutMock {
         public HTTPResponse respond(HTTPRequest request) {
             HttpResponse res = new HttpResponse();
@@ -225,6 +261,33 @@ private with sharing class IdPortenAuthUtil_Test {
             res.setBody('Error');
             res.setStatusCode(500);
             return res;
+        }
+    }
+
+    public class UserInfoEndpointMock implements HttpCalloutMock {
+        public HTTPResponse respond(HTTPRequest request) {
+            HttpResponse res = new HttpResponse();
+            res.setHeader('Content-Type', 'application/json');
+            res.setBody(
+                '{ "sub" : "NR8vTTPrM3T7rWf8dXxeWLZpxEMsug4E7pxqJuh9wIM=","pid" : "23079421936","locale" : "nb"}'
+            );
+            res.setStatusCode(200);
+            return res;
+        }
+    }
+
+    public class UserInfoEndpointMockFailure implements HttpCalloutMock {
+        public HTTPResponse respond(HTTPRequest request) {
+            HttpResponse res = new HttpResponse();
+            res.setHeader('Content-Type', 'application/json');
+            res.setStatusCode(404);
+            return res;
+        }
+    }
+
+    public class UserInfoEndpointMockError implements HttpCalloutMock {
+        public HTTPResponse respond(HTTPRequest request) {
+            return new Http().send(null);
         }
     }
 }

@@ -132,7 +132,12 @@ public with sharing class IdPortenAuthUtil {
             if (res.getStatusCode() == 200) {
                 TokenResponse resp = new TokenResponse();
                 resp.refreshToken = getTokenValueFromResponse(res.getBody(), 'refresh_token');
+                resp.accessToken = getTokenValueFromResponse(res.getBody(), 'access_token');
                 return resp;
+            } else {
+                LoggerUtility logger = new LoggerUtility();
+                logger.error(res.getStatusCode() + ' ' + res.getBody(), null, CRM_ApplicationDomain.Domain.CRM);
+                logger.publishSynch();
             }
         } catch (Exception e) {
             LoggerUtility logger = new LoggerUtility();
@@ -140,6 +145,35 @@ public with sharing class IdPortenAuthUtil {
             logger.publishSynch();
         }
         return null;
+    }
+
+    public integer getUserInfo(String accessToken) {
+        try {
+            String tokenInfoEndpointUrl = 'https://test.idporten.no/token';
+            String consumerKey = authProviderConfiguration.get('ConsumerKey');
+            String consumerSecret = authProviderConfiguration.get('ConsumerSecret');
+
+            String auth = EncodingUtil.base64Encode(Blob.valueOf(consumerKey + ':' + consumerSecret));
+
+            HttpRequest req = new HttpRequest();
+            req.setEndpoint(tokenInfoEndpointUrl);
+            req.setHeader('Content-Type', 'application/x-www-form-urlencoded');
+            req.setHeader('Authorization', 'Bearer ' + accessToken);
+            req.setMethod('GET');
+
+            HTTPResponse res = new Http().send(req);
+            if (res.getStatusCode() != 200) {
+                LoggerUtility logger = new LoggerUtility();
+                logger.error(res.getStatusCode() + ' ' + res.getBody(), null, CRM_ApplicationDomain.Domain.CRM);
+                logger.publishSynch();
+            }
+            return res.getStatusCode();
+        } catch (Exception e) {
+            LoggerUtility logger = new LoggerUtility();
+            logger.exception(e, CRM_ApplicationDomain.Domain.CRM);
+            logger.publishSynch();
+        }
+        return 500;
     }
 
     public String getRedirectUrl() {
@@ -252,5 +286,6 @@ public with sharing class IdPortenAuthUtil {
     public class TokenResponse {
         public String sid { get; set; }
         public String refreshToken { get; set; }
+        public String accessToken { get; set; }
     }
 }
