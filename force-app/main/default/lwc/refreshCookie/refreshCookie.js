@@ -1,43 +1,42 @@
 import { LightningElement } from 'lwc';
-import { NavigationMixin } from 'lightning/navigation';
 
 const visualForcePage = 'IdPortenTokenRefresh';
-export default class RefreshCookie extends NavigationMixin(LightningElement) {
-    connectedCallback() {
-        const cookie = this.findCookie('apex__redirectUrl');
+
+// Stolen from https://www.w3schools.com/js/js_cookies.asp
+const findCookie = (cname) => {
+    let name = cname + '=';
+    let decodedCookie = decodeURIComponent(document.cookie);
+    let ca = decodedCookie.split(';');
+    for (let i = 0; i < ca.length; i++) {
+        let c = ca[i];
+        while (c.charAt(0) === ' ') {
+            c = c.substring(1);
+        }
+        if (c.indexOf(name) === 0) {
+            return c.substring(name.length, c.length);
+        }
+    }
+    return '';
+};
+
+const navigateToRefreshPage = () => {
+    const currentSite = window.location.href;
+    console.log(currentSite);
+
+    const splitSite = currentSite.split('/s/');
+    window.location.href =
+        splitSite[0] + '/apex/' + visualForcePage + '?redirectUrl=' + encodeURIComponent(currentSite);
+};
+
+export default class RefreshCookie extends LightningElement {
+    // eslint-disable-next-line constructor-super
+    constructor() {
+        console.log('Running');
+        const cookie = findCookie('apex__redirectUrl');
         if (cookie === '' || cookie !== window.location.href) {
-            this.navigateToRefreshPage();
+            navigateToRefreshPage();
+        } else {
+            super();
         }
-    }
-
-    // Stolen from https://www.w3schools.com/js/js_cookies.asp
-    findCookie(cname) {
-        let name = cname + '=';
-        let decodedCookie = decodeURIComponent(document.cookie);
-        let ca = decodedCookie.split(';');
-        for (let i = 0; i < ca.length; i++) {
-            let c = ca[i];
-            while (c.charAt(0) === ' ') {
-                c = c.substring(1);
-            }
-            if (c.indexOf(name) === 0) {
-                return c.substring(name.length, c.length);
-            }
-        }
-        return '';
-    }
-
-    navigateToRefreshPage() {
-        const currentSite = window.location.href;
-
-        this[NavigationMixin.GenerateUrl]({
-            type: 'standard__webPage',
-            attributes: {
-                url: '/apex/' + visualForcePage + '?redirectUrl=' + encodeURIComponent(currentSite)
-            }
-        }).then((url) => {
-            const urlWithoutSiteEnding = url.replace('/s/', '/');
-            window.location.href = urlWithoutSiteEnding;
-        });
     }
 }
