@@ -2,10 +2,14 @@ global class IdPortenCacheDeleteHandler extends MyTriggers {
     global override void onBeforeDelete() {
         Set<Id> userIds = new Set<Id>();
         for (IdPortenCache__c cache : (List<IdPortenCache__c>) records) {
-            userIds.add(cache.UserId__c);
+            if (cache.CreatedDate > DateTime.Now().addDays(-1)) {
+                userIds.add(cache.UserId__c);
+            }
         }
 
-        IdPortenCacheDeleteHandler.performDelete(userIds);
+        if (userIds.size() > 0) {
+            IdPortenCacheDeleteHandler.performDelete(userIds);
+        }
     }
 
     @future

@@ -6,6 +6,7 @@ public with sharing class IdPortenSidController {
         Cookie retUrlCookie;
         String code = apexpages.currentPage().getParameters().get('code');
         String retUrl = ApexPages.currentPage().getParameters().get('retURL');
+
         //stop login flow when mobile app
         String userAgent = ApexPages.currentPage().getHeaders().get('USER-AGENT');
         if (userAgent != null && userAgent.contains('SalesforceMobileSDK')) {
@@ -77,6 +78,9 @@ public with sharing class IdPortenSidController {
         );
         String sid = tokenResponse?.sid;
         String refreshToken = tokenResponse?.refreshToken;
+        Cookie refreshTokenCookie = new Cookie('refreshToken', refreshToken, null, 1800, true);
+        ApexPages.currentPage().setCookies(new List<Cookie>{ refreshTokenCookie });
+
         Id userId = UserInfo.getUserId();
         authUtil.storeSid(sid, userId);
         return finishLoginFlow();
