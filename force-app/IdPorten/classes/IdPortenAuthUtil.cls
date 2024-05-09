@@ -6,13 +6,13 @@ public with sharing class IdPortenAuthUtil {
         authProviderConfiguration = getAuthProviderConfiguration();
     }
 
-    public AuthResponse initiate() {
+    public AuthResponse initiate(String pageName) {
         AuthResponse response = new AuthResponse();
         response.state = PKCEOAuthHelper.generateState();
         response.codeVerifier = PKCEOAuthHelper.generateCodeVerifier();
         String codeChallenge = PKCEOAuthHelper.getCodeChallenge(response.codeVerifier);
         response.nonce = PKCEOAuthHelper.generateNonce();
-        response.redirectUrl = getRedirectUrl();
+        response.redirectUrl = getRedirectUrl(pageName);
         String authorizeEndpointUrl = authProviderConfiguration.get('AuthorizeEndpointUrl');
         String consumerKey = authProviderConfiguration.get('ConsumerKey');
         String acrValues = authProviderConfiguration.get('AcrValues');
@@ -57,11 +57,11 @@ public with sharing class IdPortenAuthUtil {
         }
     }
 
-    public TokenResponse getSidFromIdToken(String code, String codeVerifier, String nonce) {
+    public TokenResponse getSidFromIdToken(String code, String codeVerifier, String nonce, String pageName) {
         String consumerKey = authProviderConfiguration.get('ConsumerKey');
         String consumerSecret = authProviderConfiguration.get('ConsumerSecret');
         String tokenEndpointUrl = authProviderConfiguration.get('TokenEndpointUrl');
-        String encodedRedirectUrl = EncodingUtil.urlEncode(getRedirectUrl(), 'UTF-8');
+        String encodedRedirectUrl = EncodingUtil.urlEncode(getRedirectUrl(pageName), 'UTF-8');
 
         HttpRequest req = new HttpRequest();
         req.setEndpoint(tokenEndpointUrl);
@@ -91,7 +91,6 @@ public with sharing class IdPortenAuthUtil {
         }
 
         String idToken = getTokenValueFromResponse(res.getBody(), 'id_token');
-        String refreshToken = getTokenValueFromResponse(res.getBody(), 'refresh_token');
         JWTClaims decodedIdToken = decodeIdToken(idToken);
 
         if (decodedIdToken.nonce == null || decodedIdToken.nonce != nonce) {
@@ -101,87 +100,16 @@ public with sharing class IdPortenAuthUtil {
             return null;
         }
         TokenResponse resp = new TokenResponse();
-        resp.refreshToken = refreshToken;
         resp.sid = decodedIdToken.sid;
         return resp;
     }
 
-    public TokenResponse getTokensFromRefreshToken(String refreshToken) {
-        try {
-            String tokenInfoEndpointUrl = 'https://test.idporten.no/token';
-            String consumerKey = authProviderConfiguration.get('ConsumerKey');
-            String consumerSecret = authProviderConfiguration.get('ConsumerSecret');
-
-            String auth = EncodingUtil.base64Encode(Blob.valueOf(consumerKey + ':' + consumerSecret));
-
-            HttpRequest req = new HttpRequest();
-            req.setEndpoint(tokenInfoEndpointUrl);
-            req.setHeader('Content-Type', 'application/x-www-form-urlencoded');
-            req.setMethod('POST');
-            req.setBody(
-                'grant_type=refresh_token' +
-                '&refresh_token=' +
-                refreshToken +
-                '&client_id=' +
-                consumerKey +
-                '&client_secret=' +
-                consumerSecret
-            );
-
-            HTTPResponse res = new Http().send(req);
-            if (res.getStatusCode() == 200) {
-                TokenResponse resp = new TokenResponse();
-                resp.refreshToken = getTokenValueFromResponse(res.getBody(), 'refresh_token');
-                resp.accessToken = getTokenValueFromResponse(res.getBody(), 'access_token');
-                return resp;
-            } else {
-                LoggerUtility logger = new LoggerUtility();
-                logger.error(res.getStatusCode() + ' ' + res.getBody(), null, CRM_ApplicationDomain.Domain.CRM);
-                logger.publishSynch();
-            }
-        } catch (Exception e) {
-            LoggerUtility logger = new LoggerUtility();
-            logger.exception(e, CRM_ApplicationDomain.Domain.CRM);
-            logger.publishSynch();
-        }
-        return null;
-    }
-
-    public integer getUserInfo(String accessToken) {
-        try {
-            String tokenInfoEndpointUrl = 'https://test.idporten.no/token';
-            String consumerKey = authProviderConfiguration.get('ConsumerKey');
-            String consumerSecret = authProviderConfiguration.get('ConsumerSecret');
-
-            String auth = EncodingUtil.base64Encode(Blob.valueOf(consumerKey + ':' + consumerSecret));
-
-            HttpRequest req = new HttpRequest();
-            req.setEndpoint(tokenInfoEndpointUrl);
-            req.setHeader('Content-Type', 'application/x-www-form-urlencoded');
-            req.setHeader('Authorization', 'Bearer ' + accessToken);
-            req.setMethod('GET');
-
-            HTTPResponse res = new Http().send(req);
-            if (res.getStatusCode() != 200) {
-                LoggerUtility logger = new LoggerUtility();
-                logger.error(res.getStatusCode() + ' ' + res.getBody(), null, CRM_ApplicationDomain.Domain.CRM);
-                logger.publishSynch();
-            }
-            return res.getStatusCode();
-        } catch (Exception e) {
-            LoggerUtility logger = new LoggerUtility();
-            logger.exception(e, CRM_ApplicationDomain.Domain.CRM);
-            logger.publishSynch();
-        }
-        return 500;
-    }
-
-    public String getRedirectUrl() {
+    public String getRedirectUrl(String pageName) {
         if (Test.isRunningTest()) {
             return 'https://callback';
         }
         String redirectUrl = Network.getLoginUrl(Network.getNetworkId());
-        redirectUrl = redirectUrl.replace('/login', '/IdPortenSid');
+        redirectUrl = redirectUrl.replace('/login', '/' + pageName);
         return redirectUrl;
     }
 
@@ -213,11 +141,11 @@ public with sharing class IdPortenAuthUtil {
         return authProviderConfiguration;
     }
 
-    public void extendSession() {
+    public void extendSession(String sid) {
         List<IdPortenCache__c> listOfCache = [
             SELECT Id
             FROM IdPortenCache__c
-            WHERE UserId__c = :UserInfo.getUserId() AND CreatedDate > :DateTime.Now().AddHours(-12)
+            WHERE UserId__c = :UserInfo.getUserId() AND Name = :sid
         ];
         for (IdPortenCache__c cache : listOfCache) {
             cache.ExpirationTime__c = DateTime.Now().addMinutes(SESSION_DURATION_IN_MINUTES);
@@ -285,7 +213,5 @@ public with sharing class IdPortenAuthUtil {
 
     public class TokenResponse {
         public String sid { get; set; }
-        public String refreshToken { get; set; }
-        public String accessToken { get; set; }
     }
 }

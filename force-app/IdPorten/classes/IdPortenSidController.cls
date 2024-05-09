@@ -18,7 +18,7 @@ public with sharing class IdPortenSidController {
         //initiate
         if (code == null) {
             IdPortenAuthUtil authUtil = new IdPortenAuthUtil();
-            IdPortenAuthUtil.AuthResponse authResponse = authUtil.initiate();
+            IdPortenAuthUtil.AuthResponse authResponse = authUtil.initiate('IdPortenSid');
             codeVerifierCookie = new Cookie('codeverifier', authResponse.codeVerifier, null, 1800, true);
             stateCookie = new Cookie('state', authResponse.state, null, 1800, true);
             nonceCookie = new Cookie('nonce', authResponse.nonce, null, 1800, true);
@@ -76,13 +76,10 @@ public with sharing class IdPortenSidController {
         IdPortenAuthUtil.TokenResponse tokenResponse = authUtil.getSidFromIdToken(
             code,
             codeVerifierFromCookie,
-            nonceFromCookie
+            nonceFromCookie,
+            'IdPortenSid'
         );
         String sid = tokenResponse?.sid;
-        String refreshToken = tokenResponse?.refreshToken;
-        Cookie refreshTokenCookie = new Cookie('refreshToken', refreshToken, null, 1800, true);
-        ApexPages.currentPage().setCookies(new List<Cookie>{ refreshTokenCookie });
-
         Id userId = UserInfo.getUserId();
         authUtil.storeSid(sid, userId);
         return finishLoginFlow();
