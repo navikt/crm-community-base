@@ -43,67 +43,65 @@ public with sharing class IdPortenTokenRefreshController {
         }
 
         //handle callback
-        //try {
+        try {
+            String state = apexpages.currentPage().getParameters().get('state');
 
-        String state = apexpages.currentPage().getParameters().get('state');
+            codeVerifierCookie = ApexPages.currentPage().getCookies().get('codeVerifier');
+            stateCookie = ApexPages.currentPage().getCookies().get('state');
+            nonceCookie = ApexPages.currentPage().getCookies().get('nonce');
+            redirectUrlCookie = ApexPages.currentPage().getCookies().get('redirectUrl');
+            String redirectUrlFromCookie = redirectUrlCookie.getValue();
+            pageReference pg = new pageReference(redirectUrlFromCookie);
 
-        codeVerifierCookie = ApexPages.currentPage().getCookies().get('codeVerifier');
-        stateCookie = ApexPages.currentPage().getCookies().get('state');
-        nonceCookie = ApexPages.currentPage().getCookies().get('nonce');
-        redirectUrlCookie = ApexPages.currentPage().getCookies().get('redirectUrl');
-        String redirectUrlFromCookie = redirectUrlCookie.getValue();
-        pageReference pg = new pageReference(redirectUrlFromCookie);
+            if (codeVerifierCookie == null || stateCookie == null || nonceCookie == null) {
+                LoggerUtility logger = new LoggerUtility();
+                logger.error('Cookies er ikke satt', null, CRM_ApplicationDomain.Domain.NKS);
+                logger.publishSynch();
+                return pg.setRedirect(true);
+            }
 
-        if (codeVerifierCookie == null || stateCookie == null || nonceCookie == null) {
-            LoggerUtility logger = new LoggerUtility();
-            logger.error('Cookies er ikke satt', null, CRM_ApplicationDomain.Domain.NKS);
-            logger.publishSynch();
+            String codeVerifierFromCookie = codeVerifierCookie.getValue();
+            String stateFromCookie = stateCookie.getValue();
+            String nonceFromCookie = nonceCookie.getValue();
+
+            if (state == null || state != stateFromCookie) {
+                LoggerUtility logger = new LoggerUtility();
+                logger.error('State samsvarer ikke', null, CRM_ApplicationDomain.Domain.NKS);
+                logger.publishSynch();
+                return pg.setRedirect(true);
+            }
+
+            if (nonceFromCookie == null) {
+                LoggerUtility logger = new LoggerUtility();
+                logger.error('Nonce er blank', null, CRM_ApplicationDomain.Domain.NKS);
+                logger.publishSynch();
+                return pg.setRedirect(true);
+            }
+
+            if (codeVerifierFromCookie == null) {
+                LoggerUtility logger = new LoggerUtility();
+                logger.error('Code verifier er blank', null, CRM_ApplicationDomain.Domain.NKS);
+                logger.publishSynch();
+                return pg.setRedirect(true);
+            }
+
+            IdPortenAuthUtil authUtil = new IdPortenAuthUtil();
+            IdPortenAuthUtil.TokenResponse tokenResponse = authUtil.getSidFromIdToken(
+                code,
+                codeVerifierFromCookie,
+                nonceFromCookie,
+                'IdPortenTokenRefresh'
+            );
+            String sid = tokenResponse?.sid;
+            system.debug(sid);
+            authUtil.extendSession(sid);
+
             return pg.setRedirect(true);
-        }
-
-        String codeVerifierFromCookie = codeVerifierCookie.getValue();
-        String stateFromCookie = stateCookie.getValue();
-        String nonceFromCookie = nonceCookie.getValue();
-
-        if (state == null || state != stateFromCookie) {
+        } catch (Exception e) {
             LoggerUtility logger = new LoggerUtility();
-            logger.error('State samsvarer ikke', null, CRM_ApplicationDomain.Domain.NKS);
+            logger.exception(e, CRM_ApplicationDomain.Domain.CRM);
             logger.publishSynch();
-            return pg.setRedirect(true);
         }
-
-        if (nonceFromCookie == null) {
-            LoggerUtility logger = new LoggerUtility();
-            logger.error('Nonce er blank', null, CRM_ApplicationDomain.Domain.NKS);
-            logger.publishSynch();
-            return pg.setRedirect(true);
-        }
-
-        if (codeVerifierFromCookie == null) {
-            LoggerUtility logger = new LoggerUtility();
-            logger.error('Code verifier er blank', null, CRM_ApplicationDomain.Domain.NKS);
-            logger.publishSynch();
-            return pg.setRedirect(true);
-        }
-
-        IdPortenAuthUtil authUtil = new IdPortenAuthUtil();
-        IdPortenAuthUtil.TokenResponse tokenResponse = authUtil.getSidFromIdToken(
-            code,
-            codeVerifierFromCookie,
-            nonceFromCookie,
-            'IdPortenTokenRefresh'
-        );
-        String sid = tokenResponse?.sid;
-        system.debug(sid);
-        authUtil.extendSession(sid);
-
-        return pg.setRedirect(true);
-        // } catch (Exception e) {
-
-        //     LoggerUtility logger = new LoggerUtility();
-        //     logger.exception(e, CRM_ApplicationDomain.Domain.CRM);
-        //     logger.publishSynch();
-        // }
-        //return null;
+        return null;
     }
 }
