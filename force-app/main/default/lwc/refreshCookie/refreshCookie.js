@@ -38,7 +38,6 @@ let hasRun = false;
 export default class RefreshCookie extends LightningElement {
     // eslint-disable-next-line constructor-super
     constructor() {
-        console.log('Running');
         if (hasRun) {
             return;
         }
