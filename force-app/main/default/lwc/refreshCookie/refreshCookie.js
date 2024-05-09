@@ -27,6 +27,7 @@ const navigateToRefreshPage = () => {
         splitSite[0] + '/apex/' + visualForcePage + '?redirectUrl=' + encodeURIComponent(currentSite);
 };
 
+// Gotten from https://salesforce.stackexchange.com/questions/167523/detect-community-builder-context
 const isInSitePreview = () => {
     return ['sitepreview', 'livepreview', 'live-preview', 'live.', '.builder.'].some((substring) =>
         document.URL.includes(substring)
