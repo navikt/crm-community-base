@@ -29,12 +29,11 @@ export default class RefreshCookie extends NavigationMixin(LightningElement) {
 
     navigateToRefreshPage() {
         const currentSite = window.location.href;
-        document.cookie = 'apex__redirectUrl=' + currentSite;
 
         this[NavigationMixin.GenerateUrl]({
             type: 'standard__webPage',
             attributes: {
-                url: '/apex/' + visualForcePage
+                url: '/apex/' + visualForcePage + '?redirectUrl=' + encodeURIComponent(currentSite)
             }
         }).then((url) => {
             const urlWithoutSiteEnding = url.replace('/s/', '/');
