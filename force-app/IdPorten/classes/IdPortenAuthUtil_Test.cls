@@ -32,7 +32,7 @@ private with sharing class IdPortenAuthUtil_Test {
             '&code_challenge_method=S256&ui_locales=nb&nonce=' +
             NONCE;
 
-        IdPortenAuthUtil.AuthResponse response = authUtil.initiate();
+        IdPortenAuthUtil.AuthResponse response = authUtil.initiate('IdPortenSid');
         System.assertEquals(expectedUrl, response.initiateUrl);
     }
 
@@ -83,14 +83,14 @@ private with sharing class IdPortenAuthUtil_Test {
     @IsTest
     private static void testGetSidFromIdToken() {
         Test.setMock(HttpCalloutMock.class, new TokenEndpointMock());
-        String sid = new IdPortenAuthUtil().getSidFromIdToken('code', CODE_VERIFIER, 'noncetest')?.sid;
+        String sid = new IdPortenAuthUtil().getSidFromIdToken('code', CODE_VERIFIER, 'noncetest', 'IdPortenSid')?.sid;
         System.assertEquals('QsSodfCDUpKRIYQb_fL2KUd-7UUBxEnQz7mcJxMX344', sid);
     }
 
     @IsTest
     private static void testGetSidFromIdToken_whenIdPortenApiReturnError() {
         Test.setMock(HttpCalloutMock.class, new TokenEndpointMockError());
-        String sid = new IdPortenAuthUtil().getSidFromIdToken('code', CODE_VERIFIER, 'noncetest')?.sid;
+        String sid = new IdPortenAuthUtil().getSidFromIdToken('code', CODE_VERIFIER, 'noncetest', 'IdPortenSid')?.sid;
         List<Application_Log__c> errorLogs = [
             SELECT Log_Message__c
             FROM Application_Log__c
@@ -104,7 +104,9 @@ private with sharing class IdPortenAuthUtil_Test {
     @IsTest
     private static void testGetSidFromIdToken_whenNonceDoNotMatch() {
         Test.setMock(HttpCalloutMock.class, new TokenEndpointMock());
-        String sid = new IdPortenAuthUtil().getSidFromIdToken('code', CODE_VERIFIER, 'anotherNonce')?.sid;
+        String sid = new IdPortenAuthUtil()
+            .getSidFromIdToken('code', CODE_VERIFIER, 'anotherNonce', 'IdPortenSid')
+            ?.sid;
         List<Application_Log__c> errorLogs = [
             SELECT Log_Message__c
             FROM Application_Log__c
@@ -116,48 +118,6 @@ private with sharing class IdPortenAuthUtil_Test {
     }
 
     @IsTest
-    private static void testGetTokensFromRefreshToken_success() {
-        Test.setMock(HttpCalloutMock.class, new TokenInfoEndpointMock());
-
-        IdPortenAuthUtil.TokenResponse response;
-        String refreshToken = 'asdakjlsfjsdf';
-
-        Test.startTest();
-        response = new IdPortenAuthUtil().getTokensFromRefreshToken(refreshToken);
-        Test.stopTest();
-        Assert.isNotNull(response.refreshToken, 'Expected to get refresh token');
-    }
-
-    @IsTest
-    private static void testGetTokensFromRefreshToken_failure() {
-        Test.setMock(HttpCalloutMock.class, new TokenInfoEndpointMockFailure());
-
-        IdPortenAuthUtil.TokenResponse response;
-        String refreshToken = 'asdakjlsfjsdf';
-
-        Test.startTest();
-        response = new IdPortenAuthUtil().getTokensFromRefreshToken(refreshToken);
-        Test.stopTest();
-        Assert.isNull(response, 'Expected to get null in response when status code not 200');
-    }
-
-    @IsTest
-    private static void testGetTokensFromRefreshToken_exception() {
-        Test.setMock(HttpCalloutMock.class, new TokenInfoEndpointMockError());
-
-        IdPortenAuthUtil.TokenResponse response;
-        String refreshToken = 'asdakjlsfjsdf';
-
-        Test.startTest();
-        response = new IdPortenAuthUtil().getTokensFromRefreshToken(refreshToken);
-        Test.stopTest();
-        Assert.isNull(response, 'Expected to get null in response when status code not 200');
-
-        List<Application_Log__c> logs = [SELECT Id FROM Application_Log__c WHERE Source_Class__c = 'IdPortenAuthUtil'];
-        Assert.areEqual(1, logs.size(), 'Expected one application log when getting an exception');
-    }
-
-    @IsTest
     static void testExtendSession() {
         IdPortenCache__c cache = new IdPortenCache__c();
         cache.Name = 'sid';
@@ -166,7 +126,7 @@ private with sharing class IdPortenAuthUtil_Test {
         insert cache;
 
         Test.startTest();
-        new IdPortenAuthUtil().extendSession();
+        new IdPortenAuthUtil().extendSession('sid');
         Test.stopTest();
 
         System.assertEquals(
@@ -178,33 +138,6 @@ private with sharing class IdPortenAuthUtil_Test {
             ],
             'Expect expiration time to be moved more than 20 minute'
         );
-    }
-
-    public class TokenInfoEndpointMock implements HttpCalloutMock {
-        public HTTPResponse respond(HTTPRequest request) {
-            HttpResponse res = new HttpResponse();
-            res.setHeader('Content-Type', 'application/json');
-            res.setBody(
-                '{ "active": true, "token_type": "Bearer", "expires_in": 556, "exp": 1477990301, "iat": 1477989701, "scope": "global/kontaktinformasjon.read", "client_id": "test_rp", "client_orgno": "991825827" }'
-            );
-            res.setStatusCode(200);
-            return res;
-        }
-    }
-
-    public class TokenInfoEndpointMockFailure implements HttpCalloutMock {
-        public HTTPResponse respond(HTTPRequest request) {
-            HttpResponse res = new HttpResponse();
-            res.setHeader('Content-Type', 'application/json');
-            res.setStatusCode(404);
-            return res;
-        }
-    }
-
-    public class TokenInfoEndpointMockError implements HttpCalloutMock {
-        public HTTPResponse respond(HTTPRequest request) {
-            return new Http().send(null);
-        }
     }
 
     public class TokenEndpointMock implements HttpCalloutMock {
