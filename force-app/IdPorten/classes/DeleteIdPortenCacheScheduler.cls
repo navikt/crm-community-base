@@ -38,9 +38,10 @@ public with sharing class DeleteIdPortenCacheScheduler implements Schedulable {
     /**
      * @description Schedule a run for deleting Id Porten Cache records
      * Will not reschedule if the job is already scheduled or running.
+     * @return jobId `String`
      */
-    public static void reSchedule() {
-        DeleteIdPortenCacheScheduler.reSchedule(null);
+    public static String reSchedule() {
+        return DeleteIdPortenCacheScheduler.reSchedule(null);
     }
 
     /**
@@ -73,11 +74,12 @@ public with sharing class DeleteIdPortenCacheScheduler implements Schedulable {
      * If called from a running scheduled job, supply the `SchedulableContext` in order to ignore the running job.
      *
      * @param sc `SchedulableContext`
+     * @return jobId `String`
      */
-    private static void reSchedule(SchedulableContext sc) {
+    private static String reSchedule(SchedulableContext sc) {
         for (CronTrigger ct : DeleteIdPortenCacheScheduler.getActiveCronTriggers()) {
-            if (SC == null || SC.getTriggerId() != ct.Id) {
-                return;
+            if (sc == null || SC.getTriggerId() != ct.Id) {
+                return '';
             }
         }
 
@@ -85,7 +87,7 @@ public with sharing class DeleteIdPortenCacheScheduler implements Schedulable {
         String cronExpression = DeleteIdPortenCacheScheduler.getCronExpression(cronJobTime);
         String jobName = DeleteIdPortenCacheScheduler.getJobName(cronJobTime);
 
-        System.schedule(jobName, cronExpression, new DeleteIdPortenCacheScheduler());
+        return System.schedule(jobName, cronExpression, new DeleteIdPortenCacheScheduler());
     }
 
     /**
@@ -93,14 +95,16 @@ public with sharing class DeleteIdPortenCacheScheduler implements Schedulable {
      * @param cronJobTime `DateTime`
      * @return jobName `String`
      */
+    @TestVisible
     private static String getJobName(DateTime cronJobTime) {
-        String jobName = JOB_NAME + ' - ' + cronJobTime.format();
+        String jobName = JOB_NAME;
 
         //In order to avoid duplicate job names causing issues in test we add four diget random number.
         if (Test.isRunningTest()) {
-            jobName += '- ' + (Integer) Math.floor(Math.random() * 10000);
+            jobName += ' TEST - ' + (Integer) Math.floor(Math.random() * 10000);
         }
 
+        jobName += ' - ' + cronJobTime.format();
         return jobName;
     }
 
@@ -126,7 +130,7 @@ public with sharing class DeleteIdPortenCacheScheduler implements Schedulable {
     @TestVisible
     private static List<CronTrigger> getActiveCronTriggers() {
         return [
-            SELECT Id
+            SELECT Id, CronJobDetail.Name, State
             FROM CronTrigger
             WHERE
                 CronJobDetail.JobType = '7'

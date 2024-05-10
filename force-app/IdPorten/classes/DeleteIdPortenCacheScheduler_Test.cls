@@ -2,20 +2,33 @@
 private with sharing class DeleteIdPortenCacheScheduler_Test {
     @IsTest
     private static void reScheduleTest() {
+        String result;
+
         Test.startTest();
-        DeleteIdPortenCacheScheduler.reSchedule();
+        result = DeleteIdPortenCacheScheduler.reSchedule();
         Test.stopTest();
+
+        Assert.isTrue(
+            String.isNotEmpty(result),
+            'Expect that the job was scheduled and that we got a job id in response'
+        );
     }
 
     @IsTest
     private static void reScheduleDoubleTest() {
+        DateTime shcheduledTime = System.now().addMinutes(5);
+
+        String result;
+
         Test.startTest();
         System.schedule(
-            'Delete Id Porten Cache Records - test',
-            DeleteIdPortenCacheScheduler.getCronExpression(System.now().addDays(1)),
+            DeleteIdPortenCacheScheduler.getJobName(shcheduledTime),
+            DeleteIdPortenCacheScheduler.getCronExpression(shcheduledTime),
             new DeleteIdPortenCacheScheduler()
         );
-        DeleteIdPortenCacheScheduler.reSchedule();
+        result = DeleteIdPortenCacheScheduler.reSchedule();
         Test.stopTest();
+
+        Assert.isTrue(String.isEmpty(result), 'Did not expect that the job was scheduled');
     }
 }
