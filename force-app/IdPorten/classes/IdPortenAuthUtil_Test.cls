@@ -126,7 +126,7 @@ private with sharing class IdPortenAuthUtil_Test {
         insert cache;
 
         Test.startTest();
-        new IdPortenAuthUtil().extendSession('sid');
+        new IdPortenAuthUtil().extendSession();
         Test.stopTest();
 
         System.assertEquals(
