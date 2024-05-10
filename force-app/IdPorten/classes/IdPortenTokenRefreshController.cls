@@ -70,9 +70,9 @@ public with sharing class IdPortenTokenRefreshController {
                 'IdPortenTokenRefresh'
             );
             String sid = tokenResponse?.sid;
-            system.debug(sid);
-            authUtil.extendSession(sid);
-
+            if (sid != null && !String.isBlank(sid)) {
+                authUtil.extendSession();
+            }
             return pg.setRedirect(true);
         } catch (Exception e) {
             LoggerUtility logger = new LoggerUtility();
