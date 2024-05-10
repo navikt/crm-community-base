@@ -1,14 +1,37 @@
+/**
+ * @description Class for deleting expired IdPortenCache__c records.
+ * Example code: `new DeleteIdPortenCacheRecords.deleteRecords();`
+ *
+ * The job will delete a maximum of 2000 records for each run;
+ * The results are logged under the category 'Logout'
+ *
+ * The records are also removed from the recycle bin
+ * Records in the recycle bin might still be visible in a query all:
+ * `Each Salesforce instance has a 'sweeper' thread that goes through the database(s) and removes records from tables that are in a deleted status. There is no first deleted first removed to this process. So records can remain on the table long after you have deleted and removed them from the recycle bin.`
+ * @author Tor Håkon Sigurdsen
+ * @since 2024-05-08
+ */
 public with sharing class DeleteIdPortenCacheRecords {
     private LoggerUtility logger;
 
+    /**
+     * @description constructor
+     */
     public DeleteIdPortenCacheRecords() {
         logger = new LoggerUtility('Logout');
     }
 
+    /**
+     * @description Delete IdPortenCache__c records
+     */
     public void deleteRecords() {
         runDelete(getIdPortenCacheRecords());
     }
 
+    /**
+     * @description Query all expired IdPortenCache__c records (limit 2000)
+     * @return `List<IdPortenCache__c>`
+     */
     @TestVisible
     private List<IdPortenCache__c> getIdPortenCacheRecords() {
         return [
@@ -21,10 +44,12 @@ public with sharing class DeleteIdPortenCacheRecords {
         ];
     }
 
+    /**
+     * @description Delete all supplied records and remove them from the recycle bin
+     * @param recordsToDelete `List<IdPortenCache__c>`
+     */
     @TestVisible
     private void runDelete(List<IdPortenCache__c> recordsToDelete) {
-        Integer successCount = 0;
-        Integer failedCount = 0;
         List<Id> recordIdsToDelete = new List<Id>();
         List<Id> recordsToEmptyFromRecycleBin = new List<Id>();
 
@@ -52,6 +77,11 @@ public with sharing class DeleteIdPortenCacheRecords {
         this.logger.publish();
     }
 
+    /**
+     * @description Iterate over a list of `Database.EmptyRecycleBinResult` and count successes and failures and log the result.
+     *
+     * @param emptyRecycleBinResults `List<Database.EmptyRecycleBinResult>`
+     */
     private void handleEmptyRecycleBinResult(List<Database.EmptyRecycleBinResult> emptyRecycleBinResults) {
         Integer successCount = 0;
         Integer failedCount = 0;
@@ -85,6 +115,13 @@ public with sharing class DeleteIdPortenCacheRecords {
         }
     }
 
+    /**
+     * @description Iterate over a list of `Database.DeleteResult` and count successes and failures and log the result.
+     * Return a list of the Id's of all successfully deleted records
+     *
+     * @param deleteResults `List<Database.DeleteResult>`
+     * @return recordsToEmptyFromRecycleBin `List<Id>`
+     */
     private List<Id> handleDeleteResult(List<Database.DeleteResult> deleteResults) {
         List<Id> recordsToEmptyFromRecycleBin = new List<Id>();
         Integer successCount = 0;
