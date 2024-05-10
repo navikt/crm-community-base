@@ -141,11 +141,11 @@ public with sharing class IdPortenAuthUtil {
         return authProviderConfiguration;
     }
 
-    public void extendSession(String sid) {
+    public void extendSession() {
         List<IdPortenCache__c> listOfCache = [
-            SELECT Id
+            SELECT Id, ExpirationTime__c
             FROM IdPortenCache__c
-            WHERE UserId__c = :UserInfo.getUserId() AND Name = :sid
+            WHERE UserId__c = :UserInfo.getUserId()
         ];
         for (IdPortenCache__c cache : listOfCache) {
             cache.ExpirationTime__c = DateTime.Now().addMinutes(SESSION_DURATION_IN_MINUTES);
