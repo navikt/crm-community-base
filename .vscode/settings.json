@@ -17,10 +17,6 @@
         "editor.defaultFormatter": "redhat.vscode-xml"
     },
     "diffEditor.ignoreTrimWhitespace": true,
-    "files.exclude": {
-        "**/*.cls-meta.xml": true,
-        "**/*.trigger-meta.xml": true
-    },
     "search.exclude": {
         "**/node_modules": true,
         "**/bower_components": true,
