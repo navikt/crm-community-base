@@ -1,12 +1,43 @@
 {
+    "root": true,
     "env": {
         "browser": true,
         "es2021": true
     },
-    "extends": ["eslint:recommended", "@locker/eslint-config-locker", "@salesforce/eslint-config-lwc/recommended"],
+    "extends": [
+        "eslint:recommended",
+        "plugin:@salesforce/eslint-plugin-aura/recommended",
+        "plugin:@salesforce/eslint-plugin-aura/locker",
+        "@salesforce/eslint-config-lwc/recommended",
+        "@salesforce/eslint-config-lwc/i18n",
+        "@locker/eslint-config-locker/recommended",
+        "prettier"
+    ],
+    "parser": "@babel/eslint-parser",
     "parserOptions": {
-        "ecmaVersion": 12,
-        "sourceType": "module"
+        "ecmaVersion": "latest",
+        "sourceType": "module",
+        "requireConfigFile": false,
+        "babelOptions": {
+            "parserOpts": {
+                "plugins": ["classProperties", ["decorators", { "decoratorsBeforeExport": false }]]
+            }
+        }
     },
-    "rules": {}
+
+    "plugins": [
+        "@salesforce/eslint-plugin-aura",
+        "@lwc/eslint-plugin-lwc",
+        "@salesforce/eslint-plugin-lightning",
+        "@locker/eslint-plugin-locker"
+    ],
+
+    "rules": {
+        "@lwc/lwc/no-deprecated": "error",
+        "@lwc/lwc/valid-api": "error",
+        "@lwc/lwc/no-document-query": "error",
+        "@salesforce/lightning/no-aura-localization-service": "error",
+        "@salesforce/lightning/no-moment": "error",
+        "@salesforce/lightning/prefer-i18n-service": "error"
+    }
 }
