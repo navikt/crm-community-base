@@ -112,14 +112,8 @@ public with sharing class DeleteIdPortenCacheScheduler implements Schedulable {
      * @description Stop all scheduled jobs
      */
     public static void stopSchedule() {
-        try {
-            for (CronTrigger cronTrigger : DeleteIdPortenCacheScheduler.getActiveCronTriggers()) {
-                System.abortJob(cronTrigger.Id);
-            }
-        } catch (Exception e) {
-            LoggerUtility logger = new LoggerUtility('Logout');
-            logger.exception(e, CRM_ApplicationDomain.Domain.CRM);
-            logger.publishSynch();
+        for (CronTrigger cronTrigger : DeleteIdPortenCacheScheduler.getActiveCronTriggers()) {
+            System.abortJob(cronTrigger.Id);
         }
     }
 
