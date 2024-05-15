@@ -5,10 +5,13 @@
 .localdevserver
 .ssdx
 .sfdx
+.sf
 coverage/
 .vscode
 .github
 jsconfig.json
+.eslintignore
+.eslintrc.json
 
 **/*.apex
 **/staticresources/*
