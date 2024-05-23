@@ -1,70 +1,70 @@
 .navds-modal__overlay {
-    position: fixed;
-    z-index: 1000;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background-color: rgba(38, 38, 38, 0.7);
-    padding: 1rem;
+  position: fixed;
+  z-index: 1000;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(38, 38, 38, 0.7);
+  padding: 1rem;
 }
 
 .navds-modal {
-    background-color: #ffffff;
-    display: block;
-    position: relative;
-    padding: 1rem;
-    border-radius: 4px;
-    overflow: auto;
-    max-height: 50%;
-    max-width: 50%;
-    z-index: 1010;
-    margin-left: auto;
-    margin-right: auto;
+  background-color: #ffffff;
+  display: block;
+  position: relative;
+  padding: 1rem;
+  border-radius: 4px;
+  overflow: auto;
+  max-height: 50%;
+  max-width: 50%;
+  z-index: 1010;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 :focus {
-    outline: -webkit-focus-ring-color auto 5px;
+  outline: -webkit-focus-ring-color auto 5px;
 }
 
 h1 {
-    font-family: 'Source Sans Pro', Arial, sans-serif;
-    font-size: 2em;
-    display: block;
-    margin-block-start: 0.67em;
-    margin-block-end: 0.67em;
-    margin-inline-start: 0px;
-    margin-inline-end: 0px;
-    font-weight: bold;
-    color: #262626;
+  font-family: "Source Sans Pro", Arial, sans-serif;
+  font-size: 2em;
+  display: block;
+  margin-block-start: 2rem;
+  margin-block-end: 1rem;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+  font-weight: bold;
+  color: #262626;
 }
 
 p {
-    display: block;
-    margin-block-start: 1em;
-    margin-block-end: 1em;
-    margin-inline-start: 0px;
-    margin-inline-end: 0px;
-    font-family: 'Source Sans Pro', Arial, sans-serif;
-    line-height: 1.375;
-    color: #262626;
-    font-size: 1.125rem;
+  display: block;
+  margin-block-end: 1rem;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+  font-family: "Source Sans Pro", Arial, sans-serif;
+  line-height: 1.375;
+  color: #262626;
+  font-size: 1.125rem;
 }
 
 body {
-    font-family: 'Source Sans Pro', Arial, sans-serif;
-    line-height: 1.375;
-    color: #262626;
-    font-size: 1.125rem;
+  font-family: "Source Sans Pro", Arial, sans-serif;
+  line-height: 1.375;
+  color: #262626;
+  font-size: 1.125rem;
 }
 
 .hidden {
-    display: none;
+  display: none;
 }
 
 .buttons {
-    display: flex;
-    margin: auto;
-    justify-content: center;
-    max-width: max-content;
+  display: flex;
+  margin: auto;
+  margin-bottom: 2rem !important;
+  justify-content: center;
+  max-width: max-content;
 }
