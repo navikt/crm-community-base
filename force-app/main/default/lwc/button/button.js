@@ -1,76 +1,85 @@
-import { LightningElement, api } from 'lwc';
-import { setDefaultValue, convertStringToBoolean } from 'c/componentHelperClass';
+import { LightningElement, api } from "lwc";
+import {
+  setDefaultValue,
+  convertStringToBoolean,
+} from "c/componentHelperClass";
 
 // https://navikt.github.io/Designsystemet/?path=/story/ds-react-button--all
 export default class Button extends LightningElement {
-    @api id;
-    @api name;
-    @api autofocus;
-    @api disabled;
-    @api type; // Button, Submit, Reset
-    @api value;
-    @api title;
-    @api buttonStyling; // Primary, Secondary, Action, Danger
-    @api buttonLabel;
-    @api ariaLabel;
-    @api desktopStyle;
-    @api mobileStyle;
+  @api id;
+  @api name;
+  @api autofocus;
+  @api disabled;
+  @api type; // Button, Submit, Reset
+  @api value;
+  @api title;
+  @api buttonStyling; // Primary, Secondary, Action, Danger
+  @api buttonLabel;
+  @api ariaLabel;
+  @api desktopStyle;
+  @api mobileStyle;
 
-    get buttonClass() {
-        let buttonStyle;
+  get buttonClass() {
+    let buttonStyle;
 
-        if (this.buttonStyling !== undefined) {
-            buttonStyle = this.buttonStyling.toLowerCase();
-        }
-        if (
-            buttonStyle !== 'primary' &&
-            buttonStyle !== 'secondary' &&
-            buttonStyle !== 'tertiary' &&
-            buttonStyle !== 'danger'
-        ) {
-            buttonStyle = 'primary'; // Set primary as default if invalid argument
-        }
-        return 'navds-button navds-button--' + buttonStyle + ' navds-body-short';
+    if (this.buttonStyling !== undefined) {
+      buttonStyle = this.buttonStyling.toLowerCase();
     }
-
-    handleClick(event) {
-        const eventToSend = new CustomEvent('buttonclick', { detail: event.target.value });
-        this.dispatchEvent(eventToSend);
+    if (
+      buttonStyle !== "primary" &&
+      buttonStyle !== "secondary" &&
+      buttonStyle !== "tertiary" &&
+      buttonStyle !== "danger"
+    ) {
+      buttonStyle = "primary"; // Set primary as default if invalid argument
     }
+    return "navds-button navds-button--" + buttonStyle + " navds-body-short";
+  }
 
-    get ariaLabelValue() {
-        return this.ariaLabel === undefined ? this.buttonLabel : this.ariaLabel;
-    }
+  handleClick(event) {
+    const eventToSend = new CustomEvent("buttonclick", {
+      detail: event.target.value,
+    });
+    this.dispatchEvent(eventToSend);
+  }
 
-    get setDefaultId() {
-        return setDefaultValue(this.id, 'button');
-    }
+  @api focusButton() {
+    this.template.querySelector("button").focus();
+  }
 
-    get setDefaultName() {
-        return setDefaultValue(this.name, 'button');
-    }
+  get ariaLabelValue() {
+    return this.ariaLabel === undefined ? this.buttonLabel : this.ariaLabel;
+  }
 
-    get setDefaultAutofocus() {
-        return convertStringToBoolean(this.autofocus);
-    }
+  get setDefaultId() {
+    return setDefaultValue(this.id, "button");
+  }
 
-    get setDefaultDisabled() {
-        return convertStringToBoolean(this.disabled);
-    }
+  get setDefaultName() {
+    return setDefaultValue(this.name, "button");
+  }
 
-    get setDefaultValue() {
-        return setDefaultValue(this.value, 'defaultValue');
-    }
+  get setDefaultAutofocus() {
+    return convertStringToBoolean(this.autofocus);
+  }
 
-    get setDefaultType() {
-        return setDefaultValue(this.type, 'button');
-    }
+  get setDefaultDisabled() {
+    return convertStringToBoolean(this.disabled);
+  }
 
-    get setDefaultStyle() {
-        let style = this.desktopStyle;
-        if (window.screen.width < 576) {
-            style = this.mobileStyle;
-        }
-        return setDefaultValue(style, '');
+  get setDefaultValue() {
+    return setDefaultValue(this.value, "defaultValue");
+  }
+
+  get setDefaultType() {
+    return setDefaultValue(this.type, "button");
+  }
+
+  get setDefaultStyle() {
+    let style = this.desktopStyle;
+    if (window.screen.width < 576) {
+      style = this.mobileStyle;
     }
+    return setDefaultValue(style, "");
+  }
 }

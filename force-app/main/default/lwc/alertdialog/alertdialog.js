@@ -1,54 +1,86 @@
-import { LightningElement, api } from 'lwc';
-import { setDefaultValue, convertStringToBoolean } from 'c/componentHelperClass';
+import { LightningElement, api } from "lwc";
+import {
+  setDefaultValue,
+  convertStringToBoolean,
+} from "c/componentHelperClass";
 export default class Alertdialog extends LightningElement {
-    @api header;
-    @api content;
-    @api desktopStyle;
-    @api mobileStyle;
-    @api confirmButtonLabel;
-    @api cancelButtonlabel;
-    @api centerButtons;
-    @api noCancelButton;
+  @api header;
+  @api content;
+  @api desktopStyle;
+  @api mobileStyle;
+  @api confirmButtonLabel;
+  @api cancelButtonlabel;
+  @api centerButtons;
+  @api noCancelButton;
 
-    handleButtonClick(event) {
-        const eventToSend = new CustomEvent('buttonclick', { detail: event.target.value });
-        this.closeModal();
-        this.dispatchEvent(eventToSend);
-    }
+  handleButtonClick(event) {
+    const eventToSend = new CustomEvent("buttonclick", {
+      detail: event.target.value,
+    });
+    this.closeModal();
+    this.dispatchEvent(eventToSend);
+  }
 
-    closeModal() {
-        this.template.querySelector('.ReactModal__Overlay').classList.add('hidden');
-    }
+  closeModal() {
+    this.template.querySelector(".ReactModal__Overlay").classList.add("hidden");
+  }
 
-    @api showModal() {
-        this.template.querySelector('.ReactModal__Overlay').classList.remove('hidden');
-        this.template.querySelector('[data-id="alertdialog modal"]').focus();
-    }
+  @api showModal() {
+    this.template
+      .querySelector(".ReactModal__Overlay")
+      .classList.remove("hidden");
+    this.template.querySelector('[data-id="alertdialog modal"]').focus();
+  }
 
-    get defaultConfirmButtonLabel() {
-        return setDefaultValue(this.confirmButtonLabel, 'OK');
+  trapFocusInsideModal(event) {
+    if (event.target.classList.contains("firstfocusable")) {
+      this.focusLastModalElement();
     }
+    if (event.target.classList.contains("lastfocusable")) {
+      this.focusFirstModalElement();
+    }
+  }
 
-    get defaultCancelButtonLabel() {
-        return setDefaultValue(this.cancelButtonlabel, 'Avbryt');
-    }
+  focusFirstModalElement() {
+    const modalFocusElement = this.template.querySelector(".firstButtonFocus");
+    modalFocusElement.focusButton();
+  }
 
-    get defaultNoCancelButton() {
-        return setDefaultValue(this.noCancelButton, false);
+  focusLastModalElement() {
+    if (this.noCancelButton) {
+      const modalFocusElement =
+        this.template.querySelector(".firstButtonFocus");
+      modalFocusElement.focusButton();
+      return;
     }
+    const modalFocusElement = this.template.querySelector(".lastButtonFocus");
+    modalFocusElement.focus();
+  }
 
-    get setCenterButtons() {
-        if (!convertStringToBoolean(this.centerButtons)) {
-            return 'margin: 0';
-        }
-        return 'margin: auto';
-    }
+  get defaultConfirmButtonLabel() {
+    return setDefaultValue(this.confirmButtonLabel, "OK");
+  }
 
-    get setDefaultStyle() {
-        let style = this.desktopStyle;
-        if (window.screen.width < 576) {
-            style = this.mobileStyle;
-        }
-        return setDefaultValue(style, '');
+  get defaultCancelButtonLabel() {
+    return setDefaultValue(this.cancelButtonlabel, "Avbryt");
+  }
+
+  get defaultNoCancelButton() {
+    return setDefaultValue(this.noCancelButton, false);
+  }
+
+  get setCenterButtons() {
+    if (!convertStringToBoolean(this.centerButtons)) {
+      return "margin: 0";
     }
+    return "margin: auto";
+  }
+
+  get setDefaultStyle() {
+    let style = this.desktopStyle;
+    if (window.screen.width < 576) {
+      style = this.mobileStyle;
+    }
+    return setDefaultValue(style, "");
+  }
 }
