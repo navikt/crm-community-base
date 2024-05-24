@@ -47,14 +47,14 @@ export default class Alertdialog extends LightningElement {
   }
 
   focusLastModalElement() {
-    if (this.noCancelButton) {
+    if (this.defaultNoCancelButton) {
       const modalFocusElement =
         this.template.querySelector(".firstButtonFocus");
       modalFocusElement.focusButton();
       return;
     }
     const modalFocusElement = this.template.querySelector(".lastButtonFocus");
-    modalFocusElement.focus();
+    modalFocusElement.focusButton();
   }
 
   get defaultConfirmButtonLabel() {
@@ -66,7 +66,7 @@ export default class Alertdialog extends LightningElement {
   }
 
   get defaultNoCancelButton() {
-    return setDefaultValue(this.noCancelButton, false);
+    return convertStringToBoolean(setDefaultValue(this.noCancelButton, false));
   }
 
   get setCenterButtons() {
