@@ -1,45 +1,59 @@
 <template>
-    <div class="ReactModalPortal">
-        <div class="ReactModal__Overlay ReactModal__Overlay--after-open navds-modal__overlay hidden">
-            <div
-                class="ReactModal__Content ReactModal__Content--after-open navds-modal"
-                tabindex="-1"
-                role="dialog"
-                aria-modal="true"
-                aria-hidden="false"
-                data-id="alertdialog modal"
-                style={setDefaultStyle}
-            >
-                <div>
-                    <section>
-                        <h1>{header}</h1>
-                        <p>{content}</p>
-                    </section>
-                </div>
-                <div class="buttons" style={setCenterButtons}>
-                    <span>
-                        <c-button
-                            button-label={defaultConfirmButtonLabel}
-                            button-styling="primary"
-                            value="confirm"
-                            onbuttonclick={handleButtonClick}
-                            desktop-style="width: 8rem; justify-content: center"
-                            mobile-style="width: 8rem; justify-content: center"
-                        ></c-button>
-                    </span>
-
-                    <span if:false={defaultNoCancelButton} style="padding-left: 1rem">
-                        <c-button
-                            button-label={defaultCancelButtonLabel}
-                            button-styling="secondary"
-                            value="cancel"
-                            onbuttonclick={handleButtonClick}
-                            desktop-style="width: 8rem; justify-content: center"
-                            mobile-style="width: 8rem; justify-content: center"
-                        ></c-button>
-                    </span>
-                </div>
-            </div>
+  <div class="ReactModalPortal">
+    <div
+      class="ReactModal__Overlay ReactModal__Overlay--after-open navds-modal__overlay hidden"
+    >
+      <div
+        tabindex="0"
+        class="firstfocusable"
+        onfocus={trapFocusInsideModal}
+      ></div>
+      <div
+        class="ReactModal__Content ReactModal__Content--after-open navds-modal"
+        tabindex="-1"
+        role="dialog"
+        aria-modal="true"
+        aria-hidden="false"
+        data-id="alertdialog modal"
+        style={setDefaultStyle}
+      >
+        <div>
+          <section>
+            <h1>{header}</h1>
+            <p>{content}</p>
+          </section>
         </div>
+        <div class="buttons" style={setCenterButtons}>
+          <span>
+            <c-button
+              class="firstButtonFocus"
+              button-label={defaultConfirmButtonLabel}
+              button-styling="primary"
+              value="confirm"
+              onbuttonclick={handleButtonClick}
+              desktop-style="width: 8rem; justify-content: center"
+              mobile-style="width: 8rem; justify-content: center"
+            ></c-button>
+          </span>
+
+          <span if:false={defaultNoCancelButton} style="padding-left: 1rem">
+            <c-button
+              class="lastButtonFocus"
+              button-label={defaultCancelButtonLabel}
+              button-styling="secondary"
+              value="cancel"
+              onbuttonclick={handleButtonClick}
+              desktop-style="width: 8rem; justify-content: center"
+              mobile-style="width: 8rem; justify-content: center"
+            ></c-button>
+          </span>
+        </div>
+      </div>
+      <div
+        tabindex="0"
+        class="lastfocusable"
+        onfocus={trapFocusInsideModal}
+      ></div>
     </div>
+  </div>
 </template>
