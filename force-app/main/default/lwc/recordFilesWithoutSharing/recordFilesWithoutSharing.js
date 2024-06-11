@@ -46,6 +46,7 @@ export default class recordFilesWithoutSharing extends LightningElement {
     @api checkIfEmpty() {
         return this.isContentDocumentsEmpty;
     }
+
     @api
     refreshFiles() {
         refreshApex(this.wiredGetContentDocumentsResult);
