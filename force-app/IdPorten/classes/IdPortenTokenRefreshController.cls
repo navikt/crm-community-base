@@ -17,6 +17,18 @@ public with sharing class IdPortenTokenRefreshController {
             return pg.setRedirect(true);
         }
 
+
+        // Code from https://salesforce.stackexchange.com/questions/256499/how-can-i-determine-if-the-org-that-im-currently-connected-to-is-a-scratch-org
+        Organization org = [SELECT IsSandbox, TrialExpirationDate FROM Organization];
+        Boolean isScratchOrg = org?.IsSandbox && org?.TrialExpirationDate != null;
+
+        if (isScratchOrg == true) {
+            ApexPages.currentPage()
+                .setCookies(new List<Cookie>{ new Cookie('redirectUrl', redirectUrl, null, 900, true)});
+            pageReference pgTester = new pageReference(redirectUrl);
+            return pgTester.setRedirect(true);
+        }
+
         //initiate
         if (code == null) {
             redirectUrlCookie = new Cookie('redirectUrl', redirectUrl, null, 900, true);
