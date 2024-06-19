@@ -122,4 +122,25 @@ private class IdPortenTokenRefreshController_Test {
             return res;
         }
     }
+
+    @IsTest
+    private static void redirect_validateNotScratch() {
+        //set cookies
+        Pagereference pageRef = Page.IdPortenTokenRefresh;
+
+        Test.startTest();
+
+        test.setCurrentPage(pageRef);
+        pageRef.getParameters().put('redirectUrl', '/');
+        IdPortenTokenRefreshController controller = new IdPortenTokenRefreshController();
+        PageReference redirectPage = controller.validateAndRedirect();
+        Test.stopTest();
+        String nextPage = redirectPage.getUrl();
+
+        System.assertEquals('/', nextPage, 'Expected to get redirectUrl');
+        Organization org = [SELECT IsSandbox, TrialExpirationDate FROM Organization];
+        Boolean isScratchOrg = org?.IsSandbox && org?.TrialExpirationDate != null;
+        Boolean hasNonce = redirectPage.getCookies().containsKey('nonce');
+        Assert.areEqual(isScratchOrg, !hasNonce, 'Should only get cookie outside scratch');
+    }
 }
