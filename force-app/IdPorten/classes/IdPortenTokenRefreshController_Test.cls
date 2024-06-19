@@ -112,20 +112,9 @@ private class IdPortenTokenRefreshController_Test {
         System.assertEquals('State samsvarer ikke', errorLogs[0].Log_Message__c);
     }
 
-    public class TokenEndpointMock implements HttpCalloutMock {
-        public HTTPResponse respond(HTTPRequest request) {
-            HttpResponse res = new HttpResponse();
-            res.setHeader('Content-Type', 'application/xml');
-            String idToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdF9oYXNoIjoiSGs1TDE4WVVDTVZHbjFLNFBpckY2QSIsInN1YiI6Ii10c01LdWxFNUZHQUU1WkhRRUVlLWNsT2ZqS1VheGpYVmNXc2RsaHFBRWM9IiwiYW1yIjpbIkJhbmtJRCJdLCJpc3MiOiJodHRwczovL29pZGMtdmVyMi5kaWZpLm5vL2lkcG9ydGVuLW9pZGMtcHJvdmlkZXIvIiwicGlkIjoiMTYxMjAxMDExODEiLCJsb2NhbGUiOiJuYiIsInNpZCI6IlFzU29kZkNEVXBLUklZUWJfZkwyS1VkLTdVVUJ4RW5RejdtY0p4TVgzNDQiLCJhdWQiOiJhMDY5NjYxMi1lZmM0LTQ2ZTktYTdjOS1iZmY2NTZlNTU0YzIiLCJhY3IiOiJMZXZlbDQiLCJhdXRoX3RpbWUiOjE2NDYyMjU4MjIsImV4cCI6MTY0NjIyNzE2MywiaWF0IjoxNjQ2MjI3MDQzLCJub25jZSI6Im5vbmNldGVzdCIsImp0aSI6Ik41Uk1KQmZhYnlOTklkZUFpcmMxZUJmMUZYX1VQNHhjazVZUEoydWhQQncifQ.5-MEpzms1cH97aAFVM2bNATADrdSiWxt1s_ZtiOgJ1w';
-            res.setBody('{"access_token":"access","refresh_token":"refresh", "id_token":"' + idToken + '"}');
-            res.setStatusCode(200);
-            return res;
-        }
-    }
-
     @IsTest
     private static void redirect_validateNotScratch() {
-        //set cookies
+        Test.setMock(HttpCalloutMock.class, new TokenEndpointMock());
         Pagereference pageRef = Page.IdPortenTokenRefresh;
 
         Test.startTest();
@@ -136,11 +125,24 @@ private class IdPortenTokenRefreshController_Test {
         PageReference redirectPage = controller.validateAndRedirect();
         Test.stopTest();
         String nextPage = redirectPage.getUrl();
-
-        System.assertEquals('/', nextPage, 'Expected to get redirectUrl');
+        
         Organization org = [SELECT IsSandbox, TrialExpirationDate FROM Organization];
         Boolean isScratchOrg = org?.IsSandbox && org?.TrialExpirationDate != null;
-        Boolean hasNonce = redirectPage.getCookies().containsKey('nonce');
-        Assert.areEqual(isScratchOrg, !hasNonce, 'Should only get cookie outside scratch');
+        if(isScratchOrg) {
+            Assert.areEqual('/', nextPage, 'Expected to get redirectUrl');
+        } else {
+            Assert.isTrue(nextPage.startsWith('https://auth'), 'Expected to get auth URL outside scratch');
+        }
+    }
+
+    public class TokenEndpointMock implements HttpCalloutMock {
+        public HTTPResponse respond(HTTPRequest request) {
+            HttpResponse res = new HttpResponse();
+            res.setHeader('Content-Type', 'application/xml');
+            String idToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdF9oYXNoIjoiSGs1TDE4WVVDTVZHbjFLNFBpckY2QSIsInN1YiI6Ii10c01LdWxFNUZHQUU1WkhRRUVlLWNsT2ZqS1VheGpYVmNXc2RsaHFBRWM9IiwiYW1yIjpbIkJhbmtJRCJdLCJpc3MiOiJodHRwczovL29pZGMtdmVyMi5kaWZpLm5vL2lkcG9ydGVuLW9pZGMtcHJvdmlkZXIvIiwicGlkIjoiMTYxMjAxMDExODEiLCJsb2NhbGUiOiJuYiIsInNpZCI6IlFzU29kZkNEVXBLUklZUWJfZkwyS1VkLTdVVUJ4RW5RejdtY0p4TVgzNDQiLCJhdWQiOiJhMDY5NjYxMi1lZmM0LTQ2ZTktYTdjOS1iZmY2NTZlNTU0YzIiLCJhY3IiOiJMZXZlbDQiLCJhdXRoX3RpbWUiOjE2NDYyMjU4MjIsImV4cCI6MTY0NjIyNzE2MywiaWF0IjoxNjQ2MjI3MDQzLCJub25jZSI6Im5vbmNldGVzdCIsImp0aSI6Ik41Uk1KQmZhYnlOTklkZUFpcmMxZUJmMUZYX1VQNHhjazVZUEoydWhQQncifQ.5-MEpzms1cH97aAFVM2bNATADrdSiWxt1s_ZtiOgJ1w';
+            res.setBody('{"access_token":"access","refresh_token":"refresh", "id_token":"' + idToken + '"}');
+            res.setStatusCode(200);
+            return res;
+        }
     }
 }
