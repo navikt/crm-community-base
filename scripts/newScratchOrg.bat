@@ -1,11 +1,13 @@
-:: Opprett en scratch org
-call sfdx force:org:create -f config\project-scratch-def.json --setalias %1 --durationdays %2 --setdefaultusername --json --loglevel fatal  --wait 10
+echo "Oppretter scratch org"
+call sf org create scratch --definition-file config\project-scratch-def.json --alias %1 --duration-days %2 --set-default --json --wait 30
 
-:: Installer crm-platform-base v0.169
-call sfdx force:package:install --package 04t7U000000TqIuQAK -r -k %3 --wait 10 --publishwait 10
+echo "Installer crm-platform-base v0.169"
+call sf package install --package 04t7U000000TqIuQAK --no-prompt --installation-key %3 --wait 30 --publish-wait 30
 
-:: Installer crm-platform-access-control v0.101
-call sfdx force:package:install --package 04t7U000000TpqbQAC -r -k %3 --wait 10 --publishwait 10
+echo "Installer crm-platform-access-control v0.101"
+call sf package install --package 04t7U000000TpqbQAC --no-prompt --installation-key %3 --wait 30 --publish-wait 30
 
-:: Dytt kildekoden til scratch org'en
-call sfdx force:source:push
+echo "Dytter kildekoden til scratch org'en"
+call sf project deploy start
+
+echo "Ferdig"
