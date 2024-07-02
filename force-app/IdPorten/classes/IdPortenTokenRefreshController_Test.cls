@@ -112,6 +112,29 @@ private class IdPortenTokenRefreshController_Test {
         System.assertEquals('State samsvarer ikke', errorLogs[0].Log_Message__c);
     }
 
+    @IsTest
+    private static void redirect_validateNotScratch() {
+        Test.setMock(HttpCalloutMock.class, new TokenEndpointMock());
+        Pagereference pageRef = Page.IdPortenTokenRefresh;
+
+        Test.startTest();
+
+        test.setCurrentPage(pageRef);
+        pageRef.getParameters().put('redirectUrl', '/');
+        IdPortenTokenRefreshController controller = new IdPortenTokenRefreshController();
+        PageReference redirectPage = controller.validateAndRedirect();
+        Test.stopTest();
+        String nextPage = redirectPage.getUrl();
+        
+        Organization org = [SELECT IsSandbox, TrialExpirationDate FROM Organization];
+        Boolean isScratchOrg = org?.IsSandbox && org?.TrialExpirationDate != null;
+        if(isScratchOrg) {
+            Assert.areEqual('/', nextPage, 'Expected to get redirectUrl');
+        } else {
+            Assert.isTrue(nextPage.startsWith('https://auth'), 'Expected to get auth URL outside scratch');
+        }
+    }
+
     public class TokenEndpointMock implements HttpCalloutMock {
         public HTTPResponse respond(HTTPRequest request) {
             HttpResponse res = new HttpResponse();

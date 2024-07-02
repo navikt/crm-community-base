@@ -1,6 +1,21 @@
 public with sharing class IdPortenTokenRefreshController {
     private static final Integer SESSION_DURATION_IN_MINUTES = 24;
 
+    public PageReference validateAndRedirect() {
+        // Code from https://salesforce.stackexchange.com/questions/256499/how-can-i-determine-if-the-org-that-im-currently-connected-to-is-a-scratch-org
+        Organization org = [SELECT IsSandbox, TrialExpirationDate FROM Organization];
+        Boolean isScratchOrg = org?.IsSandbox && org?.TrialExpirationDate != null;
+        
+        if (isScratchOrg == true) {
+            String redirectUrl = ApexPages.currentPage().getParameters().get('redirectUrl');
+            ApexPages.currentPage()
+                .setCookies(new List<Cookie>{ new Cookie('redirectUrl', redirectUrl, null, 900, true)});
+            pageReference pgTester = new pageReference(redirectUrl);
+            return pgTester.setRedirect(true);
+        }
+        return redirect();
+    }
+
     public PageReference redirect() {
         Cookie stateCookie;
         Cookie nonceCookie;
