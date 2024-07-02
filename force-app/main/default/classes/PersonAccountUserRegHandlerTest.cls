@@ -79,7 +79,7 @@ private class PersonAccountUserRegHandlerTest {
                 LIMIT 1
             ];
             System.assertEquals(
-                0,
+                1,
                 [
                     SELECT COUNT()
                     FROM PermissionSetAssignment
@@ -87,7 +87,7 @@ private class PersonAccountUserRegHandlerTest {
                         PermissionSetId = :permSet.Id
                         AND AssigneeId = :user.Id
                 ],
-                'Expect perm set not to be assigned to community user'
+                'Expect perm set to be assigned to new user'
             );
         }
     }
@@ -144,7 +144,7 @@ private class PersonAccountUserRegHandlerTest {
                 LIMIT 1
             ];
             System.assertEquals(
-                0,
+                1,
                 [
                     SELECT COUNT()
                     FROM PermissionSetAssignment
@@ -152,33 +152,52 @@ private class PersonAccountUserRegHandlerTest {
                         PermissionSetId = :permSet.Id
                         AND AssigneeId = :user.Id
                 ],
-                'Expect perm set not to be assigned to community user'
+                'Expect perm set to be assigned to new user'
             );
         }
     }
 
     @IsTest
     private static void updateUser() {
-        Map<String, String> attributeMap = new Map<String, String>();
-        attributeMap.put('pid', '1');
-        Auth.UserData userData = new Auth.UserData(
-            '',
-            '',
-            '',
-            '',
-            '',
-            '',
-            '',
-            '',
-            '',
-            '',
-            attributeMap
-        );
+        User navEmployee = TestDataFactory_Community.getUsers(
+            1,
+            'System Administrator',
+            true,
+            true
+        )[0];
+        System.runAs(navEmployee) {
+            Account personAccount = TestDataFactory_Community.getPersonAccounts(
+                1
+            )[0];
+            TestDataFactory_Community.getEmployerCommunityUser(
+                new Set<Id>{ personAccount.Id },
+                'Personbruker Login',
+                true
+            );
 
-        Test.startTest();
-        PersonAccountUserRegHandler regHandler = new PersonAccountUserRegHandler();
-        regHandler.updateUser(null, null, userData);
-        Test.stopTest();
+            Map<String, String> attributeMap = new Map<String, String>();
+            attributeMap.put('pid', '1');
+            Auth.UserData userData = new Auth.UserData(
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                attributeMap
+            );
+
+            PersonAccountUserRegHandler regHandler = new PersonAccountUserRegHandler();
+            User user = regHandler.createUser(null, userData);
+
+            Test.startTest();
+            regHandler.updateUser(null, null, userData);
+            Test.stopTest();
+        }
     }
 
     @IsTest
