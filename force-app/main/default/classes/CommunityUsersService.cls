@@ -194,7 +194,14 @@ public with sharing class CommunityUsersService {
             PermissionSetAssignment assignment = new PermissionSetAssignment();
             assignment.AssigneeId = userId;
             assignment.PermissionSetId = defaultPermissionSets[0].PermissionSetId__c;
-            insert assignment;
+            
+            try {
+                insert assignment;
+            } catch (Exception e) {
+                LoggerUtility logger = new LoggerUtility();
+                logger.exception(e, CRM_ApplicationDomain.Domain.CRM);
+                logger.publishSynch();
+            }
         }
     }
 

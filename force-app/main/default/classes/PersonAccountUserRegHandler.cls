@@ -1,11 +1,12 @@
 global class PersonAccountUserRegHandler implements Auth.RegistrationHandler {
-    private List<String> samhandlerNetworkIds=new List<String>{'0DB7U000000TN3u','0DB5t00000001tH'};
+    private List<String> samhandlerNetworkIds=new List<String>{'0DB7U000000TN3u','0DB5t00000001tH'}; // The id's for Arbeidsgiver Dialog Community in PROD and SIT2
+    
     global User createUser(Id portalId, Auth.UserData data) {
         String personIdent = data.attributeMap.get('pid');
         String communityId = data.attributeMap.get('sfdc_networkid');
 
         DefaultCommunityProfile__c defaultCommunityProfiles = DefaultCommunityProfile__c.getOrgDefaults();
-        String defaultCommunityPlusLoginCommunityId = defaultCommunityProfiles.DefaultCommunityPlusLoginCommunityId__c;
+        String defaultCommunityPlusLoginCommunityId = defaultCommunityProfiles.DefaultCommunityPlusLoginCommunityId__c; // The id for Aa-registeret Community
         if (
             communityId != null &&
             defaultCommunityPlusLoginCommunityId != null &&
@@ -20,9 +21,7 @@ global class PersonAccountUserRegHandler implements Auth.RegistrationHandler {
             return user;
         }
         User user = CommunityUsersService.getOrCreatePersonAccountUser(personIdent);
-        if (communityId == '0DB2o000000Ug9I' || communityId == '0DB1l0000008QNv' || communityId == '0DB2o000000Ug9D') {
-            CommunityUsersService.assignCommunitySpecificPermissionSet(user.Id, communityId);
-        }
+        CommunityUsersService.assignCommunitySpecificPermissionSet(user.Id, communityId);
 
         return user;
     }
@@ -31,7 +30,7 @@ global class PersonAccountUserRegHandler implements Auth.RegistrationHandler {
         String personIdent = data.attributeMap.get('pid');
         String communityId = data.attributeMap.get('sfdc_networkid');
         DefaultCommunityProfile__c defaultCommunityProfiles = DefaultCommunityProfile__c.getOrgDefaults();
-        String defaultCommunityPlusLoginCommunityId = defaultCommunityProfiles.DefaultCommunityPlusLoginCommunityId__c;
+        String defaultCommunityPlusLoginCommunityId = defaultCommunityProfiles.DefaultCommunityPlusLoginCommunityId__c; // The id for Aa-registeret Community
         if (
             communityId != null &&
             defaultCommunityPlusLoginCommunityId != null &&
@@ -45,8 +44,6 @@ global class PersonAccountUserRegHandler implements Auth.RegistrationHandler {
             }
         }
 
-        if (communityId == '0DB2o000000Ug9I' || communityId == '0DB1l0000008QNv' || communityId == '0DB2o000000Ug9D') {
-            CommunityUsersService.assignCommunitySpecificPermissionSet(userId, communityId);
-        }
+        CommunityUsersService.assignCommunitySpecificPermissionSet(userId, communityId);
     }
 }
