@@ -200,7 +200,7 @@ public with sharing class CommunityUsersService {
             } catch (Exception e) {
                 LoggerUtility logger = new LoggerUtility();
                 logger.exception(e, CRM_ApplicationDomain.Domain.CRM);
-                logger.publishSynch();
+                logger.publish();
             }
         }
     }
