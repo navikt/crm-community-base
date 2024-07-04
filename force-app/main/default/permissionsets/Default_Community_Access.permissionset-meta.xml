@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Gis ved opprettelse til alle nye community-brukere. Det styres via Custom Setting: Default Community Profile. Inneholder ingen tilganger direkte, men brukes til å styre members for noen experience sites.</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Default Community Access</label>
+</PermissionSet>
