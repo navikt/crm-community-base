@@ -92,8 +92,8 @@ public with sharing class IdPortenSidController {
             '0DB0E0000005HX9',
             '0DB7U000000TN3uWAG',
             '0DB7U0000004C9wWAE',
-            '0DB2o000000PCSH',
-            '0DB7U0000004C9r'
+            '0DB2o000000PCSHGA4',
+            '0DB7U0000004C9rWAE'
         };
 
         Cookie retUrlCookie = ApexPages.currentPage().getCookies().get('retUrl');
