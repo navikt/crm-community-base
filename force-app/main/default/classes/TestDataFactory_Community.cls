@@ -115,7 +115,7 @@ public class TestDataFactory_Community {
                 ProfileId = profile.Id
             );
             if (assignRole) {
-                UserRole role = [SELECT Id FROM UserRole WHERE Name = 'Default'];
+                UserRole role = [SELECT Id FROM UserRole WHERE Name = 'Default' LIMIT 1];
                 user.UserRoleId = role.Id;
             }
             users.add(user);
