@@ -39,7 +39,9 @@ public with sharing class DeleteIdPortenCacheRecords {
         return [
             SELECT Id
             FROM IdPortenCache__c
-            WHERE CreatedDate > :startDate AND ExpirationTime__c <= :Datetime.now()
+            WHERE
+                CreatedDate > :startDate
+                AND ExpirationTime__c <= :Datetime.now()
             WITH SECURITY_ENFORCED
             ORDER BY ExpirationTime__c ASC NULLS LAST
             LIMIT 2000
@@ -57,7 +59,11 @@ public with sharing class DeleteIdPortenCacheRecords {
 
         // If no records to delete return
         if (recordsToDelete == null || recordsToDelete.isEmpty()) {
-            this.logger.info('No Id Porten Caches to delete.', null, CRM_ApplicationDomain.Domain.CRM);
+            this.logger.info(
+                'No Id Porten Caches to delete.',
+                null,
+                CRM_ApplicationDomain.Domain.CRM
+            );
             return;
         }
 
@@ -65,7 +71,10 @@ public with sharing class DeleteIdPortenCacheRecords {
             recordIdsToDelete.add(recordToDelete.Id);
         }
 
-        List<Database.DeleteResult> deleteResults = Database.delete(recordIdsToDelete, false);
+        List<Database.DeleteResult> deleteResults = Database.delete(
+            recordIdsToDelete,
+            false
+        );
 
         recordsToEmptyFromRecycleBin = this.handleDeleteResult(deleteResults);
 
@@ -83,7 +92,9 @@ public with sharing class DeleteIdPortenCacheRecords {
      * @param emptyRecycleBinResults `List<Database.EmptyRecycleBinResult>`
      */
     @TestVisible
-    private void handleEmptyRecycleBinResult(List<Database.EmptyRecycleBinResult> emptyRecycleBinResults) {
+    private void handleEmptyRecycleBinResult(
+        List<Database.EmptyRecycleBinResult> emptyRecycleBinResults
+    ) {
         Integer successCount = 0;
         Integer failedCount = 0;
 
@@ -98,8 +109,8 @@ public with sharing class DeleteIdPortenCacheRecords {
         if (successCount > 0) {
             this.logger.info(
                 'Emptied ' +
-                successCount +
-                ' Id Porten Cache records from the recycle Bin.',
+                    successCount +
+                    ' Id Porten Cache records from the recycle Bin.',
                 null,
                 CRM_ApplicationDomain.Domain.CRM
             );
@@ -108,8 +119,8 @@ public with sharing class DeleteIdPortenCacheRecords {
         if (failedCount > 0) {
             this.logger.critical(
                 'Failed to empty ' +
-                failedCount +
-                ' Id Porten Cache records from the recycle bin',
+                    failedCount +
+                    ' Id Porten Cache records from the recycle bin',
                 null,
                 CRM_ApplicationDomain.Domain.CRM
             );
@@ -124,7 +135,9 @@ public with sharing class DeleteIdPortenCacheRecords {
      * @return recordsToEmptyFromRecycleBin `List<Id>`
      */
     @TestVisible
-    private List<Id> handleDeleteResult(List<Database.DeleteResult> deleteResults) {
+    private List<Id> handleDeleteResult(
+        List<Database.DeleteResult> deleteResults
+    ) {
         List<Id> recordsToEmptyFromRecycleBin = new List<Id>();
         Integer successCount = 0;
         Integer failedCount = 0;
@@ -141,14 +154,16 @@ public with sharing class DeleteIdPortenCacheRecords {
         }
 
         if (successCount > 0) {
-            this.logger.info('Deleted ' + successCount + ' Id Porten Caches.', null, CRM_ApplicationDomain.Domain.CRM);
+            this.logger.info(
+                'Deleted ' + successCount + ' Id Porten Caches.',
+                null,
+                CRM_ApplicationDomain.Domain.CRM
+            );
         }
 
         if (failedCount > 0) {
             this.logger.critical(
-                'Failed to delete ' +
-                failedCount +
-                ' Id Porten Caches:',
+                'Failed to delete ' + failedCount + ' Id Porten Caches:',
                 null,
                 CRM_ApplicationDomain.Domain.CRM
             );

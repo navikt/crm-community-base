@@ -8,6 +8,10 @@ private class IdPortenCacheDeleteHandler_Test {
         insert cache;
 
         delete cache;
-        system.assertEquals(0, [SELECT COUNT() FROM IdPortenCache__c WHERE Name = 'sid'], 'Cache is not found');
+        system.assertEquals(
+            0,
+            [SELECT COUNT() FROM IdPortenCache__c WHERE Name = 'sid'],
+            'Cache is not found'
+        );
     }
 }

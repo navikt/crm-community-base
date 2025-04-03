@@ -29,7 +29,10 @@ private with sharing class DeleteIdPortenCacheScheduler_Test {
         result = DeleteIdPortenCacheScheduler.reSchedule();
         Test.stopTest();
 
-        Assert.isTrue(String.isEmpty(result), 'Did not expect that the job was scheduled');
+        Assert.isTrue(
+            String.isEmpty(result),
+            'Did not expect that the job was scheduled'
+        );
     }
 
     @IsTest
@@ -44,13 +47,23 @@ private with sharing class DeleteIdPortenCacheScheduler_Test {
         );
 
         Test.startTest();
-        jobsBeforeStopIsRun = DeleteIdPortenCacheScheduler.getActiveCronTriggers().size();
+        jobsBeforeStopIsRun = DeleteIdPortenCacheScheduler.getActiveCronTriggers()
+            .size();
         DeleteIdPortenCacheScheduler.stopSchedule();
-        jobsAfterStopIsRun = DeleteIdPortenCacheScheduler.getActiveCronTriggers().size();
+        jobsAfterStopIsRun = DeleteIdPortenCacheScheduler.getActiveCronTriggers()
+            .size();
         Test.stopTest();
 
-        Assert.areEqual(1, jobsBeforeStopIsRun, 'Expected nmb of jobs existing before the test starts to be zero');
-        Assert.areEqual(0, jobsAfterStopIsRun, 'Expected nmb of jobs existing after the test stops to be zero');
+        Assert.areEqual(
+            1,
+            jobsBeforeStopIsRun,
+            'Expected nmb of jobs existing before the test starts to be zero'
+        );
+        Assert.areEqual(
+            0,
+            jobsAfterStopIsRun,
+            'Expected nmb of jobs existing after the test stops to be zero'
+        );
     }
 
     @IsTest
@@ -59,12 +72,22 @@ private with sharing class DeleteIdPortenCacheScheduler_Test {
         Integer jobsAfterStopIsRun = 0;
 
         Test.startTest();
-        jobsBeforeStopIsRun = DeleteIdPortenCacheScheduler.getActiveCronTriggers().size();
+        jobsBeforeStopIsRun = DeleteIdPortenCacheScheduler.getActiveCronTriggers()
+            .size();
         DeleteIdPortenCacheScheduler.stopSchedule();
-        jobsAfterStopIsRun = DeleteIdPortenCacheScheduler.getActiveCronTriggers().size();
+        jobsAfterStopIsRun = DeleteIdPortenCacheScheduler.getActiveCronTriggers()
+            .size();
         Test.stopTest();
 
-        Assert.areEqual(0, jobsBeforeStopIsRun, 'Expected nmb of jobs existing before the test starts to be zero');
-        Assert.areEqual(0, jobsAfterStopIsRun, 'Expected nmb of jobs existing after the test stops to be zero');
+        Assert.areEqual(
+            0,
+            jobsBeforeStopIsRun,
+            'Expected nmb of jobs existing before the test starts to be zero'
+        );
+        Assert.areEqual(
+            0,
+            jobsAfterStopIsRun,
+            'Expected nmb of jobs existing after the test stops to be zero'
+        );
     }
 }

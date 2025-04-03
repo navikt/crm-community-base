@@ -11,7 +11,11 @@ private class IdPortenLogoutRestService_Test {
     @IsTest
     private static void testLogoutBySessionId_whenSidInCache() {
         IdPortenLogoutRestService.logoutBySessionId('sid');
-        system.assertEquals(1, [SELECT COUNT() FROM IdPortenCache__c WHERE Name = 'sid'], 'Cache is found');
+        system.assertEquals(
+            1,
+            [SELECT COUNT() FROM IdPortenCache__c WHERE Name = 'sid'],
+            'Cache is found'
+        );
     }
 
     @IsTest

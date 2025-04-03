@@ -77,17 +77,25 @@ public with sharing class DeleteIdPortenCacheScheduler implements Schedulable {
      * @return jobId `String`
      */
     private static String reSchedule(SchedulableContext sc) {
-        for (CronTrigger ct : DeleteIdPortenCacheScheduler.getActiveCronTriggers()) {
+        for (
+            CronTrigger ct : DeleteIdPortenCacheScheduler.getActiveCronTriggers()
+        ) {
             if (sc == null || SC.getTriggerId() != ct.Id) {
                 return '';
             }
         }
 
         DateTime cronJobTime = System.now().addMinutes(FIVE_MINUTES);
-        String cronExpression = DeleteIdPortenCacheScheduler.getCronExpression(cronJobTime);
+        String cronExpression = DeleteIdPortenCacheScheduler.getCronExpression(
+            cronJobTime
+        );
         String jobName = DeleteIdPortenCacheScheduler.getJobName(cronJobTime);
 
-        return System.schedule(jobName, cronExpression, new DeleteIdPortenCacheScheduler());
+        return System.schedule(
+            jobName,
+            cronExpression,
+            new DeleteIdPortenCacheScheduler()
+        );
     }
 
     /**
@@ -112,7 +120,9 @@ public with sharing class DeleteIdPortenCacheScheduler implements Schedulable {
      * @description Stop all scheduled jobs
      */
     public static void stopSchedule() {
-        for (CronTrigger cronTrigger : DeleteIdPortenCacheScheduler.getActiveCronTriggers()) {
+        for (
+            CronTrigger cronTrigger : DeleteIdPortenCacheScheduler.getActiveCronTriggers()
+        ) {
             System.abortJob(cronTrigger.Id);
         }
     }
