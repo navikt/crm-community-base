@@ -17,6 +17,9 @@
             ],
             "c/globalCommunityHeaderMobileMenu": [
                 "globalCommunityHeaderMobileMenu/globalCommunityHeaderMobileMenu.js"
+            ],
+            "c/*": [
+                "*"
             ]
         }
     },

@@ -17,21 +17,21 @@
     "lint-staged": "lint-staged"
   },
   "devDependencies": {
-    "@locker/eslint-config-locker": "^0.21.4",
-    "@lwc/eslint-plugin-lwc": "^1.1.2",
+    "@locker/eslint-config-locker": "^0.24.8",
+    "@lwc/eslint-plugin-lwc": "^2.1.0",
     "@prettier/plugin-xml": "^3.2.2",
-    "@salesforce/eslint-config-lwc": "^3.2.3",
+    "@salesforce/eslint-config-lwc": "^3.7.1",
     "@salesforce/eslint-plugin-aura": "^2.0.0",
-    "@salesforce/eslint-plugin-lightning": "^1.0.0",
-    "@salesforce/sfdx-lwc-jest": "^4.0.1",
-    "eslint": "^8.57.0",
+    "@salesforce/eslint-plugin-lightning": "^1.0.1",
+    "@salesforce/sfdx-lwc-jest": "^7.0.1",
+    "eslint": "^8.57.1",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-import": "^2.25.4",
     "eslint-plugin-jest": "^27.6.0",
-    "husky": "^9.0.11",
-    "lint-staged": "^15.1.0",
-    "prettier": "^3.1.0",
-    "prettier-plugin-apex": "^2.0.1"
+    "husky": "^9.1.7",
+    "lint-staged": "^15.5.0",
+    "prettier": "^3.5.3",
+    "prettier-plugin-apex": "^2.2.5"
   },
   "lint-staged": {
     "**/{aura,lwc}/**/*.js": [
