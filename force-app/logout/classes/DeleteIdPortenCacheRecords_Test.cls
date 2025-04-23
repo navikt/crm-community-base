@@ -1,4 +1,5 @@
 @IsTest
+@SuppressWarnings('PMD.ApexUnitTestClassShouldHaveRunAs')
 private with sharing class DeleteIdPortenCacheRecords_Test {
     @IsTest
     private static void testDeleteRecordsWithRecords() {
@@ -34,18 +35,13 @@ private with sharing class DeleteIdPortenCacheRecords_Test {
         List<Application_Log__c> logs = [
             SELECT Id, Log_Level__c
             FROM Application_Log__c
-            WHERE Category__c = 'Logout'
+            WHERE Category__c = 'ID-porten_Logout'
         ];
 
-        Assert.areEqual(
-            1,
+        System.Assert.areEqual(
+            0,
             logs.size(),
-            'Did not expect a log result as the logs are not published at this point.'
-        );
-        Assert.areEqual(
-            'Info',
-            logs[0].Log_Level__c,
-            'Expected that we had an info record'
+            'Did not expect a log result as there was nothing to delete and nothing went wrong.'
         );
     }
 
@@ -140,7 +136,7 @@ private with sharing class DeleteIdPortenCacheRecords_Test {
         List<Application_Log__c> logs = [
             SELECT Id, Log_Level__c
             FROM Application_Log__c
-            WHERE Category__c = 'Logout'
+            WHERE Category__c = 'ID-porten_Logout'
         ];
 
         Assert.areEqual(
@@ -159,7 +155,7 @@ private with sharing class DeleteIdPortenCacheRecords_Test {
         List<Application_Log__c> logs = [
             SELECT Id, Log_Level__c
             FROM Application_Log__c
-            WHERE Category__c = 'Logout'
+            WHERE Category__c = 'ID-porten_Logout'
         ];
 
         Assert.areEqual(
@@ -194,7 +190,7 @@ private with sharing class DeleteIdPortenCacheRecords_Test {
         List<Application_Log__c> logs = [
             SELECT Id, Log_Level__c
             FROM Application_Log__c
-            WHERE Category__c = 'Logout'
+            WHERE Category__c = 'ID-porten_Logout'
         ];
 
         Assert.areEqual(1, logs.size(), 'Expected one log record');
@@ -221,23 +217,10 @@ private with sharing class DeleteIdPortenCacheRecords_Test {
         deleteIdPortenCacheRecords.logger.publish();
         Test.stopTest();
 
-        Assert.areEqual(
+        System.assert.areEqual(
             '001000000000000',
             result[0],
-            'Expected to get the Id of the failed record'
-        );
-
-        List<Application_Log__c> logs = [
-            SELECT Id, Log_Level__c
-            FROM Application_Log__c
-            WHERE Category__c = 'Logout'
-        ];
-
-        Assert.areEqual(1, logs.size(), 'Expected one log record');
-        Assert.areEqual(
-            'Info',
-            logs[0].Log_Level__c,
-            'Expected that we had a info error record'
+            'Expected to get the Id of the deleted record'
         );
     }
 
@@ -261,7 +244,7 @@ private with sharing class DeleteIdPortenCacheRecords_Test {
         List<Application_Log__c> logs = [
             SELECT Id, Log_Level__c
             FROM Application_Log__c
-            WHERE Category__c = 'Logout'
+            WHERE Category__c = 'ID-porten_Logout'
         ];
 
         Assert.areEqual(1, logs.size(), 'Expected one log record');
@@ -292,14 +275,13 @@ private with sharing class DeleteIdPortenCacheRecords_Test {
         List<Application_Log__c> logs = [
             SELECT Id, Log_Level__c
             FROM Application_Log__c
-            WHERE Category__c = 'Logout'
+            WHERE Category__c = 'ID-porten_Logout'
         ];
 
-        Assert.areEqual(1, logs.size(), 'Expected one log record');
-        Assert.areEqual(
-            'Info',
-            logs[0].Log_Level__c,
-            'Expected that we had a info error record'
+        System.assert.areEqual(
+            0,
+            logs.size(),
+            'Did not expect a log result when we had a success.'
         );
     }
 }

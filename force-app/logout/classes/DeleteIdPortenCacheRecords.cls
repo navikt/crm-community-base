@@ -3,7 +3,7 @@
  * Example code: `new DeleteIdPortenCacheRecords.deleteRecords();`
  *
  * The job will delete a maximum of 2000 records for each run;
- * The results (successes and errors) are logged under the category 'Logout'
+ * The results (successes and errors) are logged under the category 'ID-porten_Logout'
  *
  * NOTE: Records in the recycle bin might still be visible in a query all:
  * `Each Salesforce instance has a 'sweeper' thread that goes through the database(s) and removes records from tables that are in a deleted status. There is no first deleted first removed to this process. So records can remain on the table long after you have deleted and removed them from the recycle bin.`
@@ -18,7 +18,7 @@ public with sharing class DeleteIdPortenCacheRecords {
      * @description constructor
      */
     public DeleteIdPortenCacheRecords() {
-        logger = new LoggerUtility('Logout');
+        logger = new LoggerUtility('ID-porten_Logout');
     }
 
     /**
@@ -59,11 +59,6 @@ public with sharing class DeleteIdPortenCacheRecords {
 
         // If no records to delete return
         if (recordsToDelete == null || recordsToDelete.isEmpty()) {
-            this.logger.info(
-                'No Id Porten Caches to delete.',
-                null,
-                CRM_ApplicationDomain.Domain.CRM
-            );
             return;
         }
 
@@ -95,25 +90,12 @@ public with sharing class DeleteIdPortenCacheRecords {
     private void handleEmptyRecycleBinResult(
         List<Database.EmptyRecycleBinResult> emptyRecycleBinResults
     ) {
-        Integer successCount = 0;
         Integer failedCount = 0;
 
         for (Database.EmptyRecycleBinResult result : emptyRecycleBinResults) {
-            if (result.isSuccess()) {
-                successCount += 1;
-            } else {
+            if (false == result.isSuccess()) {
                 failedCount += 1;
             }
-        }
-
-        if (successCount > 0) {
-            this.logger.info(
-                'Emptied ' +
-                    successCount +
-                    ' Id Porten Cache records from the recycle Bin.',
-                null,
-                CRM_ApplicationDomain.Domain.CRM
-            );
         }
 
         if (failedCount > 0) {
@@ -151,14 +133,6 @@ public with sharing class DeleteIdPortenCacheRecords {
             } else {
                 failedCount += 1;
             }
-        }
-
-        if (successCount > 0) {
-            this.logger.info(
-                'Deleted ' + successCount + ' Id Porten Caches.',
-                null,
-                CRM_ApplicationDomain.Domain.CRM
-            );
         }
 
         if (failedCount > 0) {

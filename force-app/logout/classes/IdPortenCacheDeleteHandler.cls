@@ -15,7 +15,6 @@ global class IdPortenCacheDeleteHandler extends MyTriggers {
     @future
     public static void performDelete(Set<Id> userIds) {
         LoggerUtility logger = new LoggerUtility('Logout');
-        Integer successCount = 0;
         Integer failedCount = 0;
 
         try {
@@ -28,12 +27,6 @@ global class IdPortenCacheDeleteHandler extends MyTriggers {
             ];
 
             if (authSessionsToDelete.isEmpty()) {
-                logger.info(
-                    'No auth sessions to delete found',
-                    null,
-                    CRM_ApplicationDomain.Domain.CRM
-                );
-                logger.publish();
                 return;
             }
 
@@ -43,20 +36,11 @@ global class IdPortenCacheDeleteHandler extends MyTriggers {
             );
 
             for (Database.DeleteResult result : deleteResults) {
-                if (result.isSuccess()) {
-                    successCount += 1;
-                } else {
+                if (false == result.isSuccess()) {
                     failedCount += 1;
                 }
             }
 
-            if (successCount > 0) {
-                logger.info(
-                    'Deleted ' + successCount + ' AuthSession.',
-                    null,
-                    CRM_ApplicationDomain.Domain.CRM
-                );
-            }
             if (failedCount > 0) {
                 logger.critical(
                     'Failed to delete ' + failedCount + ' AuthSession:',
