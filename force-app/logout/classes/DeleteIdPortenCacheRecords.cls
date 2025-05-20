@@ -35,13 +35,10 @@ public with sharing class DeleteIdPortenCacheRecords {
      */
     @TestVisible
     private List<IdPortenCache__c> getIdPortenCacheRecords() {
-        DateTime startDate = DateTime.newInstance(2024, 5, 9);
         return [
             SELECT Id
             FROM IdPortenCache__c
-            WHERE
-                CreatedDate > :startDate
-                AND ExpirationTime__c <= :Datetime.now()
+            WHERE ExpirationTime__c <= :Datetime.now()
             WITH SECURITY_ENFORCED
             ORDER BY ExpirationTime__c ASC NULLS LAST
             LIMIT 2000
