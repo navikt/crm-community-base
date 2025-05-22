@@ -1,68 +1,117 @@
 {
-    "orgName": "crm-community-base",
-    "edition": "Enterprise",
-    "release": "Current",
-    "adminEmail": "fakeemail@nav.no.scratchorg",
-    "features": [
-        "Sites",
-        "ForceComPlatform",
-        "Communities",
-        "CustomerCommunity",
-        "CustomerCommunityLogin",
-        "CustomerCommunityPlus",
-        "CustomerCommunityPlusLogin",
-        "PersonAccounts",
-        "ProcessBuilder",
-        "API",
-        "Knowledge",
-        "ServiceCloud",
-        "LiveAgent",
-        "LightningServiceConsole",
-        "ContactsToMultipleAccounts",
-        "FieldService:5",
-        "FieldServiceDispatcherUser:5",
-        "FieldServiceMobileUser:5",
-        "FieldServiceSchedulingUser:5"
-    ],
-    "country": "NO",
-    "language": "en_US",
-    "settings": {
-        "experienceBundleSettings": {
-            "enableExperienceBundleMetadata": true
-        },
-        "communitiesSettings": {
-            "enableNetworksEnabled": true
-        },
-        "lightningExperienceSettings": {
-            "enableS1DesktopEnabled": true
-        },
-        "languageSettings": {
-            "enableTranslationWorkbench": true
-        },
-        "nameSettings": {
-            "enableMiddleName": true
-        },
-        "fieldServiceSettings": {
-            "fieldServiceOrgPref": true,
-            "doesShareSaParentWoWithAr": false,
-            "doesShareSaWithAr": false,
-            "enableWorkOrders": true,
-            "isGeoCodeSyncEnabled": false,
-            "isLocationHistoryEnabled": false,
-            "fieldServiceNotificationsOrgPref": false,
-            "serviceAppointmentsDueDateOffsetOrgValue": 7,
-            "workOrderLineItemSearchFields": "Subject",
-            "workOrderSearchFields": "Subject"
-        },
-        "liveAgentSettings": {
-            "enableLiveAgent": true
-        },
-        "knowledgeSettings": {
-            "enableKnowledge": true,
-            "enableLightningKnowledge": true
-        },
-        "omniChannelSettings": {
-            "enableOmniChannel": true
-        }
+  "orgName": "crm-community-base",
+  "edition": "Enterprise",
+  "adminEmail": "fakeemail@nav.no.scratchorg",
+  "features": [
+    "AddCustomApps:30",
+    "API",
+    "Communities",
+    "ContactsToMultipleAccounts",
+    "CustomerCommunity",
+    "CustomerCommunityLogin",
+    "CustomerCommunityPlus",
+    "CustomerCommunityPlusLogin",
+    "FieldService:5",
+    "FieldServiceDispatcherUser:5",
+    "FieldServiceMobileUser:5",
+    "FieldServiceSchedulingUser:5",
+    "ForceComPlatform",
+    "Knowledge",
+    "LightningServiceConsole",
+    "LiveAgent",
+    "LiveMessage",
+    "PersonAccounts",
+    "PlatformCache",
+    "ProcessBuilder",
+    "ServiceCloud",
+    "ServiceUser",
+    "Sites",
+    "SurveyAdvancedFeatures"
+  ],
+  "country": "NO",
+  "language": "en_US",
+  "settings": {
+    "accountSettings": {
+      "enableAccountTeams": true,
+      "enableRelateContactToMultipleAccounts": true
+    },
+    "chatterSettings": {
+      "enableChatter": true,
+      "enableChatterEmoticons": true,
+      "enableFeedsRichText": true
+    },
+    "communitiesSettings": {
+      "enableNetworksEnabled": true,
+      "enableOotbProfExtUserOpsEnable": true
+    },
+    "emailAdministrationSettings": {
+      "enableEnhancedEmailEnabled": true
+    },
+    "entitlementSettings": {
+      "enableEntitlements": true,
+      "enableEntitlementVersioning": true
+    },
+    "experienceBundleSettings": {
+      "enableExperienceBundleMetadata": true
+    },
+    "fieldServiceSettings": {
+      "fieldServiceOrgPref": true,
+      "doesShareSaParentWoWithAr": false,
+      "doesShareSaWithAr": false,
+      "enableWorkOrders": true,
+      "isGeoCodeSyncEnabled": false,
+      "isLocationHistoryEnabled": false,
+      "fieldServiceNotificationsOrgPref": true,
+      "serviceAppointmentsDueDateOffsetOrgValue": 7,
+      "workOrderLineItemSearchFields": "Subject",
+      "workOrderSearchFields": "Subject"
+    },
+    "knowledgeSettings": {
+      "enableKnowledge": true,
+      "enableLightningKnowledge": true
+    },
+    "languageSettings": {
+      "enableTranslationWorkbench": true
+    },
+    "lightningExperienceSettings": {
+      "enableS1DesktopEnabled": true
+    },
+    "liveAgentSettings": {
+      "enableLiveAgent": true
+    },
+    "nameSettings": {
+      "enableMiddleName": true
+    },
+    "omniChannelSettings": {
+      "enableOmniChannel": true,
+      "enableOmniSkillsRouting": true,
+      "enableOmniSecondaryRoutingPriority": true
+    },
+    "pathAssistantSettings": {
+      "pathAssistantEnabled": true
+    },
+    "securitySettings": {
+      "sessionSettings": {
+        "forceRelogin": false,
+        "lockerServiceNext": true
+      },
+      "enableAdminLoginAsAnyUser": true
+    },
+    "surveySettings": {
+      "enableSurvey": true,
+      "enableSurveyOwnerCanManageResponse": false
+    },
+    "userManagementSettings": {
+      "enableEnhancedConcealPersonalInfo": true,
+      "enableEnhancedPermsetMgmt": true,
+      "enableEnhancedProfileMgmt": true,
+      "enableNewProfileUI": true,
+      "enableProfileFiltering": true,
+      "enableScrambleUserData": false,
+      "enableUserSelfDeactivate": false,
+      "permsetsInFieldCreation": true,
+      "psaExpirationUIEnabled": true,
+      "restrictedProfileCloning": false
     }
+  }
 }
