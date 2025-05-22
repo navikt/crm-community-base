@@ -55,6 +55,7 @@ global without sharing class IdPortenLogoutRestService {
             SELECT UserId__c
             FROM IdPortenCache__c
             WHERE Name = :sid
+            WITH SECURITY_ENFORCED
         ];
 
         if (cache.size() > 0) {
@@ -73,6 +74,7 @@ global without sharing class IdPortenLogoutRestService {
             SELECT Id
             FROM AuthSession
             WHERE UsersId = :userId AND LoginType = :LOGIN_TYPE
+            WITH SECURITY_ENFORCED
         ];
     }
 

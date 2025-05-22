@@ -1,8 +1,10 @@
 @SuppressWarnings('PMD.ApexUnitTestClassShouldHaveRunAs')
-@IsTest(IsParallel=true)
+@IsTest
 private class IdPortenLogoutRestService_Test {
     @TestSetup
     static void makeData() {
+        createTestUsers();
+
         IdPortenCache__c cache = new IdPortenCache__c();
         cache.Name = 'sid';
         cache.UserId__c = '0051j000009na8sAAA'; // NOPMD - This is a test Id
@@ -37,22 +39,48 @@ private class IdPortenLogoutRestService_Test {
 
     @IsTest
     private static void getUserIdFromSessionIdWithCache() {
-        IdPortenLogoutRestService service = new IdPortenLogoutRestService();
+        String userId;
         System.Test.startTest();
-        String userId = service.getUserIdFromSessionId('sid');
+        System.runAs(getIntegrationUser()) {
+            IdPortenLogoutRestService service = new IdPortenLogoutRestService();
+            userId = service.getUserIdFromSessionId('sid');
+        }
         System.Test.stopTest();
         System.Assert.areEqual(
-            '0051j000009na8sAAA',
+            '0051j000009na8sAAA', // NOPMD - This is a test Id
             userId,
             'Expected userId when cache found'
-        ); // NOPMD - This is a test Id
+        );
+    }
+
+    @IsTest
+    private static void getUserIdFromSessionNoAccess() {
+        Exception e;
+        System.Test.startTest();
+        System.runAs(getNoAccessUser()) {
+            try {
+                IdPortenLogoutRestService service = new IdPortenLogoutRestService();
+                service.getUserIdFromSessionId('sid');
+            } catch (Exception ex) {
+                e = ex;
+            }
+        }
+        System.Test.stopTest();
+        System.assert.isInstanceOfType(
+            e,
+            QueryException.class,
+            'Expected QueryException'
+        );
     }
 
     @IsTest
     private static void getUserIdFromSessionIdNoCache() {
-        IdPortenLogoutRestService service = new IdPortenLogoutRestService();
+        String userId;
         System.Test.startTest();
-        String userId = service.getUserIdFromSessionId('sid2');
+        System.runAs(getIntegrationUser()) {
+            IdPortenLogoutRestService service = new IdPortenLogoutRestService();
+            userId = service.getUserIdFromSessionId('sid2');
+        }
         System.Test.stopTest();
         System.Assert.areEqual(
             null,
@@ -66,8 +94,8 @@ private class IdPortenLogoutRestService_Test {
         IdPortenLogoutRestService service = new IdPortenLogoutRestService();
         System.Test.startTest();
         List<AuthSession> sessions = service.getAuthSessionsForUser(
-            '0051j000009na8sAAA'
-        ); // NOPMD - This is a test Id
+            '0051j000009na8sAAA' // NOPMD - This is a test Id
+        );
         System.Test.stopTest();
         System.Assert.areEqual(0, sessions.size(), 'Expected no session found'); //We cannot create AuthSession in test context so we can only see if the query will return empty
     }
@@ -106,8 +134,8 @@ private class IdPortenLogoutRestService_Test {
 
     @IsTest
     private static void deleteAuthSessionWithNoSessions() {
-        IdPortenLogoutRestService service = new IdPortenLogoutRestService();
         System.Test.startTest();
+        IdPortenLogoutRestService service = new IdPortenLogoutRestService();
         List<Database.DeleteResult> deleteResults = service.deleteAuthSession(
             new List<AuthSession>()
         );
@@ -141,9 +169,9 @@ private class IdPortenLogoutRestService_Test {
                 Database.DeleteResult.class
             )
         );
-        IdPortenLogoutRestService service = new IdPortenLogoutRestService();
 
         Test.startTest();
+        IdPortenLogoutRestService service = new IdPortenLogoutRestService();
         service.handleDeleteResult(deleteResults);
         service.logger.publish();
         Test.stopTest();
@@ -161,9 +189,9 @@ private class IdPortenLogoutRestService_Test {
     @IsTest
     private static void testHandleEmptyDeleteResult() {
         List<Database.DeleteResult> deleteResults = new List<Database.DeleteResult>();
-        IdPortenLogoutRestService service = new IdPortenLogoutRestService();
 
         System.Test.startTest();
+        IdPortenLogoutRestService service = new IdPortenLogoutRestService();
         service.handleDeleteResult(deleteResults);
         service.logger.publish();
         System.Test.stopTest();
@@ -197,5 +225,72 @@ private class IdPortenLogoutRestService_Test {
                 AND Application_Domain__c = :CRM_ApplicationDomain.Domain.PLATFORCE.name()
         ];
         System.Assert.areEqual(1, logs.size(), 'Expected one log entry');
+    }
+
+    private static void createTestUsers() {
+        User integrationUser = getUserTemplate();
+        User noAccessUser = getUserTemplate();
+
+        integrationUser.LastName = 'IdPortenLogoutRestService';
+        noAccessUser.LastName = 'IdPortenLogoutRestServiceNoAccess';
+
+        insert new List<User>{ integrationUser, noAccessUser };
+        System.runAs(new User(Id = System.UserInfo.getUserId())) {
+            PermissionSet ps = [
+                SELECT Id
+                FROM PermissionSet
+                WHERE Name = 'IdPortenLogoutRest_Service'
+                LIMIT 1
+            ];
+            insert new PermissionSetAssignment(
+                AssigneeId = integrationUser.id,
+                PermissionSetId = ps.Id
+            );
+        }
+    }
+
+    private static User getUserTemplate() {
+        String d =
+            String.valueOf(DateTime.now().millisecond()) +
+            String.valueOf(DateTime.now().second()) +
+            String.valueOf(DateTime.now().minute());
+
+        User user = new User();
+        user.Username = d + 'test@nav.no';
+        user.Email = d + 'test@nav.no';
+        user.Alias = 'tsamp';
+        user.ProfileId = [
+            SELECT Id
+            FROM Profile
+            WHERE Name = 'Standard User' OR Name = 'Standardbruker'
+            LIMIT 1
+        ]
+        .Id;
+        user.isActive = true;
+        user.FirstName = 'First';
+        user.LastName = 'LastName';
+        user.TimeZoneSidKey = 'Europe/Paris';
+        user.LocaleSidKey = 'no_NO';
+        user.EmailEncodingKey = 'UTF-8';
+        user.LanguageLocaleKey = 'no';
+        user.CommunityNickname = 'testUser' + d;
+
+        return user;
+    }
+
+    private static User getIntegrationUser() {
+        return [
+            SELECT Id, Username, Email
+            FROM User
+            WHERE LastName = 'IdPortenLogoutRestService'
+        ][0];
+    }
+
+    private static User getNoAccessUser() {
+        return [
+            SELECT Id, Username, Email
+            FROM User
+            WHERE LastName = 'IdPortenLogoutRestServiceNoAccess'
+        ][0];
     }
 }
