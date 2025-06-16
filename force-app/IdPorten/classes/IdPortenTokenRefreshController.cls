@@ -3,13 +3,23 @@ public with sharing class IdPortenTokenRefreshController {
 
     public PageReference validateAndRedirect() {
         // Code from https://salesforce.stackexchange.com/questions/256499/how-can-i-determine-if-the-org-that-im-currently-connected-to-is-a-scratch-org
-        Organization org = [SELECT IsSandbox, TrialExpirationDate FROM Organization];
-        Boolean isScratchOrg = org?.IsSandbox && org?.TrialExpirationDate != null;
-        
+        Organization org = [
+            SELECT IsSandbox, TrialExpirationDate
+            FROM Organization
+        ];
+        Boolean isScratchOrg =
+            org?.IsSandbox && org?.TrialExpirationDate != null;
+
         if (isScratchOrg == true) {
-            String redirectUrl = ApexPages.currentPage().getParameters().get('redirectUrl');
+            String redirectUrl = ApexPages.currentPage()
+                .getParameters()
+                .get('redirectUrl');
             ApexPages.currentPage()
-                .setCookies(new List<Cookie>{ new Cookie('redirectUrl', redirectUrl, null, 900, true)});
+                .setCookies(
+                    new List<Cookie>{
+                        new Cookie('redirectUrl', redirectUrl, null, 900, true)
+                    }
+                );
             pageReference pgTester = new pageReference(redirectUrl);
             return pgTester.setRedirect(true);
         }
@@ -23,10 +33,14 @@ public with sharing class IdPortenTokenRefreshController {
         Cookie retUrlCookie;
         Cookie redirectUrlCookie;
         String code = apexpages.currentPage().getParameters().get('code');
-        String redirectUrl = ApexPages.currentPage().getParameters().get('redirectUrl');
+        String redirectUrl = ApexPages.currentPage()
+            .getParameters()
+            .get('redirectUrl');
 
         //don't refresh if mobile app
-        String userAgent = ApexPages.currentPage().getHeaders().get('USER-AGENT');
+        String userAgent = ApexPages.currentPage()
+            .getHeaders()
+            .get('USER-AGENT');
         if (userAgent != null && userAgent.contains('SalesforceMobileSDK')) {
             pageReference pg = new pageReference(redirectUrl);
             return pg.setRedirect(true);
@@ -34,16 +48,49 @@ public with sharing class IdPortenTokenRefreshController {
 
         //initiate
         if (code == null) {
-            redirectUrlCookie = new Cookie('redirectUrl', redirectUrl, null, 900, true);
+            redirectUrlCookie = new Cookie(
+                'redirectUrl',
+                redirectUrl,
+                null,
+                900,
+                true
+            );
 
             IdPortenAuthUtil authUtil = new IdPortenAuthUtil();
-            IdPortenAuthUtil.AuthResponse authResponse = authUtil.initiate('IdPortenTokenRefresh');
-            codeVerifierCookie = new Cookie('codeverifier', authResponse.codeVerifier, null, 1800, true);
-            stateCookie = new Cookie('state', authResponse.state, null, 1800, true);
-            nonceCookie = new Cookie('nonce', authResponse.nonce, null, 1800, true);
+            IdPortenAuthUtil.AuthResponse authResponse = authUtil.initiate(
+                'IdPortenTokenRefresh'
+            );
+            codeVerifierCookie = new Cookie(
+                'codeverifier',
+                authResponse.codeVerifier,
+                null,
+                1800,
+                true
+            );
+            stateCookie = new Cookie(
+                'state',
+                authResponse.state,
+                null,
+                1800,
+                true
+            );
+            nonceCookie = new Cookie(
+                'nonce',
+                authResponse.nonce,
+                null,
+                1800,
+                true
+            );
 
             ApexPages.currentPage()
-                .setCookies(new List<Cookie>{ codeVerifierCookie, stateCookie, nonceCookie, redirectUrlCookie });
+                .setCookies(
+                    new List<Cookie>{
+                        codeVerifierCookie,
+                        stateCookie,
+                        nonceCookie,
+                        redirectUrlCookie
+                    }
+                );
             pageReference pg = new pageReference(authResponse.initiateUrl);
             return pg.setRedirect(true);
         }
@@ -52,16 +99,28 @@ public with sharing class IdPortenTokenRefreshController {
         try {
             String state = apexpages.currentPage().getParameters().get('state');
 
-            codeVerifierCookie = ApexPages.currentPage().getCookies().get('codeVerifier');
+            codeVerifierCookie = ApexPages.currentPage()
+                .getCookies()
+                .get('codeVerifier');
             stateCookie = ApexPages.currentPage().getCookies().get('state');
             nonceCookie = ApexPages.currentPage().getCookies().get('nonce');
-            redirectUrlCookie = ApexPages.currentPage().getCookies().get('redirectUrl');
+            redirectUrlCookie = ApexPages.currentPage()
+                .getCookies()
+                .get('redirectUrl');
             String redirectUrlFromCookie = redirectUrlCookie.getValue();
             pageReference pg = new pageReference(redirectUrlFromCookie);
 
-            if (codeVerifierCookie == null || stateCookie == null || nonceCookie == null) {
+            if (
+                codeVerifierCookie == null ||
+                stateCookie == null ||
+                nonceCookie == null
+            ) {
                 LoggerUtility logger = new LoggerUtility();
-                logger.error('Cookies er ikke satt', null, CRM_ApplicationDomain.Domain.NKS);
+                logger.error(
+                    'Cookies er ikke satt',
+                    null,
+                    CRM_ApplicationDomain.Domain.NKS
+                );
                 logger.publishSynch();
                 return pg.setRedirect(true);
             }
@@ -72,7 +131,11 @@ public with sharing class IdPortenTokenRefreshController {
 
             if (state == null || state != stateFromCookie) {
                 LoggerUtility logger = new LoggerUtility();
-                logger.error('State samsvarer ikke', null, CRM_ApplicationDomain.Domain.NKS);
+                logger.error(
+                    'State samsvarer ikke',
+                    null,
+                    CRM_ApplicationDomain.Domain.NKS
+                );
                 logger.publishSynch();
                 return pg.setRedirect(true);
             }
@@ -89,9 +152,31 @@ public with sharing class IdPortenTokenRefreshController {
                 authUtil.extendSession();
             }
             return pg.setRedirect(true);
+        } catch (CalloutException e) {
+            LoggerUtility logger = new LoggerUtility(
+                CRM_ApplicationDomain.Domain.PLATFORCE,
+                'IdPorten'
+            );
+            if (e.getMessage().contains('Read timed out')) {
+                // No need for Critical or error on timeout
+                logger.logMessage(
+                    LoggerUtility.LogLevel.WARNING,
+                    '',
+                    '',
+                    e.getMessage(),
+                    e.getStackTraceString(),
+                    null
+                );
+            } else {
+                logger.exception(e);
+            }
+            logger.publishSynch();
         } catch (Exception e) {
-            LoggerUtility logger = new LoggerUtility();
-            logger.exception(e, CRM_ApplicationDomain.Domain.CRM);
+            LoggerUtility logger = new LoggerUtility(
+                CRM_ApplicationDomain.Domain.PLATFORCE,
+                'IdPorten'
+            );
+            logger.exception(e);
             logger.publishSynch();
         }
         return null;
