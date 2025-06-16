@@ -284,6 +284,80 @@ private class IdPortenTokenRefreshController_Test {
         );
     }
 
+    @IsTest
+    private static void redirect_handleCallback_redirectCookieEmpty() {
+        System.Test.setMock(
+            HttpCalloutMock.class,
+            new CalloutExceptionRequestMock('Read timed out')
+        );
+
+        Cookie codeVerifierCookie = new Cookie(
+            'codeverifier',
+            'codeverifier',
+            null,
+            -1,
+            true
+        );
+        Cookie stateCookie = new Cookie('state', 'state', null, -1, true);
+        Cookie nonceCookie = new Cookie('nonce', 'noncetest', null, -1, true);
+        Pagereference pageRef = Page.IdPortenTokenRefresh;
+        pageRef.setCookies(
+            new List<Cookie>{ codeVerifierCookie, stateCookie, nonceCookie }
+        );
+
+        System.Test.setCurrentPage(pageRef);
+
+        pageRef.getParameters().put('code', 'abc');
+        pageRef.getParameters().put('state', 'state');
+
+        System.Test.startTest();
+        new IdPortenTokenRefreshController().redirect();
+        System.Test.stopTest();
+
+        List<Application_Log__c> logs = [
+            SELECT
+                Log_Message__c,
+                Log_Level__c,
+                Pay_Load__c,
+                Source_Class__c,
+                Application_Domain__c,
+                Category__c
+            FROM Application_Log__c
+            WHERE Source_Class__c = 'IdPortenTokenRefreshController'
+        ];
+
+        System.Assert.areEqual(
+            1,
+            logs.size(),
+            'Expected one log entry for missing redirect URL cookie'
+        );
+        System.Assert.areEqual(
+            'Redirect URL cookie is not set.',
+            logs[0].Log_Message__c,
+            'Expected log message for missing redirect URL cookie'
+        );
+        System.Assert.areEqual(
+            'Error',
+            logs[0].Log_Level__c,
+            'Expected log level to be Error'
+        );
+        System.Assert.areEqual(
+            'IdPortenTokenRefreshController',
+            logs[0].Source_Class__c,
+            'Expected source class to be IdPortenTokenRefreshController'
+        );
+        System.Assert.areEqual(
+            'PLATFORCE',
+            logs[0].Application_Domain__c,
+            'Expected application domain to be PLATFORCE'
+        );
+        System.Assert.areEqual(
+            'IdPorten',
+            logs[0].Category__c,
+            'Expected category to be IdPorten'
+        );
+    }
+
     public class TokenEndpointMock implements HttpCalloutMock {
         public HTTPResponse respond(HTTPRequest request) {
             HttpResponse res = new HttpResponse();

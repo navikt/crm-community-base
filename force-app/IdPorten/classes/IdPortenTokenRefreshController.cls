@@ -107,6 +107,10 @@ public with sharing class IdPortenTokenRefreshController {
             redirectUrlCookie = ApexPages.currentPage()
                 .getCookies()
                 .get('redirectUrl');
+
+            if (redirectUrlCookie == null) {
+                throw new IdPortenException('Redirect URL cookie is not set.');
+            }
             String redirectUrlFromCookie = redirectUrlCookie.getValue();
             pageReference pg = new pageReference(redirectUrlFromCookie);
 
@@ -152,6 +156,28 @@ public with sharing class IdPortenTokenRefreshController {
                 authUtil.extendSession();
             }
             return pg.setRedirect(true);
+        } catch (IdPortenException e) {
+            LoggerUtility logger = new LoggerUtility(
+                CRM_ApplicationDomain.Domain.PLATFORCE,
+                'IdPorten'
+            );
+
+            if (
+                e.getMessage()
+                    .equalsIgnoreCase('Redirect URL cookie is not set.')
+            ) {
+                logger.logMessage(
+                    LoggerUtility.LogLevel.ERROR,
+                    '',
+                    '',
+                    e.getMessage(),
+                    e.getStackTraceString(),
+                    null
+                );
+            } else {
+                logger.exception(e);
+            }
+            logger.publishSynch();
         } catch (CalloutException e) {
             LoggerUtility logger = new LoggerUtility(
                 CRM_ApplicationDomain.Domain.PLATFORCE,
