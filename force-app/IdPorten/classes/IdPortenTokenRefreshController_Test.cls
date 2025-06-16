@@ -10,6 +10,24 @@ private class IdPortenTokenRefreshController_Test {
     }
 
     @IsTest
+    private static void test_isScratchOrg() {
+        IdPortenTokenRefreshController controller = new IdPortenTokenRefreshController();
+        String scratchDomainURL = 'https://test.scratch.my.salesforce.com';
+        String sandboxDomainURL = 'https://test.sandbox.my.salesforce.com';
+        String prodDomainURL = 'https://test.my.salesforce.com';
+
+        Test.startTest();
+        Boolean scratchResult = controller.isScratchOrg(scratchDomainURL);
+        Boolean sandboxResult = controller.isScratchOrg(sandboxDomainURL);
+        Boolean prodResult = controller.isScratchOrg(prodDomainURL);
+        Test.stopTest();
+
+        System.Assert.isTrue(scratchResult, 'Expected to be a scratch org');
+        System.Assert.isFalse(sandboxResult, 'Expected to be a sandbox org');
+        System.Assert.isFalse(prodResult, 'Expected to be a prod org');
+    }
+
+    @IsTest
     private static void redirect_getAuthorizationCodeUrl() {
         Test.startTest();
         IdPortenTokenRefreshController controller = new IdPortenTokenRefreshController();

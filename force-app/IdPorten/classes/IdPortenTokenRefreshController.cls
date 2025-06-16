@@ -1,16 +1,20 @@
 public with sharing class IdPortenTokenRefreshController {
     private static final Integer SESSION_DURATION_IN_MINUTES = 24;
+    LoggerUtility logger;
+
+    public IdPortenTokenRefreshController() {
+        logger = new LoggerUtility(
+            CRM_ApplicationDomain.Domain.PLATFORCE,
+            'IdPorten'
+        );
+    }
+
+    public Boolean isScratchOrg(String domainURL) {
+        return domainURL.endsWithIgnoreCase('.scratch.my.salesforce.com');
+    }
 
     public PageReference validateAndRedirect() {
-        // Code from https://salesforce.stackexchange.com/questions/256499/how-can-i-determine-if-the-org-that-im-currently-connected-to-is-a-scratch-org
-        Organization org = [
-            SELECT IsSandbox, TrialExpirationDate
-            FROM Organization
-        ];
-        Boolean isScratchOrg =
-            org?.IsSandbox && org?.TrialExpirationDate != null;
-
-        if (isScratchOrg == true) {
+        if (this.isScratchOrg(URL.getOrgDomainUrl().toExternalForm()) == true) {
             String redirectUrl = ApexPages.currentPage()
                 .getParameters()
                 .get('redirectUrl');
@@ -119,12 +123,7 @@ public with sharing class IdPortenTokenRefreshController {
                 stateCookie == null ||
                 nonceCookie == null
             ) {
-                LoggerUtility logger = new LoggerUtility();
-                logger.error(
-                    'Cookies er ikke satt',
-                    null,
-                    CRM_ApplicationDomain.Domain.NKS
-                );
+                logger.error('Cookies er ikke satt', null);
                 logger.publishSynch();
                 return pg.setRedirect(true);
             }
@@ -134,12 +133,7 @@ public with sharing class IdPortenTokenRefreshController {
             String nonceFromCookie = nonceCookie.getValue();
 
             if (state == null || state != stateFromCookie) {
-                LoggerUtility logger = new LoggerUtility();
-                logger.error(
-                    'State samsvarer ikke',
-                    null,
-                    CRM_ApplicationDomain.Domain.NKS
-                );
+                logger.error('State samsvarer ikke', null);
                 logger.publishSynch();
                 return pg.setRedirect(true);
             }
@@ -157,11 +151,6 @@ public with sharing class IdPortenTokenRefreshController {
             }
             return pg.setRedirect(true);
         } catch (IdPortenException e) {
-            LoggerUtility logger = new LoggerUtility(
-                CRM_ApplicationDomain.Domain.PLATFORCE,
-                'IdPorten'
-            );
-
             if (
                 e.getMessage()
                     .equalsIgnoreCase('Redirect URL cookie is not set.')
@@ -177,12 +166,7 @@ public with sharing class IdPortenTokenRefreshController {
             } else {
                 logger.exception(e);
             }
-            logger.publishSynch();
         } catch (CalloutException e) {
-            LoggerUtility logger = new LoggerUtility(
-                CRM_ApplicationDomain.Domain.PLATFORCE,
-                'IdPorten'
-            );
             if (e.getMessage().contains('Read timed out')) {
                 // No need for Critical or error on timeout
                 logger.logMessage(
@@ -196,13 +180,11 @@ public with sharing class IdPortenTokenRefreshController {
             } else {
                 logger.exception(e);
             }
-            logger.publishSynch();
         } catch (Exception e) {
-            LoggerUtility logger = new LoggerUtility(
-                CRM_ApplicationDomain.Domain.PLATFORCE,
-                'IdPorten'
-            );
             logger.exception(e);
+        }
+
+        if (logger.peek() != null) {
             logger.publishSynch();
         }
         return null;
