@@ -10,6 +10,24 @@ private class IdPortenTokenRefreshController_Test {
     }
 
     @IsTest
+    private static void test_isScratchOrg() {
+        IdPortenTokenRefreshController controller = new IdPortenTokenRefreshController();
+        String scratchDomainURL = 'https://test.scratch.my.salesforce.com';
+        String sandboxDomainURL = 'https://test.sandbox.my.salesforce.com';
+        String prodDomainURL = 'https://test.my.salesforce.com';
+
+        Test.startTest();
+        Boolean scratchResult = controller.isScratchOrg(scratchDomainURL);
+        Boolean sandboxResult = controller.isScratchOrg(sandboxDomainURL);
+        Boolean prodResult = controller.isScratchOrg(prodDomainURL);
+        Test.stopTest();
+
+        System.Assert.isTrue(scratchResult, 'Expected to be a scratch org');
+        System.Assert.isFalse(sandboxResult, 'Expected to be a sandbox org');
+        System.Assert.isFalse(prodResult, 'Expected to be a prod org');
+    }
+
+    @IsTest
     private static void redirect_getAuthorizationCodeUrl() {
         Test.startTest();
         IdPortenTokenRefreshController controller = new IdPortenTokenRefreshController();
@@ -24,12 +42,31 @@ private class IdPortenTokenRefreshController_Test {
         Test.setMock(HttpCalloutMock.class, new TokenEndpointMock());
 
         //set cookies
-        Cookie codeVerifierCookie = new Cookie('codeverifier', 'codeverifier', null, -1, true);
+        Cookie codeVerifierCookie = new Cookie(
+            'codeverifier',
+            'codeverifier',
+            null,
+            -1,
+            true
+        );
         Cookie stateCookie = new Cookie('state', 'state', null, -1, true);
         Cookie nonceCookie = new Cookie('nonce', 'noncetest', null, -1, true);
-        Cookie redirectUrlCookie = new Cookie('redirectUrl', '/', null, -1, true);
+        Cookie redirectUrlCookie = new Cookie(
+            'redirectUrl',
+            '/',
+            null,
+            -1,
+            true
+        );
         Pagereference pageRef = Page.IdPortenTokenRefresh;
-        pageRef.setCookies(new List<Cookie>{ codeVerifierCookie, stateCookie, nonceCookie, redirectUrlCookie });
+        pageRef.setCookies(
+            new List<Cookie>{
+                codeVerifierCookie,
+                stateCookie,
+                nonceCookie,
+                redirectUrlCookie
+            }
+        );
 
         Test.startTest();
 
@@ -41,14 +78,20 @@ private class IdPortenTokenRefreshController_Test {
         Test.stopTest();
 
         System.assertEquals('/', nextPage, 'Expected to finish login flow');
-        System.assertEquals(0, [SELECT COUNT() FROM Application_Log__c], 'Expect no errors');
+        System.assertEquals(
+            0,
+            [SELECT COUNT() FROM Application_Log__c],
+            'Expect no errors'
+        );
 
         System.assertEquals(
             1,
             [
                 SELECT COUNT()
                 FROM IdPortenCache__c
-                WHERE ExpirationTime__c > :DateTime.Now().addMinutes(20) AND UserId__c = :UserInfo.getUserId()
+                WHERE
+                    ExpirationTime__c > :DateTime.Now().addMinutes(20)
+                    AND UserId__c = :UserInfo.getUserId()
             ],
             'Expect Id Porten cache expiration time to be extended'
         );
@@ -58,7 +101,13 @@ private class IdPortenTokenRefreshController_Test {
     private static void redirect_handleCallback_whenCookiesIsNotSet() {
         Test.setMock(HttpCalloutMock.class, new TokenEndpointMock());
 
-        Cookie redirectUrlCookie = new Cookie('redirectUrl', '/', null, -1, true);
+        Cookie redirectUrlCookie = new Cookie(
+            'redirectUrl',
+            '/',
+            null,
+            -1,
+            true
+        );
         Pagereference pageRef = Page.IdPortenTokenRefresh;
         pageRef.setCookies(new List<Cookie>{ redirectUrlCookie });
 
@@ -78,7 +127,10 @@ private class IdPortenTokenRefreshController_Test {
             ORDER BY CreatedDate
         ];
         System.assertEquals(1, errorLogs.size(), 'Throw 1 error');
-        System.assertEquals('Cookies er ikke satt', errorLogs[0].Log_Message__c);
+        System.assertEquals(
+            'Cookies er ikke satt',
+            errorLogs[0].Log_Message__c
+        );
     }
 
     @IsTest
@@ -86,12 +138,31 @@ private class IdPortenTokenRefreshController_Test {
         Test.setMock(HttpCalloutMock.class, new TokenEndpointMock());
 
         //set cookies
-        Cookie codeVerifierCookie = new Cookie('codeverifier', 'codeverifier', null, -1, true);
+        Cookie codeVerifierCookie = new Cookie(
+            'codeverifier',
+            'codeverifier',
+            null,
+            -1,
+            true
+        );
         Cookie stateCookie = new Cookie('state', 'state', null, -1, true);
         Cookie nonceCookie = new Cookie('nonce', 'noncetest', null, -1, true);
-        Cookie redirectUrlCookie = new Cookie('redirectUrl', '/', null, -1, true);
+        Cookie redirectUrlCookie = new Cookie(
+            'redirectUrl',
+            '/',
+            null,
+            -1,
+            true
+        );
         Pagereference pageRef = Page.IdPortenTokenRefresh;
-        pageRef.setCookies(new List<Cookie>{ codeVerifierCookie, stateCookie, nonceCookie, redirectUrlCookie });
+        pageRef.setCookies(
+            new List<Cookie>{
+                codeVerifierCookie,
+                stateCookie,
+                nonceCookie,
+                redirectUrlCookie
+            }
+        );
 
         Test.startTest();
 
@@ -109,7 +180,10 @@ private class IdPortenTokenRefreshController_Test {
             WHERE Source_Class__c = 'IdPortenTokenRefreshController'
         ];
         System.assertEquals(1, errorLogs.size(), 'Throw 1 error');
-        System.assertEquals('State samsvarer ikke', errorLogs[0].Log_Message__c);
+        System.assertEquals(
+            'State samsvarer ikke',
+            errorLogs[0].Log_Message__c
+        );
     }
 
     @IsTest
@@ -125,14 +199,181 @@ private class IdPortenTokenRefreshController_Test {
         PageReference redirectPage = controller.validateAndRedirect();
         Test.stopTest();
         String nextPage = redirectPage.getUrl();
-        
-        Organization org = [SELECT IsSandbox, TrialExpirationDate FROM Organization];
-        Boolean isScratchOrg = org?.IsSandbox && org?.TrialExpirationDate != null;
-        if(isScratchOrg) {
+
+        Organization org = [
+            SELECT IsSandbox, TrialExpirationDate
+            FROM Organization
+        ];
+        Boolean isScratchOrg =
+            org?.IsSandbox && org?.TrialExpirationDate != null;
+        if (isScratchOrg) {
             Assert.areEqual('/', nextPage, 'Expected to get redirectUrl');
         } else {
-            Assert.isTrue(nextPage.startsWith('https://auth'), 'Expected to get auth URL outside scratch');
+            Assert.isTrue(
+                nextPage.startsWith('https://auth'),
+                'Expected to get auth URL outside scratch'
+            );
         }
+    }
+
+    @IsTest
+    private static void redirect_handleCallback_calloutTimeout() {
+        System.Test.setMock(
+            HttpCalloutMock.class,
+            new CalloutExceptionRequestMock('Read timed out')
+        );
+
+        Cookie codeVerifierCookie = new Cookie(
+            'codeverifier',
+            'codeverifier',
+            null,
+            -1,
+            true
+        );
+        Cookie stateCookie = new Cookie('state', 'state', null, -1, true);
+        Cookie nonceCookie = new Cookie('nonce', 'noncetest', null, -1, true);
+        Cookie redirectUrlCookie = new Cookie(
+            'redirectUrl',
+            '/',
+            null,
+            -1,
+            true
+        );
+        Pagereference pageRef = Page.IdPortenTokenRefresh;
+        pageRef.setCookies(
+            new List<Cookie>{
+                codeVerifierCookie,
+                stateCookie,
+                nonceCookie,
+                redirectUrlCookie
+            }
+        );
+
+        System.Test.setCurrentPage(pageRef);
+
+        pageRef.getParameters().put('code', 'abc');
+        pageRef.getParameters().put('state', 'state');
+
+        System.Test.startTest();
+        new IdPortenTokenRefreshController().redirect();
+        System.Test.stopTest();
+
+        List<Application_Log__c> logs = [
+            SELECT
+                Log_Message__c,
+                Log_Level__c,
+                Pay_Load__c,
+                Source_Class__c,
+                Application_Domain__c,
+                Category__c
+            FROM Application_Log__c
+            WHERE Source_Class__c = 'IdPortenTokenRefreshController'
+        ];
+
+        System.Assert.areEqual(
+            1,
+            logs.size(),
+            'Expected one log entry for callout timeout'
+        );
+        System.Assert.areEqual(
+            'Read timed out',
+            logs[0].Log_Message__c,
+            'Expected log message for callout timeout'
+        );
+        System.Assert.areEqual(
+            'Warning',
+            logs[0].Log_Level__c,
+            'Expected log level to be Warning'
+        );
+        System.Assert.areEqual(
+            'IdPortenTokenRefreshController',
+            logs[0].Source_Class__c,
+            'Expected source class to be IdPortenTokenRefreshController'
+        );
+        System.Assert.areEqual(
+            'PLATFORCE',
+            logs[0].Application_Domain__c,
+            'Expected application domain to be PLATFORCE'
+        );
+        System.Assert.areEqual(
+            'IdPorten',
+            logs[0].Category__c,
+            'Expected category to be IdPorten'
+        );
+    }
+
+    @IsTest
+    private static void redirect_handleCallback_redirectCookieEmpty() {
+        System.Test.setMock(
+            HttpCalloutMock.class,
+            new CalloutExceptionRequestMock('Read timed out')
+        );
+
+        Cookie codeVerifierCookie = new Cookie(
+            'codeverifier',
+            'codeverifier',
+            null,
+            -1,
+            true
+        );
+        Cookie stateCookie = new Cookie('state', 'state', null, -1, true);
+        Cookie nonceCookie = new Cookie('nonce', 'noncetest', null, -1, true);
+        Pagereference pageRef = Page.IdPortenTokenRefresh;
+        pageRef.setCookies(
+            new List<Cookie>{ codeVerifierCookie, stateCookie, nonceCookie }
+        );
+
+        System.Test.setCurrentPage(pageRef);
+
+        pageRef.getParameters().put('code', 'abc');
+        pageRef.getParameters().put('state', 'state');
+
+        System.Test.startTest();
+        new IdPortenTokenRefreshController().redirect();
+        System.Test.stopTest();
+
+        List<Application_Log__c> logs = [
+            SELECT
+                Log_Message__c,
+                Log_Level__c,
+                Pay_Load__c,
+                Source_Class__c,
+                Application_Domain__c,
+                Category__c
+            FROM Application_Log__c
+            WHERE Source_Class__c = 'IdPortenTokenRefreshController'
+        ];
+
+        System.Assert.areEqual(
+            1,
+            logs.size(),
+            'Expected one log entry for missing redirect URL cookie'
+        );
+        System.Assert.areEqual(
+            'Redirect URL cookie is not set.',
+            logs[0].Log_Message__c,
+            'Expected log message for missing redirect URL cookie'
+        );
+        System.Assert.areEqual(
+            'Error',
+            logs[0].Log_Level__c,
+            'Expected log level to be Error'
+        );
+        System.Assert.areEqual(
+            'IdPortenTokenRefreshController',
+            logs[0].Source_Class__c,
+            'Expected source class to be IdPortenTokenRefreshController'
+        );
+        System.Assert.areEqual(
+            'PLATFORCE',
+            logs[0].Application_Domain__c,
+            'Expected application domain to be PLATFORCE'
+        );
+        System.Assert.areEqual(
+            'IdPorten',
+            logs[0].Category__c,
+            'Expected category to be IdPorten'
+        );
     }
 
     public class TokenEndpointMock implements HttpCalloutMock {
@@ -140,7 +381,11 @@ private class IdPortenTokenRefreshController_Test {
             HttpResponse res = new HttpResponse();
             res.setHeader('Content-Type', 'application/xml');
             String idToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdF9oYXNoIjoiSGs1TDE4WVVDTVZHbjFLNFBpckY2QSIsInN1YiI6Ii10c01LdWxFNUZHQUU1WkhRRUVlLWNsT2ZqS1VheGpYVmNXc2RsaHFBRWM9IiwiYW1yIjpbIkJhbmtJRCJdLCJpc3MiOiJodHRwczovL29pZGMtdmVyMi5kaWZpLm5vL2lkcG9ydGVuLW9pZGMtcHJvdmlkZXIvIiwicGlkIjoiMTYxMjAxMDExODEiLCJsb2NhbGUiOiJuYiIsInNpZCI6IlFzU29kZkNEVXBLUklZUWJfZkwyS1VkLTdVVUJ4RW5RejdtY0p4TVgzNDQiLCJhdWQiOiJhMDY5NjYxMi1lZmM0LTQ2ZTktYTdjOS1iZmY2NTZlNTU0YzIiLCJhY3IiOiJMZXZlbDQiLCJhdXRoX3RpbWUiOjE2NDYyMjU4MjIsImV4cCI6MTY0NjIyNzE2MywiaWF0IjoxNjQ2MjI3MDQzLCJub25jZSI6Im5vbmNldGVzdCIsImp0aSI6Ik41Uk1KQmZhYnlOTklkZUFpcmMxZUJmMUZYX1VQNHhjazVZUEoydWhQQncifQ.5-MEpzms1cH97aAFVM2bNATADrdSiWxt1s_ZtiOgJ1w';
-            res.setBody('{"access_token":"access","refresh_token":"refresh", "id_token":"' + idToken + '"}');
+            res.setBody(
+                '{"access_token":"access","refresh_token":"refresh", "id_token":"' +
+                    idToken +
+                    '"}'
+            );
             res.setStatusCode(200);
             return res;
         }
