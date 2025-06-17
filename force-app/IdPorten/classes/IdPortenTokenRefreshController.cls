@@ -1,6 +1,6 @@
 public with sharing class IdPortenTokenRefreshController {
     private static final Integer SESSION_DURATION_IN_MINUTES = 24;
-    LoggerUtility logger;
+    private final LoggerUtility logger;
 
     public IdPortenTokenRefreshController() {
         logger = new LoggerUtility(
@@ -14,7 +14,7 @@ public with sharing class IdPortenTokenRefreshController {
     }
 
     public PageReference validateAndRedirect() {
-        if (this.isScratchOrg(URL.getOrgDomainUrl().toExternalForm()) == true) {
+        if (this.isScratchOrg(URL.getOrgDomainUrl().toExternalForm())) {
             String redirectUrl = ApexPages.currentPage()
                 .getParameters()
                 .get('redirectUrl');
