@@ -122,11 +122,13 @@ public with sharing class IdPortenAuthUtil {
         JWTClaims decodedIdToken = decodeIdToken(idToken);
 
         if (decodedIdToken.nonce == null || decodedIdToken.nonce != nonce) {
-            LoggerUtility logger = new LoggerUtility();
-            logger.error(
-                'Nonce samsvarer ikke',
-                null,
-                CRM_ApplicationDomain.Domain.NKS
+            logger.logMessage(
+                LoggerUtility.LogLevel.ERROR,
+                '',
+                '',
+                'Nonce samsvarer ikke.',
+                '',
+                null
             );
             logger.publishSynch();
             return null;

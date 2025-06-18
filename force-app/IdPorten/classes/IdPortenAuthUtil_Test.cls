@@ -32,7 +32,9 @@ private with sharing class IdPortenAuthUtil_Test {
             '&code_challenge_method=S256&ui_locales=nb&nonce=' +
             NONCE;
 
-        IdPortenAuthUtil.AuthResponse response = authUtil.initiate('IdPortenSid');
+        IdPortenAuthUtil.AuthResponse response = authUtil.initiate(
+            'IdPortenSid'
+        );
         System.assertEquals(expectedUrl, response.initiateUrl);
     }
 
@@ -45,7 +47,11 @@ private with sharing class IdPortenAuthUtil_Test {
 
         System.assertEquals(
             1,
-            [SELECT COUNT() FROM IdPortenCache__c WHERE Name = :sid AND UserId__c = :userId],
+            [
+                SELECT COUNT()
+                FROM IdPortenCache__c
+                WHERE Name = :sid AND UserId__c = :userId
+            ],
             'SID is created as cache record'
         );
     }
@@ -60,7 +66,11 @@ private with sharing class IdPortenAuthUtil_Test {
 
         System.assertEquals(
             1,
-            [SELECT COUNT() FROM Application_Log__c WHERE Source_Class__c = 'IdPortenAuthUtil'],
+            [
+                SELECT COUNT()
+                FROM Application_Log__c
+                WHERE Source_Class__c = 'IdPortenAuthUtil'
+            ],
             'Error thrown due to max field length error'
         );
     }
@@ -77,35 +87,33 @@ private with sharing class IdPortenAuthUtil_Test {
             WHERE Source_Class__c = 'IdPortenAuthUtil'
         ];
         System.assertEquals(1, errorLogs.size(), 'Throw 1 error');
-        System.assertEquals('Finner ikke SID fra ID-token', errorLogs[0].Log_Message__c);
+        System.assertEquals('ID-token er blank', errorLogs[0].Log_Message__c);
     }
 
     @IsTest
     private static void testGetSidFromIdToken() {
         Test.setMock(HttpCalloutMock.class, new TokenEndpointMock());
-        String sid = new IdPortenAuthUtil().getSidFromIdToken('code', CODE_VERIFIER, 'noncetest', 'IdPortenSid')?.sid;
+        String sid = new IdPortenAuthUtil()
+            .getSidFromIdToken(
+                'code',
+                CODE_VERIFIER,
+                'noncetest',
+                'IdPortenSid'
+            )
+            ?.sid;
         System.assertEquals('QsSodfCDUpKRIYQb_fL2KUd-7UUBxEnQz7mcJxMX344', sid);
     }
 
     @IsTest
     private static void testGetSidFromIdToken_whenIdPortenApiReturnError() {
         Test.setMock(HttpCalloutMock.class, new TokenEndpointMockError());
-        String sid = new IdPortenAuthUtil().getSidFromIdToken('code', CODE_VERIFIER, 'noncetest', 'IdPortenSid')?.sid;
-        List<Application_Log__c> errorLogs = [
-            SELECT Log_Message__c
-            FROM Application_Log__c
-            WHERE Source_Class__c = 'IdPortenAuthUtil'
-        ];
-        System.assertEquals(null, sid, 'No SID is returned');
-        System.assertEquals(1, errorLogs.size(), 'Throw 1 error');
-        System.assertEquals('Kunne ikke hente id token Error', errorLogs[0].Log_Message__c);
-    }
-
-    @IsTest
-    private static void testGetSidFromIdToken_whenNonceDoNotMatch() {
-        Test.setMock(HttpCalloutMock.class, new TokenEndpointMock());
         String sid = new IdPortenAuthUtil()
-            .getSidFromIdToken('code', CODE_VERIFIER, 'anotherNonce', 'IdPortenSid')
+            .getSidFromIdToken(
+                'code',
+                CODE_VERIFIER,
+                'noncetest',
+                'IdPortenSid'
+            )
             ?.sid;
         List<Application_Log__c> errorLogs = [
             SELECT Log_Message__c
@@ -114,7 +122,34 @@ private with sharing class IdPortenAuthUtil_Test {
         ];
         System.assertEquals(null, sid, 'No SID is returned');
         System.assertEquals(1, errorLogs.size(), 'Throw 1 error');
-        System.assertEquals('Nonce samsvarer ikke', errorLogs[0].Log_Message__c);
+        System.assertEquals(
+            'Kunne ikke hente id token',
+            errorLogs[0].Log_Message__c
+        );
+    }
+
+    @IsTest
+    private static void testGetSidFromIdToken_whenNonceDoNotMatch() {
+        Test.setMock(HttpCalloutMock.class, new TokenEndpointMock());
+        String sid = new IdPortenAuthUtil()
+            .getSidFromIdToken(
+                'code',
+                CODE_VERIFIER,
+                'anotherNonce',
+                'IdPortenSid'
+            )
+            ?.sid;
+        List<Application_Log__c> errorLogs = [
+            SELECT Log_Message__c
+            FROM Application_Log__c
+            WHERE Source_Class__c = 'IdPortenAuthUtil'
+        ];
+        System.assertEquals(null, sid, 'No SID is returned');
+        System.assertEquals(1, errorLogs.size(), 'Throw 1 error');
+        System.assertEquals(
+            'Nonce samsvarer ikke.',
+            errorLogs[0].Log_Message__c
+        );
     }
 
     @IsTest
@@ -134,7 +169,9 @@ private with sharing class IdPortenAuthUtil_Test {
             [
                 SELECT COUNT()
                 FROM IdPortenCache__c
-                WHERE ExpirationTime__c > :DateTime.Now().addMinutes(20) AND UserId__c = :UserInfo.getUserId()
+                WHERE
+                    ExpirationTime__c > :DateTime.Now().addMinutes(20)
+                    AND UserId__c = :UserInfo.getUserId()
             ],
             'Expect expiration time to be moved more than 20 minute'
         );
@@ -145,7 +182,11 @@ private with sharing class IdPortenAuthUtil_Test {
             HttpResponse res = new HttpResponse();
             res.setHeader('Content-Type', 'application/xml');
             String idToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdF9oYXNoIjoiSGs1TDE4WVVDTVZHbjFLNFBpckY2QSIsInN1YiI6Ii10c01LdWxFNUZHQUU1WkhRRUVlLWNsT2ZqS1VheGpYVmNXc2RsaHFBRWM9IiwiYW1yIjpbIkJhbmtJRCJdLCJpc3MiOiJodHRwczovL29pZGMtdmVyMi5kaWZpLm5vL2lkcG9ydGVuLW9pZGMtcHJvdmlkZXIvIiwicGlkIjoiMTYxMjAxMDExODEiLCJsb2NhbGUiOiJuYiIsInNpZCI6IlFzU29kZkNEVXBLUklZUWJfZkwyS1VkLTdVVUJ4RW5RejdtY0p4TVgzNDQiLCJhdWQiOiJhMDY5NjYxMi1lZmM0LTQ2ZTktYTdjOS1iZmY2NTZlNTU0YzIiLCJhY3IiOiJMZXZlbDQiLCJhdXRoX3RpbWUiOjE2NDYyMjU4MjIsImV4cCI6MTY0NjIyNzE2MywiaWF0IjoxNjQ2MjI3MDQzLCJub25jZSI6Im5vbmNldGVzdCIsImp0aSI6Ik41Uk1KQmZhYnlOTklkZUFpcmMxZUJmMUZYX1VQNHhjazVZUEoydWhQQncifQ.5-MEpzms1cH97aAFVM2bNATADrdSiWxt1s_ZtiOgJ1w';
-            res.setBody('{"access_token":"access","refresh_token":"refresh", "id_token":"' + idToken + '"}');
+            res.setBody(
+                '{"access_token":"access","refresh_token":"refresh", "id_token":"' +
+                    idToken +
+                    '"}'
+            );
             res.setStatusCode(200);
             return res;
         }
