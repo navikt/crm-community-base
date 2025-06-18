@@ -203,13 +203,21 @@ public with sharing class IdPortenAuthUtil {
                 .addMinutes(SESSION_DURATION_IN_MINUTES);
         }
 
-        try {
-            update listOfCache;
-        } catch (Exception e) {
-            LoggerUtility logger = new LoggerUtility();
-            logger.exception(e, CRM_ApplicationDomain.Domain.CRM);
-            logger.publishSynch();
+        List<Database.SaveResult> results = Database.update(listOfCache, false);
+        for (Database.SaveResult result : results) {
+            if (!result.isSuccess()) {
+                logger.logMessage(
+                    LoggerUtility.LogLevel.ERROR,
+                    '',
+                    '',
+                    'Kunne ikke oppdatere IdPortenCache',
+                    this.databaseErrorsToString(result.getErrors()),
+                    null
+                );
+            }
         }
+
+        logger.publishSynch();
     }
 
     private static String getTokenValueFromResponse(
@@ -227,10 +235,16 @@ public with sharing class IdPortenAuthUtil {
                 }
             }
         } catch (Exception e) {
-            LoggerUtility logger = new LoggerUtility();
-            logger.exception(e, CRM_ApplicationDomain.Domain.NKS);
-            logger.publishSynch();
+            logger.logMessage(
+                LoggerUtility.LogLevel.ERROR,
+                '',
+                '',
+                e.getMessage(),
+                e.getStackTraceString(),
+                null
+            );
         }
+        logger.publishSynch();
         return tokenValue;
     }
 
@@ -249,8 +263,14 @@ public with sharing class IdPortenAuthUtil {
             );
             return claimsDeserialized;
         } catch (Exception e) {
-            LoggerUtility logger = new LoggerUtility();
-            logger.exception(e, CRM_ApplicationDomain.Domain.NKS);
+            logger.logMessage(
+                LoggerUtility.LogLevel.ERROR,
+                '',
+                '',
+                e.getMessage(),
+                e.getStackTraceString(),
+                null
+            );
             logger.publishSynch();
         }
         return new JWTClaims();
