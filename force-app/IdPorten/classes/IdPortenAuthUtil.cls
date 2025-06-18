@@ -220,10 +220,7 @@ public with sharing class IdPortenAuthUtil {
         logger.publishSynch();
     }
 
-    private static String getTokenValueFromResponse(
-        String response,
-        String token
-    ) {
+    private String getTokenValueFromResponse(String response, String token) {
         String tokenValue = '';
         try {
             JSONParser parser = JSON.createParser(response);
@@ -248,7 +245,7 @@ public with sharing class IdPortenAuthUtil {
         return tokenValue;
     }
 
-    private static JWTClaims decodeIdToken(String encodedJWT) {
+    private JWTClaims decodeIdToken(String encodedJWT) {
         try {
             Integer headerLength = encodedJWT.indexOf('.');
             Integer claimsLength = encodedJWT.lastIndexOf('.');
