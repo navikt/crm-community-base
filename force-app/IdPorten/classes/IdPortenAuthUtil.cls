@@ -65,7 +65,7 @@ public with sharing class IdPortenAuthUtil {
                 );
             }
         } else {
-            logger.error('Finner ikke SID fra ID-token', null);
+            logger.error('ID-token er blank', null);
         }
         logger.publishSynch();
     }
@@ -103,15 +103,16 @@ public with sharing class IdPortenAuthUtil {
                 codeVerifier
         );
 
-        Http http = new Http();
-        HTTPResponse res = http.send(req);
+        HTTPResponse res = new Http().send(req);
 
         if (res.getStatusCode() != 200) {
-            LoggerUtility logger = new LoggerUtility();
-            logger.error(
-                'Kunne ikke hente id token ' + res.getBody(),
-                null,
-                CRM_ApplicationDomain.Domain.NKS
+            logger.logMessage(
+                LoggerUtility.LogLevel.ERROR,
+                '',
+                '',
+                'Kunne ikke hente id token',
+                res.getBody(),
+                null
             );
             logger.publishSynch();
             return null;
