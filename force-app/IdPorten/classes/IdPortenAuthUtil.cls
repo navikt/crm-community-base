@@ -1,19 +1,28 @@
 public with sharing class IdPortenAuthUtil {
     private static final Integer SESSION_DURATION_IN_MINUTES = 24;
     private Map<String, String> authProviderConfiguration;
+    private final LoggerUtility logger;
 
     public IdPortenAuthUtil() {
         authProviderConfiguration = getAuthProviderConfiguration();
+        logger = new LoggerUtility(
+            CRM_ApplicationDomain.Domain.PLATFORCE,
+            'IdPorten'
+        );
     }
 
     public AuthResponse initiate(String pageName) {
         AuthResponse response = new AuthResponse();
         response.state = PKCEOAuthHelper.generateState();
         response.codeVerifier = PKCEOAuthHelper.generateCodeVerifier();
-        String codeChallenge = PKCEOAuthHelper.getCodeChallenge(response.codeVerifier);
+        String codeChallenge = PKCEOAuthHelper.getCodeChallenge(
+            response.codeVerifier
+        );
         response.nonce = PKCEOAuthHelper.generateNonce();
         response.redirectUrl = getRedirectUrl(pageName);
-        String authorizeEndpointUrl = authProviderConfiguration.get('AuthorizeEndpointUrl');
+        String authorizeEndpointUrl = authProviderConfiguration.get(
+            'AuthorizeEndpointUrl'
+        );
         String consumerKey = authProviderConfiguration.get('ConsumerKey');
         String acrValues = authProviderConfiguration.get('AcrValues');
         String consumerSecret = authProviderConfiguration.get('ConsumerSecret');
@@ -38,30 +47,44 @@ public with sharing class IdPortenAuthUtil {
     }
 
     public void storeSid(String sid, Id userId) {
-        if (sid != null) {
+        if (String.isNotBlank(sid)) {
             IdPortenCache__c cache = new IdPortenCache__c();
             cache.Name = sid;
             cache.UserId__c = userId;
-            cache.ExpirationTime__c = DateTime.Now().addMinutes(SESSION_DURATION_IN_MINUTES);
-            try {
-                insert cache;
-            } catch (Exception e) {
-                LoggerUtility logger = new LoggerUtility();
-                logger.exception(e, CRM_ApplicationDomain.Domain.NKS);
-                logger.publishSynch();
+            cache.ExpirationTime__c = DateTime.Now()
+                .addMinutes(SESSION_DURATION_IN_MINUTES);
+            Database.SaveResult result = Database.insert(cache, false);
+            if (!result.isSuccess()) {
+                logger.logMessage(
+                    LoggerUtility.LogLevel.ERROR,
+                    '',
+                    '',
+                    'Kunne ikke lagre SID i cache: ',
+                    this.databaseErrorsToString(result.getErrors()),
+                    null
+                );
             }
         } else {
-            LoggerUtility logger = new LoggerUtility();
-            logger.error('Finner ikke SID fra ID-token ', null, CRM_ApplicationDomain.Domain.NKS);
-            logger.publishSynch();
+            logger.error('ID-token er blank', null);
         }
+        logger.publishSynch();
     }
 
-    public TokenResponse getSidFromIdToken(String code, String codeVerifier, String nonce, String pageName) {
+    public TokenResponse getSidFromIdToken(
+        String code,
+        String codeVerifier,
+        String nonce,
+        String pageName
+    ) {
         String consumerKey = authProviderConfiguration.get('ConsumerKey');
         String consumerSecret = authProviderConfiguration.get('ConsumerSecret');
-        String tokenEndpointUrl = authProviderConfiguration.get('TokenEndpointUrl');
-        String encodedRedirectUrl = EncodingUtil.urlEncode(getRedirectUrl(pageName), 'UTF-8');
+        String tokenEndpointUrl = authProviderConfiguration.get(
+            'TokenEndpointUrl'
+        );
+        String encodedRedirectUrl = EncodingUtil.urlEncode(
+            getRedirectUrl(pageName),
+            'UTF-8'
+        );
 
         HttpRequest req = new HttpRequest();
         req.setEndpoint(tokenEndpointUrl);
@@ -69,23 +92,28 @@ public with sharing class IdPortenAuthUtil {
         req.setMethod('POST');
         req.setBody(
             'grant_type=authorization_code&redirect_uri=' +
-            encodedRedirectUrl +
-            '&code=' +
-            code +
-            '&client_id=' +
-            consumerKey +
-            '&client_secret=' +
-            consumerSecret +
-            '&code_verifier=' +
-            codeVerifier
+                encodedRedirectUrl +
+                '&code=' +
+                code +
+                '&client_id=' +
+                consumerKey +
+                '&client_secret=' +
+                consumerSecret +
+                '&code_verifier=' +
+                codeVerifier
         );
 
-        Http http = new Http();
-        HTTPResponse res = http.send(req);
+        HTTPResponse res = new Http().send(req);
 
         if (res.getStatusCode() != 200) {
-            LoggerUtility logger = new LoggerUtility();
-            logger.error('Kunne ikke hente id token ' + res.getBody(), null, CRM_ApplicationDomain.Domain.NKS);
+            logger.logMessage(
+                LoggerUtility.LogLevel.ERROR,
+                '',
+                '',
+                'Kunne ikke hente id token',
+                res.getBody(),
+                null
+            );
             logger.publishSynch();
             return null;
         }
@@ -94,8 +122,14 @@ public with sharing class IdPortenAuthUtil {
         JWTClaims decodedIdToken = decodeIdToken(idToken);
 
         if (decodedIdToken.nonce == null || decodedIdToken.nonce != nonce) {
-            LoggerUtility logger = new LoggerUtility();
-            logger.error('Nonce samsvarer ikke', null, CRM_ApplicationDomain.Domain.NKS);
+            logger.logMessage(
+                LoggerUtility.LogLevel.ERROR,
+                '',
+                '',
+                'Nonce samsvarer ikke.',
+                '',
+                null
+            );
             logger.publishSynch();
             return null;
         }
@@ -118,25 +152,42 @@ public with sharing class IdPortenAuthUtil {
 
         if (Test.isRunningTest()) {
             authProviderConfiguration.put('AcrValues', 'arc');
-            authProviderConfiguration.put('AuthorizeEndpointUrl', 'https://auth');
+            authProviderConfiguration.put(
+                'AuthorizeEndpointUrl',
+                'https://auth'
+            );
             authProviderConfiguration.put('ConsumerKey', 'key');
             authProviderConfiguration.put('ConsumerSecret', 'secret');
             authProviderConfiguration.put('TokenEndpointUrl', 'https://token');
-            authProviderConfiguration.put('TokenInfoEndpointUrl', 'https://tokenInfo');
+            authProviderConfiguration.put(
+                'TokenInfoEndpointUrl',
+                'https://tokenInfo'
+            );
             return authProviderConfiguration;
         }
 
         ID_porten__mdt mdt = [
-            SELECT AcrValues__c, AuthorizeEndpointUrl__c, ConsumerKey__c, ConsumerSecret__c, TokenEndpointUrl__c
+            SELECT
+                AcrValues__c,
+                AuthorizeEndpointUrl__c,
+                ConsumerKey__c,
+                ConsumerSecret__c,
+                TokenEndpointUrl__c
             FROM ID_porten__mdt
             WHERE DeveloperName = 'IdPorten'
         ];
         // TokenInfoEndpointUrl__c
         authProviderConfiguration.put('AcrValues', mdt.AcrValues__c);
-        authProviderConfiguration.put('AuthorizeEndpointUrl', mdt.AuthorizeEndpointUrl__c);
+        authProviderConfiguration.put(
+            'AuthorizeEndpointUrl',
+            mdt.AuthorizeEndpointUrl__c
+        );
         authProviderConfiguration.put('ConsumerKey', mdt.ConsumerKey__c);
         authProviderConfiguration.put('ConsumerSecret', mdt.ConsumerSecret__c);
-        authProviderConfiguration.put('TokenEndpointUrl', mdt.TokenEndpointUrl__c);
+        authProviderConfiguration.put(
+            'TokenEndpointUrl',
+            mdt.TokenEndpointUrl__c
+        );
         // authProviderConfiguration.put('TokenInfoEndpointUrl', mdt.TokenInfoEndpointUrl__c);
         return authProviderConfiguration;
     }
@@ -148,19 +199,28 @@ public with sharing class IdPortenAuthUtil {
             WHERE UserId__c = :UserInfo.getUserId()
         ];
         for (IdPortenCache__c cache : listOfCache) {
-            cache.ExpirationTime__c = DateTime.Now().addMinutes(SESSION_DURATION_IN_MINUTES);
+            cache.ExpirationTime__c = DateTime.Now()
+                .addMinutes(SESSION_DURATION_IN_MINUTES);
         }
 
-        try {
-            update listOfCache;
-        } catch (Exception e) {
-            LoggerUtility logger = new LoggerUtility();
-            logger.exception(e, CRM_ApplicationDomain.Domain.CRM);
-            logger.publishSynch();
+        List<Database.SaveResult> results = Database.update(listOfCache, false);
+        for (Database.SaveResult result : results) {
+            if (!result.isSuccess()) {
+                logger.logMessage(
+                    LoggerUtility.LogLevel.ERROR,
+                    '',
+                    '',
+                    'Kunne ikke oppdatere IdPortenCache',
+                    this.databaseErrorsToString(result.getErrors()),
+                    null
+                );
+            }
         }
+
+        logger.publishSynch();
     }
 
-    private static String getTokenValueFromResponse(String response, String token) {
+    private String getTokenValueFromResponse(String response, String token) {
         String tokenValue = '';
         try {
             JSONParser parser = JSON.createParser(response);
@@ -172,18 +232,27 @@ public with sharing class IdPortenAuthUtil {
                 }
             }
         } catch (Exception e) {
-            LoggerUtility logger = new LoggerUtility();
-            logger.exception(e, CRM_ApplicationDomain.Domain.NKS);
-            logger.publishSynch();
+            logger.logMessage(
+                LoggerUtility.LogLevel.ERROR,
+                '',
+                '',
+                e.getMessage(),
+                e.getStackTraceString(),
+                null
+            );
         }
+        logger.publishSynch();
         return tokenValue;
     }
 
-    private static JWTClaims decodeIdToken(String encodedJWT) {
+    private JWTClaims decodeIdToken(String encodedJWT) {
         try {
             Integer headerLength = encodedJWT.indexOf('.');
             Integer claimsLength = encodedJWT.lastIndexOf('.');
-            String jwtClaims = encodedJWT.mid(headerLength + 1, claimsLength - headerLength - 1);
+            String jwtClaims = encodedJWT.mid(
+                headerLength + 1,
+                claimsLength - headerLength - 1
+            );
 
             JWTClaims claimsDeserialized = (JWTClaims) Json.deserialize(
                 EncodingUtil.base64Decode(jwtClaims).toString(),
@@ -191,8 +260,14 @@ public with sharing class IdPortenAuthUtil {
             );
             return claimsDeserialized;
         } catch (Exception e) {
-            LoggerUtility logger = new LoggerUtility();
-            logger.exception(e, CRM_ApplicationDomain.Domain.NKS);
+            logger.logMessage(
+                LoggerUtility.LogLevel.ERROR,
+                '',
+                '',
+                e.getMessage(),
+                e.getStackTraceString(),
+                null
+            );
             logger.publishSynch();
         }
         return new JWTClaims();
@@ -213,5 +288,13 @@ public with sharing class IdPortenAuthUtil {
 
     public class TokenResponse {
         public String sid { get; set; }
+    }
+
+    private String databaseErrorsToString(List<Database.Error> errors) {
+        String errorMessages = '';
+        for (Database.Error error : errors) {
+            errorMessages += error.getMessage() + ';\n';
+        }
+        return errorMessages;
     }
 }
