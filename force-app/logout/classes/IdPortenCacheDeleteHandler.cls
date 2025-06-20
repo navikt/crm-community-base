@@ -14,11 +14,6 @@ global class IdPortenCacheDeleteHandler extends MyTriggers {
 
     @future
     public static void performDelete(Set<Id> userIds) {
-        LoggerUtility logger = new LoggerUtility(
-            'Logout',
-            CRM_ApplicationDomain.Domain.PLATFORCE
-        );
-
         List<AuthSession> authSessionsToDelete = [
             SELECT Id
             FROM AuthSession
@@ -37,13 +32,16 @@ global class IdPortenCacheDeleteHandler extends MyTriggers {
         );
 
         handleDeleteResult(deleteResults);
-        logger.publish();
     }
 
     @TestVisible
     private static void handleDeleteResult(
         List<Database.DeleteResult> deleteResults
     ) {
+        LoggerUtility logger = new LoggerUtility(
+            CRM_ApplicationDomain.Domain.PLATFORCE,
+            'Logout'
+        );
         for (Database.DeleteResult result : deleteResults) {
             if (!result.isSuccess()) {
                 String errors = '';
@@ -62,5 +60,6 @@ global class IdPortenCacheDeleteHandler extends MyTriggers {
                 );
             }
         }
+        logger.publish();
     }
 }
