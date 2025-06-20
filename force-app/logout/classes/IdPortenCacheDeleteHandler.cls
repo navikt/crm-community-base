@@ -14,58 +14,53 @@ global class IdPortenCacheDeleteHandler extends MyTriggers {
 
     @future
     public static void performDelete(Set<Id> userIds) {
-        LoggerUtility logger = new LoggerUtility('Logout');
-        Integer failedCount = 0;
+        LoggerUtility logger = new LoggerUtility(
+            'Logout',
+            CRM_ApplicationDomain.Domain.PLATFORCE
+        );
 
-        try {
-            List<AuthSession> authSessionsToDelete = [
-                SELECT Id
-                FROM AuthSession
-                WHERE
-                    UsersId = :userIds
-                    AND LoginType = 'Chatter Communities External User Third Party SSO'
-            ];
+        List<AuthSession> authSessionsToDelete = [
+            SELECT Id
+            FROM AuthSession
+            WHERE
+                UsersId = :userIds
+                AND LoginType = 'Chatter Communities External User Third Party SSO'
+        ];
 
-            if (authSessionsToDelete.isEmpty()) {
-                return;
-            }
+        if (authSessionsToDelete.isEmpty()) {
+            return;
+        }
 
-            List<Database.DeleteResult> deleteResults = Database.delete(
-                authSessionsToDelete,
-                false
-            );
+        List<Database.DeleteResult> deleteResults = Database.delete(
+            authSessionsToDelete,
+            false
+        );
 
-            for (Database.DeleteResult result : deleteResults) {
-                if (false == result.isSuccess()) {
-                    failedCount += 1;
+        handleDeleteResult(deleteResults);
+        logger.publish();
+    }
+
+    @TestVisible
+    private static void handleDeleteResult(
+        List<Database.DeleteResult> deleteResults
+    ) {
+        for (Database.DeleteResult result : deleteResults) {
+            if (!result.isSuccess()) {
+                String errors = '';
+
+                for (Database.Error error : result.getErrors()) {
+                    errors += error.getMessage() + '\n';
                 }
-            }
 
-            if (failedCount > 0) {
-                logger.critical(
-                    'Failed to delete ' + failedCount + ' AuthSession:',
+                logger.logMessage(
+                    LoggerUtility.LogLevel.ERROR,
+                    result.id,
                     null,
-                    CRM_ApplicationDomain.Domain.CRM
+                    'Error deleting AuthSession for Experience User.',
+                    errors,
+                    null
                 );
             }
-
-            delete [
-                SELECT Id
-                FROM AuthSession
-                WHERE
-                    UsersId = :userIds
-                    AND LoginType = 'Chatter Communities External User Third Party SSO'
-            ];
-        } catch (Exception e) {
-            logger.critical(
-                'Could not delete AuthSession while deleting Id Porten cache. + \n' +
-                    userIds +
-                    '\n' +
-                    e.getMessage(),
-                null,
-                CRM_ApplicationDomain.Domain.CRM
-            );
         }
-        logger.publish();
     }
 }
