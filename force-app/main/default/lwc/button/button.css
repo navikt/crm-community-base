@@ -20,11 +20,8 @@
 .navds-button--secondary:hover,
 .navds-button--secondary:active {
     color: #ffffff;
-    background-color: #0056b4;
+    background-color: #CCE1FF;
     border-color: transparent;
-}
-.navds-button--secondary:active {
-    background-color: #005b82;
 }
 
 .navds-body-short {
