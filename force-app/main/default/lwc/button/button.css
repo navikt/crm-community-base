@@ -14,14 +14,14 @@
     align-items: center;
     padding: calc(0.75rem - 2px) 0.75rem;
 }
+.navds-button--secondary {
+    border: 2px solid #0067c5;
+}
 .navds-button--secondary:hover,
 .navds-button--secondary:active {
     color: #ffffff;
-    background-color: #0056b4;
+    background-color: #CCE1FF;
     border-color: transparent;
-}
-.navds-button--secondary:active {
-    background-color: #005b82;
 }
 
 .navds-body-short {
