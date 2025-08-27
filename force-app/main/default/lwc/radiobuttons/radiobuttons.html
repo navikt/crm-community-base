@@ -1,6 +1,7 @@
 <template>
-    <fieldset tabindex="-1" style="padding: unset">
-        <legend class="navds-fieldset__legend navds-label" style={labelFontSize}>{header}
+    <fieldset role="radiogroup" aria-labelledby="radio-group-header" tabindex="-1" style="padding: unset">
+        <legend id="radio-group-header" class="navds-fieldset__legend navds-label" style={labelFontSize}>
+            {header}
             <c-helptext if:true={isHelpText} text={helptextContent} hover-text={helptextHovertext}></c-helptext>
         </legend>
         
@@ -8,7 +9,7 @@
             <div class="navds-radio-buttons" style={flex}>
                 <template for:each={radiobuttons} for:item="radiobutton">
                     <div key={radiobutton.label} class="navds-radio">
-                        <input key={radiobutton.label} id={radiobutton.label} form=[form} name={groupName} value={radiobutton.label}  data-id={radiobutton.label} onclick={handleRadiobuttonsClick} type="radio" class="navds-radio__input" aria-invalid="false" disabled={radiobutton.disabled} required={radiobutton.required} checked={radiobutton.checked}></input>
+                        <input key={radiobutton.label} id={radiobutton.label} form={form} name={groupName} value={radiobutton.label}  data-id={radiobutton.label} onclick={handleRadiobuttonsClick} type="radio" class="navds-radio__input" aria-invalid="false" disabled={radiobutton.disabled} required={radiobutton.required} checked={radiobutton.checked}></input>
                         <label key={radiobutton.label} for={radiobutton.label} class="navds-radio__label navds-body-short">{radiobutton.label}</label>
                     </div>
                 </template>
