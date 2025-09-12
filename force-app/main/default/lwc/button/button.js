@@ -13,7 +13,7 @@ export default class Button extends LightningElement {
   @api type; // Button, Submit, Reset
   @api value;
   @api title;
-  @api buttonStyling; // Primary, Secondary, Action, Danger
+  @api buttonStyling; // Primary, Secondary, Tertiary, Danger
   @api buttonLabel;
   @api ariaLabel;
   @api desktopStyle;
