@@ -153,12 +153,10 @@ button {
 }
 
 .navds-button:disabled:disabled {
-    background-color: #a0a0a0;
-    color: #ffffff;
     cursor: not-allowed;
-    border-width: 0;
     box-shadow: none;
     transform: none;
+    opacity: 0.3;
 }
 
 .navds-button:focus {
