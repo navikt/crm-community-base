@@ -36,9 +36,8 @@
   inset-block-end: calc(100% + 8px);
   padding: 0.75rem 0.875rem;
   box-sizing: border-box;
-  bottom: 50px;
   white-space: normal;
-  width: 20vw;
+  width: 30vw;
 }
 
 .helptextPopupContent {
@@ -79,8 +78,6 @@
   content: "";
   transform: rotate(45deg);
   background-color: #ffffff;
-  border: 1px solid;
-  border-color: #a0a0a0;
   width: 1rem;
   height: 1rem;
 }
@@ -95,16 +92,24 @@
   white-space: normal;
 }
 
+.helptextBackdrop {
+  position: fixed;
+  inset: 0;
+  background: transparent;
+  z-index: 999;
+}
+
 @media (max-width: 576px) {
   .helptextPopup {
+    position: fixed;
     max-inline-size: min(320px, 92vw);
+    width: auto;
     padding: 0.75rem;
-    inset-inline-start: 0;
-    inset-inline-end: auto;
-    width: 80vw;
+    transform: none;
   }
   .helptextArrow {
-    left: calc(52%);
+    left: auto;
+    bottom: auto;
   }
 }
 

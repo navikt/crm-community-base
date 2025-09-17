@@ -1,5 +1,9 @@
 <template>
   <div class="helptext">
+    <div
+      class="helptextBackdrop helptextPopup--hidden"
+      onclick={helptextBlur}
+    ></div>
     <button
       class="helptextButton"
       type="button"
@@ -8,6 +12,7 @@
       aria-controls="helptext-popover"
       title={defaultHoverText}
       onclick={helptextFocus}
+      onblur={helptextBlur}
     >
       <svg
         width="1em"
