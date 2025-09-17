@@ -153,12 +153,50 @@ button {
 }
 
 .navds-button:disabled:disabled {
-  background-color: #a0a0a0;
-  color: #ffffff;
   cursor: not-allowed;
-  border-width: 0;
   box-shadow: none;
   transform: none;
+  opacity: 0.3;
+}
+
+.navds-button--primary:disabled:hover,
+.navds-button--primary:disabled:active,
+.navds-button--primary:disabled:focus {
+  background-color: #0067c5;
+  border-color: #0067c5;
+  color: #ffffff;
+  box-shadow: none;
+  cursor: not-allowed;
+}
+
+.navds-button--secondary:disabled:hover,
+.navds-button--secondary:disabled:active,
+.navds-button--secondary:disabled:focus {
+  background-color: #ffffff;
+  border-color: #0067c5;
+  color: #0067c5;
+  box-shadow: none;
+  cursor: not-allowed;
+}
+
+.navds-button--tertiary:disabled:hover,
+.navds-button--tertiary:disabled:active,
+.navds-button--tertiary:disabled:focus {
+  background-color: transparent;
+  border-color: transparent;
+  color: #0067c5;
+  box-shadow: none;
+  cursor: not-allowed;
+}
+
+.navds-button--danger:disabled:hover,
+.navds-button--danger:disabled:active,
+.navds-button--danger:disabled:focus {
+  background-color: #ba3a26;
+  border-color: #ba3a26;
+  color: #ffffff;
+  box-shadow: none;
+  cursor: not-allowed;
 }
 
 .navds-button:focus {
