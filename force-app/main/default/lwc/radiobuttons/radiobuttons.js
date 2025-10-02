@@ -2,7 +2,6 @@ import { api, LightningElement } from 'lwc';
 import { setDefaultValue } from 'c/componentHelperClass';
 
 export default class radiobuttons extends LightningElement {
-    @api radiobuttons = [];
     @api header;
     @api groupName;
     @api form;
@@ -15,15 +14,25 @@ export default class radiobuttons extends LightningElement {
     @api desktopStyle;
     @api mobileStyle;
     @api setDefaultValue;
+    _radiobuttons = [];
+    @api
+    get radiobuttons() {
+        return this._radiobuttons;
+    }
+    set radiobuttons(value) {
+        this._radiobuttons = Array.isArray(value) ? value.map(v => ({ ...v })) : [];
+        this.checkedValues = [];
+    }
 
     checkedValues = [];
     handleRadiobuttonsClick() {
         this.updateShowErrorTextValue();
-        this.checkedValues = this.radiobuttons.map((obj) => ({ ...obj, checked: false }));
-        for (let i = 0; i < this.radiobuttons.length; i++) {
-            this.checkedValues[i].checked = this.template.querySelector(
-                '[data-id="' + this.checkedValues[i].label + '"]'
-            ).checked;
+        this.checkedValues = this._radiobuttons.map((obj) => ({ ...obj, checked: false }));
+        for (let i = 0; i < this._radiobuttons.length; i++) {
+            const input = this.template.querySelector('[data-id="' + this._radiobuttons[i].label + '"]');
+            if (input) {
+                this.checkedValues[i].checked = input.checked;
+            }
         }
         const eventToSend = new CustomEvent('radiobuttonsclick', { detail: this.checkedValues });
         this.dispatchEvent(eventToSend);
@@ -45,8 +54,9 @@ export default class radiobuttons extends LightningElement {
         this.bottomErrorTextWhenRow = false;
         let checked = false;
         // Check for checked values and error
-        this.radiobuttons.forEach((element, index) => {
-            checked = this.template.querySelector('[data-id="' + element.label + '"]').checked;
+        this._radiobuttons.forEach((element, index) => {
+            const input = this.template.querySelector('[data-id="' + element.label + '"]');
+            checked = input ? input.checked : false;
             if (this.checkIfError(checked, element.required, element.disabled)) {
                 error = true;
                 this.template.querySelectorAll('label')[index].classList.add('navds-error__label');
@@ -61,24 +71,28 @@ export default class radiobuttons extends LightningElement {
     // Need to set value again on render to avoid user having to click twice on radiobutton
     renderedCallback() {
         if (this.checkedValues.length > 0) {
-            for (let i = 0; i < this.radiobuttons.length; i++) {
-                this.template.querySelector('[data-id="' + this.radiobuttons[i].label + '"]').checked =
-                    this.checkedValues[i].checked;
+            for (let i = 0; i < this._radiobuttons.length; i++) {
+                const input = this.template.querySelector('[data-id="' + this._radiobuttons[i].label + '"]');
+                if (input) input.checked = this.checkedValues[i].checked;
             }
-        }
-        if (this.setDefaultValue != null && this.setDefaultValue !== '') {
-            const defaultValue = this.setDefaultValue.toString().toLowerCase();
-            this.radiobuttons.forEach((radioButton) => {
-                const radioValue = radioButton.value.toString().toLowerCase();
-                const radioInput = this.template.querySelector('[data-id="' + radioButton.label + '"]');
-                if (radioInput) {
-                    if (radioValue === defaultValue) {
-                        radioInput.checked = true;
-                    }
-                } else {
-                    console.error('Radio element not found');
-                }
+        } else {
+            this._radiobuttons.forEach((rb) => {
+                const input = this.template.querySelector('[data-id="' + rb.label + '"]');
+                if (input) input.checked = !!rb.checked;
             });
+            if (this.setDefaultValue != null && this.setDefaultValue !== '') {
+                const defaultValue = this.setDefaultValue.toString().toLowerCase();
+                const anyChecked = this._radiobuttons.some(rb => !!rb.checked);
+                if (!anyChecked) {
+                    this._radiobuttons.forEach((radioButton) => {
+                        const radioValue = radioButton.value.toString().toLowerCase();
+                        const radioInput = this.template.querySelector('[data-id="' + radioButton.label + '"]');
+                        if (radioInput && radioValue === defaultValue) {
+                            radioInput.checked = true;
+                        }
+                    });
+                }
+            }
         }
     }
 
