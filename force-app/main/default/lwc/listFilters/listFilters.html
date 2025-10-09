@@ -3,108 +3,64 @@
 <!-- sldsValidatorIgnore -->
 <template>
     <div if:true={isOpen} class="fullscreen-overlay" onclick={overlayClick}>
+        <div class="sr-only" aria-live="polite" role="status">
+            {screenReaderMessage}.
+        </div>
         <div class="overlay-container" onclick={overlayContainerClick}>
             <div class="overlay-content">
                 <div class="drag-rectangle"></div>
                 <h3 class="header">{header}</h3>
                 <ul class="list">
                     <template iterator:it={filterArray}>
-                        <li
-                            data-id={it.value.name}
-                            key={it.value.name}
-                            class="row-element"
-                            onclick={handleRowClick}
-                            onkeypress={handleRowClick}
-                            data-filterindex={it.index}
-                            tabindex="0"
-                            aria-expanded={it.value.isOpen}
-                        >
+                        <li data-id={it.value.name} key={it.value.name} class="row-element" onclick={handleRowClick}
+                            onkeypress={handleRowClick} data-filterindex={it.index} tabindex="0"
+                            aria-expanded={it.value.isOpen}>
                             <p class="filter-label">{it.value.label}</p>
                             <div class="active-filters-wrapper" aria-hidden="true">
                                 <template iterator:element={it.value.value}>
-                                    <div
-                                        if:true={element.value.value}
-                                        key={element.value.name}
-                                        class="active-filter-container"
-                                        onclick={doNothing}
-                                    >
+                                    <div if:true={element.value.value} key={element.value.name}
+                                        class="active-filter-container" onclick={doNothing}>
                                         <p if:true={it.value.isDateInterval} class="active-filter-text">
                                             {element.value.labelprefix}{element.value.localTimeValue}
                                         </p>
                                         <p if:false={it.value.isDateInterval} class="active-filter-text">
                                             {element.value.label}
                                         </p>
-                                        <c-icon
-                                            data-filter={it.value.name}
-                                            data-id={element.value.name}
-                                            onclick={removeFilter}
-                                            onkeypress={removeFilter}
-                                            icon="ErrorFilled"
-                                            data-filterindex={it.index}
-                                            data-valueindex={element.index}
-                                            class="icon-class"
-                                        ></c-icon>
+                                        <c-icon data-filter={it.value.name} data-id={element.value.name}
+                                            onclick={removeFilter} onkeypress={removeFilter} icon="ErrorFilled"
+                                            data-filterindex={it.index} data-valueindex={element.index}
+                                            class="icon-class"></c-icon>
                                     </div>
                                 </template>
                             </div>
                             <c-icon class="expander-icon" if:false={it.value.isOpen} icon="Expand"></c-icon>
                             <c-icon class="expander-icon" if:true={it.value.isOpen} icon="Collapse"></c-icon>
                         </li>
-                        <div
-                            if:true={it.value.isOpen}
-                            key={it.value.name}
-                            class="expanded-filter"
-                            aria-expanded={it.value.isOpen}
-                        >
-                            <c-checkbox
-                                if:true={it.value.showMarkAllCheckbox}
-                                oncheckboxclick={markAllCheckboxes}
-                                aria-label="Merk alle"
-                                title="Merk alle"
-                                default-value={it.value.allMarked}
-                                data-filterindex={it.index}
-                            ></c-checkbox>
-                            <c-checkboxgroup
-                                if:true={it.value.isCheckboxgroup}
-                                checkboxes={it.value.value}
-                                oncheckboxgroupclick={handleCheckboxChange}
-                                data-id={it.value.name}
-                                data-filterindex={it.index}
-                            ></c-checkboxgroup>
+                        <div if:true={it.value.isOpen} key={it.value.name} class="expanded-filter"
+                            aria-expanded={it.value.isOpen}>
+                            <c-checkbox if:true={it.value.showMarkAllCheckbox} oncheckboxclick={markAllCheckboxes}
+                                aria-label="Merk alle" title="Merk alle" default-value={it.value.allMarked}
+                                data-filterindex={it.index}></c-checkbox>
+                            <c-checkboxgroup if:true={it.value.isCheckboxgroup} checkboxes={it.value.value}
+                                oncheckboxgroupclick={handleCheckboxChange} data-id={it.value.name}
+                                data-filterindex={it.index}></c-checkboxgroup>
                             <fieldset if:true={it.value.isDateInterval}>
                                 <template iterator:date={it.value.value}>
-                                    <c-input
-                                        key={date.value.name}
-                                        label={date.value.label}
-                                        data-id={date.value.name}
-                                        type="date"
-                                        ongetvalueonchange={handleDateChange}
-                                        name={date.value.name}
-                                        value={date.value.value}
-                                        data-filterindex={it.index}
-                                        data-valueindex={date.index}
-                                        desktop-style="padding-bottom: 1rem;"
-                                        mobile-style="padding-bottom: 1rem;"
-                                    ></c-input>
+                                    <c-input key={date.value.name} label={date.value.label} data-id={date.value.name}
+                                        type="date" ongetvalueonchange={handleDateChange} name={date.value.name}
+                                        value={date.value.value} data-filterindex={it.index}
+                                        data-valueindex={date.index} desktop-style="padding-bottom: 1rem;"
+                                        mobile-style="padding-bottom: 1rem;"></c-input>
                                 </template>
                             </fieldset>
-                            <c-input
-                                if:true={it.value.isSearch}
-                                ongetvalueonchange={handleSearchTermChange}
-                                type="text"
-                                value={it.value.searchTerm}
-                                data-filterindex={it.index}
-                            ></c-input>
+                            <c-input if:true={it.value.isSearch} ongetvalueonchange={handleSearchTermChange} type="text"
+                                value={it.value.searchTerm} data-filterindex={it.index}></c-input>
                         </div>
                     </template>
                 </ul>
-                <c-button
-                    button-label={buttonLabel}
-                    button-styling="primary"
-                    onbuttonclick={applyFilter}
+                <c-button button-label={buttonLabel} button-styling="primary" onbuttonclick={applyFilter}
                     desktop-style="width: 8rem; justify-content: center"
-                    mobile-style="width: 8rem; justify-content: center"
-                ></c-button>
+                    mobile-style="width: 8rem; justify-content: center"></c-button>
             </div>
         </div>
     </div>
