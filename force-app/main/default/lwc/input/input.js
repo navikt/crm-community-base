@@ -89,11 +89,14 @@ export default class Input extends LightningElement {
 
     // Sends value on change
     handleonchange() {
-        const selectedEvent = new CustomEvent('change', {
-            detail: this.template.querySelector('input').value
-        });
-        this.dispatchEvent(selectedEvent);
-    }
+    let inputValue = this.template.querySelector('input').value;
+    this.value = inputValue;
+    const selectedEvent = new CustomEvent('change', {
+        detail: inputValue
+    });
+    this.dispatchEvent(selectedEvent);
+}
+
 
     // Sends value on change
     sendValueOnChange() {
