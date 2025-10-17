@@ -153,44 +153,45 @@ li:hover {
   .row-element:last-child {
     border-bottom: 1px solid #000000;
   }
+}
 .sr-only {
-    position: absolute !important;
-    height: 1px;
-    width: 1px;
-    overflow: hidden;
-    clip: rect(1px, 1px, 1px, 1px);
-    white-space: nowrap;
+  position: absolute !important;
+  height: 1px;
+  width: 1px;
+  overflow: hidden;
+  clip: rect(1px, 1px, 1px, 1px);
+  white-space: nowrap;
 }
 
 @media (min-width: 576px) {
-    .fullscreen-overlay {
-        all: initial;
-        width: 20%;
-        height: auto;
-        position: absolute;
-        transform: translate(-109%, 42px);
-    }
-    .overlay-container {
-        width: 100%;
-        height: auto;
-        position: absolute;
-        padding: 1rem;
-        border: black 1px solid;
-        border-radius: 6px;
-    }
-    .drag-rectangle,
-    .header {
-        display: none;
-    }
-    .row-element {
-        border-top: 1px solid #000000;
-    }
-    .row-element:first-child {
-        border-top: 0;
-    }
-    .row-element:last-child {
-        border-bottom: 1px solid #000000;
-    }
+  .fullscreen-overlay {
+    all: initial;
+    width: 20%;
+    height: auto;
+    position: absolute;
+    transform: translate(-109%, 42px);
+  }
+  .overlay-container {
+    width: 100%;
+    height: auto;
+    position: absolute;
+    padding: 1rem;
+    border: black 1px solid;
+    border-radius: 6px;
+  }
+  .drag-rectangle,
+  .header {
+    display: none;
+  }
+  .row-element {
+    border-top: 1px solid #000000;
+  }
+  .row-element:first-child {
+    border-top: 0;
+  }
+  .row-element:last-child {
+    border-bottom: 1px solid #000000;
+  }
 }
 
 .hidden {
