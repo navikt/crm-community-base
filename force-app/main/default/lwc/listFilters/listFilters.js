@@ -5,7 +5,8 @@ export default class ListFilters extends LightningElement {
     @api activeFilters;
     @api filters;
     @track filterArray = [];
-
+    screenReaderMessage = '';
+    
     setFilterArray() {
         let arr = [];
         this.filters.forEach((element) => {
@@ -45,6 +46,7 @@ export default class ListFilters extends LightningElement {
     handleRowClick(event) {
         let filterindex = event.currentTarget.dataset.filterindex;
         this.filterArray[filterindex].isOpen = !this.filterArray[filterindex].isOpen;
+        this.screenReaderMessage = `${this.filterArray[filterindex].label} filtergruppe ${this.filterArray[filterindex].isOpen ? 'utvidet' : 'minimert'}`;
     }
 
     handleCheckboxChange(event) {
