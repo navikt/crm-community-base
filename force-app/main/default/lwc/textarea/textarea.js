@@ -5,6 +5,7 @@ export default class Textarea extends LightningElement {
     @api name = 'textarea';
     @api label = '';
     @api value;
+    @api description;
     @api form;
     @api helptextContent = '';
     @api helptextHovertext;

@@ -6,6 +6,7 @@
             >
             <c-helptext if:true={isHelpText} text={helptextContent} hover-text={helptextHovertext}></c-helptext>
         </div>
+        <div if:true={description} class="navds-form-field__description">{description}</div>
         <div class="navds-textarea__wrapper">
             <textarea
                 oninput={sendValueOnChange}
