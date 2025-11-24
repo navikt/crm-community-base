@@ -6,14 +6,14 @@
     height: 3em;
     width: 5em;
     padding: 0.5rem;
-    border: 1px solid var(--filterButtonBorderColor);
+    border: 4px solid var(--filterButtonBorderColor);
     border-radius: 8px;
     background-color: var(--filterButtonBackgroundColor);
 }
 
 .open-filter-button:hover {
     color: #ffffff;
-    background-color: #0056b4;
+    background-color: #E0E3E7;
     border-color: transparent;
 }
 
