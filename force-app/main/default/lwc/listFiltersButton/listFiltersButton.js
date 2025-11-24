@@ -8,8 +8,8 @@ export default class ListFiltersButton extends LightningElement {
 
     connectedCallback() {
         document.documentElement.style.setProperty('--filterButtonColor', '#262626');
-        document.documentElement.style.setProperty('--filterButtonBackgroundColor', '#EFEFEF');
-        document.documentElement.style.setProperty('--filterButtonBorderColor', '#929292');
+        document.documentElement.style.setProperty('--filterButtonBackgroundColor', '#ffffff');
+        document.documentElement.style.setProperty('--filterButtonBorderColor', '#5D6574');
     }
 
     openFilters() {
@@ -24,10 +24,10 @@ export default class ListFiltersButton extends LightningElement {
         }
         if (this.isOpen) {
             document.documentElement.style.setProperty('--filterButtonColor', '#ffffff');
-            document.documentElement.style.setProperty('--filterButtonBackgroundColor', '#0056b4');
+            document.documentElement.style.setProperty('--filterButtonBackgroundColor', '#E0E3E7');
         } else {
             document.documentElement.style.setProperty('--filterButtonColor', '#262626');
-            document.documentElement.style.setProperty('--filterButtonBackgroundColor', '#EFEFEF');
+            document.documentElement.style.setProperty('--filterButtonBackgroundColor', '#ffffff');
         }
     }
 
