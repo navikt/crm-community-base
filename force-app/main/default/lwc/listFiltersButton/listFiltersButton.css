@@ -1,6 +1,5 @@
 .open-filter-button {
     display: inline-flex;
-    /* color: var(--filterButtonColor); */
     justify-content: center;
     align-items: center;
     height: 3em;
