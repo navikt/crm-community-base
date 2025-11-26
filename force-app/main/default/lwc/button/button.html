@@ -15,7 +15,7 @@
         aria-label={ariaLabelValue}
         aria-busy={isLoadingActive}
     >
-        <template if:true={isLoadingActive}>
+        <template lwc:if={isLoadingActive}>
             <svg
                 class="navds-loader navds-loader--small navds-loader--inverted navds-loader--transparent"
                 viewBox="0 0 50 50"
@@ -41,7 +41,7 @@
             </svg>
         </template>
 
-        <template if:false={isLoadingActive}>
+        <template lwc:else>
             {buttonLabel}
         </template>
     </button>
