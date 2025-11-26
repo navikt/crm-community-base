@@ -18,13 +18,13 @@ export default class Button extends LightningElement {
   @api ariaLabel;
   @api desktopStyle;
   @api mobileStyle;
+  @api isLoading; // "true" | "false"
 
   get buttonClass() {
-    let buttonStyle;
+    let buttonStyle = this.buttonStyling
+      ? this.buttonStyling.toLowerCase()
+      : "primary";
 
-    if (this.buttonStyling !== undefined) {
-      buttonStyle = this.buttonStyling.toLowerCase();
-    }
     if (
       buttonStyle !== "primary" &&
       buttonStyle !== "secondary" &&
@@ -33,18 +33,31 @@ export default class Button extends LightningElement {
     ) {
       buttonStyle = "primary"; // Set primary as default if invalid argument
     }
-    return "navds-button navds-button--" + buttonStyle + " navds-body-short";
+
+    let classes =
+      "navds-button navds-button--" + buttonStyle + " navds-body-short";
+
+    if (this.isLoadingActive) {
+      classes += " navds-button--loading";
+    }
+
+    return classes;
   }
 
   handleClick(event) {
     const eventToSend = new CustomEvent("buttonclick", {
       detail: event.target.value,
+      bubbles: true,
+      composed: true,
     });
     this.dispatchEvent(eventToSend);
   }
 
   @api focusButton() {
-    this.template.querySelector("button").focus();
+    const btn = this.template.querySelector("button");
+    if (btn && !this.isLoadingActive) {
+      btn.focus();
+    }
   }
 
   get ariaLabelValue() {
@@ -64,7 +77,8 @@ export default class Button extends LightningElement {
   }
 
   get setDefaultDisabled() {
-    return convertStringToBoolean(this.disabled);
+    const baseDisabled = convertStringToBoolean(this.disabled);
+    return baseDisabled || this.isLoadingActive;
   }
 
   get setDefaultValue() {
@@ -81,5 +95,9 @@ export default class Button extends LightningElement {
       style = this.mobileStyle;
     }
     return setDefaultValue(style, "");
+  }
+
+  get isLoadingActive() {
+    return convertStringToBoolean(this.isLoading);
   }
 }
