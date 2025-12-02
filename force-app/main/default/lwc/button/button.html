@@ -13,7 +13,36 @@
         title={title}
         style={setDefaultStyle}
         aria-label={ariaLabelValue}
+        aria-busy={isLoadingActive}
     >
-        {buttonLabel}
+        <template lwc:if={isLoadingActive}>
+            <svg
+                class="navds-loader navds-loader--small navds-loader--inverted navds-loader--transparent"
+                viewBox="0 0 50 50"
+                focusable="false"
+                preserveAspectRatio="xMidYMid"
+                aria-hidden="true"
+            >
+                <circle
+                    class="navds-loader__background"
+                    cx="25"
+                    cy="25"
+                    r="20"
+                    fill="none"
+                ></circle>
+                <circle
+                    class="navds-loader__foreground"
+                    cx="25"
+                    cy="25"
+                    r="20"
+                    fill="none"
+                    stroke-dasharray="50 155"
+                ></circle>
+            </svg>
+        </template>
+
+        <template lwc:else>
+            {buttonLabel}
+        </template>
     </button>
 </template>
