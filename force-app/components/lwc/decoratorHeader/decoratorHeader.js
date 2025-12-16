@@ -69,7 +69,11 @@ export default class DecoratorHeader extends LightningElement {
           const scriptGroupElement = document.createDocumentFragment();
           for (let scripter of scriptElement) {
             if (scripter.id === "__DECORATOR_DATA__") {
-              window.__DECORATOR_DATA__ = JSON.parse(scripter.innerHTML ?? "");
+              const decoratorData = JSON.parse(scripter.innerHTML ?? '');
+              decoratorData.headAssets = decoratorData.headAssets.filter((asset) => {
+                  return asset.attribs.rel !== 'manifest';
+              });
+              window.__DECORATOR_DATA__ = decoratorData;
               continue;
             }
             if (scripter.type == null || scripter.type === "") continue;
