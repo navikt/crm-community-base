@@ -129,3 +129,65 @@
 .helptextPopup--hidden {
   display: none;
 }
+
+@media (max-width: 800px), (max-height: 600px) {
+  .helptextPopup {
+    position: fixed;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 0.1rem !important;
+
+    max-inline-size: calc(100vw - 2rem);
+
+    max-block-size: calc(100vh - 4rem);
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    padding: 0.75rem;
+    box-sizing: border-box;
+  }
+
+  .helptextArrow {
+    display: none;
+  }
+
+  .helptextPopupContent {
+    font-size: 0.5rem; 
+    line-height: 1.35;
+  }
+}
+
+@media (max-width: 480px), (max-height: 400px) {
+  .helptextPopup {
+    bottom: 0.1rem;
+  }
+}
+
+/* Media query for 175% zoom range */
+@media (max-width: 1200px) and (min-width: 1050px) {
+  .helptextPopup {
+    position: fixed;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: auto;
+
+    max-inline-size: calc(100vw - 2rem);
+    max-block-size: calc(100vh - 4rem);
+
+    overflow-y: auto; 
+    overflow-x: hidden;
+
+    padding: 0.75rem;
+    box-sizing: border-box;
+  }
+
+  .helptextArrow {
+    display: none;
+  }
+
+  .helptextPopupContent {
+    font-size: 0.85rem; 
+    line-height: 1.4;
+  }
+}
+
