@@ -31,7 +31,7 @@
   border-radius: 4px;
   position: absolute;
   left: 50%;
-  transform: translateX(-47.2%);
+  transform: translateX(-46%);
   inset-inline-start: 0;
   inset-block-end: calc(100% + 8px);
   padding: 0.75rem 0.875rem;
@@ -130,15 +130,16 @@
   display: none;
 }
 
+/* Zoom  200% */
 @media (max-width: 800px), (max-height: 600px) {
   .helptextPopup {
     position: fixed;
     left: 50%;
     transform: translateX(-50%);
-    bottom: 0.1rem !important;
+    bottom: 0.5rem !important;
 
     max-inline-size: calc(100vw - 2rem);
-
+    max-height: calc(100vh - 2rem);
     max-block-size: calc(100vh - 4rem);
     overflow-y: auto;
     overflow-x: hidden;
@@ -152,19 +153,13 @@
   }
 
   .helptextPopupContent {
-    font-size: 0.5rem; 
+    font-size: clamp(1rem, 0.6rem, 1rem);
     line-height: 1.35;
   }
 }
 
-@media (max-width: 480px), (max-height: 400px) {
-  .helptextPopup {
-    bottom: 0.1rem;
-  }
-}
-
 /* Media query for 175% zoom range */
-@media (max-width: 1200px) and (min-width: 1050px) {
+@media (max-width: 1200px) and (min-width: 1000px) {
   .helptextPopup {
     position: fixed;
     left: 50%;
@@ -186,7 +181,7 @@
   }
 
   .helptextPopupContent {
-    font-size: 0.85rem; 
+    font-size: 1rem; 
     line-height: 1.4;
   }
 }
