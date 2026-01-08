@@ -10,8 +10,9 @@
     background-color: var(--filterButtonBackgroundColor);
 }
 
-.open-filter-button:hover {
-    background-color: #E0E3E7;
+.open-filter-button:hover,
+.open-filter-button:focus {
+    background-color: #E1E2E6;
 }
 
 @media (max-width: 576px) {
