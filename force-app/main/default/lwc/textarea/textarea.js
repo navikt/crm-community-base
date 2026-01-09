@@ -34,6 +34,10 @@ export default class Textarea extends LightningElement {
         this.haslabel();
     }
 
+    get descriptionId() {
+        return this.description ? `${this.setDefaultId}-description` : '';
+    }
+
     get miscStyle() {
         let toReturn;
         if (this.cols === undefined) {
