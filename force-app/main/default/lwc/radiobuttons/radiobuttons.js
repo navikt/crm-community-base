@@ -11,6 +11,7 @@ export default class radiobuttons extends LightningElement {
     @api errorSize;
     @api helptextContent = '';
     @api helptextHovertext;
+    @api description; 
     @api desktopStyle;
     @api mobileStyle;
     @api setDefaultValue;
@@ -19,10 +20,27 @@ export default class radiobuttons extends LightningElement {
     get radiobuttons() {
         return this._radiobuttons;
     }
+    get descriptionId() {
+        return this.description ? `${this.setDefaultId}-description` : undefined;
+    }
     set radiobuttons(value) {
-        this._radiobuttons = Array.isArray(value) ? value.map(v => ({ ...v })) : [];
+        this._radiobuttons = Array.isArray(value) ? value.map(rb => ({
+        ...rb,
+        ariaDescription: this.buildScreenReaderText(rb)
+        })) : [];
         this.checkedValues = [];
     }
+
+    buildScreenReaderText(radio) {
+        if (!radio) {
+            return null;
+        }
+
+        return radio.description
+            ? `${radio.label} ${radio.description}`
+            : radio.label;
+    }
+
 
     checkedValues = [];
     handleRadiobuttonsClick() {
