@@ -6,7 +6,7 @@
             >
             <c-helptext if:true={isHelpText} text={helptextContent} hover-text={helptextHovertext}></c-helptext>
         </div>
-        <div if:true={description} class="navds-form-field__description">{description}</div>
+        <div lwc:if={description} id={descriptionId} class="navds-form-field__description">{description}</div>
         <div class="navds-textarea__wrapper">
             <textarea
                 oninput={sendValueOnChange}
@@ -15,7 +15,7 @@
                 id={setDefaultId}
                 aria-invalid="false"
                 form={form}
-                aria-describedby=""
+                aria-describedby={descriptionId} 
                 class="navds-textarea__input navds-body-short navds-body-medium"
                 style={miscStyle}
                 placeholder={placeholder}
