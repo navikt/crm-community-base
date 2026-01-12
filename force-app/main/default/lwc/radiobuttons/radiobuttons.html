@@ -10,7 +10,7 @@
                 <template for:each={radiobuttons} for:item="radiobutton">
                     <div key={radiobutton.label} class="navds-radio">
                         <input key={radiobutton.label} id={radiobutton.label} aria-label={radiobutton.ariaDescription} form={form} name={groupName} value={radiobutton.label}  data-id={radiobutton.label} onclick={handleRadiobuttonsClick} type="radio" class="navds-radio__input" aria-invalid="false" disabled={radiobutton.disabled} required={radiobutton.required} checked={radiobutton.checked}></input>
-                        <label key={radiobutton.label} for={radiobutton.label} class="navds-radio__label navds-body-short">{radiobutton.label}</label>
+                        <label key={radiobutton.label} for={radiobutton.label} class="navds-radio__label navds-body-short" style={labelStyle}>{radiobutton.label}</label>
 
                         <template lwc:if={radiobutton.description}>
                             <div class="navds-form-field__description">{radiobutton.description}</div>
