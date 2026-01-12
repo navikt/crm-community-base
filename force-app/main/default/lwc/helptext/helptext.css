@@ -158,31 +158,3 @@
   }
 }
 
-/* Media query for 175% zoom range */
-@media (max-width: 1200px) and (min-width: 1000px) {
-  .helptextPopup {
-    position: fixed;
-    left: 50%;
-    transform: translateX(-50%);
-    bottom: auto;
-
-    max-inline-size: calc(100vw - 2rem);
-    max-block-size: calc(100vh - 4rem);
-
-    overflow-y: auto; 
-    overflow-x: hidden;
-
-    padding: 0.75rem;
-    box-sizing: border-box;
-  }
-
-  .helptextArrow {
-    display: none;
-  }
-
-  .helptextPopupContent {
-    font-size: 1rem; 
-    line-height: 1.4;
-  }
-}
-
