@@ -8,6 +8,7 @@ export default class radiobuttons extends LightningElement {
     @api flexDirection;
     @api errorText;
     @api labelSize;
+    @api labelFontWeight;
     @api errorSize;
     @api helptextContent = '';
     @api helptextHovertext;
@@ -23,6 +24,11 @@ export default class radiobuttons extends LightningElement {
     get descriptionId() {
         return this.description ? `${this.setDefaultId}-description` : undefined;
     }
+    get labelStyle() {
+        const weight = this.labelFontWeight || 'normal';
+        return `font-weight: ${weight};`;
+    }
+    
     set radiobuttons(value) {
         this._radiobuttons = Array.isArray(value) ? value.map(rb => ({
         ...rb,
