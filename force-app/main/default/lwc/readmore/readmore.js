@@ -10,6 +10,7 @@ export default class Readmore extends LightningElement {
     @api hoverBackGroundColor;
     @api focusBackGroundColor;
     @api titleFontWeight;
+    @api textColor;
 
     renderedCallback() { 
 
@@ -24,6 +25,7 @@ export default class Readmore extends LightningElement {
         css.setProperty('--hover-bg-color',this.hoverBackGroundColor);
         css.setProperty('--focus-bg-color',this.focusBackGroundColor);
         css.setProperty('--title-font-weight',this.titleFontWeight);
+        css.setProperty('--main-font-color',this.textColor);
     }
 
      setDefaultCssProperties() {
@@ -45,6 +47,10 @@ export default class Readmore extends LightningElement {
 
         if(this.titleFontWeight === undefined){
             this.titleFontWeight = '400';
+        }
+
+        if(this.textColor === undefined){
+            this.textColor = '#0067c5';
         }
     }
 
