@@ -72,3 +72,11 @@
     color: #262626;
     cursor: not-allowed;
 }
+
+.navds-form-field__description {
+    color: #555863;
+}
+
+.navds-form-field {
+    gap: 0 !important;
+}
