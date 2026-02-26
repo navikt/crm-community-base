@@ -7,10 +7,6 @@ public without sharing class CommunityUserAsyncRequestHandler extends AsyncJob {
 
         accountIdSet.addAll(((List<Id>) ar.CRM_Params__c.split(',')));
 
-        if (accountIdSet.isEmpty()) {
-            return;
-        }
-
         //get persons who contains new names
         Map<Id, Person__c> personsWithChangedName = new Map<Id, Person__c>();
         for (Person__c person : [
