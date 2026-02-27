@@ -1,6 +1,11 @@
 public without sharing class CommunityUserAsyncRequestHandler extends AsyncJob {
     public override void execute(AsyncRequest__c ar) {
-        List<Id> accountIds = ar.CRM_Params__c.split(',');
+        Set<Id> accountIdSet = new Set<Id>();
+        if (String.isBlank(ar.CRM_Params__c)) {
+            return;
+        }
+
+        accountIdSet.addAll(((List<Id>) ar.CRM_Params__c.split(',')));
 
         //get persons who contains new names
         Map<Id, Person__c> personsWithChangedName = new Map<Id, Person__c>();
@@ -12,15 +17,9 @@ public without sharing class CommunityUserAsyncRequestHandler extends AsyncJob {
                 INT_MiddleName__c,
                 INT_IsHasTombstone__c
             FROM Person__c
-            WHERE CRM_Account__c IN :accountIds
+            WHERE CRM_Account__c IN :accountIdSet
         ]) {
             personsWithChangedName.put(person.CRM_Account__c, person);
-        }
-
-        //convert account ids to set to be able to user Users Selector class
-        Set<Id> accountIdSet = new Set<Id>();
-        for (Id accountId : accountIds) {
-            accountIdSet.add(accountId);
         }
 
         //update community users with name from Person__c
