@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CspTrustedSite xmlns="http://soap.sforce.com/2006/04/metadata">
   <context>Communities</context>
-  <endpointUrl>*.nav.no</endpointUrl>
+  <endpointUrl>api.uxsignals.com</endpointUrl>
   <isActive>true</isActive>
   <isApplicableToConnectSrc>true</isApplicableToConnectSrc>
   <isApplicableToFontSrc>false</isApplicableToFontSrc>
-  <isApplicableToFrameSrc>true</isApplicableToFrameSrc>
-  <isApplicableToImgSrc>true</isApplicableToImgSrc>
+  <isApplicableToFrameSrc>false</isApplicableToFrameSrc>
+  <isApplicableToImgSrc>false</isApplicableToImgSrc>
   <isApplicableToMediaSrc>false</isApplicableToMediaSrc>
-  <isApplicableToStyleSrc>true</isApplicableToStyleSrc>
+  <isApplicableToStyleSrc>false</isApplicableToStyleSrc>
 </CspTrustedSite>
