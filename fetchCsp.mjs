@@ -32,7 +32,7 @@ fetch('https://www.nav.no/dekoratoren/api/csp')
     })
     .then((cspList) => {
         for (const item in cspList) {
-            let name = item.replace(/[ \-&/\\#,+()$~%.'":?<>{}]/g, '_');
+            let name = item.replace(/[ \-&/\\#,+()$~%.'":?<>{}]+/g, '_');
             name = name.replace(/\*/g, 'star');
             var doc = builder
                 .create('CspTrustedSite', { version: '1.0', encoding: 'UTF-8' })
