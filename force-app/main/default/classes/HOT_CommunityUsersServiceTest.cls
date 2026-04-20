@@ -48,11 +48,11 @@ private class HOT_CommunityUsersServiceTest {
             insert person;
         }
 
-        Test.startTest();
+        System.Test.startTest();
         HOT_CommunityUsersService.createTjenesteleverandorFormidlerUser(
             new List<String>{ '01011800001' }
         );
-        Test.stopTest();
+        System.Test.stopTest();
 
         User user = [
             SELECT Id, Name, FirstName, LastName, ProfileId
