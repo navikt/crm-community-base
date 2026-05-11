@@ -20,6 +20,7 @@ export default class Input extends LightningElement {
     @api minLength = '0';
     @api placeholder = '';
     @api id = 'inputcomponent';
+    @api description; 
     @api mobileStyle;
     @api desktopStyle;
 

@@ -4,7 +4,7 @@
             <label for={setDefaultId} if:true={isLabel} style={labelFontSize} class="navds-textarea__label navds-label"
                 >{label}</label
             >
-            <c-helptext if:true={isHelpText} text={helptextContent} hover-text={helptextHovertext}></c-helptext>
+            <c-helptext lwc:if={isHelpText} text={helptextContent} hover-text={helptextHovertext}></c-helptext>
         </div>
         <div lwc:if={description} id={descriptionId} class="navds-form-field__description">{description}</div>
         <div class="navds-textarea__wrapper">
