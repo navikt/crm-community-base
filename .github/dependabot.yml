@@ -5,32 +5,58 @@
 
 version: 2
 updates:
-  - package-ecosystem: "github-actions" # See documentation for possible values
-    directory: "/" # Location of package manifests
+  - package-ecosystem: "github-actions"
+    directory: "/"
     schedule:
-      interval: "weekly"
-      day: "monday"
+      interval: "daily"
       time: "05:00"
-      timezone: "Europe/Berlin"
+      timezone: "Europe/Oslo"
     cooldown:
       default-days: 7
     groups:
-      gha:
+      gha-major:
         patterns:
           - "*"
-  - package-ecosystem: "npm" # See documentation for possible values
-    directory: "/" # Location of package manifests
-    schedule:
-      interval: "weekly"
-      day: "monday"
-      time: "05:00"
-      timezone: "Europe/Berlin"
-    cooldown:
-      default-days: 7
-    groups:
-      npm:
+        update-types:
+          - "major"
+      gha-minor-patch:
+        patterns:
+          - "*"
         update-types:
           - "minor"
           - "patch"
+      gha-unknown:
         patterns:
           - "*"
+
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "daily"
+      time: "05:00"
+      timezone: "Europe/Oslo"
+    cooldown:
+      default-days: 7
+    groups:
+      npm-production-major:
+        dependency-type: "production"
+        update-types:
+          - "major"
+      npm-production-minor-patch:
+        dependency-type: "production"
+        update-types:
+          - "minor"
+          - "patch"
+      npm-production-unknown:
+        dependency-type: "production"
+      npm-development-major:
+        dependency-type: "development"
+        update-types:
+          - "major"
+      npm-development-minor-patch:
+        dependency-type: "development"
+        update-types:
+          - "minor"
+          - "patch"
+      npm-development-unknown:
+        dependency-type: "development"
