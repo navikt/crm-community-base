@@ -25,7 +25,7 @@ jobs:
           app-id: ${{ vars.PLATFORM_TOKEN_APP_ID }}
           private-key: ${{ secrets.PLATFORM_TOKEN_APP_PRIVATE_KEY }}
       - name: Automerge Dependabot PRs
-        uses: navikt/automerge-dependabot@a8509d20101f618c831b5eb13f28df6b4274607b # v1.4
+        uses: navikt/automerge-dependabot@70455df4433fac78f20d5a248f9ebf07ccac11fe # v1.5
         with:
           token: ${{ steps.app-token.outputs.token }}
           blackout-periods: "Sat,Sun,Jul 1-Jul 31,Dec 20-Jan 5"
