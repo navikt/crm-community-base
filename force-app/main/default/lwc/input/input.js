@@ -49,6 +49,12 @@ export default class Input extends LightningElement {
         return convertStringToBoolean(this.autofocus);
     }
 
+    get accessibilityRole() {
+        return this.type === 'date' || this.type === 'time'
+            ? 'textbox'
+            : null;
+    }
+
     // Call this when value is needed
     @api getValue() {
         return this.template.querySelector('input').value;
