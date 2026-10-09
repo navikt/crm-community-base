@@ -15,7 +15,7 @@ export default class DsTextField extends LightningElement {
     error;
 
     get inputElement() {
-        return this.template.querySelector('.navds-text-field__input');
+        return this.template.querySelector('.aksel-text-field__input');
     }
 
     @api
@@ -29,17 +29,17 @@ export default class DsTextField extends LightningElement {
     }
 
     get classes() {
-        let classy = 'navds-form-field';
-        classy += ` navds-form-field--${this.size}`;
+        let classy = 'aksel-form-field';
+        classy += ` aksel-form-field--${this.size}`;
 
         if (this.error) {
-            classy += ' navds-text-field--error navds-date__field--error';
+            classy += ' aksel-text-field--error aksel-date__field--error';
         }
         if (this.disabled) {
-            classy += ' navds-text-field--disabled navds-form-field--disabled';
+            classy += ' aksel-text-field--disabled aksel-form-field--disabled';
         }
         if (this.readOnly) {
-            classy += ' navds-form-field--readonly navds-text-field--readonly';
+            classy += ' aksel-form-field--readonly aksel-text-field--readonly';
         }
 
         return classy;
@@ -47,13 +47,13 @@ export default class DsTextField extends LightningElement {
 
     get labelClasses() {
         return (
-            `navds-form-field__label navds-label navds-label--${this.size}` + (this.hideLabel ? ' navds-sr-only' : '')
+            `aksel-form-field__label aksel-label aksel-label--${this.size}` + (this.hideLabel ? ' aksel-sr-only' : '')
         );
     }
 
     get inputClasses() {
         return (
-            'navds-text-field__input navds-body-short navds-body-short--' + (this.size !== null ? this.size : 'medium')
+            'aksel-text-field__input aksel-body-short aksel-body-short--' + (this.size !== null ? this.size : 'medium')
         );
     }
 
