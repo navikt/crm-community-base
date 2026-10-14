@@ -1,0 +1,13 @@
+<template>
+    <template lwc:if={showWarnings}>
+        <div class="aksel-error-summary aksel-error-summary--medium" tabindex="-1" role="region">
+            <h2 class="aksel-error-summary__heading aksel-heading aksel-heading--small" tabindex="-1">{title}</h2>
+            <ul class="aksel-error-summary__list aksel-body-short">
+                <template for:each={errorList.errors} for:item="error">
+                    <c-sto-community-error-item error={error} key={error.Id} onclickeditemevent={handleLinkClick}>
+                    </c-sto-community-error-item>
+                </template>
+            </ul>
+        </div>
+    </template>
+</template>

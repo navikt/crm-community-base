@@ -1,0 +1,20 @@
+:host {
+    display: block;
+}
+
+.combobox-floating-wrapper {
+    position: absolute;
+    top: calc(100% + var(--ax-space-4));
+    left: 0;
+    right: 0;
+    z-index: 1000;
+}
+
+.combobox-floating-wrapper[hidden] {
+    display: none;
+}
+
+.aksel-combobox__list-options {
+    padding-top: var(--ax-space-4);
+    padding-bottom: var(--ax-space-4);
+}
