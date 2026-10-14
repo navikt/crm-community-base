@@ -1,6 +1,6 @@
 import { LightningElement, api } from 'lwc';
 
-export default class StoCommunityErrorItem extends LightningElement {
+export default class DsErrorItem extends LightningElement {
     @api error;
 
     handleLinkClick(event) {

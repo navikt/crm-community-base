@@ -1,6 +1,6 @@
 import { LightningElement, api } from 'lwc';
 
-export default class CommunityErrorSummary extends LightningElement {
+export default class DsErrorSummary extends LightningElement {
     @api errorList;
     @api originalTitle = 'For å sende melding må du rette følgende:';
     bufferFocus = false;
