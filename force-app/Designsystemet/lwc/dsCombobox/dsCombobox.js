@@ -2,7 +2,7 @@ import { LightningElement, api } from 'lwc';
 
 let idCounter = 0;
 
-export default class CommunityCombobox extends LightningElement {
+export default class DsCombobox extends LightningElement {
     @api label = '';
     @api placeholder = '- Velg et alternativ -';
     @api options = [];

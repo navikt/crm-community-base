@@ -1,6 +1,6 @@
 import { LightningElement, api } from 'lwc';
 
-export default class CommunityModal extends LightningElement {
+export default class DsModal extends LightningElement {
     @api showCloseButton = false;
     @api showFooterLine = false;
     @api modalHeader;

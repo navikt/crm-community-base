@@ -1,6 +1,6 @@
 import { LightningElement, api } from 'lwc';
 
-export default class CommunityCheckbox extends LightningElement {
+export default class DsCheckbox extends LightningElement {
     @api labelText;
 
     error = false;

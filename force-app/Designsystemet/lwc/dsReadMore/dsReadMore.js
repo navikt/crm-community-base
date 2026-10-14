@@ -1,6 +1,6 @@
 import { LightningElement, api } from 'lwc';
 
-export default class NksReadMore extends LightningElement {
+export default class DsReadMore extends LightningElement {
     @api title;
     @api content;
 

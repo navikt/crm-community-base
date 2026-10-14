@@ -1,6 +1,6 @@
 import { LightningElement, api } from 'lwc';
 
-export default class CommunityAlert extends LightningElement {
+export default class DsAlert extends LightningElement {
     @api alertType;
     @api alertText;
 }

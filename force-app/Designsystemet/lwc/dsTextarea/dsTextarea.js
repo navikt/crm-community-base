@@ -1,8 +1,9 @@
 import { LightningElement, api } from 'lwc';
 
-export default class StoCommunityTextarea extends LightningElement {
+export default class DsTextarea extends LightningElement {
     @api maxLength;
     @api label;
+    @api description;
 
     errorMessage = 'Tekstboksen kan ikke være tom';
     message;
@@ -81,10 +82,6 @@ export default class StoCommunityTextarea extends LightningElement {
         );
     }
 
-    get labelText() {
-        return 'Tekstområde' + (this.limitCharacters ? ' med plass til ' + this.maxLength + ' tegn' : '');
-    }
-
     get limitCharacters() {
         return this.maxLength !== 0 && this.maxLength != null;
     }
@@ -102,9 +99,5 @@ export default class StoCommunityTextarea extends LightningElement {
             'aksel-form-field aksel-form-field--medium aksel-textarea--resize-both ' +
             (this.errorState ? ' aksel-textarea--error' : '')
         );
-    }
-
-    get description() {
-        return 'Teksten lagres ikke automatisk. Hvis du er på denne siden i mer enn 30 minutter, kan du bli logget ut og miste det du har skrevet.';
     }
 }

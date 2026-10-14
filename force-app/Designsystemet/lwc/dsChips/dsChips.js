@@ -1,6 +1,6 @@
 import { LightningElement, api } from 'lwc';
 
-export default class CommunityChips extends LightningElement {
+export default class DsChips extends LightningElement {
     @api label = '';
     @api options = [];
 
