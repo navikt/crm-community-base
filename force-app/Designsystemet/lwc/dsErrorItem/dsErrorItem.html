@@ -1,0 +1,10 @@
+<template>
+    <li>
+        <template lwc:if={linkToElement}>
+            <a href="#" class="aksel-error-summary__item aksel-link" onclick={handleLinkClick}>{error.Text}</a>
+        </template>
+        <template lwc:else>
+            <lightning-formatted-rich-text value={error.Text}></lightning-formatted-rich-text>
+        </template>
+    </li>
+</template>

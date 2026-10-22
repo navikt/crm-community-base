@@ -1,0 +1,48 @@
+<template>
+    <div lwc:if={showModal} class="modal__overlay" onkeydown={handleKeyDown}>
+        <div tabindex="0" class="firstFocusable" onfocus={handleFocus}></div>
+        <dialog
+            class="aksel-modal aksel-modal--medium aksel-modal--autowidth"
+            aria-labelledby="modalHeader"
+            autofocus=""
+            open=""
+        >
+            <div class="aksel-modal__header">
+                <template lwc:if={showCloseButton}>
+                    <button
+                        data-color="neutral"
+                        data-variant="tertiary"
+                        type="button"
+                        class="aksel-modal__button aksel-button aksel-button--small aksel-button--icon-only"
+                        onclick={closeModal}
+                    >
+                        <span class="aksel-button__icon"
+                            ><svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="1em"
+                                height="1em"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                focusable="false"
+                                role="img"
+                                aria-labelledby="title-_r_4_"
+                            >
+                                <title id="title-_r_4_">Lukk</title>
+                                <path
+                                    fill="currentColor"
+                                    d="M6.53 5.47a.75.75 0 0 0-1.06 1.06L10.94 12l-5.47 5.47a.75.75 0 1 0 1.06 1.06L12 13.06l5.47 5.47a.75.75 0 1 0 1.06-1.06L13.06 12l5.47-5.47a.75.75 0 0 0-1.06-1.06L12 10.94z"
+                                ></path></svg
+                        ></span>
+                    </button>
+                </template>
+                <h1 id="modalHeader" class="aksel-heading aksel-heading--medium">{modalHeader}</h1>
+            </div>
+            <div class="aksel-modal__body">
+                <slot name="modalContent"></slot>
+            </div>
+            <template lwc:if={showFooterLine}> <hr class="blokk-m" /></template>
+            <slot name="modalFooter"></slot>
+        </dialog>
+        <div tabindex="0" class="lastFocusable" onfocus={handleFocus}></div>
+    </div>
+</template>
