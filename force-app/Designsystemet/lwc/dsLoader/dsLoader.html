@@ -1,0 +1,30 @@
+<template>
+  <svg
+    class={loaderClass}
+    data-color={color}
+    data-variant={variant}
+    viewBox="0 0 50 50"
+    focusable="false"
+    tabindex="-1"
+    preserveAspectRatio="xMidYMid"
+    role="img"
+    aria-labelledby="loader-title"
+  >
+    <title id="loader-title">{title}</title>
+    <circle
+      class="aksel-loader__background"
+      cx="25"
+      cy="25"
+      r="20"
+      fill="none"
+    ></circle>
+    <circle
+      class="aksel-loader__foreground"
+      cx="25"
+      cy="25"
+      r="20"
+      fill="none"
+      stroke-dasharray="50 155"
+    ></circle>
+  </svg>
+</template>
