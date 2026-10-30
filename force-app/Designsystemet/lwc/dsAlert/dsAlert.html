@@ -1,5 +1,5 @@
 <template>
-    <div data-color={alertType} data-size="medium" class="aksel-inline-message aksel-body-long aksel-body-long--medium">
+    <div data-color={alertType} data-size={size} class="aksel-inline-message aksel-body-long aksel-body-long--medium">
         <svg
             xmlns="http://www.w3.org/2000/svg"
             width="1em"
@@ -18,6 +18,6 @@
                 clip-rule="evenodd"
             ></path>
         </svg>
-        <span><slot>{alertText}</slot></span>
+        <span data-color="accent"><slot>{alertText}</slot></span>
     </div>
 </template>
