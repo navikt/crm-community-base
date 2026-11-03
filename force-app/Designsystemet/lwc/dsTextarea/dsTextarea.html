@@ -6,6 +6,7 @@
         </div>
         <textarea
             aria-invalid={errorState}
+            aria-describedby={describedBy}
             onchange={handleChange}
             oninput={handleMessage}
             class="aksel-textarea__input aksel-body-short aksel-body-short--medium aksel-textarea--counter min-row textBox"
@@ -13,15 +14,17 @@
             id="textareaInput"
         >
             {message}
-            </textarea
-        >
+            </textarea>
         <div aria-hidden="true" class="mirror minRow" tabindex="-1"></div>
         <template lwc:if={limitCharacters}>
             <p aria-live="off" class={remainingCharacterClass}>{remainingCharacterText}</p>
         </template>
         <div aria-relevant="additions removals" aria-live="polite">
             <template lwc:if={errorState}>
-                <div class="aksel-error-message aksel-error-message--medium aksel-label aksel-error-message--show-icon">
+                <div
+                    id="textarea-error"
+                    class="aksel-error-message aksel-error-message--medium aksel-label aksel-error-message--show-icon"
+                >
                     <svg
                         viewBox="0 0 17 16"
                         fill="none"

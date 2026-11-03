@@ -8,19 +8,27 @@ export default class DsTextarea extends LightningElement {
     errorMessage = 'Tekstboksen kan ikke være tom';
     message;
     errorState = false;
+    hasValidated = false;
+    lastPublishedMessage;
 
     handleChange(event) {
         this.message = event.target.value;
-        this.publishMessage();
+        if (this.message !== this.lastPublishedMessage) {
+            this.publishMessage();
+        }
     }
 
     handleMessage(event) {
-        this.errorState = false;
         this.message = event.target.value;
+        if (this.hasValidated) {
+            this.checkError();
+        }
         this.processMessageStyling();
+        this.publishMessage();
     }
 
     checkError() {
+        this.hasValidated = true;
         if (!this.message || this.message.length === 0) {
             this.errorState = true;
             this.errorMessage = 'Tekstboksen kan ikke være tom.';
@@ -43,6 +51,7 @@ export default class DsTextarea extends LightningElement {
     }
 
     publishMessage() {
+        this.lastPublishedMessage = this.message;
         const textChangedEvent = new CustomEvent('textchanged', {
             detail: this.message
         });
@@ -60,6 +69,17 @@ export default class DsTextarea extends LightningElement {
     @api
     focus() {
         this.textBox.focus();
+    }
+
+    @api
+    reportValidity() {
+        this.message = this.textBox.value;
+        this.checkError();
+        return !this.errorState;
+    }
+
+    get describedBy() {
+        return this.errorState ? 'textarea-description textarea-error' : 'textarea-description';
     }
 
     get remainingCharacters() {

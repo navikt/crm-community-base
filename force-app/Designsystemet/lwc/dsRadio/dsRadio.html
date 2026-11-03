@@ -1,18 +1,20 @@
 <template>
     <fieldset
-        aria-invalid="false"
+        aria-invalid={showErrorText}
+        aria-describedby={describedBy}
         role="radiogroup"
-        class="aksel-radio-group aksel-radio-group--medium aksel-fieldset aksel-fieldset--medium"
+        class={fieldsetClass}
         onchange={handleChange}
     >
         <legend class="aksel-fieldset__legend aksel-label"><slot name="legend">Mangler legend</slot></legend>
         <div class="aksel-radio-buttons" onfocusout={checkForError}>
             <template for:each={_options} for:item="option">
-                <div class="aksel-radio aksel-radio--medium" key={option.value}>
+                <div class={radioClass} key={option.value}>
                     <input
                         id={option.id}
                         data-id={option.id}
-                        aria-invalid="false"
+                        aria-invalid={showErrorText}
+                        aria-describedby={describedBy}
                         name={radioName}
                         type="radio"
                         class="aksel-radio__input"

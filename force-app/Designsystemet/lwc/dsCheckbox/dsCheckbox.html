@@ -3,6 +3,7 @@
         <div class="aksel-checkbox__input-wrapper" data-standalone="false">
             <input
                 aria-invalid={error}
+                aria-describedby={describedBy}
                 id="checkbox"
                 type="checkbox"
                 class="aksel-checkbox__input checkbox"
@@ -28,7 +29,7 @@
         >
     </div>
     <template lwc:if={error}>
-        <p class="aksel-error-message aksel-label aksel-error-message--show-icon">
+        <p id="checkbox-error" class="aksel-error-message aksel-label aksel-error-message--show-icon">
             <svg
                 viewBox="0 0 17 16"
                 fill="none"

@@ -21,6 +21,12 @@ export default class DsRadio extends LightningElement {
     }
 
     @api
+    reportValidity() {
+        this.updateErrorText();
+        return !this.showErrorText;
+    }
+
+    @api
     focus() {
         const test = this.template.querySelectorAll('.aksel-radio__input')[0];
         test?.focus();
@@ -54,5 +60,20 @@ export default class DsRadio extends LightningElement {
 
     get radioName() {
         return 'radioGroupName-aksel-' + this.UUID;
+    }
+
+    get fieldsetClass() {
+        return (
+            'aksel-radio-group aksel-radio-group--medium aksel-fieldset aksel-fieldset--medium' +
+            (this.showErrorText ? ' aksel-fieldset--error' : '')
+        );
+    }
+
+    get radioClass() {
+        return 'aksel-radio aksel-radio--medium' + (this.showErrorText ? ' aksel-radio--error' : '');
+    }
+
+    get describedBy() {
+        return this.showErrorText ? 'fieldset-error-aksel-id-4' : null;
     }
 }

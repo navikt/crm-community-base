@@ -34,6 +34,16 @@ export default class DsCheckbox extends LightningElement {
     }
 
     @api
+    reportValidity() {
+        this.error = !this.checked;
+        return !this.error;
+    }
+
+    get describedBy() {
+        return this.error ? 'checkbox-error' : null;
+    }
+
+    @api
     setChecked(value) {
         this.checked = value;
         this.error = !this.checked;
