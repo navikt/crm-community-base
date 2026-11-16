@@ -90,6 +90,7 @@ public with sharing class IdPortenSidController {
             '0DB2o000000Ug9I',
             '0DB2o000000Ug9D',
             '0DB0E0000005HX9',
+            '0DB2o000000Ug6iGAC',
             '0DB7U000000TN3uWAG',
             '0DB7U0000004C9wWAE',
             '0DB2o000000PCSH',
