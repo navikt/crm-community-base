@@ -1,40 +1,25 @@
 {
-    "compilerOptions": {
-        "experimentalDecorators": true,
-        "baseUrl": ".",
-        "paths": {
-            "c/globalCommunityFooter": [
-                "globalCommunityFooter/globalCommunityFooter.js"
-            ],
-            "c/globalCommunityHeader": [
-                "globalCommunityHeader/globalCommunityHeader.js"
-            ],
-            "c/pubsub": [
-                "pubsub/pubsub.js"
-            ],
-            "c/globalCommunityHeaderDesktopMenu": [
-                "globalCommunityHeaderDesktopMenu/globalCommunityHeaderDesktopMenu.js"
-            ],
-            "c/globalCommunityHeaderMobileMenu": [
-                "globalCommunityHeaderMobileMenu/globalCommunityHeaderMobileMenu.js"
-            ],
-            "c/*": [
-                "*"
-            ]
-        }
-    },
-    "include": [
-        "**/*",
-        "../../../../.sfdx/typings/lwc/**/*.d.ts"
-    ],
-    "typeAcquisition": {
-        "include": [
-            "jest"
-        ]
-    },
+  "compilerOptions": {
+    "experimentalDecorators": true,
+    "baseUrl": ".",
     "paths": {
-        "c/*": [
-            "*"
-        ]
+      "c/*": [
+        "*"
+      ]
     }
+  },
+  "include": [
+    "**/*",
+    "../../../../.sfdx/typings/lwc/**/*.d.ts"
+  ],
+  "typeAcquisition": {
+    "include": [
+      "jest"
+    ]
+  },
+  "paths": {
+    "c/*": [
+      "*"
+    ]
+  }
 }
